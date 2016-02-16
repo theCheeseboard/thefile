@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=theFile
+Comment=File Manager
+Exec=thefile
+Icon=system-file-manager
