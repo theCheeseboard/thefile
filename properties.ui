@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Properties</class>
+ <widget class="QDialog" name="Properties">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>270</width>
+    <height>387</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>251</width>
+     <height>37</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>File Properties</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fileName">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>52</y>
+     <width>251</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>File Name:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fileSize">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>76</y>
+     <width>251</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>File Size:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fileType">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>100</y>
+     <width>251</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>File Type:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>175</x>
+     <y>345</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+   <property name="icon">
+    <iconset theme="dialog-ok"/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
