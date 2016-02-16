@@ -37,3 +37,6 @@ FORMS    += mainwindow.ui \
     filetransfers.ui \
     transferwindow.ui \
     properties.ui
+
+DISTFILES += \
+    theFile.desktop
