@@ -25,6 +25,7 @@
 #include <QProcess>
 #include <QPainter>
 #include <QPaintDevice>
+#include <QDebug>
 
 #include <kmessagewidget.h>
 
@@ -88,6 +89,10 @@ private slots:
     void on_fav_itemClicked(QListWidgetItem *item);
 
     void on_actionUnmount_triggered();
+
+    void on_fav_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionUnmount2_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -45,6 +45,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -317,6 +320,15 @@
    </property>
   </action>
   <action name="actionUnmount">
+   <property name="icon">
+    <iconset theme="media-eject">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+  </action>
+  <action name="actionUnmount2">
    <property name="icon">
     <iconset theme="media-eject"/>
    </property>

@@ -148,21 +148,7 @@ void MainWindow::blockDevicesChanged() {
 
 
 
-                                if (device->fileSystem()->mountPoints().count() == 0) {
-                                    QPainter *p = new QPainter();
-                                    QPixmap temp = icon.pixmap(16,16);
-                                    p->begin(&temp);
-                                    p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-unmounted").pixmap(8,8));
-                                    p->end();
-                                    icon = QIcon(temp);
-                                } else {
-                                    QPainter *p = new QPainter();
-                                    QPixmap temp = icon.pixmap(16,16);
-                                    p->begin(&temp);
-                                    p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-mounted").pixmap(8,8));
-                                    p->end();
-                                    icon = QIcon(temp);
-                                }
+
 
                                 QString itemText(parse[1].replace("\\x20", " ") + " (" + device->fileSystem()->name + ")");
                                 item = new QListWidgetItem(itemText);
@@ -177,6 +163,21 @@ void MainWindow::blockDevicesChanged() {
                 icon = QIcon::fromTheme("drive-harddisk");
             }
 
+            if (device->fileSystem()->mountPoints().count() == 0) {
+                QPainter *p = new QPainter();
+                QPixmap temp = icon.pixmap(16,16);
+                p->begin(&temp);
+                p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-unmounted").pixmap(8,8));
+                p->end();
+                icon = QIcon(temp);
+            } else {
+                QPainter *p = new QPainter();
+                QPixmap temp = icon.pixmap(16,16);
+                p->begin(&temp);
+                p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-mounted").pixmap(8,8));
+                p->end();
+                icon = QIcon(temp);
+            }
 
 
             item->setIcon(icon);
@@ -538,8 +539,12 @@ void MainWindow::on_fav_itemClicked(QListWidgetItem *item)
 {
     if (favDirs.count() - 1 < ui->fav->selectionModel()->selectedIndexes().at(0).row()) {
         QString dev = item->text().mid(item->text().indexOf("(") + 1, item->text().indexOf(")") - item->text().indexOf("(") - 1);
+        qDebug() << "Mounting " + dev;
         if (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
             QString mountpoint = udisks->blockDevice(dev)->fileSystem()->mount();
+            while (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
+                QApplication::processEvents();
+            }
             if (mountpoint == "") {
                 ui->messageFav->setText("Couldn't mount " + udisks->blockDevice(dev)->dev);
                 ui->messageFav->animatedShow();
@@ -562,9 +567,46 @@ void MainWindow::on_actionUnmount_triggered()
     for (QString device : udisks->blockDevices()) {
         if (udisks->blockDevice(device)->fileSystem()) {
             if (udisks->blockDevice(device)->fileSystem()->mountPoints().contains(currentDir.path())) {
+                qDebug() << "Unmounting " + udisks->blockDevice(device)->name;
                 udisks->blockDevice(device)->fileSystem()->unmount();
                 currentDir.setPath(QDir::homePath());
-                reloadList();
+                while (udisks->blockDevice(device)->fileSystem()->mountPoints().count() != 0) {
+                    QApplication::processEvents();
+                }
+
+                ui->message->setText("The device was unmounted successfully.");
+                ui->message->setMessageType(KMessageWidget::Positive);
+                ui->message->setCloseButtonVisible(true);
+                ui->message->animatedShow();
+                blockDevicesChanged();
+            }
+        }
+    }
+}
+
+void MainWindow::on_fav_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu *cx = new QMenu(this);
+
+    if (ui->fav->selectedItems().count() != 0) {
+        cx->addSection("For \"" + ui->fav->selectedItems().at(0)->text() + "\"");
+        cx->addAction(ui->actionUnmount2);
+    }
+
+    cx->exec(ui->fav->mapToGlobal(pos));
+}
+
+void MainWindow::on_actionUnmount2_triggered()
+{
+    QString dev = ui->fav->selectedItems().at(0)->text().mid(ui->fav->selectedItems().at(0)->text().indexOf("(") + 1, ui->fav->selectedItems().at(0)->text().indexOf(")") - ui->fav->selectedItems().at(0)->text().indexOf("(") - 1);
+    for (QString device : udisks->blockDevices()) {
+        if (udisks->blockDevice(device)->fileSystem()) {
+            if (udisks->blockDevice(device)->name == dev) {
+                qDebug() << "Unmounting " + dev;
+                udisks->blockDevice(device)->fileSystem()->unmount();
+                while (udisks->blockDevice(device)->fileSystem()->mountPoints().count() != 0) {
+                    QApplication::processEvents();
+                }
 
                 ui->message->setText("The device was unmounted successfully.");
                 ui->message->setMessageType(KMessageWidget::Positive);
