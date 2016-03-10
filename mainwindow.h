@@ -26,6 +26,7 @@
 #include <QPainter>
 #include <QPaintDevice>
 #include <QDebug>
+#include <QMimeDatabase>
 
 #include <kmessagewidget.h>
 
@@ -33,6 +34,7 @@
 #include "about.h"
 #include "filetransfers.h"
 #include "copy.h"
+#include "properties.h"
 
 static QList<copy*> copyops;
 static fileTransfers *transferWin;
@@ -50,6 +52,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void goTo(QString dir);
 
 private slots:
     void on_files_itemDoubleClicked(QTableWidgetItem *item);
@@ -94,6 +97,8 @@ private slots:
 
     void on_actionUnmount2_triggered();
 
+    void on_actionProperties_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -104,6 +109,7 @@ private:
     QFileSystemWatcher *watcher;
     QString oldFileName;
     QPoint startPos;
+    QMimeDatabase *mimes;
 
     void reloadFavourites();
 

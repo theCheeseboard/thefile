@@ -67,13 +67,6 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="errorLabel">
-        <property name="text">
-         <string>There's nothing to see in this folder.</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="KMessageWidget" name="message">
         <property name="text">
          <string/>
@@ -82,7 +75,7 @@
          <bool>false</bool>
         </property>
         <property name="messageType">
-         <enum>KMessageWidget::Information</enum>
+         <enum>KMessageWidget::Warning</enum>
         </property>
        </widget>
       </item>
@@ -102,6 +95,9 @@
         </property>
         <property name="dragDropMode">
          <enum>QAbstractItemView::NoDragDrop</enum>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
         </property>
         <attribute name="horizontalHeaderHighlightSections">
          <bool>false</bool>
@@ -174,7 +170,6 @@
    <addaction name="actionNew_Folder"/>
    <addaction name="actionUnmount"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionBack">
    <property name="icon">
     <iconset theme="go-previous">
@@ -330,7 +325,8 @@
   </action>
   <action name="actionUnmount2">
    <property name="icon">
-    <iconset theme="media-eject"/>
+    <iconset theme="media-eject">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>

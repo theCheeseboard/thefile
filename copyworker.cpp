@@ -70,14 +70,14 @@ void copyWorker::process() { // Process. Start processing data.
                 emit finished();
                 return;
             }
-            QByteArray buf = src.read(32768);
+            QByteArray buf = src.read(4194304);
             d.write(buf);
             readBytes += buf.length();
-            sync();
-            //if (emitCounter == 100) {
-                emit progress(readBytes, totalBytes, file, dest);
-                emitCounter = 0;
-            //}
+            emit progress(readBytes, totalBytes, file, dest);
+            emitCounter = 0;
+            if (emitCounter == 100) {
+                sync();
+            }
             emitCounter++;
         }
         src.close();

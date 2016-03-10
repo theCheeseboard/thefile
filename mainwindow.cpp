@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
+
     ui->mainToolBar->addWidget(ui->addr);
     ui->message->setVisible(false);
     ui->messageFav->setVisible(false);
@@ -61,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(reloadList()));
 
     icons = new QFileIconProvider();
+    mimes = new QMimeDatabase();
 
     ui->files->setColumnCount(4);
     ui->files->setHorizontalHeaderLabels(QStringList() << "Name" << "Type" << "Size" << "Date");
@@ -75,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QFile fav(QDir::homePath() + "/.thefile/fav");
     if (!fav.exists()) {
         fav.open(QFile::WriteOnly);
-        fav.write(QString(QDir::homePath() + ",Home\n").toUtf8());
+        fav.write(QString(QDir::homePath() + ",Home\n/,Root").toUtf8());
         fav.close();
     }
 
@@ -108,6 +111,8 @@ void MainWindow::blockDevicesChanged() {
         QListWidgetItem *item = new QListWidgetItem(dat.at(1));
         if (QDir::homePath() == dat.at(0)) {
             item->setIcon(QIcon::fromTheme("user-home"));
+        } else if (dat.at(0) == "/") {
+            item->setIcon(QIcon::fromTheme("computer"));
         } else {
             item->setIcon(QIcon::fromTheme("folder"));
         }
@@ -115,8 +120,17 @@ void MainWindow::blockDevicesChanged() {
         favDirs.append(dat.at(0));
     }
 
+    QListWidgetItem* sep = new QListWidgetItem();
+    sep->setSizeHint(QSize(50, 1));
+    sep->setFlags(Qt::NoItemFlags);
+    ui->fav->addItem(sep);
+
+    QFrame *sepLine = new QFrame();
+    sepLine->setFrameShape(QFrame::HLine);
+    ui->fav->setItemWidget(sep, sepLine);
+
     QProcess *lsblk = new QProcess(this);
-    lsblk->start("lsblk -rf --output name,label,hotplug");
+    lsblk->start("lsblk -rf --output name,label,hotplug,parttype");
 
     lsblk->waitForFinished();
     QByteArray output = lsblk->readAllStandardOutput();
@@ -133,11 +147,11 @@ void MainWindow::blockDevicesChanged() {
                     QStringList parse = part.split(" ");
                     if (parse.length() > 1) {
                         if (parse[0] == device->fileSystem()->name) {
+
                             if (parse[1] == "") {
                                 item = new QListWidgetItem(calculateSize(device->size) + " Hard Drive (" + device->fileSystem()->name + ")");
                                 icon = QIcon::fromTheme("drive-harddisk");
                             } else {
-
                                 if (parse.count() > 2) {
                                     if (parse[2] == "0") {
                                         icon = QIcon::fromTheme("drive-harddisk");
@@ -145,11 +159,6 @@ void MainWindow::blockDevicesChanged() {
                                         icon = QIcon::fromTheme("drive-removable-media");
                                     }
                                 }
-
-
-
-
-
                                 QString itemText(parse[1].replace("\\x20", " ") + " (" + device->fileSystem()->name + ")");
                                 item = new QListWidgetItem(itemText);
                             }
@@ -201,7 +210,6 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::reloadList() {
-    ui->errorLabel->setVisible(false);
     watcher->removePaths(watcher->directories());
     watcher->addPath(currentDir.path());
     currentDir.refresh();
@@ -261,7 +269,8 @@ void MainWindow::reloadList() {
                 QFile f(currentDir.path() + "/" + file);
                 QFileInfo info(f);
                 QTableWidgetItem *name = new QTableWidgetItem(file);
-                name->setIcon(icons->icon(QFileIconProvider::File));
+                QMimeType mime = mimes->mimeTypeForFile(info);
+                name->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
 
                 ui->files->setItem(i, 0, name);
 
@@ -315,10 +324,16 @@ void MainWindow::on_files_itemDoubleClicked(QTableWidgetItem *item)
     if (currentDir.cd(ui->files->item(item->row(), 0)->text())) {
         reloadList();
     } else {
-        if (QFile(currentDir.path() + item->text()).permissions() & QFile::ExeOther) {
-            QProcess::execute(currentDir.path() + item->text());
+        QFile file(currentDir.path() + "/" + item->text());
+
+
+        if (file.permissions() & QFile::ExeUser) {
+                if (!QProcess::startDetached("\"" + currentDir.path() + "/" + item->text() + "\"")) {
+                    QProcess::startDetached("xdg-open", QStringList() << currentDir.path() + "/" + item->text());
+                }
         } else {
-            QDesktopServices::openUrl(QUrl::fromLocalFile(currentDir.path() + "/" + item->text()));
+            //QDesktopServices::openUrl(QUrl::fromLocalFile(currentDir.path() + "/" + item->text()));
+            QProcess::startDetached("xdg-open", QStringList() << currentDir.path() + "/" + item->text());
         }
     }
 }
@@ -347,6 +362,7 @@ void MainWindow::on_files_customContextMenuRequested(const QPoint &pos)
         cx->addSection("For \"" + ui->files->selectedItems().at(0)->text() + "\"");
         cx->addAction(ui->actionOpen);
         cx->addAction(ui->actionRename);
+        cx->addAction(ui->actionProperties);
         if (ui->files->selectedItems().count() > 1) {
             cx->addSection("For all selected objects");
         }
@@ -363,7 +379,9 @@ void MainWindow::on_files_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_actionOpen_triggered()
 {
-    if (ui->files->selectedItems().count() > 0) {
+    if (ui->addr->hasFocus()) {
+        on_addr_returnPressed();
+    } else if (ui->files->selectedItems().count() > 0) {
         on_files_itemDoubleClicked(ui->files->selectedItems().at(0));
     }
 }
@@ -470,12 +488,8 @@ void MainWindow::on_actionAdd_To_Bar_triggered()
 
 void MainWindow::on_addr_returnPressed()
 {
-    //if (QDir(ui->addr->text()).exists()) {
-        currentDir.setPath(ui->addr->text());
-        reloadList();
-    /*} else {
-        QMessageBox::warning(this, "Nonexistent directory", "That folder doesn't exist.", QMessageBox::Ok, QMessageBox::Ok);
-    }*/
+    currentDir.setPath(ui->addr->text());
+    reloadList();
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
@@ -586,14 +600,14 @@ void MainWindow::on_actionUnmount_triggered()
 
 void MainWindow::on_fav_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu *cx = new QMenu(this);
-
     if (ui->fav->selectedItems().count() != 0) {
-        cx->addSection("For \"" + ui->fav->selectedItems().at(0)->text() + "\"");
-        cx->addAction(ui->actionUnmount2);
+        QMenu *cx = new QMenu(this);
+            if (favDirs.count() - 1 < ui->fav->selectionModel()->selectedIndexes().at(0).row()) {
+                cx->addSection("For \"" + ui->fav->selectedItems().at(0)->text() + "\"");
+                cx->addAction(ui->actionUnmount2);
+            }
+        cx->exec(ui->fav->mapToGlobal(pos));
     }
-
-    cx->exec(ui->fav->mapToGlobal(pos));
 }
 
 void MainWindow::on_actionUnmount2_triggered()
@@ -615,5 +629,19 @@ void MainWindow::on_actionUnmount2_triggered()
                 blockDevicesChanged();
             }
         }
+    }
+}
+
+void MainWindow::goTo(QString dir) {
+    currentDir.setPath(dir);
+    reloadList();
+}
+
+void MainWindow::on_actionProperties_triggered()
+{
+    if (ui->files->selectedItems().count() > 0) {
+        QFile *f = new QFile(currentDir.path() + "/" + ui->files->selectedItems().at(0)->text());
+        Properties* p = new Properties(f, this);
+        p->show();
     }
 }
