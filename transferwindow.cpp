@@ -6,6 +6,8 @@ transferWindow::transferWindow(QWidget *parent) :
     ui(new Ui::transferWindow)
 {
     ui->setupUi(this);
+
+    ui->conflictFrame->setEnabled(false);
 }
 
 transferWindow::~transferWindow()

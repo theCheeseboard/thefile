@@ -12,7 +12,7 @@ class copyWorker : public QObject
 {
     Q_OBJECT
  public:
-     copyWorker(QStringList* files, QString d);
+     copyWorker(QStringList files, QString d, bool deleteOriginal = false);
      ~copyWorker();
  public slots:
      void process();
@@ -22,9 +22,10 @@ class copyWorker : public QObject
      void error(QString err);
      void progress(quint64 value, quint64 max, QString src, QString dest);
  private:
-     QStringList *source;
+     QStringList source;
      QString dest;
      bool cancelTransferNow = false;
+     bool deleteOriginal;
 };
 
 #endif // COPYWORKER_H

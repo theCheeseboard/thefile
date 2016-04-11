@@ -1,8 +1,9 @@
 #include "copyworker.h"
 
-copyWorker::copyWorker(QStringList* files, QString d) { // Constructor
+copyWorker::copyWorker(QStringList files, QString d, bool deleteOriginal) { // Constructor
     source = files;
     dest = d;
+    this->deleteOriginal = deleteOriginal;
 }
 
 copyWorker::~copyWorker() { // Destructor
@@ -17,7 +18,7 @@ void copyWorker::process() { // Process. Start processing data.
     QStringList *root = new QStringList();
     QStringList *filesToCopy = new QStringList();
 
-    for (QString file : *source) {
+    for (QString file : source) {
         if (QDir(file).exists()) {
             QDirIterator *iterator = new QDirIterator(QDir(file), QDirIterator::Subdirectories);
 
@@ -82,6 +83,10 @@ void copyWorker::process() { // Process. Start processing data.
         }
         src.close();
         d.close();
+
+        if (deleteOriginal) {
+            src.remove();
+        }
         i++;
     }
     emit finished();

@@ -14,7 +14,7 @@ class copy : public QObject
 {
     Q_OBJECT
 public:
-    copy(QStringList* source, QString dest, MainWindow *parent = 0);
+    copy(QStringList source, QString dest, bool deleteOriginal = false, MainWindow *parent = 0);
 
 signals:
     void showTransferWin();
@@ -28,7 +28,7 @@ public slots:
     void progress(quint64 prog, quint64 max, QString s, QString d);
 
 private:
-    QStringList* source;
+    QStringList source;
     QString dest;
     transferWindow *window;
 

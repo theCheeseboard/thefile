@@ -3,6 +3,6 @@
 Type=Application
 Version=1.0
 Name=theFile
-Comment=File Manager
+GenericName=File Manager
 Exec=thefile
 Icon=system-file-manager

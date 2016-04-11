@@ -27,6 +27,7 @@
 #include <QPaintDevice>
 #include <QDebug>
 #include <QMimeDatabase>
+#include <QPropertyAnimation>
 
 #include <kmessagewidget.h>
 
@@ -59,8 +60,6 @@ private slots:
 
     void on_actionUp_triggered();
 
-    void on_fav_itemDoubleClicked(QListWidgetItem *item);
-
     void on_actionAbout_triggered();
 
     void blockDevicesChanged();
@@ -72,10 +71,10 @@ private slots:
     void on_actionCopy_triggered();
 
     void on_actionDelete_triggered();
+
     void reloadList();
 
     void on_actionPaste_triggered();
-
 
     void on_files_entered(const QModelIndex &index);
 
@@ -99,6 +98,28 @@ private slots:
 
     void on_actionProperties_triggered();
 
+    void on_fav_clicked(const QModelIndex &index);
+
+    void on_actionMove_to_Trash_triggered();
+
+    void on_actionNew_Window_triggered();
+
+    void on_pushButton_2_clicked();
+
+    void on_actionClose_Window_triggered();
+
+    void on_actionExit_triggered();
+
+    void restoreFilesFromTrash(QStringList filenames);
+
+    void on_pushButton_clicked();
+
+    void on_actionRestore_triggered();
+
+    void on_actionEmpty_Trash_triggered();
+
+    void on_actionShow_Hidden_Files_toggled(bool arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -110,6 +131,7 @@ private:
     QString oldFileName;
     QPoint startPos;
     QMimeDatabase *mimes;
+    QStringList filesMovedToTrash;
 
     void reloadFavourites();
 

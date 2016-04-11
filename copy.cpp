@@ -3,7 +3,7 @@
 extern QList<copy*> copyops;
 //extern fileTransfers *transferWin;
 
-copy::copy(QStringList *source, QString dest, MainWindow *parent) : QObject(parent)
+copy::copy(QStringList source, QString dest, bool deleteOriginal, MainWindow *parent) : QObject(parent)
 {
     this->source = source;
     this->dest = dest;
@@ -11,7 +11,7 @@ copy::copy(QStringList *source, QString dest, MainWindow *parent) : QObject(pare
     progressBar = new QProgressBar();
 
     QThread *thread = new QThread;
-    copyWorker *worker = new copyWorker(source, dest);
+    copyWorker *worker = new copyWorker(source, dest, deleteOriginal);
     worker->moveToThread(thread);
     //connect(worker, SIGNAL (error(QString)), this, SLOT (errorString(QString)));
     connect(thread, SIGNAL (started()), worker, SLOT (process()));

@@ -2,6 +2,7 @@
 #define ABOUT_H
 
 #include <QDialog>
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class about;
