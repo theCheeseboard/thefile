@@ -30,6 +30,7 @@
 #include <QPropertyAnimation>
 
 #include <kmessagewidget.h>
+#include <libmtp.h>
 
 #include "udisks2.h"
 #include "about.h"

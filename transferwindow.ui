@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>517</height>
+    <height>547</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -153,7 +153,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton">
+       <widget class="QCommandLinkButton" name="replaceFile">
         <property name="text">
          <string>Replace File</string>
         </property>
@@ -163,7 +163,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton_2">
+       <widget class="QCommandLinkButton" name="skipFile">
         <property name="text">
          <string>Skip File</string>
         </property>
@@ -173,7 +173,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton_3">
+       <widget class="QCheckBox" name="applyToAllCheck">
+        <property name="text">
+         <string>Apply to All</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCommandLinkButton" name="cancelFile">
         <property name="text">
          <string>Cancel Transfer</string>
         </property>

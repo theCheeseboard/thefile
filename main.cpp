@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "copyworker.h"
 #include <QApplication>
 
 extern fileTransfers *transferWin;
@@ -6,6 +7,8 @@ extern fileTransfers *transferWin;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    qRegisterMetaType<copyWorker::continueTransferOptions>("copyWorker::continueTransferOptions");
 
     if (QIcon::themeName() == "hicolor") {
         QIcon::setThemeName("breeze");

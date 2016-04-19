@@ -57,6 +57,23 @@ void copyWorker::process() { // Process. Start processing data.
         if (info.fileName() == "." || info.fileName() == "..") {
             continue;
         }
+        if (d.exists()) {
+            if (!continueOptionStay) {
+                emit fileConflict(info.fileName());
+                continueOption = Waiting;
+
+                while (continueOption == Waiting) {
+                    QApplication::processEvents();
+                }
+            }
+
+            if (continueOption == Skip) {
+                continue;
+            } else if (continueOption == Cancel) {
+                emit finished();
+                return;
+            }
+        }
 
         src.open(QFile::ReadOnly);
         d.open(QFile::WriteOnly);
@@ -94,4 +111,11 @@ void copyWorker::process() { // Process. Start processing data.
 
 void copyWorker::cancelTransfer() {
     cancelTransferNow = true;
+}
+
+void copyWorker::continueTransfer(continueTransferOptions option, bool applyToAll) {
+    if (applyToAll) {
+        continueOptionStay = true;
+    }
+    continueOption = option;
 }

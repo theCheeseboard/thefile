@@ -23,6 +23,8 @@ copy::copy(QStringList source, QString dest, bool deleteOriginal, MainWindow *pa
     window = new transferWindow();
     connect(window, SIGNAL(cancelTransfer()), worker, SLOT(cancelTransfer()));
     connect(this, SIGNAL(prog(qint64,qint64,QString,QString)), window, SLOT(prog(qint64,qint64,QString,QString)));
+    connect(worker, SIGNAL(fileConflict(QString)), window, SLOT(fileConflict(QString)));
+    connect(window, SIGNAL(continueTransfer(copyWorker::continueTransferOptions,bool)), worker, SLOT(continueTransfer(copyWorker::continueTransferOptions,bool)));
     window->show();
     thread->start();
 

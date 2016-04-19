@@ -132,57 +132,110 @@ void MainWindow::blockDevicesChanged() {
         UDisks2Block *device = udisks->blockDevice(block);
         QListWidgetItem *item;
         QIcon icon;
-        if (device->fileSystem()) { //Check that filesystem exists on block device
-            if (device->type != "swap") { //Ignore swap devices
-                for (QString part : QString(output).split("\n")) {
-                    if (part != "") {
-                        QStringList parse = part.split(" ");
-                        if (parse.length() > 1) {
-                            if (parse[0] == device->fileSystem()->name) {
+        if (device) { //Check that device actually exists
+            if (device->fileSystem()) { //Check that filesystem exists on block device
+                if (device->type != "swap") { //Ignore swap devices
+                    for (QString part : QString(output).split("\n")) {
+                        if (part != "") {
+                            QStringList parse = part.split(" ");
+                            if (parse.length() > 1) {
+                                if (parse[0] == device->fileSystem()->name) {
 
-                                if (parse[1] == "") {
-                                    item = new QListWidgetItem(calculateSize(device->size) + " Hard Drive (" + device->fileSystem()->name + ")");
-                                    icon = QIcon::fromTheme("drive-harddisk");
-                                } else {
-                                    if (parse.count() > 2) {
-                                        if (parse[2] == "0") {
-                                            icon = QIcon::fromTheme("drive-harddisk");
-                                        } else {
-                                            icon = QIcon::fromTheme("drive-removable-media");
+                                    if (parse[1] == "") {
+                                        item = new QListWidgetItem(calculateSize(device->size) + " Hard Drive (" + device->fileSystem()->name + ")");
+                                        icon = QIcon::fromTheme("drive-harddisk");
+                                    } else {
+                                        if (parse.count() > 2) {
+                                            if (parse[2] == "0") {
+                                                icon = QIcon::fromTheme("drive-harddisk");
+                                            } else {
+                                                icon = QIcon::fromTheme("drive-removable-media");
+                                            }
                                         }
+                                        QString itemText(parse[1].replace("\\x20", " ") + " (" + device->fileSystem()->name + ")");
+                                        item = new QListWidgetItem(itemText);
                                     }
-                                    QString itemText(parse[1].replace("\\x20", " ") + " (" + device->fileSystem()->name + ")");
-                                    item = new QListWidgetItem(itemText);
                                 }
                             }
                         }
                     }
-                }
 
-                if (!(item)) {
-                    item = new QListWidgetItem(calculateSize(device->size) + " Hard Drive (" + device->fileSystem()->name + ")");
-                    icon = QIcon::fromTheme("drive-harddisk");
-                }
+                    if (!(item)) {
+                        item = new QListWidgetItem(calculateSize(device->size) + " Hard Drive (" + device->fileSystem()->name + ")");
+                        icon = QIcon::fromTheme("drive-harddisk");
+                    }
 
-                if (device->fileSystem()->mountPoints().count() == 0) {
-                    QPainter *p = new QPainter();
-                    QPixmap temp = icon.pixmap(16,16);
-                    p->begin(&temp);
-                    p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-unmounted").pixmap(8,8));
-                    p->end();
-                    icon = QIcon(temp);
-                } else {
-                    QPainter *p = new QPainter();
-                    QPixmap temp = icon.pixmap(16,16);
-                    p->begin(&temp);
-                    p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-mounted").pixmap(8,8));
-                    p->end();
-                    icon = QIcon(temp);
-                }
+                    if (device->fileSystem()->mountPoints().count() == 0) {
+                        QPainter *p = new QPainter();
+                        QPixmap temp = icon.pixmap(16,16);
+                        p->begin(&temp);
+                        p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-unmounted").pixmap(8,8));
+                        p->end();
+                        icon = QIcon(temp);
+                    } else {
+                        QPainter *p = new QPainter();
+                        QPixmap temp = icon.pixmap(16,16);
+                        p->begin(&temp);
+                        p->drawPixmap(8,8,8,8,QIcon::fromTheme("emblem-mounted").pixmap(8,8));
+                        p->end();
+                        icon = QIcon(temp);
+                    }
 
-                item->setIcon(icon);
-                ui->fav->addItem(item);
+                    item->setIcon(icon);
+                    item->setData(Qt::UserRole, device->fileSystem()->name);
+                    ui->fav->addItem(item);
+                }
             }
+        }
+    }
+
+    if (QFile("/usr/bin/jmtpfs").exists()) {
+        //Detect MTP devices
+        QProcess* mtpDev = new QProcess(this);
+        mtpDev->start("jmtpfs -l");
+        mtpDev->waitForStarted();
+
+        QListWidgetItem* sep3 = new QListWidgetItem();
+        sep3->setSizeHint(QSize(50, 1));
+        sep3->setFlags(Qt::NoItemFlags);
+        ui->fav->addItem(sep3);
+
+        QFrame *sepLine3 = new QFrame();
+        sepLine3->setFrameShape(QFrame::HLine);
+        ui->fav->setItemWidget(sep3, sepLine3);
+
+        while (mtpDev->state() == QProcess::Running) {
+            QApplication::processEvents();
+        }
+        QString output(mtpDev->readAll());
+        bool startReading = false;
+        bool hasItem = false;
+        for (QString line : output.split("\n")) {
+            if (line != "") {
+                if (startReading) {
+                    hasItem = true;
+                    QStringList parse = line.split(", "); //busLocation, devNum, productId, vendorId, product, vendor
+                    QListWidgetItem* item = new QListWidgetItem();
+                    QString text = parse.at(5) + " " + parse.at(4);
+                    if (!text.contains("(MTP)")) {
+                        text += " (MTP)";
+                    }
+                    item->setText(parse.at(5) + " " + parse.at(4));
+                    item->setIcon(QIcon::fromTheme("smartphone"));
+                    item->setData(Qt::UserRole, "mtp");
+                    item->setData(Qt::UserRole + 1, parse.at(0));
+                    item->setData(Qt::UserRole + 2, parse.at(1));
+                    ui->fav->addItem(item);
+                } else {
+                    if (line.startsWith("Available devices")) {
+                        startReading = true;
+                    }
+                }
+            }
+        }
+
+        if (!hasItem) {
+            delete sep3;
         }
     }
 }
@@ -195,133 +248,158 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::reloadList() {
-    watcher->removePaths(watcher->directories());
-    watcher->addPath(currentDir.path());
-    currentDir.refresh();
+    if (ui->files->isEnabled()) {
+        ui->files->setEnabled(false);
+        watcher->removePaths(watcher->directories());
+        watcher->addPath(currentDir.path());
+        currentDir.refresh();
 
-    ui->files->clearContents();
-    if (!currentDir.exists()) {
-        ui->message->setText("This folder doesn't exist.");
-        ui->message->setMessageType(KMessageWidget::Error);
-        ui->message->setCloseButtonVisible(false);
-        ui->message->animatedShow();
-        ui->files->setRowCount(0);
-    } else if (currentDir.entryList().count() == 2) {
-        ui->message->setText("There aren't any files to see here.");
-        ui->message->setMessageType(KMessageWidget::Warning);
-        ui->message->setCloseButtonVisible(false);
-        ui->message->animatedShow();
-        ui->files->setRowCount(0);
-    } else if (!currentDir.isReadable()) {
-        ui->message->setText("Can't read this folder.");
-        ui->message->setMessageType(KMessageWidget::Error);
-        ui->message->setCloseButtonVisible(false);
-        ui->message->animatedShow();
-        ui->files->setRowCount(0);
-    } else {
-        ui->message->animatedHide();
-        int i = 0;
-        //ui->files->setRowCount(currentDir.count() - 2);
-        ui->files->setRowCount(0);
+        ui->files->clearContents();
+        if (!currentDir.exists()) {
+            ui->message->setText("This folder doesn't exist.");
+            ui->message->setMessageType(KMessageWidget::Error);
+            ui->message->setCloseButtonVisible(false);
+            ui->message->animatedShow();
+            ui->files->setRowCount(0);
+        } else if (currentDir.entryList().count() == 2) {
+            ui->message->setText("There aren't any files to see here.");
+            ui->message->setMessageType(KMessageWidget::Warning);
+            ui->message->setCloseButtonVisible(false);
+            ui->message->animatedShow();
+            ui->files->setRowCount(0);
+        } else if (!currentDir.isReadable()) {
+            ui->message->setText("Can't read this folder.");
+            ui->message->setMessageType(KMessageWidget::Error);
+            ui->message->setCloseButtonVisible(false);
+            ui->message->animatedShow();
+            ui->files->setRowCount(0);
+        } else {
+            ui->message->animatedHide();
+            int i = 0;
+            //ui->files->setRowCount(currentDir.count() - 2);
+            ui->files->setRowCount(0);
 
-        for (QString file : currentDir.entryList()) { //Get Directories
-            if (file == "." || file == "..") {
-                continue;
+            for (QString file : currentDir.entryList()) { //Get Directories
+                if (file == "." || file == "..") {
+                    continue;
+                }
+                if (QDir(currentDir.path() + "/" + file).exists()) {
+                    ui->files->setRowCount(ui->files->rowCount() + 1);
+                    QTableWidgetItem *name = new QTableWidgetItem(file);
+
+                    //Give special directories special icons
+                    if (currentDir.path() + "/" + file == QDir::homePath()) { //Home Folder
+                        name->setIcon(QIcon::fromTheme("user-home"));
+                    } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Documents") { //Documents Folder
+                        name->setIcon(QIcon::fromTheme("folder-documents"));
+                    } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Downloads") { //Downloads Folder
+                        name->setIcon(QIcon::fromTheme("folder-downloads"));
+                    } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Music") { //Music Folder
+                        name->setIcon(QIcon::fromTheme("folder-music"));
+                    } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Pictures") { //Pictures Folder
+                        name->setIcon(QIcon::fromTheme("folder-pictures"));
+                    } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Videos") { //Videos Folder
+                        name->setIcon(QIcon::fromTheme("folder-videos"));
+                    } else {
+                        if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
+                                !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) { //MTP Root Folder
+                            if (currentDir.path() + "/" + file == currentDir.path() + "/Card") { //Memory Card
+                                name->setIcon(QIcon::fromTheme("drive-removable-media"));
+                            } else if (currentDir.path() + "/" + file == currentDir.path() + "/Phone") { //Internal Storage
+                                name->setIcon(QIcon::fromTheme("smartphone"));
+                            } else { //Generic Folder
+                                name->setIcon(QIcon::fromTheme("folder"));
+                            }
+                        } else { //Generic Folder
+                            name->setIcon(QIcon::fromTheme("folder"));
+                        }
+                    }
+                    ui->files->setItem(i, 0, name);
+
+                    QTableWidgetItem *type = new QTableWidgetItem("Folder");
+                    ui->files->setItem(i, 1, type);
+
+                    if (file.startsWith(".")) {
+                        QBrush disabledColor = ui->files->palette().brush(QPalette::Disabled, QPalette::Foreground);
+                        name->setForeground(disabledColor);
+                        type->setForeground(disabledColor);
+                    }
+                    i++;
+
+                }
+                QApplication::processEvents();
             }
-            if (QDir(currentDir.path() + "/" + file).exists()) {
-                ui->files->setRowCount(ui->files->rowCount() + 1);
-                QTableWidgetItem *name = new QTableWidgetItem(file);
-
-                //Give special directories special icons
-                if (currentDir.path() + "/" + file == QDir::homePath()) { //Home Folder
-                    name->setIcon(QIcon::fromTheme("user-home"));
-                } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Documents") { //Documents Folder
-                    name->setIcon(QIcon::fromTheme("folder-documents"));
-                } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Downloads") { //Downloads Folder
-                    name->setIcon(QIcon::fromTheme("folder-downloads"));
-                } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Music") { //Music Folder
-                    name->setIcon(QIcon::fromTheme("folder-music"));
-                } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Pictures") { //Pictures Folder
-                    name->setIcon(QIcon::fromTheme("folder-pictures"));
-                } else if (currentDir.path() + "/" + file == QDir::homePath() + "/Videos") { //Videos Folder
-                    name->setIcon(QIcon::fromTheme("folder-videos"));
-                } else { //Generic Folder
-                    name->setIcon(QIcon::fromTheme("folder"));
+            for (QString file : currentDir.entryList()) { //Get Files
+                if (file == "." || file == "..") {
+                    continue;
                 }
-                ui->files->setItem(i, 0, name);
+                if (!QDir(currentDir.path() + "/" + file).exists()) {
+                    ui->files->setRowCount(ui->files->rowCount() + 1);
+                    QFile f(currentDir.path() + "/" + file);
+                    QFileInfo info(f);
+                    QTableWidgetItem *name = new QTableWidgetItem(file);
+                    QMimeType mime = mimes->mimeTypeForFile(info);
+                    name->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
 
-                QTableWidgetItem *type = new QTableWidgetItem("Folder");
-                ui->files->setItem(i, 1, type);
+                    ui->files->setItem(i, 0, name);
 
-                if (file.startsWith(".")) {
-                    QBrush disabledColor = ui->files->palette().brush(QPalette::Disabled, QPalette::Foreground);
-                    name->setForeground(disabledColor);
-                    type->setForeground(disabledColor);
+                    QTableWidgetItem *type = new QTableWidgetItem(info.completeSuffix() + " file");
+                    ui->files->setItem(i, 1, type);
+
+                    QTableWidgetItem *size = new QTableWidgetItem(calculateSize(info.size()));
+                    ui->files->setItem(i, 2, size);
+
+                    QTableWidgetItem *date = new QTableWidgetItem(info.lastModified().toString("dd/MM/yy hh:mm"));
+                    ui->files->setItem(i, 3, date);
+
+                    if (file.startsWith(".")) {
+                        QBrush disabledColor = ui->files->palette().brush(QPalette::Disabled, QPalette::Foreground);
+                        name->setForeground(disabledColor);
+                        type->setForeground(disabledColor);
+                        size->setForeground(disabledColor);
+                        date->setForeground(disabledColor);
+                    }
+
+                    i++;
                 }
-                i++;
-
+                QApplication::processEvents();
             }
         }
-        for (QString file : currentDir.entryList()) { //Get Files
-            if (file == "." || file == "..") {
-                continue;
-            }
-            if (!QDir(currentDir.path() + "/" + file).exists()) {
-                ui->files->setRowCount(ui->files->rowCount() + 1);
-                QFile f(currentDir.path() + "/" + file);
-                QFileInfo info(f);
-                QTableWidgetItem *name = new QTableWidgetItem(file);
-                QMimeType mime = mimes->mimeTypeForFile(info);
-                name->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
 
-                ui->files->setItem(i, 0, name);
-
-
-                QTableWidgetItem *type = new QTableWidgetItem(info.completeSuffix() + " file");
-                ui->files->setItem(i, 1, type);
-
-                QTableWidgetItem *size = new QTableWidgetItem(calculateSize(info.size()));
-                ui->files->setItem(i, 2, size);
-
-                QTableWidgetItem *date = new QTableWidgetItem(info.lastModified().toString("dd/MM/yy hh:mm"));
-                ui->files->setItem(i, 3, date);
-
-                if (file.startsWith(".")) {
-                    QBrush disabledColor = ui->files->palette().brush(QPalette::Disabled, QPalette::Foreground);
-                    name->setForeground(disabledColor);
-                    type->setForeground(disabledColor);
-                    size->setForeground(disabledColor);
-                    date->setForeground(disabledColor);
-                }
-
-                i++;
-            }
+        if (currentDir.path() == QDir::homePath() + "/.local/share/Trash/files") { //This is the trash.
+            ui->addr->setText("Trash");
+            this->setWindowTitle("Trash - theFile");
+        } else if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp")) { //This is an MTP device
+            QString titleText = "mtp:" + currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length());
+            ui->addr->setText(titleText);
+            this->setWindowTitle(titleText + " - theFile");
+        } else { //This is not an interesting folder, show path in address bar
+            ui->addr->setText(currentDir.path());
+            this->setWindowTitle(currentDir.path() + " - theFile");
         }
-    }
 
-    if (currentDir.path() == QDir::homePath() + "/.local/share/Trash/files") { //This is the trash.
-        ui->addr->setText("Trash");
-        this->setWindowTitle("Trash - theFile");
-    } else { //This is not an interesting folder, show path in address bar
-        ui->addr->setText(currentDir.path());
-        this->setWindowTitle(currentDir.path() + " - theFile");
-    }
-
-    if (currentDir.path() == QDir::rootPath()) {
-        ui->actionUnmount->setVisible(false);
-    } else {
-        bool showUnmount = false;
-        for (QString device : udisks->blockDevices()) {
-            if (udisks->blockDevice(device)->fileSystem()) {
-                if (udisks->blockDevice(device)->fileSystem()->mountPoints().contains(currentDir.path())) {
-                    showUnmount = true;
+        if (currentDir.path() == QDir::rootPath()) {
+            ui->actionUnmount->setVisible(false);
+        } else {
+            bool showUnmount = false;
+            if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
+                    !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) {
+                showUnmount = true;
+            } else {
+                for (QString device : udisks->blockDevices()) {
+                    if (udisks->blockDevice(device)->fileSystem()) {
+                        if (udisks->blockDevice(device)->fileSystem()->mountPoints().contains(currentDir.path())) {
+                            showUnmount = true;
+                        }
+                    }
                 }
             }
+            ui->actionUnmount->setVisible(showUnmount);
         }
-        ui->actionUnmount->setVisible(showUnmount);
-    }
 
-    blockDevicesChanged();
+        blockDevicesChanged();
+        ui->files->setEnabled(true);
+    }
 }
 
 void MainWindow::on_files_itemDoubleClicked(QTableWidgetItem *item)
@@ -348,7 +426,9 @@ void MainWindow::on_files_itemDoubleClicked(QTableWidgetItem *item)
 
 void MainWindow::on_actionUp_triggered()
 {
-    if (currentDir.path() == QDir::homePath() + "/.local/share/Trash/files") { //This is trash, go to home instead
+    if (currentDir.path() == QDir::homePath() + "/.local/share/Trash/files" ||
+            (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
+             !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/"))) { //This is trash or MTP root, go to home instead
         currentDir.cd(QDir::homePath());
         reloadList();
     } else { //Go up a folder
@@ -386,7 +466,9 @@ void MainWindow::on_files_customContextMenuRequested(const QPoint &pos)
                 cx->addSection("For all selected objects");
             }
             cx->addAction(ui->actionCopy);
-            cx->addAction(ui->actionMove_to_Trash);
+            if (!currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp")) { //Detect if this is MTP device
+                cx->addAction(ui->actionMove_to_Trash);
+            }
             cx->addAction(ui->actionDelete);
         }
 
@@ -600,22 +682,48 @@ void MainWindow::on_fav_itemClicked(QListWidgetItem *item)
         if (item->text() == "Trash") { //This is the trash folder; navigate to the trash folder
             currentDir.setPath(QDir::homePath() + "/.local/share/Trash/files");
             reloadList();
-        } else { //This is a block device; mount and navigate to block device.
-            QString dev = item->text().mid(item->text().indexOf("(") + 1, item->text().indexOf(")") - item->text().indexOf("(") - 1);
-            qDebug() << "Mounting " + dev;
-            if (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
-                QString mountpoint = udisks->blockDevice(dev)->fileSystem()->mount();
-                while (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
-                    QApplication::processEvents();
+        } else { //This is a block or MTP device; mount and navigate to device.
+            QString dev = item->data(Qt::UserRole).toString();
+            if (dev == "mtp") {
+                qDebug() << "Mounting MTP device " + item->data(Qt::UserRole + 1).toString() + ", " + item->data(Qt::UserRole + 2).toString();
+
+                QString mtpDirName = "mtp" + item->data(Qt::UserRole + 1).toString() + "," + item->data(Qt::UserRole + 2).toString();
+                QDir::home().mkdir(".thefile");
+                QDir(QDir::homePath() + "/.thefile").mkdir(mtpDirName);
+                QProcess *mountProcess = new QProcess(this);
+
+                bool mounted = false;
+                for (QString file : QDir(QDir::homePath() + "/.thefile/" + mtpDirName).entryList()) {
+                    if (file != "." && file != "..") {
+                        mounted = true;
+                    }
                 }
-                if (mountpoint == "") {
-                    ui->messageFav->setText("Couldn't mount " + udisks->blockDevice(dev)->dev);
-                    ui->messageFav->animatedShow();
-                } else {
-                    currentDir.setPath(mountpoint);
+                if (!mounted) {
+                    mountProcess->start("jmtpfs " + QDir::homePath() + "/.thefile/" + mtpDirName + " -device=" + item->data(Qt::UserRole + 1).toString() + "," + item->data(Qt::UserRole + 2).toString());
+                    mountProcess->waitForStarted();
+
+                    while (mountProcess->state() == QProcess::Running) {
+                        QApplication::processEvents();
+                    }
                 }
+
+                currentDir.setPath(QDir::homePath() + "/.thefile/" + mtpDirName);
             } else {
-                currentDir.setPath(udisks->blockDevice(dev)->fileSystem()->mountPoints().at(0));
+                qDebug() << "Mounting " + dev;
+                if (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
+                    QString mountpoint = udisks->blockDevice(dev)->fileSystem()->mount();
+                    while (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
+                        QApplication::processEvents();
+                    }
+                    if (mountpoint == "") {
+                        ui->messageFav->setText("Couldn't mount " + udisks->blockDevice(dev)->dev);
+                        ui->messageFav->animatedShow();
+                    } else {
+                        currentDir.setPath(mountpoint);
+                    }
+                } else {
+                    currentDir.setPath(udisks->blockDevice(dev)->fileSystem()->mountPoints().at(0));
+                }
             }
             reloadList();
             blockDevicesChanged();
@@ -628,21 +736,32 @@ void MainWindow::on_fav_itemClicked(QListWidgetItem *item)
 
 void MainWindow::on_actionUnmount_triggered()
 {
-    for (QString device : udisks->blockDevices()) {
-        if (udisks->blockDevice(device)->fileSystem()) {
-            if (udisks->blockDevice(device)->fileSystem()->mountPoints().contains(currentDir.path())) {
-                qDebug() << "Unmounting " + udisks->blockDevice(device)->name;
-                udisks->blockDevice(device)->fileSystem()->unmount();
-                currentDir.setPath(QDir::homePath());
-                while (udisks->blockDevice(device)->fileSystem()->mountPoints().count() != 0) {
-                    QApplication::processEvents();
-                }
+    if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
+            !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) {
+        QProcess::execute("fusermount -u " + currentDir.path());
+        currentDir.removeRecursively();
+        currentDir.setPath(QDir::homePath());
 
-                ui->message->setText("The device was unmounted successfully.");
-                ui->message->setMessageType(KMessageWidget::Positive);
-                ui->message->setCloseButtonVisible(true);
-                ui->message->animatedShow();
-                blockDevicesChanged();
+        ui->message->setText("The device was unmounted successfully.");
+        ui->message->setMessageType(KMessageWidget::Positive);
+        ui->message->setCloseButtonVisible(true);
+        ui->message->animatedShow();
+    } else {
+        for (QString device : udisks->blockDevices()) {
+            if (udisks->blockDevice(device)->fileSystem()) {
+                if (udisks->blockDevice(device)->fileSystem()->mountPoints().contains(currentDir.path())) {
+                    qDebug() << "Unmounting " + udisks->blockDevice(device)->name;
+                    udisks->blockDevice(device)->fileSystem()->unmount();
+                    currentDir.setPath(QDir::homePath());
+                    while (udisks->blockDevice(device)->fileSystem()->mountPoints().count() != 0) {
+                        QApplication::processEvents();
+                    }
+
+                    ui->message->setText("The device was unmounted successfully.");
+                    ui->message->setMessageType(KMessageWidget::Positive);
+                    ui->message->setCloseButtonVisible(true);
+                    ui->message->animatedShow();
+                }
             }
         }
     }
