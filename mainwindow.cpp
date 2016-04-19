@@ -488,7 +488,9 @@ void MainWindow::on_actionUp_triggered()
 {
     if (currentDir.path() == QDir::homePath() + "/.local/share/Trash/files" ||
             (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
-             !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/"))) { //This is trash or MTP root, go to home instead
+             !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) ||
+            (currentDir.path().startsWith(QDir::homePath() + "/.thefile/ios") &&
+            !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/ios").length()).contains("/"))) { //This is trash, MTP root or iOS, go to home instead
         currentDir.cd(QDir::homePath());
         reloadList();
     } else { //Go up a folder
