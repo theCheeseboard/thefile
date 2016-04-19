@@ -121,6 +121,8 @@ private slots:
 
     void on_actionShow_Hidden_Files_toggled(bool arg1);
 
+    void on_openPhotoFolder_clicked();
+
 private:
     Ui::MainWindow *ui;
 

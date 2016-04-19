@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->message->setVisible(false);
     ui->messageFav->setVisible(false);
     ui->movedToTrashFrame->setVisible(false);
+    ui->deviceContentFrame->setVisible(false);
 
     if (copyops.count() == 0) {
         copyops = QList<copy*>();
@@ -189,27 +190,28 @@ void MainWindow::blockDevicesChanged() {
         }
     }
 
+    QListWidgetItem* sep3 = new QListWidgetItem();
+    sep3->setSizeHint(QSize(50, 1));
+    sep3->setFlags(Qt::NoItemFlags);
+    ui->fav->addItem(sep3);
+
+    QFrame *sepLine3 = new QFrame();
+    sepLine3->setFrameShape(QFrame::HLine);
+    bool hasItem = false;
+    ui->fav->setItemWidget(sep3, sepLine3);
+
     if (QFile("/usr/bin/jmtpfs").exists()) {
         //Detect MTP devices
         QProcess* mtpDev = new QProcess(this);
         mtpDev->start("jmtpfs -l");
         mtpDev->waitForStarted();
 
-        QListWidgetItem* sep3 = new QListWidgetItem();
-        sep3->setSizeHint(QSize(50, 1));
-        sep3->setFlags(Qt::NoItemFlags);
-        ui->fav->addItem(sep3);
-
-        QFrame *sepLine3 = new QFrame();
-        sepLine3->setFrameShape(QFrame::HLine);
-        ui->fav->setItemWidget(sep3, sepLine3);
 
         while (mtpDev->state() == QProcess::Running) {
             QApplication::processEvents();
         }
         QString output(mtpDev->readAll());
         bool startReading = false;
-        bool hasItem = false;
         for (QString line : output.split("\n")) {
             if (line != "") {
                 if (startReading) {
@@ -234,9 +236,50 @@ void MainWindow::blockDevicesChanged() {
             }
         }
 
-        if (!hasItem) {
-            delete sep3;
+    }
+
+    if (QFile("/usr/bin/ifuse").exists() && QFile("/usr/bin/idevicepair").exists() && QFile("/usr/bin/idevice_id").exists()) {
+        //Detect iOS Devices
+
+        QProcess* iosDev = new QProcess();
+        iosDev->start("idevice_id -l");
+        iosDev->waitForStarted();
+
+        while (iosDev->state() == QProcess::Running) {
+            QApplication::processEvents();
         }
+
+        QString output(iosDev->readAll());
+        for (QString line : output.split("\n")) {
+            if (line != "") {
+                if (!line.startsWith("ERROR:")) {
+                    QListWidgetItem* item = new QListWidgetItem();
+                    QProcess* iosName = new QProcess();
+                    iosName->start("idevice_id " + line);
+                    iosName->waitForFinished();
+
+                    QString name(iosName->readAll());
+                    name = name.trimmed();
+
+                    if (name == "") {
+                        item->setText("iOS Device");
+                    } else {
+                        item->setText(name + " (iOS)");
+                    }
+
+                    item->setIcon(QIcon::fromTheme("smartphone"));
+                    item->setData(Qt::UserRole, "ios");
+                    item->setData(Qt::UserRole + 1, line);
+                    ui->fav->addItem(item);
+                    hasItem = true;
+                }
+            }
+        }
+    }
+
+    if (!hasItem) {
+        delete sepLine3;
+        delete sep3;
     }
 }
 
@@ -305,7 +348,7 @@ void MainWindow::reloadList() {
                                 !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) { //MTP Root Folder
                             if (currentDir.path() + "/" + file == currentDir.path() + "/Card") { //Memory Card
                                 name->setIcon(QIcon::fromTheme("drive-removable-media"));
-                            } else if (currentDir.path() + "/" + file == currentDir.path() + "/Phone") { //Internal Storage
+                            } else if (currentDir.path() + "/" + file == currentDir.path() + "/Phone" || currentDir.path() + "/" + file == currentDir.path() + "/Internal storage") { //Internal Storage
                                 name->setIcon(QIcon::fromTheme("smartphone"));
                             } else { //Generic Folder
                                 name->setIcon(QIcon::fromTheme("folder"));
@@ -373,6 +416,10 @@ void MainWindow::reloadList() {
             QString titleText = "mtp:" + currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length());
             ui->addr->setText(titleText);
             this->setWindowTitle(titleText + " - theFile");
+        } else if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/ios")) { //This is an iOS Device
+            QString titleText = "ios:" + currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length());
+            ui->addr->setText(titleText);
+            this->setWindowTitle(titleText + " - theFile");
         } else { //This is not an interesting folder, show path in address bar
             ui->addr->setText(currentDir.path());
             this->setWindowTitle(currentDir.path() + " - theFile");
@@ -380,10 +427,13 @@ void MainWindow::reloadList() {
 
         if (currentDir.path() == QDir::rootPath()) {
             ui->actionUnmount->setVisible(false);
+            ui->deviceContentFrame->setVisible(false);
         } else {
             bool showUnmount = false;
-            if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
-                    !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) {
+            if ((currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
+                    !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) ||
+                    (currentDir.path().startsWith(QDir::homePath() + "/.thefile/ios") &&
+                    !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/ios").length()).contains("/"))) {
                 showUnmount = true;
             } else {
                 for (QString device : udisks->blockDevices()) {
@@ -393,6 +443,16 @@ void MainWindow::reloadList() {
                         }
                     }
                 }
+            }
+
+            if (showUnmount) {
+                if (QDir(currentDir.path() + "/DCIM").exists()) {
+                    ui->deviceContentFrame->setVisible(true);
+                } else {
+                    ui->deviceContentFrame->setVisible(false);
+                }
+            } else {
+                ui->deviceContentFrame->setVisible(false);
             }
             ui->actionUnmount->setVisible(showUnmount);
         }
@@ -708,6 +768,55 @@ void MainWindow::on_fav_itemClicked(QListWidgetItem *item)
                 }
 
                 currentDir.setPath(QDir::homePath() + "/.thefile/" + mtpDirName);
+            } else if (dev == "ios") { //iOS Device
+                QString id = item->data(Qt::UserRole + 1).toString();
+                qDebug() << "Mounting iOS Device " + id;
+
+                QProcess* pairProcess = new QProcess(this);
+                pairProcess->start("idevicepair -u " + id + " pair");
+                pairProcess->waitForStarted();
+
+                while (pairProcess->state() == QProcess::Running) {
+                    QApplication::processEvents();
+                }
+
+                QString pairOutput(pairProcess->readAll());
+                if (pairOutput.startsWith("ERROR:")) {
+                    if (pairOutput.contains("Please enter the passcode")) { // Ask user to unlock device
+                        QMessageBox::critical(this, "iOS Device Locked", "The device is locked. Enter the passcode on the device and try again.", QMessageBox::Ok, QMessageBox::Ok);
+                    } else if (pairOutput.contains("Please accept the trust dialog")) { //Ask user to trust PC
+                        QMessageBox::critical(this, "iOS Device Trust", "Your device does not trust this PC. To access the device, you need to trust this PC. Answer the trust dialog on your device and try again.", QMessageBox::Ok, QMessageBox::Ok);
+                    } else if (pairOutput.contains("user denied the trust dialog")) { //User did not trust PC
+                        QMessageBox::critical(this, "iOS Device Trust", "We can't access this device because you told it to not trust this computer.", QMessageBox::Ok, QMessageBox::Ok);
+                    } else { //Generic Error
+                        QMessageBox::critical(this, "iOS Error", "An error occurred trying to pair with the device:\n\n" + pairOutput, QMessageBox::Ok, QMessageBox::Ok);
+                    }
+                    return;
+                } else {
+                    QString iosDirName = "ios" + id;
+                    QDir::home().mkdir(".thefile");
+                    QDir(QDir::homePath() + "/.thefile").mkdir(iosDirName);
+
+                    QProcess* mountProcess = new QProcess();
+
+                    bool mounted = false;
+                    for (QString file : QDir(QDir::homePath() + "/.thefile/" + iosDirName).entryList()) {
+                        if (file != "." && file != "..") {
+                            mounted = true;
+                        }
+                    }
+                    if (!mounted) {
+                        mountProcess->start("ifuse " + QDir::homePath() + "/.thefile/" + iosDirName + " -u " + id);
+                        mountProcess->waitForStarted();
+
+                        while (mountProcess->state() == QProcess::Running) {
+                            QApplication::processEvents();
+                        }
+                    }
+
+                    currentDir.setPath(QDir::homePath() + "/.thefile/" + iosDirName);
+                }
+
             } else {
                 qDebug() << "Mounting " + dev;
                 if (udisks->blockDevice(dev)->fileSystem()->mountPoints().count() == 0) {
@@ -736,8 +845,10 @@ void MainWindow::on_fav_itemClicked(QListWidgetItem *item)
 
 void MainWindow::on_actionUnmount_triggered()
 {
-    if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
-            !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) {
+    if ((currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp") &&
+            !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/mtp").length()).contains("/")) ||
+            (currentDir.path().startsWith(QDir::homePath() + "/.thefile/ios") &&
+            !currentDir.path().remove(0, QString(QDir::homePath() + "/.thefile/ios").length()).contains("/"))) {
         QProcess::execute("fusermount -u " + currentDir.path());
         currentDir.removeRecursively();
         currentDir.setPath(QDir::homePath());
@@ -957,5 +1068,11 @@ void MainWindow::on_actionShow_Hidden_Files_toggled(bool arg1)
     } else {
         currentDir.setFilter(QDir::Files | QDir::Dirs);
     }
+    reloadList();
+}
+
+void MainWindow::on_openPhotoFolder_clicked()
+{
+    currentDir.cd("DCIM");
     reloadList();
 }
