@@ -6,3 +6,4 @@ Name=theFile
 GenericName=File Manager
 Exec=thefile
 Icon=system-file-manager
+MimeType=inode/directory
