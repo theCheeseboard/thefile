@@ -808,7 +808,7 @@ void MainWindow::on_fav_itemClicked(QListWidgetItem *item)
                         }
                     }
                     if (!mounted) {
-                        mountProcess->start("ifuse " + QDir::homePath() + "/.thefile/" + iosDirName + " -u " + id);
+                        mountProcess->start("ifuse -o ro " + QDir::homePath() + "/.thefile/" + iosDirName + " -u " + id);
                         mountProcess->waitForStarted();
 
                         while (mountProcess->state() == QProcess::Running) {
