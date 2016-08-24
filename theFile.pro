@@ -4,18 +4,20 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui dbus
 CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = theFile
+TARGET = thefile
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    tablewidget.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    tablewidget.h
 
 FORMS    += mainwindow.ui
