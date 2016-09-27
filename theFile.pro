@@ -15,9 +15,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    tablewidget.cpp
+    tablewidget.cpp \
+    runningtransfers.cpp \
+    copyjob.cpp
 
 HEADERS  += mainwindow.h \
-    tablewidget.h
+    tablewidget.h \
+    runningtransfers.h \
+    copyjob.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    runningtransfers.ui

@@ -21,6 +21,9 @@
 #include <QFileSystemWatcher>
 #include <QResizeEvent>
 #include <QPropertyAnimation>
+#include <QClipboard>
+#include <QMimeData>
+#include "copyjob.h"
 
 namespace Ui {
 class MainWindow;
@@ -94,6 +97,14 @@ private slots:
 
     void setFilePermissions();
 
+    void on_actionCopy_triggered();
+
+    void on_actionCut_triggered();
+
+    void on_actionPaste_triggered();
+
+    void on_fileMessageCancel_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -104,6 +115,7 @@ private:
     QDir currentDir = QDir::home();
     QMap<QString, QString> MountPoints;
     QStringList pathHistory;
+    bool cancelMount = false;
 
     QStringList FilesToUndo;
 
