@@ -23,6 +23,7 @@
 #include <QPropertyAnimation>
 #include <QClipboard>
 #include <QMimeData>
+#include <QDBusConnectionInterface>
 #include "copyjob.h"
 
 namespace Ui {

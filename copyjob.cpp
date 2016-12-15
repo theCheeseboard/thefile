@@ -107,8 +107,8 @@ void CopyJobWorker::startCopy() {
             while (iterator.hasNext()) {
                 QString filePath = iterator.next();
                 if (iterator.fileName() != "." && iterator.fileName() != "..") {
-                    if (QFile(filePath).exists()) {
-                        copyFile(filePath, destination + "/" + directory.dirName() + filePath.remove(localFile));\
+                    if (QFile(filePath).exists() && !QDir(filePath).exists()) {
+                        copyFile(filePath, destination + "/" + directory.dirName() + filePath.remove(localFile));
                     }
                 }
             }
@@ -129,6 +129,10 @@ void CopyJobWorker::startCopy() {
 void CopyJobWorker::copyFile(QString source, QString destination) {
     qDebug() << "Copy " + source + " -> " + destination;
     QDir::root().mkpath(QFileInfo(destination).absoluteDir().absolutePath());
+
+    if (QDir(destination).exists()) {
+        destination = destination + source.mid(source.lastIndexOf("/"));
+    }
 
     QFile sourceFile(source);
     QFile destFile(destination);

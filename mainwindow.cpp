@@ -217,6 +217,16 @@ void MainWindow::reloadList() {
                     }
                 } else if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp")) {
                     ui->SpecialFolderName->setText("MTP Device");
+                } else if (currentDir.path().startsWith(QDir::homePath() + "/.config/kdeconnect")) {
+                    QString deviceId = currentDir.path();
+                    deviceId = deviceId.remove(QDir::homePath() + "/.config/kdeconnect/");
+                    deviceId = deviceId.remove(0, 16);
+                    deviceId = deviceId.remove("/kdeconnect_sftp/");
+                    deviceId = deviceId.left(16);
+
+                    QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + deviceId, "org.kde.kdeconnect.device");
+                    QString deviceName = interface.property("name").toString();
+                    ui->SpecialFolderName->setText(deviceName);
                 }
             } else {
                 ui->SpecialFolderName->setText(StorageInfo.name());
@@ -260,8 +270,20 @@ void MainWindow::reloadList() {
         } else if (currentDir.path().startsWith(QDir::homePath() + "/.thefile/mtp")) {
             ui->currentDirBar->setText("MTP Device " + currentDir.path().remove(QDir::homePath() + "/.thefile/mtp"));
             this->setWindowFilePath(currentDir.path());
-            this->setWindowTitle("iOS Device " + currentDir.path().remove(QDir::homePath() + "/.thefile/mtp") + " - theFile");
+            this->setWindowTitle("MTP Device " + currentDir.path().remove(QDir::homePath() + "/.thefile/mtp") + " - theFile");
+        } else if (currentDir.path().startsWith(QDir::homePath() + "/.config/kdeconnect")) {
+            QString deviceId = currentDir.path();
+            deviceId = deviceId.remove(QDir::homePath() + "/.config/kdeconnect/");
+            deviceId = deviceId.remove(0, 16);
+            deviceId = deviceId.remove("/kdeconnect_sftp/");
+            deviceId = deviceId.left(16);
 
+            QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + deviceId, "org.kde.kdeconnect.device");
+            this->setWindowFilePath(currentDir.path());
+            QString deviceName = interface.property("name").toString();
+            QString path = currentDir.path().remove(QDir::homePath() + "/.config/kdeconnect/" + deviceId + "/kdeconnect_sftp/" + deviceId);
+            ui->currentDirBar->setText("KDE Connect (" + deviceName + ")" + path);
+            this->setWindowTitle("KDE Connect (" + deviceName + ")" + path + " - theFile");
         } else {
             ui->currentDirBar->setText(currentDir.path());
             this->setWindowFilePath(currentDir.path());
@@ -495,6 +517,33 @@ void MainWindow::reloadLeftList() {
         }
     }
 
+    if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect")) {
+        //Detect KDE Connect devices
+
+        QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon");
+        QDBusReply<QStringList> devices = interface.call("devices", true, true);
+        for (QString device : devices.value()) {
+            QDBusInterface deviceInterface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device");
+            QDBusReply<QStringList> loaded = deviceInterface.call("loadedPlugins");
+            if (loaded.value().contains("kdeconnect_sftp")) {
+                QString name = deviceInterface.property("name").toString();
+                QListWidgetItem* item = new QListWidgetItem();
+
+                if (name == "") {
+                    item->setText(device + " (KDEC)");
+                } else {
+                    item->setText(name + " (KDEC)");
+                }
+
+                item->setIcon(QIcon::fromTheme("smartphone"));
+                item->setData(Qt::UserRole, "kdec");
+                item->setData(Qt::UserRole + 1, device);
+                ui->placesTable->addItem(item);
+                hasItem = true;
+            }
+        }
+    }
+
     //If there are no devices, delete the seperator
     if (!hasItem) {
         sepLineDev->deleteLater();
@@ -526,13 +575,14 @@ void MainWindow::on_filesTable_cellDoubleClicked(int row, int column)
 {
     Q_UNUSED(column)
 
+    QStorageInfo StorageInfo(currentDir.path());
     if (isTrashFolder()) { //File is in trash. Don't allow opening.
         QMessageBox::information(this, "File in trash", "This file/folder is in the trash. Restore the file to open it.", QMessageBox::Ok, QMessageBox::Ok);
     } else {
         QString filename = ui->filesTable->item(row, 0)->data(Qt::UserRole).toString();
         if (isDirectory(filename)) {
             navigate(filename);
-        } else if (QFileInfo(filename).isExecutable()) {
+        } else if (QFileInfo(filename).isExecutable() && StorageInfo.fileSystemType() == "ext4") {
             QProcess::startDetached(filename);
         } else {
             QProcess::startDetached("xdg-open", QStringList() << filename);
@@ -664,6 +714,20 @@ void MainWindow::on_placesTable_itemActivated(QListWidgetItem *item)
         }
 
         navigate(QDir::homePath() + "/.thefile/" + iosDirName);
+    } else if (item->data(Qt::UserRole).toString() == "kdec") { //KDE Connect
+        QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + item->data(Qt::UserRole + 1).toString() + "/sftp", "org.kde.kdeconnect.device.sftp");
+        QDBusReply<QString> mountPoint = interface.call("mountPoint");
+        QDBusReply<bool> mounted = interface.call("isMounted");
+        if (mounted) {
+            navigate(mountPoint);
+        } else {
+            interface.call("mountAndWait");
+            if (QDir(mountPoint).exists()) {
+                navigate(mountPoint);
+            } else {
+                QMessageBox::critical(this, "Couldn't connect to device", "We couldn't connect to your device.", QMessageBox::Ok, QMessageBox::Ok);
+            }
+        }
     }
 }
 
@@ -733,6 +797,12 @@ void MainWindow::on_actionUnmount_triggered()
                     QProcess::execute("fusermount -u " + currentDir.path());
                     currentDir.removeRecursively();
                     navigate(QDir::homePath());
+            } else if (currentDir.path().startsWith(QDir::homePath() + "/.config/kdeconnect") &&
+                       currentDir.path().count() == 81) {
+                QString device = currentDir.path().right(16);
+                QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/sftp", "org.kde.kdeconnect.device.sftp");
+                interface.call("unmount");
+                navigate(QDir::homePath());
             } else {
                 showErrorMessage("Can't unmount this drive.");
             }
