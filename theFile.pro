@@ -12,17 +12,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = thefile
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     tablewidget.cpp \
     runningtransfers.cpp \
-    copyjob.cpp
+    copyjob.cpp \
+    aboutdialog.cpp
 
 HEADERS  += mainwindow.h \
     tablewidget.h \
     runningtransfers.h \
-    copyjob.h
+    copyjob.h \
+    aboutdialog.h
 
 FORMS    += mainwindow.ui \
-    runningtransfers.ui
+    runningtransfers.ui \
+    aboutdialog.ui

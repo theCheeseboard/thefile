@@ -881,6 +881,7 @@ void MainWindow::on_filesTable_customContextMenuRequested(const QPoint &pos)
 
         cx->addSection("For folder \"" + currentDir.dirName() + "\"");
         cx->addAction(ui->actionNew_Folder);
+        cx->addAction(ui->actionPaste);
     }
 
     cx->exec(ui->filesTable->mapToGlobal(pos));
@@ -1172,4 +1173,10 @@ void MainWindow::on_fileMessageCancel_clicked()
     cancelMount = true;
     ui->fileMessage->setVisible(false);
     ui->FileListFrame->setVisible(true);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog dialog;
+    dialog.exec();
 }

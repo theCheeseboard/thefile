@@ -24,7 +24,9 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QDBusConnectionInterface>
+#include <QMenu>
 #include "copyjob.h"
+#include "aboutdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -105,6 +107,8 @@ private slots:
     void on_actionPaste_triggered();
 
     void on_fileMessageCancel_clicked();
+
+    void on_actionAbout_triggered();
 
 private:
     Ui::MainWindow *ui;
