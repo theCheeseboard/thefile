@@ -10,6 +10,7 @@
 #include <QMenu>
 #include <ttoast.h>
 #include <QProcess>
+#include "propertiesdialog.h"
 
 class FileTable : public QTreeView
 {
@@ -23,6 +24,9 @@ public:
     };
 
     ViewType currentViewType();
+
+    bool showingHidden();
+    void setShowHidden(bool showHidden);
 
 signals:
     void titleChanged(QString title);
@@ -52,10 +56,12 @@ private slots:
 
     void customContextMenu(QPoint pos);
 
+    void setError(QString error);
+
 private:
     FilesystemModel* fModel;
     QWidget* errorWidget;
-    QLabel* errorLabel;
+    QLabel *errorTitleLabel, *errorLabel;
 
     ViewType vt;
 

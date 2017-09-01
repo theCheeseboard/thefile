@@ -9,14 +9,16 @@ FileTable::FileTable(QString directory, QWidget *parent) : QTreeView(parent)
     this->setAcceptDrops(true);
     this->setDragDropMode(DragDrop);
     this->setEditTriggers(SelectedClicked);
+    this->setShowHidden(false);
 
     this->setModel(fModel);
+    this->setItemDelegate(new FilesystemDelegate);
     this->setRootIndex(fModel->index(directory));
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setSelectionMode(ExtendedSelection);
 
     this->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    this->header()->setSectionResizeMode(3, QHeaderView::Interactive);
+    this->header()->setSectionResizeMode(2, QHeaderView::Fixed);
 
     errorWidget = new QWidget();
     errorWidget->setVisible(false);
@@ -24,11 +26,22 @@ FileTable::FileTable(QString directory, QWidget *parent) : QTreeView(parent)
     errorWidget->setGeometry(0, 0, this->width(), this->height());
     errorWidget->setAutoFillBackground(true);
 
-    QBoxLayout* errorLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+    QBoxLayout* errorLayout = new QBoxLayout(QBoxLayout::TopToBottom);
     errorWidget->setLayout(errorLayout);
+    errorLayout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    errorTitleLabel = new QLabel();
+    QFont titleFont = errorTitleLabel->font();
+    titleFont.setPointSize(20);
+    errorTitleLabel->setFont(titleFont);
+    errorTitleLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    errorLayout->addWidget(errorTitleLabel);
 
     errorLabel = new QLabel();
+    errorLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     errorLayout->addWidget(errorLabel);
+
+    errorLayout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(activate(QModelIndex)));
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(customContextMenu(QPoint)));
@@ -96,14 +109,11 @@ void FileTable::go(QString directory) {
 
     QFileInfo info(directory);
     if (!info.exists()) {
-        errorLabel->setText("That folder doesn't exist.");
-        errorWidget->setVisible(true);
+        setError("That folder doesn't exist.");
     } else if (!info.isDir()) {
-        errorLabel->setText("That's not a folder.");
-        errorWidget->setVisible(true);
+        setError("That's not a folder.");
     } else if (!info.isReadable() && !info.isExecutable()) {
-        errorLabel->setText("Couldn't get to that folder.");
-        errorWidget->setVisible(true);
+        setError("Couldn't get to that folder.");
     } else {
         errorWidget->setVisible(false);
     }
@@ -117,7 +127,7 @@ void FileTable::customContextMenu(QPoint pos) {
     QModelIndex index = this->indexAt(pos);
     if (index.isValid()) {
         QFileInfo info = fModel->fileInfo(index);
-        QMenu* menu = new QMenu();
+        /*QMenu* menu = new QMenu();
         if (info.isFile()) {
             menu->addSection("For file " + info.fileName());
         } else {
@@ -140,7 +150,11 @@ void FileTable::customContextMenu(QPoint pos) {
             toast->show(this);
         });
 
-        menu->exec(this->mapToGlobal(pos));
+        menu->exec(this->mapToGlobal(pos));*/
+
+        PropertiesDialog* dialog = new PropertiesDialog(info, QCursor::pos());
+        dialog->show();
+        dialog->setFocus();
     }
 }
 
@@ -160,4 +174,22 @@ void FileTable::resizeEvent(QResizeEvent *event) {
 void FileTable::mkdir(QModelIndex parent) {
     QModelIndex index = fModel->mkdir(parent, "Untitled Folder");
     edit(index);
+}
+
+void FileTable::setShowHidden(bool showHidden) {
+    if (showHidden) {
+        fModel->setFilter(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+    } else {
+        fModel->setFilter(QDir::AllEntries | QDir::System | QDir::NoDotAndDotDot);
+    }
+}
+
+bool FileTable::showingHidden() {
+    return fModel->filter() & QDir::Hidden;
+}
+
+void FileTable::setError(QString error) {
+    errorTitleLabel->setText("The bits aren't here!");
+    errorLabel->setText(error);
+    errorWidget->setVisible(true);
 }

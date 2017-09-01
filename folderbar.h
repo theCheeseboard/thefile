@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QVariant>
 #include <QLineEdit>
+#include <QStorageInfo>
 
 class FolderBar : public QWidget
 {

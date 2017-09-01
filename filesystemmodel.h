@@ -8,6 +8,9 @@
 #include <QMenu>
 #include <QFileIconProvider>
 #include <QMimeDatabase>
+#include <QStyledItemDelegate>
+#include <QPainter>
+#include <QStorageInfo>
 #include "transferengine.h"
 
 class FilesystemModel : public QFileSystemModel
@@ -24,6 +27,14 @@ public slots:
 
 private:
     QMimeDatabase* mimeDatabase;
+};
+
+class FilesystemDelegate : public QStyledItemDelegate
+{
+
+public:
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 #endif // FILESYSTEMMODEL_H

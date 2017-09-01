@@ -29,8 +29,10 @@ public:
     PaneItemType itemType();
     QString text() const;
     QIcon icon() const;
-    QStringList mountPoints();
-    QString attemptMount();
+    QStringList mountPoints() const;
+    QString attemptMount() const;
+    QString attemptUnmount() const;
+    QString forceUnmount() const;
     QString filePath();
     bool isMounted();
 

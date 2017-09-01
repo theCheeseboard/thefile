@@ -1,5 +1,7 @@
 #include "transferengine.h"
 
+extern QString calculateSize(quint64 size);
+
 TransferObject::TransferObject(QStringList source, QString destination, TransferType type, QObject* parent) : QObject(parent)
 {
     QStringList savedSource;
@@ -79,12 +81,8 @@ void TransferEngine::addTransfer(TransferObject *transfer) {
 
         switch (transfer->transferType()) {
             case TransferObject::Copy: {
-                //Count files
-                pane->setActionLabelText("Counting files...");
-
-                QList<FileConflict> fileConflicts;
-
-
+                TransferCopy* copy = new TransferCopy(sources, dest, pane);
+                copy->start();
                 break;
             }
             case TransferObject::Move: {
@@ -124,10 +122,10 @@ TransferPane::TransferPane(TransferObject* transfer, QWidget *parent) : QFrame(p
     mainLayout = new QBoxLayout(QBoxLayout::TopToBottom);
     mainLayout->setSpacing(2);
 
-    progress = new QProgressBar();
-    progress->setMinimum(0);
-    progress->setMaximum(0);
-    mainLayout->addWidget(progress);
+    progressBar = new QProgressBar();
+    progressBar->setMinimum(0);
+    progressBar->setMaximum(0);
+    mainLayout->addWidget(progressBar);
 
     mainWidget->setLayout(mainLayout);
 
@@ -182,6 +180,11 @@ void TransferPane::resolveConflicts(QList<FileConflict> conflicts) {
         actionLabel->setText(QString::number(conflicts.count()) + " file conflicts need to be resolved.");
     }
     this->conflicts = conflicts;
+}
+
+void TransferPane::progress(qulonglong value, qulonglong max) {
+    progressBar->setMaximum(max);
+    progressBar->setValue(value);
 }
 
 void TransferPane::resizeEvent(QResizeEvent *event) {
@@ -298,7 +301,7 @@ void TransferMove::run() {
     emit setActionLabelText("Now moving " + QString::number(numberOfFiles) + " files.");
 
     //Move each file individually to make sure that file conflicts are handled
-    int filesMoved;
+    int filesMoved = 0;
     for (QString file : source) {
         //Check file conflicts
         QFileInfo info(file);
@@ -333,7 +336,7 @@ void TransferMove::run() {
                     }
                     numberOfFiles++;
 
-                    emit setActionLabelText(QString::number(numberOfFiles) + " files and counting...");
+                    emit setActionLabelText(QString::number(numberOfFiles) + " files moved...");
                 }
             } else {
                 for (FileConflict conflict : fileConflicts) {
@@ -352,6 +355,188 @@ void TransferMove::run() {
             filesMoved++;
         }
 
-        emit setActionLabelText(QString::number(numberOfFiles) + "/" + filesMoved + " files moved...");
+        emit setActionLabelText(QString::number(numberOfFiles) + "/" + QString::number(filesMoved) + " files moved...");
+
     }
+}
+
+TransferCopy::TransferCopy(QStringList source, QString destination, TransferPane *pane, QObject *parent) : QThread(parent)
+{
+    this->source = source;
+    this->destination = destination;
+    this->pane = pane;
+
+    connect(this, SIGNAL(setActionLabelText(QString)), pane, SLOT(setActionLabelText(QString)));
+    connect(this, SIGNAL(resolveConflicts(FileConflictList)), pane, SLOT(resolveConflicts(FileConflictList)));
+    connect(this, SIGNAL(progress(qulonglong,qulonglong)), pane, SLOT(progress(qulonglong,qulonglong)));
+}
+
+void TransferCopy::run() {
+    //Count files
+    emit setActionLabelText("Counting files...");
+
+    QList<FileConflict> fileConflicts;
+    int numberOfFiles = 0;
+    qulonglong bytes = 0;
+
+    for (QString file : source) {
+        //Check file conflicts
+        QFileInfo info(file);
+        QString newFile = destination + "/" + info.fileName();
+        QFileInfo newInfo(newFile);
+        if (newInfo.exists()) {
+            if (newInfo.isDir()) {
+                QDirIterator iterator(file, QDirIterator::Subdirectories);
+                while (iterator.hasNext()) {
+                    iterator.next();
+                    if (iterator.fileName() == "." || iterator.fileName() == "..") {
+                        continue;
+                    } else {
+                        QString newFile = destination + "/" + iterator.filePath().mid(file.lastIndexOf("/") + 1);
+                        QFileInfo newInfo(newFile);
+                        if (newInfo.exists()) {
+                            FileConflict conflict;
+                            conflict.file = iterator.filePath();
+                            fileConflicts.append(conflict);
+                        }
+                    }
+                }
+            } else {
+                FileConflict conflict;
+                conflict.file = file;
+                fileConflicts.append(conflict);
+            }
+        }
+
+        if (info.isDir()) {
+            QDirIterator iterator(file, QDirIterator::Subdirectories);
+            while (iterator.hasNext()) {
+                iterator.next();
+                if (iterator.fileName() == "." || iterator.fileName() == "..") {
+                    continue;
+                } else {
+                    QFileInfo info = iterator.fileInfo();
+                    if (newInfo.exists()) {
+                        FileConflict conflict;
+                        conflict.file = iterator.filePath();
+                        fileConflicts.append(conflict);
+                    }
+
+                    if (!newInfo.isDir()) {
+                        numberOfFiles++;
+                        bytes += info.size();
+                    }
+
+                    emit setActionLabelText(QString::number(numberOfFiles) + " files and counting (" + calculateSize(bytes) + ")");
+                }
+
+            }
+        } else {
+            numberOfFiles++;
+            bytes += info.size();
+        }
+
+        emit setActionLabelText(QString::number(numberOfFiles) + " files and counting (" + calculateSize(bytes) + ")");
+    }
+
+    if (fileConflicts.count() > 0) {
+        QEventLoop loop;
+        connect(pane, &TransferPane::conflictsResolved, [=, &fileConflicts, &loop](FileConflictList conflicts) {
+            fileConflicts = conflicts;
+            loop.exit();
+        });
+        emit resolveConflicts(fileConflicts);
+        loop.exec();
+    }
+
+    emit setActionLabelText("Now copying " + QString::number(numberOfFiles) + " files.");
+
+    //Move each file individually to make sure that file conflicts are handled
+    qulonglong bytesMoved = 0;
+    for (QString file : source) {
+        //Check file conflicts
+        QFileInfo info(file);
+        QFile fileObj(file);
+        QString newFile = destination + "/" + info.fileName();
+        QFileInfo newInfo(newFile);
+        if (info.isDir()) {
+            QDir::root().mkpath(newFile);
+
+            QDirIterator iterator(file, QDirIterator::Subdirectories);
+            while (iterator.hasNext()) {
+                iterator.next();
+
+                if (iterator.fileName() == "." || iterator.fileName() == "..") {
+                    continue;
+                } else {
+                    QFileInfo info = iterator.fileInfo();
+                    QString newFile = destination + "/" + iterator.filePath().mid(file.lastIndexOf("/") + 1);
+                    QFileInfo newInfo(newFile);
+                    QFile fileObj(iterator.filePath());
+
+                    if (info.isDir()) {
+                        QDir::root().mkpath(newFile);
+                    } else {
+                        if (newInfo.exists()) {
+                            for (FileConflict conflict : fileConflicts) {
+                                if (conflict.file == file) {
+                                    if (conflict.resolution == FileConflict::Overwrite) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        //Copy the file
+                        fileObj.open(QFile::ReadOnly);
+                        QFile newFileObj(newFile);
+                        newFileObj.open(QFile::WriteOnly);
+
+                        while (!fileObj.atEnd()) {
+                            QByteArray ba = fileObj.read(4194304);
+                            newFileObj.write(ba);
+                            bytesMoved += ba.size();
+
+                            emit progress(bytesMoved, bytes);
+                            emit setActionLabelText("Copied " + calculateSize(bytesMoved) + " out of " + calculateSize(bytes));
+                        }
+
+                        fileObj.close();
+                        newFileObj.close();
+                    }
+                }
+            }
+        } else {
+            if (newInfo.exists()) {
+                for (FileConflict conflict : fileConflicts) {
+                    if (conflict.file == file) {
+                        if (conflict.resolution == FileConflict::Overwrite) {
+                            continue;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            //Copy the file
+            fileObj.open(QFile::ReadOnly);
+            QFile newFileObj(newFile);
+            newFileObj.open(QFile::WriteOnly);
+
+            while (!fileObj.atEnd()) {
+                QByteArray ba = fileObj.read(4194304);
+                newFileObj.write(ba);
+                bytesMoved += ba.size();
+
+                emit progress(bytesMoved, bytes);
+                emit setActionLabelText("Copied " + calculateSize(bytesMoved) + " out of " + calculateSize(bytes));
+            }
+
+            fileObj.close();
+            newFileObj.close();
+        }
+
+        //emit setActionLabelText(QString::number(numberOfFiles) + "/" + QString::number(filesMoved) + " files moved...");
+    }
+    emit setActionLabelText("Done");
 }

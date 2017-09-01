@@ -83,6 +83,7 @@ void MainWindow::on_fileTables_currentChanged(int index)
 {
     FileTable* table = (FileTable*) ui->fileTables->widget(index);
     folderBar->setPath(table->path());
+    ui->actionHidden_Files->setChecked(table->showingHidden());
 }
 
 void MainWindow::on_actionRename_triggered()
@@ -134,4 +135,19 @@ void MainWindow::on_actionAbout_theFile_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::exit();
+}
+
+void MainWindow::on_actionHidden_Files_toggled(bool arg1)
+{
+    currentTable()->setShowHidden(arg1);
+}
+
+void MainWindow::on_drives_toast(tToast *toast)
+{
+    toast->show(this);
+}
+
+void MainWindow::on_fileTables_tabCloseRequested(int index)
+{
+    ui->fileTables->widget(index)->deleteLater();
 }

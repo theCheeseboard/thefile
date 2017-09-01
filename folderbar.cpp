@@ -38,22 +38,30 @@ FolderBar::FolderBar(QWidget *parent) : QWidget(parent)
 }
 
 void FolderBar::setPath(QString path) {
+    pathEdit->setText(path);
+
     for (QPushButton* button : buttons) {
         button->deleteLater();
     }
     buttons.clear();
 
-    QPushButton* rootButton = new QPushButton();
-    rootButton->setText("/");
-    connect(rootButton, &QPushButton::clicked, [=] {
-        emit go("/");
-    });
-    buttonLayout->addWidget(rootButton);
+    QStorageInfo sInfo(path);
+    QString buildParts;
+    if (sInfo.isRoot()) {
+        QPushButton* rootButton = new QPushButton();
+        rootButton->setText("/");
+        connect(rootButton, &QPushButton::clicked, [=] {
+            emit go("/");
+        });
+        buttonLayout->addWidget(rootButton);
 
-    buttons.append(rootButton);
+        buttons.append(rootButton);
+    } else {
+        path = path.mid(sInfo.rootPath().lastIndexOf("/"));
+        buildParts = sInfo.rootPath().left(sInfo.rootPath().lastIndexOf("/"));
+    }
 
     QStringList parts = path.split("/");
-    QString buildParts;
     for (QString part : parts) {
         if (part != "") {
             buildParts += "/" + part;
@@ -69,8 +77,6 @@ void FolderBar::setPath(QString path) {
             buttons.append(button);
         }
     }
-
-    pathEdit->setText(path);
 }
 
 void FolderBar::pathEditEntered() {

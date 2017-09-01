@@ -108,16 +108,21 @@ PaneItem::PaneItem(QDBusObjectPath path) {
             QString label = interface->property("IdLabel").toString();
             if (label == "") {
                 qulonglong size = interface->property("Size").toULongLong();
-                label = calculateSize(size) + " Disk";
+
+                tx = calculateSize(size) + " Disk";
             } else {
                 tx = label;
             }
 
             QIcon ic;
-            if (driveInterface->property("Removable").toBool()) {
-                ic = QIcon::fromTheme("drive-removable-media");
+            if (driveInterface->isValid()) {
+                if (driveInterface->property("Removable").toBool()) {
+                    ic = QIcon::fromTheme("drive-removable-media");
+                } else {
+                    ic = QIcon::fromTheme("drive-harddisk");
+                }
             } else {
-                ic = QIcon::fromTheme("drive-harddisk");
+                ic = QIcon::fromTheme("package");
             }
             this->ic = ic;
         }
@@ -152,7 +157,7 @@ QIcon PaneItem::icon() const {
     return ic;
 }
 
-QStringList PaneItem::mountPoints() {
+QStringList PaneItem::mountPoints() const {
     if (this->type == Disk) {
         QDBusMessage getMountPoints = QDBusMessage::createMethodCall(fsInterface->service(), fsInterface->path(), "org.freedesktop.DBus.Properties", "Get");
         getMountPoints.setArguments(QList<QVariant>() << "org.freedesktop.UDisks2.Filesystem" << "MountPoints");
@@ -175,12 +180,43 @@ QStringList PaneItem::mountPoints() {
     }
 }
 
-QString PaneItem::attemptMount() {
-    QDBusMessage reply = fsInterface->call("Mount");
+QString PaneItem::attemptMount() const {
+    QDBusMessage reply = fsInterface->call("Mount", QVariantMap());
     if (reply.errorName() == "") {
         return reply.arguments().first().toString();
     } else {
-        return reply.errorName();
+        return reply.errorMessage();
+    }
+}
+
+QString PaneItem::attemptUnmount() const {
+    QDBusMessage reply = fsInterface->call("Unmount", QVariantMap());
+    if (reply.errorName() == "") {
+        return "";
+    } else {
+        QString error = reply.errorName();
+        if (error == "org.freedesktop.UDisks2.Error.DeviceBusy") {
+            return "The disk is currently being used.";
+        } else {
+            return reply.errorMessage();
+        }
+    }
+}
+
+QString PaneItem::forceUnmount() const {
+    QVariantMap options;
+    options.insert("force", true);
+
+    QDBusMessage reply = fsInterface->call("Unmount", options);
+    if (reply.errorName() == "") {
+        return "";
+    } else {
+        QString error = reply.errorName();
+        if (error == "org.freedesktop.UDisks2.Error.DeviceBusy") {
+            return "The disk is currently being used.";
+        } else {
+            return reply.errorMessage();
+        }
     }
 }
 
@@ -209,7 +245,7 @@ void DrivesDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option
     QStyledItemDelegate::paint(painter, newOption, index);
 
     PaneItem item = index.data(Qt::UserRole).value<PaneItem>();
-    if (item.isMounted()) {
+    if (item.isMounted() && item.itemType() == PaneItem::Disk) {
         painter->setBrush(option.palette.color(QPalette::Highlight));
         painter->setPen(Qt::transparent);
         painter->drawRect(option.rect.left(), option.rect.top(), 3, option.rect.height());

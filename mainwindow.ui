@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>theFile</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="system-file-manager"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -37,6 +40,12 @@
        </property>
        <property name="currentIndex">
         <number>-1</number>
+       </property>
+       <property name="tabsClosable">
+        <bool>true</bool>
+       </property>
+       <property name="movable">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -76,6 +85,8 @@
     </property>
     <addaction name="actionAs_List"/>
     <addaction name="actionAs_Tree"/>
+    <addaction name="separator"/>
+    <addaction name="actionHidden_Files"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -112,7 +123,7 @@
   </action>
   <action name="actionGo_Up">
    <property name="icon">
-    <iconset theme="go-up">
+    <iconset theme="go-parent-folder">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -126,6 +137,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset theme="view-list-details">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;As List</string>
    </property>
@@ -133,6 +148,10 @@
   <action name="actionAs_Tree">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="view-list-tree">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>As T&amp;ree</string>
@@ -178,18 +197,28 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
   <action name="actionAbout_theFile">
    <property name="icon">
-    <iconset theme="help-about"/>
+    <iconset theme="help-about">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>About theFile</string>
+    <string>&amp;About theFile</string>
+   </property>
+  </action>
+  <action name="actionHidden_Files">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Hidden Files</string>
    </property>
   </action>
  </widget>

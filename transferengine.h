@@ -71,6 +71,8 @@ public slots:
 
     void resolveConflicts(FileConflictList);
 
+    void progress(qulonglong value, qulonglong max);
+
 signals:
     void heightChanged();
 
@@ -89,7 +91,7 @@ private:
     QBoxLayout *mainLayout;
 
     QLabel *titleLabel, *actionLabel;
-    QProgressBar* progress;
+    QProgressBar* progressBar;
 };
 
 class TransferDialog : public QDialog
@@ -121,6 +123,28 @@ signals:
     void setActionLabelText(QString text);
 
     void resolveConflicts(FileConflictList conflicts);
+
+private:
+    void run();
+
+    QStringList source;
+    QString destination;
+    TransferPane* pane;
+};
+
+class TransferCopy : public QThread
+{
+    Q_OBJECT
+
+public:
+    explicit TransferCopy(QStringList source, QString destination, TransferPane* pane, QObject* parent = NULL);
+
+signals:
+    void setActionLabelText(QString text);
+
+    void resolveConflicts(FileConflictList conflicts);
+
+    void progress(qulonglong value, qulonglong max);
 
 private:
     void run();

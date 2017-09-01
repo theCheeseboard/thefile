@@ -32,7 +32,9 @@ SOURCES += \
     transferengine.cpp \
     driveslist.cpp \
     drivesmodel.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    forceunmountdialog.cpp \
+    propertiesdialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,11 +44,15 @@ HEADERS += \
     transferengine.h \
     driveslist.h \
     drivesmodel.h \
-    aboutdialog.h
+    aboutdialog.h \
+    forceunmountdialog.h \
+    propertiesdialog.h
 
 FORMS += \
         mainwindow.ui \
-    aboutdialog.ui
+    aboutdialog.ui \
+    forceunmountdialog.ui \
+    propertiesdialog.ui
 
 DISTFILES += \
     thefile.desktop

@@ -50,6 +50,12 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionHidden_Files_toggled(bool arg1);
+
+    void on_drives_toast(tToast *);
+
+    void on_fileTables_tabCloseRequested(int index);
+
 private:
     Ui::MainWindow *ui;
 

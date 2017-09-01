@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ForceUnmountDialog</class>
+ <widget class="QDialog" name="ForceUnmountDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Unmount Drive</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="media-unmount"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Unmount Drive</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Here's what's using this drive now:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="usingApps"/>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Force unmounting this drive can lead to data loss if another application is currently using it. Do you want to force unmount this drive?</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="noUnmount">
+       <property name="text">
+        <string>Don't Unmount</string>
+       </property>
+       <property name="icon">
+        <iconset theme="dialog-cancel">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="unmount">
+       <property name="text">
+        <string>Force Unmount</string>
+       </property>
+       <property name="icon">
+        <iconset theme="media-unmount">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>unmount</sender>
+   <signal>clicked()</signal>
+   <receiver>ForceUnmountDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>314</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>noUnmount</sender>
+   <signal>clicked()</signal>
+   <receiver>ForceUnmountDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>88</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
