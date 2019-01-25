@@ -22,6 +22,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+DEFINES += BLOCK_SIZE=4194304
 
 SOURCES += \
         main.cpp \
@@ -29,30 +30,36 @@ SOURCES += \
     filetable.cpp \
     filesystemmodel.cpp \
     folderbar.cpp \
-    transferengine.cpp \
     driveslist.cpp \
     drivesmodel.cpp \
     aboutdialog.cpp \
     forceunmountdialog.cpp \
-    propertiesdialog.cpp
+    propertiesdialog.cpp \
+    transfers/transferengine.cpp \
+    transfers/transferpane.cpp \
+    transfers/conflictresolver.cpp
 
 HEADERS += \
         mainwindow.h \
     filetable.h \
     filesystemmodel.h \
     folderbar.h \
-    transferengine.h \
     driveslist.h \
     drivesmodel.h \
     aboutdialog.h \
     forceunmountdialog.h \
-    propertiesdialog.h
+    propertiesdialog.h \
+    transfers/transferengine.h \
+    transfers/transferpane.h \
+    transfers/conflictresolver.h
 
 FORMS += \
         mainwindow.ui \
     aboutdialog.ui \
     forceunmountdialog.ui \
-    propertiesdialog.ui
+    propertiesdialog.ui \
+    transfers/transferpane.ui \
+    transfers/conflictresolver.ui
 
 DISTFILES += \
     thefile.desktop

@@ -12,6 +12,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <ttoast.h>
+#include <QDir>
 
 namespace Ui {
 class PropertiesDialog;
@@ -23,7 +24,7 @@ class PropertiesDialog : public QDialog
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit PropertiesDialog(QFileInfo fileInfo, QPoint pos, QWidget *parent = 0);
+    explicit PropertiesDialog(QList<QFileInfo> fileInfo, QDir parentFolder, QPoint pos, QWidget *parent = 0);
     ~PropertiesDialog();
 
     void setGeometry(QRect geometry);
@@ -39,12 +40,19 @@ public slots:
 private slots:
     void on_savePermissionsButton_clicked();
 
-private:
+    void on_copyButton_clicked();
+
+    void on_permissionsButton_clicked();
+
+    void on_pasteButton_clicked();
+
+    private:
     Ui::PropertiesDialog *ui;
 
     void paintEvent(QPaintEvent* event);
-    QFileInfo info;
-    QFile file;
+    QList<QFileInfo> info;
+    QDir parentFolder;
+    //QList<QFile> file;
 };
 
 #endif // PROPERTIESDIALOG_H

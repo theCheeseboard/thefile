@@ -11,7 +11,7 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 #include <QStorageInfo>
-#include "transferengine.h"
+#include "transfers/transferengine.h"
 
 class FilesystemModel : public QFileSystemModel
 {

@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(folderBar, &FolderBar::go, [=](QString path) {
         currentTable()->go(path);
     });
+    folderBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     switch (settings.value("view/type", FileTable::List).toInt()) {
         case FileTable::List:

@@ -109,11 +109,11 @@ void FileTable::go(QString directory) {
 
     QFileInfo info(directory);
     if (!info.exists()) {
-        setError("That folder doesn't exist.");
+        setError(tr("That folder doesn't exist."));
     } else if (!info.isDir()) {
-        setError("That's not a folder.");
+        setError(tr("That's not a folder."));
     } else if (!info.isReadable() && !info.isExecutable()) {
-        setError("Couldn't get to that folder.");
+        setError(tr("Couldn't get to that folder."));
     } else {
         errorWidget->setVisible(false);
     }
@@ -126,33 +126,15 @@ QString FileTable::path() {
 void FileTable::customContextMenu(QPoint pos) {
     QModelIndex index = this->indexAt(pos);
     if (index.isValid()) {
-        QFileInfo info = fModel->fileInfo(index);
-        /*QMenu* menu = new QMenu();
-        if (info.isFile()) {
-            menu->addSection("For file " + info.fileName());
-        } else {
-            menu->addSection("For folder " + info.fileName());
+        QList<QFileInfo> info;
+
+        for (QModelIndex i : this->selectionModel()->selectedIndexes()) {
+            if (i.column() == 0) {
+                info.append(fModel->fileInfo(i));
+            }
         }
 
-        menu->addAction(QIcon::fromTheme("edit-rename"), "Rename", [=] {
-            this->edit(index);
-        });
-        menu->addAction(QIcon::fromTheme("edit-delete"), "Delete", [=] {
-            tToast* toast = new tToast();
-            toast->setTitle("File Deleted");
-            toast->setText("Deleted " + info.fileName());
-
-            QMap<QString, QString> actions;
-            actions.insert("undo", "Undo");
-            toast->setActions(actions);
-            toast->setTimeout(5000);
-            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-            toast->show(this);
-        });
-
-        menu->exec(this->mapToGlobal(pos));*/
-
-        PropertiesDialog* dialog = new PropertiesDialog(info, QCursor::pos());
+        PropertiesDialog* dialog = new PropertiesDialog(info, info.first().dir(), QCursor::pos());
         dialog->show();
         dialog->setFocus();
     }
@@ -172,7 +154,7 @@ void FileTable::resizeEvent(QResizeEvent *event) {
 }
 
 void FileTable::mkdir(QModelIndex parent) {
-    QModelIndex index = fModel->mkdir(parent, "Untitled Folder");
+    QModelIndex index = fModel->mkdir(parent, tr("Untitled Folder"));
     edit(index);
 }
 
@@ -189,7 +171,7 @@ bool FileTable::showingHidden() {
 }
 
 void FileTable::setError(QString error) {
-    errorTitleLabel->setText("The bits aren't here!");
+    errorTitleLabel->setText(tr("The bits aren't here!"));
     errorLabel->setText(error);
     errorWidget->setVisible(true);
 }

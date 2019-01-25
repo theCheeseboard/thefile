@@ -12,6 +12,7 @@ FolderBar::FolderBar(QWidget *parent) : QWidget(parent)
     buttonLayout = new QBoxLayout(QBoxLayout::LeftToRight);
     buttonLayout->setSpacing(0);
     buttonLayout->setMargin(0);
+    buttonLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
     buttonWidget->setLayout(buttonLayout);
 
     pathEdit = new QLineEdit();
@@ -22,6 +23,7 @@ FolderBar::FolderBar(QWidget *parent) : QWidget(parent)
     pathEditButton->setCheckable(true);
     pathEditButton->setFlat(true);
     pathEditButton->setIcon(QIcon::fromTheme("folder"));
+    pathEditButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect(pathEditButton, &QPushButton::clicked, [=](bool checked) {
         if (checked) {
             pathEdit->setVisible(true);
@@ -47,13 +49,15 @@ void FolderBar::setPath(QString path) {
 
     QStorageInfo sInfo(path);
     QString buildParts;
+    int rootButtonWidth = 0;
     if (sInfo.isRoot()) {
         QPushButton* rootButton = new QPushButton();
         rootButton->setText("/");
         connect(rootButton, &QPushButton::clicked, [=] {
             emit go("/");
         });
-        buttonLayout->addWidget(rootButton);
+        buttonLayout->insertWidget(buttonLayout->count() - 1, rootButton);
+        rootButtonWidth = rootButton->sizeHint().width();
 
         buttons.append(rootButton);
     } else {
@@ -72,9 +76,20 @@ void FolderBar::setPath(QString path) {
             connect(button, &QPushButton::clicked, [=] {
                 emit go(button->property("goPath").toString());
             });
-            buttonLayout->addWidget(button);
 
             buttons.append(button);
+        }
+    }
+
+    int remainingWidth = this->width() - rootButtonWidth;
+    for (int i = buttons.count() - 1; i >= 0; i--) {
+        QPushButton* b = buttons.at(i);
+        if (remainingWidth - b->sizeHint().width() >= 0) {
+            if (rootButtonWidth == 0 && i == buttons.count() - 1) {
+                buttonLayout->insertWidget(buttonLayout->count() - 1, b);
+            } else {
+                buttonLayout->insertWidget(1, b);
+            }
         }
     }
 }

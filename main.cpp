@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "transferengine.h"
+#include "transfers/transferengine.h"
 
 TransferEngine* transferEngine;
 
