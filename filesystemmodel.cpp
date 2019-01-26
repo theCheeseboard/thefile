@@ -1,5 +1,7 @@
 #include "filesystemmodel.h"
 
+#include <the-libs_global.h>
+
 extern TransferEngine* transferEngine;
 extern QString calculateSize(quint64 size);
 
@@ -62,13 +64,13 @@ void FilesystemDelegate::paint(QPainter *painter, const QStyleOptionViewItem& op
     }
 
     QRect iconRect;
-    iconRect.setWidth(16);
-    iconRect.setHeight(16);
-    iconRect.moveTop(option.rect.top() + option.rect.height() / 2 - 8);
+    iconRect.setWidth(16 * theLibsGlobal::getDPIScaling());
+    iconRect.setHeight(16 * theLibsGlobal::getDPIScaling());
+    iconRect.moveTop(option.rect.top() + option.rect.height() / 2 - 8 * theLibsGlobal::getDPIScaling());
     iconRect.moveRight(option.rect.right());
 
     if (index.column() == 0) {
-        newOption.rect.adjust(3, 0, 0, 0);
+        newOption.rect.adjust(3 * theLibsGlobal::getDPIScaling(), 0, 0, 0);
         QStyledItemDelegate::paint(painter, newOption, index);
         painter->setPen(Qt::transparent);
 
@@ -84,12 +86,12 @@ void FilesystemDelegate::paint(QPainter *painter, const QStyleOptionViewItem& op
             painter->setBrush(QColor(255, 100, 0));
         }
 
-        painter->drawRect(option.rect.left(), option.rect.top(), 3, option.rect.height());
+        painter->drawRect(option.rect.left(), option.rect.top(), 3 * theLibsGlobal::getDPIScaling(), option.rect.height());
 
         if (info.isSymLink()) {
-            QPixmap px = QIcon::fromTheme("insert-link").pixmap(16, 16);
+            QPixmap px = QIcon::fromTheme("insert-link").pixmap(16 * theLibsGlobal::getDPIScaling(), 16 * theLibsGlobal::getDPIScaling());
             painter->drawPixmap(iconRect, px);
-            iconRect.adjust(-16, 0, -16, 0);
+            iconRect.adjust(-16 * theLibsGlobal::getDPIScaling(), 0, -16 * theLibsGlobal::getDPIScaling(), 0);
         }
     } else {
         QStyledItemDelegate::paint(painter, newOption, index);

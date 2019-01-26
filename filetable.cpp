@@ -1,5 +1,9 @@
 #include "filetable.h"
 
+#include <QScroller>
+#include <QGestureEvent>
+#include <tpropertyanimation.h>
+
 FileTable::FileTable(QString directory, QWidget *parent) : QTreeView(parent)
 {
     fModel = new FilesystemModel();
@@ -10,6 +14,7 @@ FileTable::FileTable(QString directory, QWidget *parent) : QTreeView(parent)
     this->setDragDropMode(DragDrop);
     this->setEditTriggers(SelectedClicked);
     this->setShowHidden(false);
+    this->setAttribute(Qt::WA_AcceptTouchEvents);
 
     this->setModel(fModel);
     this->setItemDelegate(new FilesystemDelegate);
@@ -54,6 +59,17 @@ FileTable::FileTable(QString directory, QWidget *parent) : QTreeView(parent)
         case Tree:
             this->setRootIsDecorated(true);
     }
+
+    selectionPopup = new SelectionPopup(this);
+    selectionPopup->setGeometry(this->width() / 2 - selectionPopup->width() / 2, this->height() + 9, selectionPopup->width(), selectionPopup->height());
+    selectionPopup->show();
+    connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, [=] {
+        this->updateSelectionPopup();
+    });
+
+    QScroller::grabGesture(this, QScroller::TouchGesture);
+    this->grabGesture(Qt::TapGesture, Qt::DontStartGestureOnChildren);
+    this->grabGesture(Qt::TapAndHoldGesture, Qt::DontStartGestureOnChildren);
 }
 
 QString FileTable::title() {
@@ -150,6 +166,13 @@ void FileTable::rm() {
 
 void FileTable::resizeEvent(QResizeEvent *event) {
     errorWidget->resize(this->width(), this->height());
+
+    if (this->selectionModel()->selectedRows().isEmpty()) {
+        selectionPopup->setGeometry(this->width() / 2 - selectionPopup->width() / 2, this->height() + 9, selectionPopup->width(), selectionPopup->height());
+    } else {
+        selectionPopup->setGeometry(this->width() / 2 - selectionPopup->width() / 2, this->height() - selectionPopup->height() - 9, selectionPopup->width(), selectionPopup->height());
+    }
+
     QTreeView::resizeEvent(event);
 }
 
@@ -174,4 +197,56 @@ void FileTable::setError(QString error) {
     errorTitleLabel->setText(tr("The bits aren't here!"));
     errorLabel->setText(error);
     errorWidget->setVisible(true);
+}
+
+bool FileTable::event(QEvent *event) {
+    if (event->type() == QEvent::TouchBegin) {
+        event->accept();
+    } else if (event->type() == QEvent::TouchEnd) {
+        event->accept();
+    } else if (event->type() == QEvent::TouchCancel) {
+        event->accept();
+    } else if (event->type() == QEvent::Gesture) {
+        QGestureEvent* e = (QGestureEvent*) event;
+        if (QTapGesture* g = (QTapGesture*) e->gesture(Qt::TapGesture)) {
+            if (g->state() == Qt::GestureFinished) {
+                QModelIndex activator = this->indexAt(g->position().toPoint());
+                if (activator.isValid()) {
+                    if (this->selectionModel()->selectedRows().count() == 0) {
+                        this->activate(activator);
+                    } else {
+                        this->selectionModel()->select(activator, QItemSelectionModel::Toggle | QItemSelectionModel::Rows);
+                    }
+                }
+                this->updateSelectionPopup();
+            }
+        }
+        if (QTapAndHoldGesture* g = (QTapAndHoldGesture*) e->gesture(Qt::TapAndHoldGesture)) {
+            g->setGestureCancelPolicy(QGesture::CancelAllInContext);
+            if (g->state() == Qt::GestureFinished) {
+                QModelIndex selection = this->indexAt(g->position().toPoint());
+                this->selectionModel()->select(selection, QItemSelectionModel::Toggle | QItemSelectionModel::Rows);
+                this->updateSelectionPopup();
+            }
+        }
+    } else {
+        return QTreeView::event(event);
+    }
+    return true;
+}
+
+void FileTable::updateSelectionPopup() {
+    QModelIndexList selection = this->selectionModel()->selectedRows();
+
+    tPropertyAnimation* anim = new tPropertyAnimation(this->selectionPopup, "geometry");
+    anim->setStartValue(this->selectionPopup->geometry());
+    if (selection.isEmpty()) {
+        anim->setEndValue(QRect(this->width() / 2 - selectionPopup->width() / 2, this->height() + 9, selectionPopup->width(), selectionPopup->height()));
+    } else {
+        selectionPopup->setItemText(tr("%n item(s) selected", nullptr, selection.count()));
+        anim->setEndValue(QRect(this->width() / 2 - selectionPopup->width() / 2, this->height() - selectionPopup->height() - 9, selectionPopup->width(), selectionPopup->height()));
+    }
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->setDuration(500);
+    anim->start();
 }
