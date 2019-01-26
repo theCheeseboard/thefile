@@ -444,7 +444,7 @@ void TransferCopy::copyFile(QString file, QString destination, bool& hadUnresolv
         oldFile.open(QFile::ReadOnly);
         newFile.open(QFile::WriteOnly);
 
-        char data[BLOCK_SIZE];
+        char* data = new char[BLOCK_SIZE];
         while (!oldFile.atEnd()) {
             qint64 dataRead = oldFile.read(data, BLOCK_SIZE);
             newFile.write(data, dataRead);
@@ -453,6 +453,7 @@ void TransferCopy::copyFile(QString file, QString destination, bool& hadUnresolv
             emit progress(bytesMoved, bytes);
             emit setActionLabelText(tr("Copied %1 out of %2").arg(calculateSize(bytesMoved), calculateSize(bytes)));
         }
+        delete[] data;
     } else {
         //We've got a file we can't handle!
         //We should technically never get here!!!!!!!
