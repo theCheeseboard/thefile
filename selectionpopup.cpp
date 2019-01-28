@@ -17,6 +17,11 @@ SelectionPopup::~SelectionPopup()
     delete ui;
 }
 
-void SelectionPopup::setItemText(QString itemText) {
-    ui->numSelected->setText(itemText);
+void SelectionPopup::setSelection(QList<QFileInfo> selection) {
+    ui->numSelected->setText(tr("%n item(s) selected", nullptr, selection.count()));
+}
+
+void SelectionPopup::on_clearButton_clicked()
+{
+    emit clearSelection();
 }

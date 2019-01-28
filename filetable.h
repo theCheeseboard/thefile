@@ -67,10 +67,13 @@ private:
     QLabel *errorTitleLabel, *errorLabel;
     SelectionPopup* selectionPopup;
 
+    Qt::GestureState tapHoldState = Qt::NoGesture;
+
     ViewType vt;
 
     void resizeEvent(QResizeEvent* event) override;
     bool event(QEvent* event) override;
+    bool eventFilter(QObject* object, QEvent* event) override;
 
     QSettings settings;
 };

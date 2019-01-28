@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>295</width>
+    <width>391</width>
     <height>36</height>
    </rect>
   </property>
@@ -57,6 +57,25 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QPushButton" name="clearButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-clear"/>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="numSelected">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -84,7 +103,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="edit-cut"/>
+         <iconset theme="edit-cut">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -100,7 +120,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="edit-copy"/>
+         <iconset theme="edit-copy">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -116,7 +137,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="application-menu"/>
+         <iconset theme="application-menu">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
