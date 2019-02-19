@@ -111,6 +111,7 @@ class TransferThread : public QThread
     protected:
         void run();
         virtual void doWork(bool& hadUnresolvedConflicts) = 0;
+        QSharedPointer<FileConflict> getConflict(QString file);
 
         QStringList source;
         QString destination;
@@ -126,17 +127,6 @@ class TransferThread : public QThread
         FileConflictList checkConflicts(QString oldFile, QString newFile, qulonglong& bytes);
 };
 
-class TransferMove : public TransferThread
-{
-    Q_OBJECT
-
-    public:
-        explicit TransferMove(QStringList source, QString destination, TransferPane* pane, QObject* parent = nullptr);
-
-    protected:
-        void doWork(bool& hadUnresolvedConflicts);
-};
-
 class TransferCopy : public TransferThread
 {
     Q_OBJECT
@@ -150,6 +140,19 @@ class TransferCopy : public TransferThread
         void copyFile(QString file, QString destination, bool& hadUnresolvedConflicts, qulonglong& bytesMoved);
         qulonglong bytesMoved = 0;
 };
+
+class TransferMove : public TransferCopy
+{
+    Q_OBJECT
+
+    public:
+        explicit TransferMove(QStringList source, QString destination, TransferPane* pane, QObject* parent = nullptr);
+
+    protected:
+        void doWork(bool& hadUnresolvedConflicts);
+        void moveItem(QString item, QString destination, bool& hadUnresolvedConflicts, qulonglong& bytesMoved);
+};
+
 
 class TransferEngine : public QObject
 {

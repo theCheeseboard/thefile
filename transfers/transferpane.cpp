@@ -69,9 +69,9 @@ void TransferPane::resolveConflicts(FileConflictList conflicts, bool hasNonSimpl
 
         if (conflicts.count() == 1) {
             QFileInfo info(conflicts.first()->file);
-            ui->conflictActionLabel->setText("The file " + info.fileName() + " already exists in the destination.");
+            ui->conflictActionLabel->setText(tr("The file %1 already exists in the destination.").arg(info.fileName()));
         } else {
-            ui->conflictActionLabel->setText(QString::number(conflicts.count()) + " file conflicts need to be resolved.");
+            ui->conflictActionLabel->setText(tr("%n file conflicts need to be resolved.", nullptr, conflicts.count()));
         }
         this->resize();
     }
@@ -103,6 +103,8 @@ void TransferPane::on_replaceAllConflicts_clicked()
         i->data()->resolution = FileConflict::Overwrite;
     }
     emit conflictsResolved(conflicts);
+    ui->stack->setCurrentIndex(0);
+    resize();
 }
 
 void TransferPane::on_skipAllConflicts_clicked()
@@ -111,6 +113,8 @@ void TransferPane::on_skipAllConflicts_clicked()
         i->data()->resolution = FileConflict::Skip;
     }
     emit conflictsResolved(conflicts);
+    ui->stack->setCurrentIndex(0);
+    resize();
 }
 
 void TransferPane::on_cancelButton_clicked()
@@ -153,4 +157,16 @@ void TransferPane::on_replaceAllButton_clicked()
     for (ConflictResolver* resolver : resolvers) {
         resolver->setResolution(FileConflict::Overwrite);
     }
+}
+
+void TransferPane::on_finishResolveButton_clicked()
+{
+    emit conflictsResolved(conflicts);
+    ui->stack->setCurrentIndex(0);
+    resize();
+}
+
+void TransferPane::transferFinished() {
+    emit finished();
+    this->setVisible(false);
 }

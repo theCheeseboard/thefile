@@ -280,7 +280,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="finishResolveButton">
            <property name="text">
             <string>Finish</string>
            </property>

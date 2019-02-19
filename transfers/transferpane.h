@@ -50,12 +50,16 @@ class TransferPane : public QFrame
 
         void resize();
 
+        void transferFinished();
+
     signals:
         void heightChanged();
 
         void cancelTransfer();
 
         void conflictsResolved(FileConflictList resolutions);
+
+        void finished();
 
     private slots:
         void on_replaceAllConflicts_clicked();
@@ -69,6 +73,8 @@ class TransferPane : public QFrame
         void on_skipAllButton_clicked();
 
         void on_replaceAllButton_clicked();
+
+        void on_finishResolveButton_clicked();
 
     private:
         Ui::TransferPane *ui;

@@ -2,6 +2,7 @@
 #include "transferpane.h"
 
 #include <QApplication>
+#include <QStorageInfo>
 
 extern QString calculateSize(quint64 size);
 
@@ -124,6 +125,14 @@ void TransferDialog::addTransferPane(TransferPane *pane) {
     transferPanes.append(pane);
     transfersLayout->addWidget(pane);
     connect(pane, SIGNAL(heightChanged()), this, SLOT(resizeHeight()));
+    connect(pane, &TransferPane::finished, [=] {
+        transferPanes.removeOne(pane);
+        transfersLayout->removeWidget(pane);
+
+        if (transferPanes.count() == 0) {
+            this->hide();
+        }
+    });
 
     if (!this->isVisible()) {
         this->show();
@@ -158,6 +167,7 @@ TransferThread::TransferThread(QStringList source, QString destination, Transfer
     connect(this, SIGNAL(setActionLabelText(QString)), pane, SLOT(setActionLabelText(QString)));
     connect(this, SIGNAL(resolveConflicts(FileConflictList,bool)), pane, SLOT(resolveConflicts(FileConflictList,bool)));
     connect(this, SIGNAL(progress(qulonglong,qulonglong)), pane, SLOT(progress(qulonglong,qulonglong)));
+    connect(this, SIGNAL(done()), pane, SLOT(transferFinished()));
 }
 
 void TransferThread::run() {
@@ -183,7 +193,6 @@ void TransferThread::run() {
         if (loop->exec() == 1) {
             loop->deleteLater();
             emit done();
-            pane->hide();
             return; //Finish the transfer
         }
         loop->deleteLater();
@@ -203,7 +212,6 @@ void TransferThread::run() {
     this->doWork(hasUnresolvedConflicts);
 
     emit done();
-    pane->hide();
 }
 
 FileConflictList TransferThread::checkConflicts(QString oldFile, QString newFile, qulonglong& bytes) {
@@ -301,7 +309,15 @@ FileConflictList TransferThread::checkConflicts(QString oldFile, QString newFile
     return conflicts;
 }
 
-TransferMove::TransferMove(QStringList source, QString destination, TransferPane *pane, QObject *parent) : TransferThread(source, destination, pane, parent)
+QSharedPointer<FileConflict> TransferThread::getConflict(QString file) {
+    QSharedPointer<FileConflict> relevantConflict;
+    for (QSharedPointer<FileConflict> conflict : fileConflicts) {
+        if (conflict->file == file) relevantConflict = conflict;
+    }
+    return relevantConflict;
+}
+
+TransferMove::TransferMove(QStringList source, QString destination, TransferPane *pane, QObject *parent) : TransferCopy(source, destination, pane, parent)
 {
     this->source = source;
     this->destination = destination;
@@ -322,54 +338,55 @@ void TransferMove::doWork(bool& hadUnresolvedConflicts) {
         QFile fileObj(file);
         QString newFile = destination + "/" + info.fileName();
         QFileInfo newInfo(newFile);
-        if (newInfo.exists()) {
-            if (newInfo.isDir()) {
-                QDirIterator iterator(file, QDirIterator::Subdirectories);
-                while (iterator.hasNext()) {
-                    iterator.next();
-                    if (iterator.fileName() == "." || iterator.fileName() == "..") {
-                        continue;
-                    } else {
-                        QString newFile = destination + "/" + iterator.filePath().mid(file.lastIndexOf("/") + 1);
-                        QFileInfo newInfo(newFile);
-                        if (newInfo.exists()) {
-                            for (QSharedPointer<FileConflict> conflict : fileConflicts) {
-                                if (conflict->file == file) {
-                                    if (conflict->resolution == FileConflict::Overwrite) {
-                                        QFile(newFile).remove();
-                                        fileObj.rename(newFile);
-                                        filesMoved++;
-                                    }
-                                    break;
-                                }
-                            }
-                        } else {
-                            fileObj.rename(newFile);
-                            filesMoved++;
-                        }
-                    }
-                    numberOfFiles++;
-
-                    emit setActionLabelText(QString::number(numberOfFiles) + " files moved...");
-                }
-            } else {
-                for (QSharedPointer<FileConflict> conflict : fileConflicts) {
-                    if (conflict->file == file) {
-                        if (conflict->resolution == FileConflict::Overwrite) {
-                            QFile(newFile).remove();
-                            fileObj.rename(newFile);
-                            filesMoved++;
-                        }
-                        break;
-                    }
-                }
-            }
-        } else {
-            fileObj.rename(newFile);
-            filesMoved++;
-        }
+        moveItem(file, newFile, hadUnresolvedConflicts, this->bytesMoved);
 
         emit setActionLabelText(QString::number(numberOfFiles) + "/" + QString::number(filesMoved) + " files moved...");
+    }
+}
+
+void TransferMove::moveItem(QString item, QString destination, bool& hadUnresolvedConflicts, qulonglong& bytesMoved) {
+    QStorageInfo srcDrive(item);
+    QStorageInfo destDrive(destination);
+    QFileInfo destInfo(destination);
+    if (destInfo.exists()) {
+        QSharedPointer<FileConflict> relevantConflict = getConflict(item);
+
+        if (relevantConflict.isNull()) {
+            //Bail out because we've found a conflict that should not be here
+            hadUnresolvedConflicts = true;
+            return;
+        } else {
+            switch (relevantConflict->resolution) {
+                case FileConflict::Skip:
+                    //Skip this conflict
+                    return;
+                case FileConflict::Rename:
+                    //Rename the file
+                    destInfo.setFile(relevantConflict->newName);
+                    break;
+                case FileConflict::Overwrite:
+                    //Delete the old file so we can overwrite it
+                    if (destInfo.isDir()) {
+                        QDir(destination).removeRecursively();
+                    } else {
+                        QFile(destination).remove();
+                    }
+                    break;
+            }
+        }
+
+    }
+
+    if (srcDrive.rootPath() == destDrive.rootPath()) {
+        //We're on the same drive
+        //Just rename the item and we should be good
+
+        QFile::rename(item, destInfo.filePath());
+    } else {
+        //We need to copy the item and then delete it
+        //We should not run into any conflicts at this point
+        copyFile(item, destInfo.filePath(), hadUnresolvedConflicts, bytesMoved);
+
     }
 }
 
@@ -408,10 +425,7 @@ void TransferCopy::copyFile(QString file, QString destination, bool& hadUnresolv
         }
     } else if (srcInfo.isFile()) {
         if (dstInfo.exists()) {
-            QSharedPointer<FileConflict> relevantConflict;
-            for (QSharedPointer<FileConflict> conflict : fileConflicts) {
-                if (conflict->file == file) relevantConflict = conflict;
-            }
+            QSharedPointer<FileConflict> relevantConflict = getConflict(file);
 
             if (relevantConflict.isNull()) {
                 //Bail out because we've found a conflict that should not be here
@@ -444,7 +458,8 @@ void TransferCopy::copyFile(QString file, QString destination, bool& hadUnresolv
         oldFile.open(QFile::ReadOnly);
         newFile.open(QFile::WriteOnly);
 
-        char data[BLOCK_SIZE];
+        //char data[BLOCK_SIZE];
+        char* data = new char[BLOCK_SIZE];
         while (!oldFile.atEnd()) {
             qint64 dataRead = oldFile.read(data, BLOCK_SIZE);
             newFile.write(data, dataRead);
@@ -453,6 +468,7 @@ void TransferCopy::copyFile(QString file, QString destination, bool& hadUnresolv
             emit progress(bytesMoved, bytes);
             emit setActionLabelText(tr("Copied %1 out of %2").arg(calculateSize(bytesMoved), calculateSize(bytes)));
         }
+        delete[] data;
     } else {
         //We've got a file we can't handle!
         //We should technically never get here!!!!!!!
