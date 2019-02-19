@@ -37,7 +37,8 @@ SOURCES += \
     propertiesdialog.cpp \
     transfers/transferengine.cpp \
     transfers/transferpane.cpp \
-    transfers/conflictresolver.cpp
+    transfers/conflictresolver.cpp \
+    selectionpopup.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +52,8 @@ HEADERS += \
     propertiesdialog.h \
     transfers/transferengine.h \
     transfers/transferpane.h \
-    transfers/conflictresolver.h
+    transfers/conflictresolver.h \
+    selectionpopup.h
 
 FORMS += \
         mainwindow.ui \
@@ -59,7 +61,8 @@ FORMS += \
     forceunmountdialog.ui \
     propertiesdialog.ui \
     transfers/transferpane.ui \
-    transfers/conflictresolver.ui
+    transfers/conflictresolver.ui \
+    selectionpopup.ui
 
 DISTFILES += \
     thefile.desktop

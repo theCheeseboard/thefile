@@ -11,6 +11,7 @@
 #include <ttoast.h>
 #include <QProcess>
 #include "propertiesdialog.h"
+#include "selectionpopup.h"
 
 class FileTable : public QTreeView
 {
@@ -58,14 +59,21 @@ private slots:
 
     void setError(QString error);
 
+    void updateSelectionPopup();
+
 private:
     FilesystemModel* fModel;
     QWidget* errorWidget;
     QLabel *errorTitleLabel, *errorLabel;
+    SelectionPopup* selectionPopup;
+
+    Qt::GestureState tapHoldState = Qt::NoGesture;
 
     ViewType vt;
 
     void resizeEvent(QResizeEvent* event) override;
+    bool event(QEvent* event) override;
+    bool eventFilter(QObject* object, QEvent* event) override;
 
     QSettings settings;
 };
