@@ -21,6 +21,7 @@
 
 #include <QMap>
 #include "schemeHandlers/fileschemehandler.h"
+#include "schemeHandlers/trashschemehandler.h"
 
 struct ResourceManagerPrivate {
     QMap<QString, SchemeHandler*> schemeHandlers;
@@ -29,6 +30,7 @@ struct ResourceManagerPrivate {
 ResourceManager::ResourceManager(QObject* parent) : QObject(parent) {
     d = new ResourceManagerPrivate();
     registerSchemeHandler("file", new FileSchemeHandler());
+    registerSchemeHandler("trash", new TrashSchemeHandler());
 }
 
 ResourceManager* ResourceManager::instance() {
@@ -131,6 +133,12 @@ SchemePathWatcher* ResourceManager::watch(QUrl url) {
     SchemeHandler* handler = handlerForUrl(url);
     if (!handler) return nullptr;
     return handler->watch(url);
+}
+
+QVariant ResourceManager::special(QString scheme, QString operation, QVariantMap args) {
+    SchemeHandler* handler = instance()->d->schemeHandlers.value(scheme);
+    if (!handler) return QVariant();
+    return handler->special(operation, args);
 }
 
 SchemeHandler* ResourceManager::handlerForUrl(QUrl url) {

@@ -205,6 +205,12 @@ SchemePathWatcher* FileSchemeHandler::watch(QUrl url) {
     return new FileSchemePathWatcher(url);
 }
 
+QVariant FileSchemeHandler::special(QString operation, QVariantMap args) {
+    Q_UNUSED(args);
+    Q_UNUSED(operation);
+    return QVariant();
+}
+
 FileSchemePathWatcher::FileSchemePathWatcher(QUrl url, QObject* parent) : SchemePathWatcher(parent) {
     d = new FileSchemePathWatcherPrivate();
     d->watcher = new QFileSystemWatcher();

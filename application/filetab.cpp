@@ -55,16 +55,33 @@ FileTab::~FileTab() {
 void FileTab::setCurrentUrl(QUrl url) {
     url.setPath(url.path() + "/");
     url = url.resolved(QUrl("."));
+
+    while (url.path().contains("//")) {
+        url.setPath(url.path().replace("//", "/"));
+    }
+
     d->currentUrl = url;
     emit currentUrlChanged(d->currentUrl);
+
+    switch (effectiveViewType()) {
+        case FileTab::Columns:
+            ui->horizontalSpacer->changeSize(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
+            break;
+        case FileTab::Trash:
+            ui->horizontalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+            break;
+    }
 
     QList<QUrl> columnPaths;
     QUrl bits = url;
     while (bits.path() != "/") {
         columnPaths.prepend(bits);
-        bits = bits.resolved(QUrl(".."));
+
+        QUrl newBits = bits.resolved(QUrl(".."));
+        if (newBits == bits) break;
+        bits = newBits;
     }
-    columnPaths.prepend(bits);
+    if (columnPaths.isEmpty() || columnPaths.first() != bits) columnPaths.prepend(bits);
 
     //Modify the current columns
     for (int i = 0; i < columnPaths.count(); i++) {
@@ -75,30 +92,52 @@ void FileTab::setCurrentUrl(QUrl url) {
             nextPath = columnPaths.at(i + 1);
         }
 
+        FileColumn* col;
         if (d->currentColumns.count() > i && d->currentColumns.at(i) != path) {
-            FileColumn* col = d->currentColumnWidgets.at(i);
+            col = d->currentColumnWidgets.at(i);
             col->setUrl(path);
             col->setSelected(nextPath);
         } else if (d->currentColumns.count() <= i) {
             //We need to add a new column
-            FileColumn* col = new FileColumn(path);
-            col->setFixedWidth(SC_DPI(300));
+            col = new FileColumn(path);
             col->setSelected(nextPath);
             connect(col, &FileColumn::navigate, this, &FileTab::setCurrentUrl);
+            connect(col, &FileColumn::urlChanged, this, &FileTab::tabTitleChanged);
             ui->dirsLayout->addWidget(col);
             d->currentColumnWidgets.append(col);
         } else {
-            FileColumn* col = d->currentColumnWidgets.at(i);
+            col = d->currentColumnWidgets.at(i);
             col->setSelected(nextPath);
+        }
+
+        switch (effectiveViewType()) {
+            case FileTab::Columns:
+                col->setFixedWidth(SC_DPI(300));
+                break;
+            case FileTab::Trash:
+                col->setFixedWidth(QWIDGETSIZE_MAX);
+                col->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+                break;
         }
     }
 
-    //TODO: remove extraenous columns
-    while (d->currentColumns.count() > columnPaths.count()) {
-        FileColumn* col = d->currentColumnWidgets.takeLast();
-        ui->dirsLayout->removeWidget(col);
-        col->deleteLater();
-        d->currentColumns.removeLast();
+    switch (effectiveViewType()) {
+        case FileTab::Columns:
+            while (d->currentColumns.count() > columnPaths.count()) {
+                FileColumn* col = d->currentColumnWidgets.takeLast();
+                ui->dirsLayout->removeWidget(col);
+                col->deleteLater();
+                d->currentColumns.removeLast();
+            }
+            break;
+        case FileTab::Trash:
+            while (d->currentColumnWidgets.count() > 1) {
+                FileColumn* col = d->currentColumnWidgets.takeLast();
+                ui->dirsLayout->removeWidget(col);
+                col->deleteLater();
+            }
+            while (columnPaths.count() > 1) columnPaths.removeLast();
+            break;
     }
 
     d->currentColumns = columnPaths;
@@ -118,12 +157,30 @@ void FileTab::setCurrentUrl(QUrl url) {
     });
     connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
     anim->start();
+
+    emit tabTitleChanged();
 }
 
 QUrl FileTab::currentUrl() {
     return d->currentUrl;
 }
 
+QString FileTab::tabTitle() {
+    for (auto i = d->currentColumnWidgets.rbegin(); i != d->currentColumnWidgets.rend(); i++) {
+        QString title = (*i)->columnTitle();
+        if (!title.isEmpty()) return title;
+    }
+    return "";
+}
+
 void FileTab::closeTab() {
     emit tabClosed();
+}
+
+FileTab::ViewType FileTab::effectiveViewType() {
+    if (d->currentUrl.scheme() == "trash") {
+        return Trash;
+    } else {
+        return Columns;
+    }
 }

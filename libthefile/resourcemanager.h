@@ -51,6 +51,8 @@ class ResourceManager : public QObject {
 
         static SchemePathWatcher* watch(QUrl url);
 
+        static QVariant special(QString scheme, QString operation, QVariantMap args);
+
     signals:
 
     private:

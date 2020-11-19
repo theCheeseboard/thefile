@@ -17,38 +17,34 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef FILESCHEMEHANDLER_H
-#define FILESCHEMEHANDLER_H
+#ifndef TRASHSCHEMEHANDLER_H
+#define TRASHSCHEMEHANDLER_H
 
 #include "schemehandler.h"
 
-struct FileSchemePathWatcherPrivate;
-class FileSchemePathWatcher : public SchemePathWatcher {
+struct TrashSchemeHandlerPrivate;
+class TrashSchemeHandler : public SchemeHandler {
         Q_OBJECT
     public:
-        explicit FileSchemePathWatcher(QUrl url, QObject* parent = nullptr);
-        ~FileSchemePathWatcher();
-
-    private:
-        FileSchemePathWatcherPrivate* d;
-};
-
-struct FileSchemeHandlerPrivate;
-class FileSchemeHandler : public SchemeHandler {
-        Q_OBJECT
-    public:
-        explicit FileSchemeHandler(QObject* parent = nullptr);
-        ~FileSchemeHandler();
+        explicit TrashSchemeHandler(QObject* parent = nullptr);
+        ~TrashSchemeHandler();
 
     signals:
 
     private:
-        FileSchemeHandlerPrivate* d;
+        TrashSchemeHandlerPrivate* d;
+
+        QList<QDir> trashDirs();
+
+        QUrl trashedFile(QUrl url);
+        QUrl trashInfoFile(QUrl url);
+
+        FileInformation internalFileInformation(QUrl url);
 
         // SchemeHandler interface
     public:
         bool isFile(QUrl url);
-        tPromise<FileInformationList>* list(QUrl url, QDir::Filters filters, QDir::SortFlags sortFlags);
+        tPromise<QList<FileInformation>>* list(QUrl url, QDir::Filters filters, QDir::SortFlags sortFlags);
         tPromise<FileInformation>* fileInformation(QUrl url);
         tPromise<QIODevice*>* open(QUrl url, QIODevice::OpenMode mode);
         tPromise<void>* mkpath(QUrl url);
@@ -60,5 +56,6 @@ class FileSchemeHandler : public SchemeHandler {
         SchemePathWatcher* watch(QUrl url);
         QVariant special(QString operation, QVariantMap args);
 };
+Q_DECLARE_METATYPE(tPromise<void>*)
 
-#endif // FILESCHEMEHANDLER_H
+#endif // TRASHSCHEMEHANDLER_H

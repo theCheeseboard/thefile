@@ -17,46 +17,34 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef FILETAB_H
-#define FILETAB_H
+#ifndef DELETEPERMANENTLYPOPOVER_H
+#define DELETEPERMANENTLYPOPOVER_H
 
 #include <QWidget>
-#include <QUrl>
 
 namespace Ui {
-    class FileTab;
+    class DeletePermanentlyPopover;
 }
 
-struct FileTabPrivate;
-class FileTab : public QWidget {
+struct DeletePermanentlyPopoverPrivate;
+class DeletePermanentlyPopover : public QWidget {
         Q_OBJECT
 
     public:
-        explicit FileTab(QWidget* parent = nullptr);
-        ~FileTab();
+        explicit DeletePermanentlyPopover(QList<QUrl> filesToDelete, QWidget* parent = nullptr);
+        ~DeletePermanentlyPopover();
 
-        enum ViewType {
-            Columns,
-            Trash
-        };
+    private slots:
+        void on_titleLabel_backButtonClicked();
 
-        void setCurrentUrl(QUrl url);
-        QUrl currentUrl();
-
-        QString tabTitle();
-
-        void closeTab();
+        void on_doDeleteButton_clicked();
 
     signals:
-        void currentUrlChanged(QUrl url);
-        void tabClosed();
-        void tabTitleChanged();
+        void done();
 
     private:
-        Ui::FileTab* ui;
-        FileTabPrivate* d;
-
-        ViewType effectiveViewType();
+        Ui::DeletePermanentlyPopover* ui;
+        DeletePermanentlyPopoverPrivate* d;
 };
 
-#endif // FILETAB_H
+#endif // DELETEPERMANENTLYPOPOVER_H

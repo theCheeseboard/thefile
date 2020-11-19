@@ -12,12 +12,14 @@ CONFIG += c++11
 SOURCES += \
     resourcemanager.cpp \
     schemeHandlers/fileschemehandler.cpp \
+    schemeHandlers/trashschemehandler.cpp \
     schemehandler.cpp
 
 HEADERS += \
     libthefile_global.h \
     resourcemanager.h \
     schemeHandlers/fileschemehandler.h \
+    schemeHandlers/trashschemehandler.h \
     schemehandler.h
 
 # Default rules for deployment.

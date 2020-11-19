@@ -27,6 +27,7 @@ namespace Ui {
     class FileColumn;
 }
 
+class QMenu;
 struct FileColumnPrivate;
 class FileColumn : public QWidget {
         Q_OBJECT
@@ -38,6 +39,9 @@ class FileColumn : public QWidget {
         void setUrl(QUrl url);
         void setSelected(QUrl url);
 
+        QString columnTitle();
+
+        void cut();
         void copy();
         void paste();
         void newFolder();
@@ -47,9 +51,14 @@ class FileColumn : public QWidget {
 
     signals:
         void navigate(QUrl url);
+        void urlChanged();
 
     private slots:
         void on_folderView_customContextMenuRequested(const QPoint& pos);
+
+        void on_folderErrorPage_customContextMenuRequested(const QPoint& pos);
+
+        void on_folderView_doubleClicked(const QModelIndex& index);
 
     private:
         Ui::FileColumn* ui;
@@ -57,6 +66,9 @@ class FileColumn : public QWidget {
 
         void reload();
         void updateItems();
+
+        void addFolderMenuItems(QMenu* menu);
+        void ensureUrlSelected();
 };
 
 #endif // FILECOLUMN_H

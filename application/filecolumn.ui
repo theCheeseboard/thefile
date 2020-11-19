@@ -63,7 +63,7 @@
      <item>
       <widget class="tStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="folderPage">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -107,16 +107,19 @@
         </layout>
        </widget>
        <widget class="QWidget" name="folderErrorPage">
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <spacer name="verticalSpacer_2">
+          <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>255</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -160,14 +163,14 @@
           </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer">
+          <spacer name="verticalSpacer_2">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>254</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>

@@ -107,3 +107,11 @@ void FileDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, 
 
     QStyledItemDelegate::paint(painter, newOptions, index);
 }
+
+QMimeData* FileModel::mimeData(const QModelIndexList& indexes) const {
+    return QAbstractListModel::mimeData(indexes);
+}
+
+Qt::ItemFlags FileModel::flags(const QModelIndex& index) const {
+    return QAbstractListModel::flags(index);
+}

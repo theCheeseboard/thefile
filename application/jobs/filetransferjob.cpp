@@ -287,6 +287,33 @@ void FileTransferJob::transferNextFile() {
         QUrl destinationUrl = d->sourceMappings.take(sourceUrl);
 
         TPROMISE_CREATE_NEW_THREAD(void, {
+            SchemeHandler::FileInformation sourceInformation = d->sourceInformation.value(sourceUrl);
+            QString fileName = QFileInfo(sourceUrl.path()).fileName();
+
+            //Determine what to do with these files
+            if (d->type == Move) {
+                //See if we can just move the file
+                if (ResourceManager::canMove(sourceUrl, destinationUrl)) {
+                    d->description = tr("Moving %n").arg(fileName);
+
+                    //Delete the destination if it exists
+                    if (ResourceManager::isFile(destinationUrl)) ResourceManager::deleteFile(destinationUrl);
+                    ResourceManager::mkpath(destinationUrl.resolved(QUrl(".")))->await();
+                    tPromiseResults<void> moveResults = ResourceManager::move(sourceUrl, destinationUrl)->await();
+                    if (!moveResults.error.isEmpty()) {
+                        tWarn("FileTransferJob") << "Failed to move" << sourceUrl.toString() << "->" << destinationUrl.toString();
+                        tWarn("FileTransferJob") << moveResults.error;
+                        rej("Could not move file");
+                        return;
+                    }
+
+                    d->progress += sourceInformation.size;
+                    d->totalFilesTransferred++;
+                    res();
+                    return;
+                }
+            }
+
             tPromiseResults<QIODevice*> sourceResults = ResourceManager::open(sourceUrl, QIODevice::ReadOnly)->await();
             if (!sourceResults.error.isEmpty()) {
                 //Error!
@@ -313,8 +340,6 @@ void FileTransferJob::transferNextFile() {
 
             //Dump the source file to the destination file
             quint64 readBytes = 0;
-            SchemeHandler::FileInformation sourceInformation = d->sourceInformation.value(sourceUrl);
-            QString fileName = QFileInfo(sourceUrl.path()).fileName();
 
 
             while (readBytes < sourceInformation.size) {
@@ -348,6 +373,13 @@ void FileTransferJob::transferNextFile() {
             dest->close();
             source->deleteLater();
             dest->deleteLater();
+
+
+            if (d->type == Move && !d->cancelled) {
+                //Delete the source file
+                ResourceManager::deleteFile(sourceUrl)->await();
+            }
+
             res();
         })->then([ = ] {
             transferNextFile();

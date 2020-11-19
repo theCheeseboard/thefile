@@ -66,6 +66,8 @@ class SchemeHandler : public QObject {
 
         virtual SchemePathWatcher* watch(QUrl url) = 0;
 
+        virtual QVariant special(QString operation, QVariantMap args) = 0;
+
     signals:
 
 };

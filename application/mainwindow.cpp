@@ -96,11 +96,11 @@ void MainWindow::newTab() {
     connect(button, &QPushButton::clicked, this, [ = ] {
         ui->stackedWidget->setCurrentWidget(tab);
     });
-    connect(ui->stackedWidget, &tStackedWidget::switchingFrame, this, [ = ](int frame) {
+    connect(ui->stackedWidget, &tStackedWidget::switchingFrame, button, [ = ](int frame) {
         if (ui->stackedWidget->widget(frame) == tab) button->setChecked(true);
     });
-    connect(tab, &FileTab::currentUrlChanged, this, [ = ](QUrl url) {
-        button->setText(QFileInfo(QFileInfo(url.path()).canonicalFilePath()).fileName());
+    connect(tab, &FileTab::tabTitleChanged, this, [ = ] {
+        button->setText(tab->tabTitle());
     });
     connect(tab, &FileTab::tabClosed, this, [ = ] {
         ui->stackedWidget->removeWidget(tab);

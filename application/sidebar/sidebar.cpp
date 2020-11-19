@@ -57,7 +57,7 @@ Sidebar::Sidebar(QWidget* parent) :
         {tr("Pictures"), QIcon::fromTheme("folder-pictures"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation))},
         {tr("Videos"), QIcon::fromTheme("folder-videos"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))},
         {tr("Root"), QIcon::fromTheme("folder-root"), QUrl::fromLocalFile(QDir::rootPath())},
-        {tr("Trash"), QIcon::fromTheme("user-trash"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation))}
+        {tr("Trash"), QIcon::fromTheme("user-trash"), QUrl("trash:/")}
     })) {
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(place.name);

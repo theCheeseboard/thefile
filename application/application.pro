@@ -18,6 +18,7 @@ SOURCES += \
     jobs/widgets/filetransferjobwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    popovers/deletepermanentlypopover.cpp \
     sidebar/devicesmodel.cpp \
     sidebar/sidebar.cpp
 
@@ -29,6 +30,7 @@ HEADERS += \
     jobs/filetransferjob.h \
     jobs/widgets/filetransferjobwidget.h \
     mainwindow.h \
+    popovers/deletepermanentlypopover.h \
     sidebar/devicesmodel.h \
     sidebar/sidebar.h
 
@@ -37,6 +39,7 @@ FORMS += \
     filetab.ui \
     jobs/widgets/filetransferjobwidget.ui \
     mainwindow.ui \
+    popovers/deletepermanentlypopover.ui \
     sidebar/sidebar.ui
 
 # Default rules for deployment.
