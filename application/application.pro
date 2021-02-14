@@ -1,4 +1,4 @@
-QT       += core gui thelib concurrent frisbee
+QT       += core gui thelib concurrent frisbee tdesktopenvironment
 TARGET = thefile
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

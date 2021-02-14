@@ -33,6 +33,7 @@
 #include <tpopover.h>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <MimeAssociations/mimeassociationmanager.h>
 #include "hiddenfilesproxymodel.h"
 #include "jobs/filetransferjob.h"
 #include "popovers/deletepermanentlypopover.h"
@@ -294,6 +295,39 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
     if (sel.count() > 0) {
         if (sel.count() == 1) {
             menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(sel.first().data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
+            QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
+            if (ResourceManager::isFile(url)) {
+                menu->addAction(QIcon::fromTheme("document-open"), tr("Open"), this, [ = ] {
+                    QDesktopServices::openUrl(url);
+                });
+
+                QMimeDatabase db;
+                QMimeType mimeType = db.mimeTypeForFile(url.toLocalFile());
+
+                QMenu* otherApps = new QMenu();
+                otherApps->setTitle(tr("Open With..."));
+
+                QList<ApplicationPointer> apps = MimeAssociationManager::applicationsForMimeType(mimeType.name());
+                for (ApplicationPointer app : apps) {
+                    otherApps->addAction(QIcon::fromTheme(app->getProperty("Icon").toString()), app->getProperty("Name").toString(), this, [ = ] {
+
+                        QMap<QString, QString> launchArgs;
+                        launchArgs.insert("%u", url.toString());
+                        launchArgs.insert("%U", url.toString());
+                        launchArgs.insert("%f", url.toLocalFile());
+                        launchArgs.insert("%F", url.toLocalFile());
+                        app->launch(launchArgs);
+                    });
+                }
+
+                otherApps->addSeparator();
+                otherApps->addAction(tr("Another app..."), this, [ = ] {
+                    QProcess::startDetached("xdg-open", {"--force-prompt", url.toString()});
+                });
+
+                menu->addMenu(otherApps);
+                menu->addSeparator();
+            }
         } else if (sel.count() > 1) {
             menu->addSection(tr("For %n items", nullptr, sel.count()));
         }
