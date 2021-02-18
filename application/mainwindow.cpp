@@ -143,10 +143,10 @@ void MainWindow::on_actionGo_triggered() {
     QString location = QInputDialog::getText(this, tr("Go"), tr("Enter a location to go to"), QLineEdit::Normal, text, &ok);
     if (ok) {
         QUrl url = QUrl::fromUserInput(location);
-        if (ResourceManager::isSchemeHandlerRegistered(url.scheme())) {
-            static_cast<FileTab*>(ui->stackedWidget->currentWidget())->setCurrentUrl(url);
-        } else {
-            QMessageBox::warning(this, tr("Can't open that URL"), tr("%1 URLs are not supported").arg(url.scheme()));
-        }
+//        if (ResourceManager::isDirectoryHandlerRegistered(url.scheme())) {
+        static_cast<FileTab*>(ui->stackedWidget->currentWidget())->setCurrentUrl(url);
+//        } else {
+//            QMessageBox::warning(this, tr("Can't open that URL"), tr("%1 URLs are not supported").arg(url.scheme()));
+//        }
     }
 }

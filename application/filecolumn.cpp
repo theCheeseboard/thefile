@@ -39,19 +39,19 @@
 #include "popovers/deletepermanentlypopover.h"
 
 struct FileColumnPrivate {
-    QUrl url;
+    DirectoryPtr directory;
     QUrl selectedUrl;
     FileModel* model = nullptr;
     HiddenFilesProxyModel* proxy;
 };
 
-FileColumn::FileColumn(QUrl url, QWidget* parent) :
+FileColumn::FileColumn(DirectoryPtr directory, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::FileColumn) {
     ui->setupUi(this);
 
     d = new FileColumnPrivate();
-    d->url = url;
+    d->directory = directory;
 
     d->proxy = new HiddenFilesProxyModel();
     ui->folderView->setModel(d->proxy);
@@ -66,14 +66,11 @@ FileColumn::~FileColumn() {
     delete d;
 }
 
-void FileColumn::setUrl(QUrl url) {
-    bool pathSame = false;
-    if (d->url.path() == url.path()) pathSame = true;
-    if ((d->url.path().isEmpty() || d->url.path() == "/") && (url.path().isEmpty() || url.path() == "/")) pathSame = true;
-    if (d->url.scheme() == url.scheme() && pathSame) return;
-    d->url = url;
+void FileColumn::setDirectory(DirectoryPtr directory) {
+    if (d->directory->url() == directory->url()) return;
+    d->directory = directory;
 
-    emit urlChanged();
+    emit directoryChanged();
     reload();
 }
 
@@ -83,15 +80,15 @@ void FileColumn::setSelected(QUrl url) {
 }
 
 QString FileColumn::columnTitle() {
-    if (d->url.path() == "/") {
-        if (d->url.scheme() == "file") return tr("Root");
-        if (d->url.scheme() == "trash") return tr("Trash");
-        return d->url.scheme();
+    if (d->directory->url().path() == "/") {
+        if (d->directory->url().scheme() == "file") return tr("Root");
+        if (d->directory->url().scheme() == "trash") return tr("Trash");
+        return d->directory->url().scheme();
     } else {
-        if (d->url.scheme() == "file") {
-            if (QDir(d->url.path()) == QDir::home()) return tr("Home");
+        if (d->directory->url().scheme() == "file") {
+            if (QDir(d->directory->url().path()) == QDir::home()) return tr("Home");
         }
-        return QFileInfo(QFileInfo(d->url.path()).canonicalFilePath()).fileName();
+        return QFileInfo(QFileInfo(d->directory->url().path()).canonicalFilePath()).fileName();
     }
 }
 
@@ -147,7 +144,7 @@ void FileColumn::paste() {
         }
 
         //Prepare a copy job
-        FileTransferJob* job = new FileTransferJob(transferType, data->urls(), d->url, this->window());
+        FileTransferJob* job = new FileTransferJob(transferType, data->urls(), d->directory, this->window());
         tJobManager::trackJobDelayed(job);
 
         //Clear the clipboard after a cut operation
@@ -159,14 +156,14 @@ void FileColumn::newFolder() {
     bool ok;
     QString folderName = QInputDialog::getText(this, tr("New Folder"), tr("Folder name"), QLineEdit::Normal, tr("New Folder"), &ok);
     if (ok) {
-        ResourceManager::mkpath(d->url.resolved(folderName));
+        d->directory->mkpath(folderName);
     }
 }
 
 void FileColumn::moveToTrash() {
     QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
     for (QModelIndex index : sel) {
-        ResourceManager::trash(index.data(FileModel::UrlRole).toUrl());
+        d->directory->trash(index.data(FileModel::PathSegmentRole).toString());
     }
 
     tToast* toast = new tToast(this->window());
@@ -204,13 +201,13 @@ void FileColumn::rename() {
         if (ok) {
             QUrl oldUrl = item.data(FileModel::UrlRole).toUrl();
             QUrl newUrl = oldUrl.resolved(QUrl("./" + newName));
-            ResourceManager::move(oldUrl, newUrl);
+            d->directory->move(item.data(FileModel::PathSegmentRole).toString(), newUrl);
         }
     }
 }
 
 void FileColumn::reload() {
-    d->model = new FileModel(d->url);
+    d->model = new FileModel(d->directory);
     connect(d->model, &FileModel::modelAboutToBeReset, this, [ = ] {
         ui->folderView->selectionModel()->blockSignals(true);
     });
@@ -225,7 +222,7 @@ void FileColumn::reload() {
     ui->folderNameLabel->setText(columnTitle());
     connect(ui->folderView->selectionModel(), &QItemSelectionModel::currentChanged, this, [ = ] {
         if (ui->folderView->currentIndex().isValid()) {
-            emit navigate(ui->folderView->currentIndex().data(FileModel::UrlRole).toUrl());
+            emit navigate(ResourceManager::directoryForUrl(ui->folderView->currentIndex().data(FileModel::UrlRole).toUrl()));
         }
     });
 }
@@ -262,7 +259,7 @@ void FileColumn::updateItems() {
 
 void FileColumn::addFolderMenuItems(QMenu* menu) {
     if (d->model) {
-        if (d->url.scheme() == "trash") {
+        if (d->directory->url().scheme() == "trash") {
 
         } else {
             if (d->model->currentError().isEmpty() || d->model->currentError() == QStringLiteral("error.no-items")) {
@@ -296,7 +293,7 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
         if (sel.count() == 1) {
             menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(sel.first().data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
             QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
-            if (ResourceManager::isFile(url)) {
+            if (d->directory->isFile(sel.first().data(FileModel::PathSegmentRole).toString())) {
                 menu->addAction(QIcon::fromTheme("document-open"), tr("Open"), this, [ = ] {
                     QDesktopServices::openUrl(url);
                 });
@@ -334,16 +331,16 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
 
         menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
         menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
-        if (d->url.scheme() == "trash") {
+        if (d->directory->url().scheme() == "trash") {
             menu->addAction(QIcon::fromTheme("trash-restore"), tr("Put Back"), this, [ = ] {
                 for (QModelIndex index : sel) {
                     QUrl url = index.data(FileModel::UrlRole).toUrl();
-                    QVariant restorePath = ResourceManager::special("trash", "restorePath", {{"url", url}});
+                    QVariant restorePath = d->directory->special("restorePath", {{"url", url}});
                     if (restorePath.isValid()) {
                         QUrl dest = restorePath.toUrl();
 
                         //Prepare a move job
-                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, {url}, dest, this->window());
+                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, {url}, ResourceManager::directoryForUrl(dest), this->window());
                         tJobManager::trackJobDelayed(job);
                     }
                 }
@@ -376,7 +373,7 @@ void FileColumn::on_folderErrorPage_customContextMenuRequested(const QPoint& pos
 
 void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
     QUrl url = index.data(FileModel::UrlRole).toUrl();
-    if (ResourceManager::isFile(url)) {
+    if (!ResourceManager::directoryForUrl(url)) {
         QDesktopServices::openUrl(url);
     }
 }

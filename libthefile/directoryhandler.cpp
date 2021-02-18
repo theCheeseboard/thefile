@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2021 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,32 +17,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
-
-#include <QObject>
-#include <QDir>
-#include "directory.h"
 #include "directoryhandler.h"
 
-struct ResourceManagerPrivate;
-class ResourceManager : public QObject {
-        Q_OBJECT
-    public:
-        explicit ResourceManager(QObject* parent = nullptr);
+DirectoryHandler::DirectoryHandler(QObject *parent) : QObject(parent)
+{
 
-        static ResourceManager* instance();
-
-        bool registerDirectoryHandler(DirectoryHandler* handler);
-
-        static DirectoryPtr directoryForUrl(QUrl url);
-        static DirectoryPtr parentDirectoryForUrl(QUrl url);
-        static QString relativePath(QUrl from, QUrl to);
-
-    signals:
-
-    private:
-        ResourceManagerPrivate* d;
-};
-
-#endif // RESOURCEMANAGER_H
+}

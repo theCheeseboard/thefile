@@ -18,8 +18,8 @@
  *
  * *************************************/
 #include "trashschemehandler.h"
-
-#include "fileschemehandler.h"
+#if 0
+#include "localfilesystemdirectory.h"
 #include "resourcemanager.h"
 #include <QStandardPaths>
 #include <QFileIconProvider>
@@ -28,7 +28,7 @@ struct TrashSchemeHandlerPrivate {
     QFileIconProvider iconProvider;
 };
 
-TrashSchemeHandler::TrashSchemeHandler(QObject* parent) : SchemeHandler(parent) {
+TrashSchemeHandler::TrashSchemeHandler(QObject* parent) : Directory(parent) {
     d = new TrashSchemeHandlerPrivate();
 }
 
@@ -61,7 +61,7 @@ QUrl TrashSchemeHandler::trashInfoFile(QUrl url) {
     return QUrl();
 }
 
-SchemeHandler::FileInformation TrashSchemeHandler::internalFileInformation(QUrl url) {
+Directory::FileInformation TrashSchemeHandler::internalFileInformation(QUrl url) {
     QFileInfo trashedFile(this->trashedFile(url).toLocalFile());
     QFileInfo trashInfoFile(this->trashInfoFile(url).toLocalFile());
 
@@ -80,11 +80,11 @@ SchemeHandler::FileInformation TrashSchemeHandler::internalFileInformation(QUrl 
     return fileInformation;
 }
 
-bool TrashSchemeHandler::isFile(QUrl url) {
-    return url.hasQuery();
+bool TrashSchemeHandler::isFile(QString filename) {
+    return filename.hasQuery();
 }
 
-tPromise<QList<SchemeHandler::FileInformation>>* TrashSchemeHandler::list(QUrl url, QDir::Filters filters, QDir::SortFlags sortFlags) {
+tPromise<QList<Directory::FileInformation>>* TrashSchemeHandler::list(QDir::Filters filters, QDir::SortFlags sortFlags) {
     return TPROMISE_CREATE_NEW_THREAD(FileInformationList, {
         Q_UNUSED(rej)
 
@@ -117,15 +117,15 @@ tPromise<QList<SchemeHandler::FileInformation>>* TrashSchemeHandler::list(QUrl u
     });
 }
 
-tPromise<SchemeHandler::FileInformation>* TrashSchemeHandler::fileInformation(QUrl url) {
+tPromise<Directory::FileInformation>* TrashSchemeHandler::fileInformation(QString filename) {
     return TPROMISE_CREATE_SAME_THREAD(FileInformation, {
         Q_UNUSED(rej);
         res(internalFileInformation(url));
     });
 }
 
-tPromise<QIODevice*>* TrashSchemeHandler::open(QUrl url, QIODevice::OpenMode mode) {
-    QUrl trashedFile = this->trashedFile(url);
+tPromise<QIODevice*>* TrashSchemeHandler::open(QString filename, QIODevice::OpenMode mode) {
+    QUrl trashedFile = this->trashedFile(filename);
     if (trashedFile.isValid()) {
         //Open the trashed file
         return ResourceManager::open(trashedFile, mode);
@@ -136,29 +136,29 @@ tPromise<QIODevice*>* TrashSchemeHandler::open(QUrl url, QIODevice::OpenMode mod
     });
 }
 
-tPromise<void>* TrashSchemeHandler::mkpath(QUrl url) {
+tPromise<void>* TrashSchemeHandler::mkpath(QString filename) {
     return TPROMISE_CREATE_SAME_THREAD(void, {
         Q_UNUSED(res);
         rej("Operation not supported");
     });
 }
 
-bool TrashSchemeHandler::canTrash(QUrl url) {
-    Q_UNUSED(url);
+bool TrashSchemeHandler::canTrash(QString filename) {
+    Q_UNUSED(filename);
     return false;
 }
 
-tPromise<QUrl>* TrashSchemeHandler::trash(QUrl url) {
-    Q_UNUSED(url);
+tPromise<QUrl>* TrashSchemeHandler::trash(QString filename) {
+    Q_UNUSED(filename);
     return TPROMISE_CREATE_SAME_THREAD(QUrl, {
         Q_UNUSED(res);
         rej("Cannot trash");
     });
 }
 
-tPromise<void>* TrashSchemeHandler::deleteFile(QUrl url) {
-    QUrl trashedFile = this->trashedFile(url);
-    QUrl trashInfoFile = this->trashInfoFile(url);
+tPromise<void>* TrashSchemeHandler::deleteFile(QString filename) {
+    QUrl trashedFile = this->trashedFile(filename);
+    QUrl trashInfoFile = this->trashInfoFile(filename);
 
     if (trashedFile.isValid() && trashInfoFile.isValid()) {
         return TPROMISE_CREATE_NEW_THREAD(void, {
@@ -176,17 +176,17 @@ tPromise<void>* TrashSchemeHandler::deleteFile(QUrl url) {
     });
 }
 
-bool TrashSchemeHandler::canMove(QUrl from, QUrl to) {
-    QUrl trashedFile = this->trashedFile(from);
+bool TrashSchemeHandler::canMove(QString filename, QUrl to) {
+    QUrl trashedFile = this->trashedFile(filename);
     if (trashedFile.isValid()) {
         return ResourceManager::canMove(trashedFile, to);
     }
     return false;
 }
 
-tPromise<void>* TrashSchemeHandler::move(QUrl from, QUrl to) {
-    QUrl trashedFile = this->trashedFile(from);
-    QUrl trashInfoFile = this->trashInfoFile(from);
+tPromise<void>* TrashSchemeHandler::move(QString filename, QUrl to) {
+    QUrl trashedFile = this->trashedFile(filename);
+    QUrl trashInfoFile = this->trashInfoFile(filename);
     if (trashedFile.isValid() && trashInfoFile.isValid()) {
         return TPROMISE_CREATE_SAME_THREAD_WITH_CALLBACK_NAMES(void, outerRes, outerRej, {
             ResourceManager::move(trashedFile, to)->then([ = ] {
@@ -220,3 +220,4 @@ QVariant TrashSchemeHandler::special(QString operation, QVariantMap args) {
     }
     return QVariant();
 }
+#endif

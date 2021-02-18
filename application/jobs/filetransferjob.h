@@ -21,6 +21,7 @@
 #define FILETRANSFERJOB_H
 
 #include <tjob.h>
+#include <directory.h>
 
 struct FileTransferJobPrivate;
 class FileTransferJob : public tJob {
@@ -39,7 +40,7 @@ class FileTransferJob : public tJob {
             Done
         };
 
-        explicit FileTransferJob(TransferType type, QList<QUrl> source, QUrl destination, QWidget* jobsPopover, QObject* parent = nullptr);
+        explicit FileTransferJob(TransferType type, QList<QUrl> source, DirectoryPtr destination, QWidget* jobsPopover, QObject* parent = nullptr);
         ~FileTransferJob();
 
         TransferType type();

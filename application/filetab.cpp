@@ -28,10 +28,10 @@
 #include <tvariantanimation.h>
 #include <QScrollBar>
 #include <tlogger.h>
+#include <resourcemanager.h>
 
 struct FileTabPrivate {
-    QUrl currentUrl;
-    QList<QUrl> currentColumns;
+    QList<DirectoryPtr> currentColumns;
     QList<FileColumn*> currentColumnWidgets;
 };
 
@@ -53,15 +53,18 @@ FileTab::~FileTab() {
 }
 
 void FileTab::setCurrentUrl(QUrl url) {
-    url.setPath(url.path() + "/");
-    url = url.resolved(QUrl("."));
+    setCurrentDir(ResourceManager::directoryForUrl(url));
+}
 
-    while (url.path().contains("//")) {
-        url.setPath(url.path().replace("//", "/"));
+void FileTab::setCurrentDir(DirectoryPtr directory) {
+    QList<DirectoryPtr> directories;
+    directories.append(directory);
+
+    DirectoryPtr dir = ResourceManager::parentDirectoryForUrl(directories.last()->url());
+    while (dir) {
+        directories.append(dir);
+        dir = ResourceManager::parentDirectoryForUrl(directories.last()->url());
     }
-
-    d->currentUrl = url;
-    emit currentUrlChanged(d->currentUrl);
 
     switch (effectiveViewType()) {
         case FileTab::Columns:
@@ -72,37 +75,28 @@ void FileTab::setCurrentUrl(QUrl url) {
             break;
     }
 
-    QList<QUrl> columnPaths;
-    QUrl bits = url;
-    while (bits.path() != "/") {
-        columnPaths.prepend(bits);
-
-        QUrl newBits = bits.resolved(QUrl(".."));
-        if (newBits == bits) break;
-        bits = newBits;
-    }
-    if (columnPaths.isEmpty() || columnPaths.first() != bits) columnPaths.prepend(bits);
+    std::reverse(directories.begin(), directories.end());
 
     //Modify the current columns
-    for (int i = 0; i < columnPaths.count(); i++) {
-        QUrl path = columnPaths.at(i);
-        QUrl nextPath;
+    for (int i = 0; i < directories.count(); i++) {
+        DirectoryPtr directory = directories.at(i);
 
-        if (i + 1 != columnPaths.count()) {
-            nextPath = columnPaths.at(i + 1);
+        QUrl nextPath;
+        if (i + 1 < directories.count()) {
+            nextPath = directories.at(i + 1)->url();
         }
 
         FileColumn* col;
-        if (d->currentColumns.count() > i && d->currentColumns.at(i) != path) {
+        if (d->currentColumns.count() > i && d->currentColumns.at(i)->url() != directory->url()) {
             col = d->currentColumnWidgets.at(i);
-            col->setUrl(path);
+            col->setDirectory(directory);
             col->setSelected(nextPath);
         } else if (d->currentColumns.count() <= i) {
             //We need to add a new column
-            col = new FileColumn(path);
+            col = new FileColumn(directory);
             col->setSelected(nextPath);
-            connect(col, &FileColumn::navigate, this, &FileTab::setCurrentUrl);
-            connect(col, &FileColumn::urlChanged, this, &FileTab::tabTitleChanged);
+            connect(col, &FileColumn::navigate, this, &FileTab::setCurrentDir);
+            connect(col, &FileColumn::directoryChanged, this, &FileTab::tabTitleChanged);
             ui->dirsLayout->addWidget(col);
             d->currentColumnWidgets.append(col);
         } else {
@@ -123,7 +117,7 @@ void FileTab::setCurrentUrl(QUrl url) {
 
     switch (effectiveViewType()) {
         case FileTab::Columns:
-            while (d->currentColumns.count() > columnPaths.count()) {
+            while (d->currentColumns.count() > directories.count()) {
                 FileColumn* col = d->currentColumnWidgets.takeLast();
                 ui->dirsLayout->removeWidget(col);
                 col->deleteLater();
@@ -136,11 +130,11 @@ void FileTab::setCurrentUrl(QUrl url) {
                 ui->dirsLayout->removeWidget(col);
                 col->deleteLater();
             }
-            while (columnPaths.count() > 1) columnPaths.removeLast();
+            while (directories.count() > 1) directories.removeLast();
             break;
     }
 
-    d->currentColumns = columnPaths;
+    d->currentColumns = directories;
 
     //Scroll to the end
     tVariantAnimation* anim = new tVariantAnimation(this);
@@ -162,7 +156,8 @@ void FileTab::setCurrentUrl(QUrl url) {
 }
 
 QUrl FileTab::currentUrl() {
-    return d->currentUrl;
+    if (d->currentColumns.isEmpty()) return QUrl();
+    return d->currentColumns.last()->url();
 }
 
 QString FileTab::tabTitle() {
@@ -178,7 +173,7 @@ void FileTab::closeTab() {
 }
 
 FileTab::ViewType FileTab::effectiveViewType() {
-    if (d->currentUrl.scheme() == "trash") {
+    if (currentUrl().scheme() == "trash") {
         return Trash;
     } else {
         return Columns;

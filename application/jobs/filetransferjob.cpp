@@ -34,12 +34,12 @@ struct FileTransferJobPrivate {
 
     FileTransferJob::TransferType type;
     QList<QUrl> source;
-    QUrl destination;
+    DirectoryPtr destination;
 
     QElapsedTimer timer;
 
     QMap<QUrl, QUrl> sourceMappings;
-    QMap<QUrl, SchemeHandler::FileInformation> sourceInformation;
+    QMap<QUrl, Directory::FileInformation> sourceInformation;
     QList<QUrl> conflicts;
     quint64 totalDataToTransfer;
     quint64 totalFilesTransferred = 0;
@@ -54,7 +54,7 @@ struct FileTransferJobPrivate {
     bool cancelled = false;
 };
 
-FileTransferJob::FileTransferJob(TransferType type, QList<QUrl> source, QUrl destination, QWidget* jobsPopover, QObject* parent) : tJob(parent) {
+FileTransferJob::FileTransferJob(TransferType type, QList<QUrl> source, DirectoryPtr destination, QWidget* jobsPopover, QObject* parent) : tJob(parent) {
     d = new FileTransferJobPrivate();
     d->type = type;
     d->source = source;
@@ -125,22 +125,27 @@ void FileTransferJob::fileDiscovery() {
 
     struct DiscoveryResults {
         QMap<QUrl, QUrl> sourceMappings;
-        QMap<QUrl, SchemeHandler::FileInformation> sourceInformation;
+        QMap<QUrl, Directory::FileInformation> sourceInformation;
         quint64 totalFileSize = 0;
     };
 
-    TPROMISE_CREATE_NEW_THREAD(DiscoveryResults, {
+//    TPROMISE_CREATE_NEW_THREAD(DiscoveryResults, {
+    tPromise<DiscoveryResults>::runOnNewThread([ = ](tPromiseFunctions<DiscoveryResults>::SuccessFunction res, tPromiseFunctions<DiscoveryResults>::FailureFunction rej) {
         Q_UNUSED(rej);
         //TODO: Automatically rename files if a copy exists
 
         DiscoveryResults results;
         for (QUrl baseUrl : d->source) {
-            if (ResourceManager::isFile(baseUrl)) {
+            DirectoryPtr baseDirectory = ResourceManager::parentDirectoryForUrl(baseUrl);
+            if (baseDirectory->isFile(baseUrl.fileName())) {
                 QUrl relativePath(baseUrl.path().remove(baseUrl.resolved(QUrl(".")).path()));
-                QUrl destination = d->destination.resolved(relativePath);
+
+                QUrl destUrl = d->destination->url();
+                if (!destUrl.path().endsWith("/")) destUrl.setPath(destUrl.path() + "/");
+                QUrl destination = destUrl.resolved(relativePath);
                 results.sourceMappings.insert(baseUrl, destination);
 
-                tPromiseResults<SchemeHandler::FileInformation> info = ResourceManager::fileInformation(baseUrl)->await();
+                tPromiseResults<Directory::FileInformation> info = baseDirectory->fileInformation(baseUrl.fileName())->await();
                 results.totalFileSize += info.result.size;
                 results.sourceInformation.insert(baseUrl, info.result);
 
@@ -153,18 +158,22 @@ void FileTransferJob::fileDiscovery() {
                 QList<QUrl> sourceUrls = {baseUrl};
                 while (!sourceUrls.isEmpty()) {
                     QUrl sourceUrl = sourceUrls.takeFirst();
-                    if (ResourceManager::isFile(sourceUrl)) {
+                    DirectoryPtr sourceDirectory = ResourceManager::parentDirectoryForUrl(sourceUrl);
+                    if (sourceDirectory->isFile(sourceUrl.fileName())) {
                         QString relativePathString = sourceUrl.path().remove(baseUrl.resolved(QUrl(".")).path());
                         if (relativePathString.startsWith("/")) relativePathString.remove(0, 1);
-                        QUrl destination = d->destination.resolved(QUrl(relativePathString));
+
+                        QUrl destUrl = d->destination->url();
+                        if (!destUrl.path().endsWith("/")) destUrl.setPath(destUrl.path() + "/");
+                        QUrl destination = destUrl.resolved(QUrl(relativePathString));
                         results.sourceMappings.insert(sourceUrl, destination);
 
-                        tPromiseResults<SchemeHandler::FileInformation> info = ResourceManager::fileInformation(sourceUrl)->await();
+                        tPromiseResults<Directory::FileInformation> info = sourceDirectory->fileInformation(sourceUrl.fileName())->await();
                         results.totalFileSize += info.result.size;
                         results.sourceInformation.insert(sourceUrl, info.result);
                     } else {
-                        tPromiseResults<FileInformationList> results = ResourceManager::list(sourceUrl, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot)->await();
-                        for (SchemeHandler::FileInformation info : results.result) {
+                        tPromiseResults<FileInformationList> results = ResourceManager::directoryForUrl(sourceUrl)->list(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDir::NoSort)->await();
+                        for (Directory::FileInformation info : results.result) {
                             sourceUrls.append(info.resource);
                         }
                     }
@@ -211,7 +220,7 @@ void FileTransferJob::conflictCheck() {
 
     QFuture<QUrl> future = QtConcurrent::filtered(d->sourceMappings.keys(), [ = ](const QUrl & sourceUrl) {
         QUrl dest = d->sourceMappings.value(sourceUrl);
-        return ResourceManager::isFile(dest);
+        return ResourceManager::parentDirectoryForUrl(dest)->isFile(dest.fileName());
     });
 
     QFutureWatcher<QUrl>* watcher = new QFutureWatcher<QUrl>();
@@ -287,19 +296,22 @@ void FileTransferJob::transferNextFile() {
         QUrl destinationUrl = d->sourceMappings.take(sourceUrl);
 
         TPROMISE_CREATE_NEW_THREAD(void, {
-            SchemeHandler::FileInformation sourceInformation = d->sourceInformation.value(sourceUrl);
+            Directory::FileInformation sourceInformation = d->sourceInformation.value(sourceUrl);
             QString fileName = QFileInfo(sourceUrl.path()).fileName();
+
+            DirectoryPtr sourceDirectory = ResourceManager::parentDirectoryForUrl(sourceUrl);
+            DirectoryPtr destinationDirectory = ResourceManager::parentDirectoryForUrl(destinationUrl);
 
             //Determine what to do with these files
             if (d->type == Move) {
                 //See if we can just move the file
-                if (ResourceManager::canMove(sourceUrl, destinationUrl)) {
+                if (sourceDirectory->canMove(sourceUrl.fileName(), destinationUrl)) {
                     d->description = tr("Moving %n").arg(fileName);
 
                     //Delete the destination if it exists
-                    if (ResourceManager::isFile(destinationUrl)) ResourceManager::deleteFile(destinationUrl);
-                    ResourceManager::mkpath(destinationUrl.resolved(QUrl(".")))->await();
-                    tPromiseResults<void> moveResults = ResourceManager::move(sourceUrl, destinationUrl)->await();
+                    if (destinationDirectory->isFile(destinationUrl.fileName())) destinationDirectory->deleteFile(destinationUrl.fileName());
+                    destinationDirectory->mkpath(".")->await();
+                    tPromiseResults<void> moveResults = sourceDirectory->move(sourceUrl.fileName(), destinationUrl)->await();
                     if (!moveResults.error.isEmpty()) {
                         tWarn("FileTransferJob") << "Failed to move" << sourceUrl.toString() << "->" << destinationUrl.toString();
                         tWarn("FileTransferJob") << moveResults.error;
@@ -314,7 +326,7 @@ void FileTransferJob::transferNextFile() {
                 }
             }
 
-            tPromiseResults<QIODevice*> sourceResults = ResourceManager::open(sourceUrl, QIODevice::ReadOnly)->await();
+            tPromiseResults<QIODevice*> sourceResults = sourceDirectory->open(sourceUrl.fileName(), QIODevice::ReadOnly)->await();
             if (!sourceResults.error.isEmpty()) {
                 //Error!
                 tWarn("FileTransferJob") << "Failed to copy" << sourceUrl.toString() << "->" << destinationUrl.toString();
@@ -324,9 +336,9 @@ void FileTransferJob::transferNextFile() {
             }
             QIODevice* source = sourceResults.result;
 
-            ResourceManager::mkpath(destinationUrl.resolved(QUrl(".")))->await();
+            destinationDirectory->mkpath(".")->await();
 
-            tPromiseResults<QIODevice*> destResults = ResourceManager::open(destinationUrl, QIODevice::WriteOnly | QIODevice::Unbuffered)->await();
+            tPromiseResults<QIODevice*> destResults = destinationDirectory->open(destinationUrl.fileName(), QIODevice::WriteOnly | QIODevice::Unbuffered)->await();
             if (!destResults.error.isEmpty()) {
                 //Error!
                 source->close();
@@ -377,7 +389,7 @@ void FileTransferJob::transferNextFile() {
 
             if (d->type == Move && !d->cancelled) {
                 //Delete the source file
-                ResourceManager::deleteFile(sourceUrl)->await();
+                sourceDirectory->deleteFile(sourceUrl.fileName())->await();
             }
 
             res();

@@ -48,8 +48,8 @@ void DeletePermanentlyPopover::on_titleLabel_backButtonClicked() {
 }
 
 void DeletePermanentlyPopover::on_doDeleteButton_clicked() {
-    for (QUrl url : d->filesToDelete) {
-        ResourceManager::deleteFile(url);
+    for (QUrl url : qAsConst(d->filesToDelete)) {
+        ResourceManager::parentDirectoryForUrl(url)->deleteFile(url.fileName());
     }
     emit done();
 }

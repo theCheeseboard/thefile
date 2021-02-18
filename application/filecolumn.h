@@ -22,6 +22,7 @@
 
 #include <QWidget>
 #include <QUrl>
+#include "directory.h"
 
 namespace Ui {
     class FileColumn;
@@ -33,10 +34,10 @@ class FileColumn : public QWidget {
         Q_OBJECT
 
     public:
-        explicit FileColumn(QUrl url, QWidget* parent = nullptr);
+        explicit FileColumn(DirectoryPtr directory, QWidget* parent = nullptr);
         ~FileColumn();
 
-        void setUrl(QUrl url);
+        void setDirectory(DirectoryPtr directory);
         void setSelected(QUrl url);
 
         QString columnTitle();
@@ -50,8 +51,8 @@ class FileColumn : public QWidget {
         void rename();
 
     signals:
-        void navigate(QUrl url);
-        void urlChanged();
+        void navigate(DirectoryPtr directory);
+        void directoryChanged();
 
     private slots:
         void on_folderView_customContextMenuRequested(const QPoint& pos);

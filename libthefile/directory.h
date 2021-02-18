@@ -17,8 +17,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SCHEMEHANDLER_H
-#define SCHEMEHANDLER_H
+#ifndef DIRECTORY_H
+#define DIRECTORY_H
 
 #include <QObject>
 #include <QIcon>
@@ -35,43 +35,44 @@ class SchemePathWatcher : public QObject {
         void changed();
 };
 
-class SchemeHandler : public QObject {
+class Directory : public QObject {
         Q_OBJECT
     public:
-        explicit SchemeHandler(QObject* parent = nullptr);
+        explicit Directory(QObject* parent = nullptr);
 
         struct FileInformation {
             QIcon icon;
             QString name;
             QUrl resource;
             quint64 size;
+            QString pathSegment;
 
             bool isHidden;
         };
 
 
-        virtual bool isFile(QUrl url) = 0;
-        virtual tPromise<QList<FileInformation>>* list(QUrl url, QDir::Filters filters, QDir::SortFlags sortFlags) = 0;
-        virtual tPromise<FileInformation>* fileInformation(QUrl url) = 0;
-        virtual tPromise<QIODevice*>* open(QUrl url, QIODevice::OpenMode mode) = 0;
+        virtual bool isFile(QString path) = 0;
+        virtual QUrl url() = 0;
+        virtual tPromise<QList<FileInformation>>* list(QDir::Filters filters, QDir::SortFlags sortFlags) = 0;
+        virtual tPromise<FileInformation>* fileInformation(QString filename) = 0;
+        virtual tPromise<QIODevice*>* open(QString filename, QIODevice::OpenMode mode) = 0;
 
-        virtual tPromise<void>* mkpath(QUrl url) = 0;
+        virtual tPromise<void>* mkpath(QString filename) = 0;
 
-        virtual bool canTrash(QUrl url) = 0;
-        virtual tPromise<QUrl>* trash(QUrl url) = 0;
-        virtual tPromise<void>* deleteFile(QUrl url) = 0;
+        virtual bool canTrash(QString filename) = 0;
+        virtual tPromise<QUrl>* trash(QString filename) = 0;
+        virtual tPromise<void>* deleteFile(QString filename) = 0;
 
-        virtual bool canMove(QUrl from, QUrl to) = 0;
-        virtual tPromise<void>* move(QUrl from, QUrl to) = 0;
-
-        virtual SchemePathWatcher* watch(QUrl url) = 0;
+        virtual bool canMove(QString filename, QUrl to) = 0;
+        virtual tPromise<void>* move(QString filename, QUrl to) = 0;
 
         virtual QVariant special(QString operation, QVariantMap args) = 0;
 
     signals:
-
+        void contentsChanged();
 };
 
-typedef QList<SchemeHandler::FileInformation> FileInformationList;
+typedef QList<Directory::FileInformation> FileInformationList;
+typedef QSharedPointer<Directory> DirectoryPtr;
 
-#endif // SCHEMEHANDLER_H
+#endif // DIRECTORY_H

@@ -22,26 +22,28 @@
 
 #include <QAbstractListModel>
 #include <QStyledItemDelegate>
+#include "directory.h"
 
 struct FileModelPrivate;
 class FileModel : public QAbstractListModel {
         Q_OBJECT
 
     public:
-        explicit FileModel(QUrl path, QObject* parent = nullptr);
+        explicit FileModel(DirectoryPtr directory, QObject* parent = nullptr);
         ~FileModel();
 
         enum Roles {
             UrlRole = Qt::UserRole,
-            HiddenRole
+            HiddenRole,
+            PathSegmentRole
         };
 
         // Basic functionality:
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-        QMimeData*mimeData(const QModelIndexList&indexes) const override;
-        Qt::ItemFlags flags(const QModelIndex&index) const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
 
         QString currentError();
 

@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2021 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,12 +17,23 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "schemehandler.h"
+#ifndef DIRECTORYHANDLER_H
+#define DIRECTORYHANDLER_H
 
-SchemeHandler::SchemeHandler(QObject* parent) : QObject(parent) {
+#include <QObject>
+#include "directory.h"
 
-}
+class DirectoryHandler : public QObject {
+        Q_OBJECT
+    public:
+        explicit DirectoryHandler(QObject* parent = nullptr);
 
-SchemePathWatcher::SchemePathWatcher(QObject* parent) : QObject(parent) {
+        virtual DirectoryPtr directoryForUrl(QUrl url) = 0;
+        virtual DirectoryPtr parentDirectoryForUrl(QUrl url) = 0;
+        virtual QString relativePath(QUrl from, QUrl to) = 0;
 
-}
+    signals:
+
+};
+
+#endif // DIRECTORYHANDLER_H

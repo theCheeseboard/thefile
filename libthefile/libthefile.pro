@@ -10,17 +10,21 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    resourcemanager.cpp \
-    schemeHandlers/fileschemehandler.cpp \
-    schemeHandlers/trashschemehandler.cpp \
-    schemehandler.cpp
+    directories/localfilesystemdirectory.cpp \
+    directories/trashschemehandler.cpp \
+    directory.cpp \
+    directoryHandlers/localfiledirectoryhandler.cpp \
+    directoryhandler.cpp \
+    resourcemanager.cpp
 
 HEADERS += \
+    directories/localfilesystemdirectory.h \
+    directories/trashschemehandler.h \
+    directory.h \
+    directoryHandlers/localfiledirectoryhandler.h \
+    directoryhandler.h \
     libthefile_global.h \
-    resourcemanager.h \
-    schemeHandlers/fileschemehandler.h \
-    schemeHandlers/trashschemehandler.h \
-    schemehandler.h
+    resourcemanager.h
 
 # Default rules for deployment.
 unix {

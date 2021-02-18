@@ -20,17 +20,17 @@
 #include "resourcemanager.h"
 
 #include <QMap>
-#include "schemeHandlers/fileschemehandler.h"
-#include "schemeHandlers/trashschemehandler.h"
+#include "directoryHandlers/localfiledirectoryhandler.h"
+//#include "schemeHandlers/trashschemehandler.h"
 
 struct ResourceManagerPrivate {
-    QMap<QString, SchemeHandler*> schemeHandlers;
+    QList<DirectoryHandler*> schemeHandlers;
 };
 
 ResourceManager::ResourceManager(QObject* parent) : QObject(parent) {
     d = new ResourceManagerPrivate();
-    registerSchemeHandler("file", new FileSchemeHandler());
-    registerSchemeHandler("trash", new TrashSchemeHandler());
+    registerDirectoryHandler(new LocalFileDirectoryHandler());
+//    registerSchemeHandler("trash", new TrashSchemeHandler());
 }
 
 ResourceManager* ResourceManager::instance() {
@@ -38,109 +38,35 @@ ResourceManager* ResourceManager::instance() {
     return instance;
 }
 
-bool ResourceManager::registerSchemeHandler(QString scheme, SchemeHandler* handler) {
-    if (d->schemeHandlers.contains(scheme)) return false;
-    d->schemeHandlers.insert(scheme, handler);
+bool ResourceManager::registerDirectoryHandler(DirectoryHandler* handler) {
+    if (d->schemeHandlers.contains(handler)) return false;
+    d->schemeHandlers.append(handler);
     return true;
 }
 
-bool ResourceManager::isSchemeHandlerRegistered(QString scheme) {
-    return instance()->d->schemeHandlers.contains(scheme);
+DirectoryPtr ResourceManager::directoryForUrl(QUrl url) {
+    DirectoryPtr directory;
+    for (DirectoryHandler* handler : instance()->d->schemeHandlers) {
+        directory = handler->directoryForUrl(url);
+        if (directory) return directory;
+    }
+    return directory;
 }
 
-bool ResourceManager::isFile(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return false;
-    return handler->isFile(url);
+DirectoryPtr ResourceManager::parentDirectoryForUrl(QUrl url) {
+    DirectoryPtr directory;
+    for (DirectoryHandler* handler : instance()->d->schemeHandlers) {
+        directory = handler->parentDirectoryForUrl(url);
+        if (directory) return directory;
+    }
+    return directory;
 }
 
-tPromise<FileInformationList>* ResourceManager::list(QUrl url, QDir::Filters filters, QDir::SortFlags sortFlags) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(FileInformationList, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->list(url, filters, sortFlags);
-}
-
-tPromise<SchemeHandler::FileInformation>* ResourceManager::fileInformation(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(SchemeHandler::FileInformation, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->fileInformation(url);
-}
-
-tPromise<QIODevice*>* ResourceManager::open(QUrl url, QIODevice::OpenMode mode) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(QIODevice*, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->open(url, mode);
-}
-
-tPromise<void>* ResourceManager::mkpath(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(void, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->mkpath(url);
-}
-
-bool ResourceManager::canTrash(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return false;
-    return handler->canTrash(url);
-}
-
-tPromise<QUrl>* ResourceManager::trash(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(QUrl, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->trash(url);
-}
-
-tPromise<void>* ResourceManager::deleteFile(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(void, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->deleteFile(url);
-}
-
-bool ResourceManager::canMove(QUrl from, QUrl to) {
-    SchemeHandler* handler = handlerForUrl(from);
-    if (!handler) return false;
-    return handler->canMove(from, to);
-}
-
-tPromise<void>* ResourceManager::move(QUrl from, QUrl to) {
-    SchemeHandler* handler = handlerForUrl(from);
-    if (!handler) return TPROMISE_CREATE_SAME_THREAD(void, {
-        Q_UNUSED(res)
-        rej("Scheme unregistered");
-    });
-    return handler->move(from, to);
-}
-
-SchemePathWatcher* ResourceManager::watch(QUrl url) {
-    SchemeHandler* handler = handlerForUrl(url);
-    if (!handler) return nullptr;
-    return handler->watch(url);
-}
-
-QVariant ResourceManager::special(QString scheme, QString operation, QVariantMap args) {
-    SchemeHandler* handler = instance()->d->schemeHandlers.value(scheme);
-    if (!handler) return QVariant();
-    return handler->special(operation, args);
-}
-
-SchemeHandler* ResourceManager::handlerForUrl(QUrl url) {
-    return instance()->d->schemeHandlers.value(url.scheme());
+QString ResourceManager::relativePath(QUrl from, QUrl to) {
+    QString rel;
+    for (DirectoryHandler* handler : instance()->d->schemeHandlers) {
+        rel = handler->relativePath(from, to);
+        if (!rel.isEmpty()) return rel;
+    }
+    return rel;
 }

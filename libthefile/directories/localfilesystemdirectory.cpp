@@ -17,7 +17,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "fileschemehandler.h"
+#include "localfilesystemdirectory.h"
 
 #include <QDir>
 #include <QFileIconProvider>
@@ -26,33 +26,46 @@
 #include <unistd.h>
 
 struct FileSchemePathWatcherPrivate {
+};
+
+struct LocalFilesystemDirectoryPrivate {
+    QUrl url;
+    QFileIconProvider iconProvider;
+
     QFileSystemWatcher* watcher;
 };
 
-struct FileSchemeHandlerPrivate {
-    QFileIconProvider iconProvider;
-};
+LocalFilesystemDirectory::LocalFilesystemDirectory(QUrl url, QObject* parent) : Directory(parent) {
+    d = new LocalFilesystemDirectoryPrivate();
+    d->url = url;
 
-FileSchemeHandler::FileSchemeHandler(QObject* parent) : SchemeHandler(parent) {
-    d = new FileSchemeHandlerPrivate();
+    d->watcher = new QFileSystemWatcher();
+    d->watcher->addPath(url.toLocalFile());
+    connect(d->watcher, &QFileSystemWatcher::directoryChanged, this, &LocalFilesystemDirectory::contentsChanged);
+    connect(d->watcher, &QFileSystemWatcher::fileChanged, this, &LocalFilesystemDirectory::contentsChanged);
 }
 
-FileSchemeHandler::~FileSchemeHandler() {
+LocalFilesystemDirectory::~LocalFilesystemDirectory() {
+    d->watcher->deleteLater();
     delete d;
 }
 
-bool FileSchemeHandler::isFile(QUrl url) {
-    return QFileInfo(url.toLocalFile()).isFile();
+bool LocalFilesystemDirectory::isFile(QString filename) {
+    return QFileInfo(QDir(d->url.toLocalFile()).absoluteFilePath(filename)).isFile();
 }
 
-tPromise<FileInformationList>* FileSchemeHandler::list(QUrl url, QDir::Filters filters, QDir::SortFlags sortFlags) {
+QUrl LocalFilesystemDirectory::url() {
+    return d->url;
+}
+
+tPromise<FileInformationList>* LocalFilesystemDirectory::list(QDir::Filters filters, QDir::SortFlags sortFlags) {
     return TPROMISE_CREATE_NEW_THREAD(FileInformationList, {
-        QDir dir(url.toLocalFile());
+        QDir dir(d->url.toLocalFile());
 
         QFileInfoList files = dir.entryInfoList(filters, sortFlags);
 
         if (files.isEmpty()) {
-            QFileInfo dirInfo(url.toLocalFile());
+            QFileInfo dirInfo(d->url.toLocalFile());
 
             if (!dirInfo.exists()) {
                 rej("error.not-found");
@@ -97,6 +110,7 @@ tPromise<FileInformationList>* FileSchemeHandler::list(QUrl url, QDir::Filters f
             fileInfo.size = file.size();
             fileInfo.icon = d->iconProvider.icon(file);
             fileInfo.isHidden = file.isHidden();
+            fileInfo.pathSegment = file.fileName();
             fileInfoList.append(fileInfo);
         }
 
@@ -104,11 +118,11 @@ tPromise<FileInformationList>* FileSchemeHandler::list(QUrl url, QDir::Filters f
     });
 }
 
-tPromise<SchemeHandler::FileInformation>* FileSchemeHandler::fileInformation(QUrl url) {
-    return TPROMISE_CREATE_NEW_THREAD(SchemeHandler::FileInformation, {
+tPromise<Directory::FileInformation>* LocalFilesystemDirectory::fileInformation(QString filename) {
+    return TPROMISE_CREATE_NEW_THREAD(Directory::FileInformation, {
         Q_UNUSED(rej)
 
-        QFileInfo file(url.toLocalFile());
+        QFileInfo file(QDir(d->url.toLocalFile()).absoluteFilePath(filename));
 
         FileInformation fileInfo;
         fileInfo.name = file.fileName();
@@ -116,14 +130,15 @@ tPromise<SchemeHandler::FileInformation>* FileSchemeHandler::fileInformation(QUr
         fileInfo.size = file.size();
         fileInfo.icon = d->iconProvider.icon(file);
         fileInfo.isHidden = file.isHidden();
+        fileInfo.pathSegment = file.fileName();
 
         res(fileInfo);
     });
 }
 
-tPromise<QIODevice*>* FileSchemeHandler::open(QUrl url, QIODevice::OpenMode mode) {
+tPromise<QIODevice*>* LocalFilesystemDirectory::open(QString filename, QIODevice::OpenMode mode) {
     return TPROMISE_CREATE_SAME_THREAD(QIODevice*, {
-        QFile* file = new QFile(url.toLocalFile());
+        QFile* file = new QFile(QDir(d->url.toLocalFile()).absoluteFilePath(filename));
         if (file->open(mode)) {
             res(file);
         } else {
@@ -133,9 +148,9 @@ tPromise<QIODevice*>* FileSchemeHandler::open(QUrl url, QIODevice::OpenMode mode
     });
 }
 
-tPromise<void>* FileSchemeHandler::mkpath(QUrl url) {
+tPromise<void>* LocalFilesystemDirectory::mkpath(QString filename) {
     return TPROMISE_CREATE_NEW_THREAD(void, {
-        if (QDir::root().mkpath(url.toLocalFile())) {
+        if (QDir::root().mkpath(QDir(d->url.toLocalFile()).absoluteFilePath(filename))) {
             res();
         } else {
             rej("Could not make path");
@@ -143,14 +158,14 @@ tPromise<void>* FileSchemeHandler::mkpath(QUrl url) {
     });
 }
 
-bool FileSchemeHandler::canTrash(QUrl url) {
+bool LocalFilesystemDirectory::canTrash(QString filename) {
     return true;
 }
 
-tPromise<QUrl>* FileSchemeHandler::trash(QUrl url) {
+tPromise<QUrl>* LocalFilesystemDirectory::trash(QString filename) {
     return TPROMISE_CREATE_NEW_THREAD(QUrl, {
         QString pathInTrash;
-        if (QFile::moveToTrash(url.toLocalFile(), &pathInTrash)) {
+        if (QFile::moveToTrash(QDir(d->url.toLocalFile()).absoluteFilePath(filename), &pathInTrash)) {
             res(QUrl::fromLocalFile(pathInTrash));
         } else {
             rej("Could not trash file");
@@ -158,16 +173,16 @@ tPromise<QUrl>* FileSchemeHandler::trash(QUrl url) {
     });
 }
 
-tPromise<void>* FileSchemeHandler::deleteFile(QUrl url) {
+tPromise<void>* LocalFilesystemDirectory::deleteFile(QString filename) {
     return TPROMISE_CREATE_NEW_THREAD(void, {
-        if (isFile(url)) {
-            if (QFile::remove(url.toLocalFile())) {
+        if (isFile(filename)) {
+            if (QFile::remove(QDir(d->url.toLocalFile()).absoluteFilePath(filename))) {
                 res();
             } else {
                 rej("Could not delete file");
             }
         } else {
-            QDir dir(url.toLocalFile());
+            QDir dir(QDir(d->url.toLocalFile()).absoluteFilePath(filename));
             if (dir.removeRecursively()) {
                 res();
             } else {
@@ -177,9 +192,9 @@ tPromise<void>* FileSchemeHandler::deleteFile(QUrl url) {
     });
 }
 
-bool FileSchemeHandler::canMove(QUrl from, QUrl to) {
-    if (from.scheme() != to.scheme()) return false;
-    QDir fromDir = QFileInfo(from.toLocalFile()).dir();
+bool LocalFilesystemDirectory::canMove(QString filename, QUrl to) {
+    if (to.scheme() != "file") return false;
+    QDir fromDir = QFileInfo(QDir(d->url.toLocalFile()).absoluteFilePath(filename)).dir();
     QDir toDir = QFileInfo(to.toLocalFile()).dir();
 
     QStorageInfo fromVol(fromDir);
@@ -188,24 +203,20 @@ bool FileSchemeHandler::canMove(QUrl from, QUrl to) {
     return fromVol.rootPath() == toVol.rootPath();
 }
 
-tPromise<void>* FileSchemeHandler::move(QUrl from, QUrl to) {
+tPromise<void>* LocalFilesystemDirectory::move(QString filename, QUrl to) {
     return TPROMISE_CREATE_NEW_THREAD(void, {
-        if (!canMove(from, to)) {
+        if (!canMove(filename, to)) {
             rej("Cannot move");
             return;
         }
 
-        QFile::rename(from.toLocalFile(), to.toLocalFile());
+        QFile::rename(QDir(d->url.toLocalFile()).absoluteFilePath(filename), to.toLocalFile());
 
         res();
     });
 }
 
-SchemePathWatcher* FileSchemeHandler::watch(QUrl url) {
-    return new FileSchemePathWatcher(url);
-}
-
-QVariant FileSchemeHandler::special(QString operation, QVariantMap args) {
+QVariant LocalFilesystemDirectory::special(QString operation, QVariantMap args) {
     Q_UNUSED(args);
     Q_UNUSED(operation);
     return QVariant();
@@ -213,13 +224,8 @@ QVariant FileSchemeHandler::special(QString operation, QVariantMap args) {
 
 FileSchemePathWatcher::FileSchemePathWatcher(QUrl url, QObject* parent) : SchemePathWatcher(parent) {
     d = new FileSchemePathWatcherPrivate();
-    d->watcher = new QFileSystemWatcher();
-    d->watcher->addPath(url.toLocalFile());
-    connect(d->watcher, &QFileSystemWatcher::directoryChanged, this, &FileSchemePathWatcher::changed);
-    connect(d->watcher, &QFileSystemWatcher::fileChanged, this, &FileSchemePathWatcher::changed);
 }
 
 FileSchemePathWatcher::~FileSchemePathWatcher() {
-    d->watcher->deleteLater();
     delete d;
 }

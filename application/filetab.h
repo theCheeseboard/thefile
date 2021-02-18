@@ -22,6 +22,7 @@
 
 #include <QWidget>
 #include <QUrl>
+#include <directory.h>
 
 namespace Ui {
     class FileTab;
@@ -41,6 +42,7 @@ class FileTab : public QWidget {
         };
 
         void setCurrentUrl(QUrl url);
+        void setCurrentDir(DirectoryPtr directory);
         QUrl currentUrl();
 
         QString tabTitle();

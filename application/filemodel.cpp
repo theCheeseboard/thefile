@@ -25,19 +25,18 @@
 #include <resourcemanager.h>
 
 struct FileModelPrivate {
-    QUrl currentPath;
-    QList<SchemeHandler::FileInformation> files;
-    SchemePathWatcher* watcher;
+    DirectoryPtr currentDir;
+    QList<Directory::FileInformation> files;
 
     QString currentError;
 };
 
-FileModel::FileModel(QUrl path, QObject* parent)
+FileModel::FileModel(DirectoryPtr directory, QObject* parent)
     : QAbstractListModel(parent) {
     d = new FileModelPrivate();
-    d->currentPath = path;
-    d->watcher = ResourceManager::watch(path);
-    connect(d->watcher, &SchemePathWatcher::changed, this, &FileModel::reloadData);
+    d->currentDir = directory;
+
+    connect(directory.data(), &Directory::contentsChanged, this, &FileModel::reloadData);
 
     reloadData();
 }
@@ -55,7 +54,7 @@ int FileModel::rowCount(const QModelIndex& parent) const {
 QVariant FileModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid()) return QVariant();
 
-    SchemeHandler::FileInformation file = d->files.at(index.row());
+    Directory::FileInformation file = d->files.at(index.row());
     switch (role) {
         case Qt::DisplayRole:
             return file.name;
@@ -65,6 +64,8 @@ QVariant FileModel::data(const QModelIndex& index, int role) const {
             return file.resource;
         case HiddenRole:
             return file.isHidden;
+        case PathSegmentRole:
+            return file.pathSegment;
     }
 
     return QVariant();
@@ -77,7 +78,7 @@ QString FileModel::currentError() {
 void FileModel::reloadData() {
     beginResetModel();
 
-    ResourceManager::list(d->currentPath, QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst)->then([ = ] (FileInformationList fileInfo) {
+    d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst)->then([ = ] (FileInformationList fileInfo) {
         d->files = fileInfo;
         if (d->files.isEmpty()) {
             d->currentError = "error.no-items";
