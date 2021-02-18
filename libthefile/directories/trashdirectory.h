@@ -17,33 +17,34 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef TRASHSCHEMEHANDLER_H
-#define TRASHSCHEMEHANDLER_H
-#if 0
+#ifndef TRASHDIRECTORY_H
+#define TRASHDIRECTORY_H
+
 #include "directory.h"
 
-struct TrashSchemeHandlerPrivate;
-class TrashSchemeHandler : public Directory {
+struct TrashDirectoryPrivate;
+class TrashDirectory : public Directory {
         Q_OBJECT
     public:
-        explicit TrashSchemeHandler(QObject* parent = nullptr);
-        ~TrashSchemeHandler();
+        explicit TrashDirectory(QUrl url, QObject* parent = nullptr);
+        ~TrashDirectory();
 
     signals:
 
     private:
-        TrashSchemeHandlerPrivate* d;
+        TrashDirectoryPrivate* d;
 
         QList<QDir> trashDirs();
 
-        QUrl trashedFile(QUrl url);
-        QUrl trashInfoFile(QUrl url);
+        QUrl trashedFile(QString filename);
+        QUrl trashInfoFile(QString filename);
 
-        FileInformation internalFileInformation(QUrl url);
+        FileInformation internalFileInformation(QString filename);
 
         // SchemeHandler interface
     public:
         bool isFile(QString filename);
+        QUrl url();
         tPromise<QList<FileInformation>>* list(QDir::Filters filters, QDir::SortFlags sortFlags);
         tPromise<FileInformation>* fileInformation(QString filename);
         tPromise<QIODevice*>* open(QString filename, QIODevice::OpenMode mode);
@@ -56,5 +57,5 @@ class TrashSchemeHandler : public Directory {
         QVariant special(QString operation, QVariantMap args);
 };
 Q_DECLARE_METATYPE(tPromise<void>*)
-#endif
-#endif // TRASHSCHEMEHANDLER_H
+
+#endif // TRASHDIRECTORY_H

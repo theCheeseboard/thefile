@@ -340,7 +340,7 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
                         QUrl dest = restorePath.toUrl();
 
                         //Prepare a move job
-                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, {url}, ResourceManager::directoryForUrl(dest), this->window());
+                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, {url}, ResourceManager::parentDirectoryForUrl(dest), this->window());
                         tJobManager::trackJobDelayed(job);
                     }
                 }

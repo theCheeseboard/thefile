@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2021 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,24 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "directory.h"
+#ifndef TRASHDIRECTORYHANDLER_H
+#define TRASHDIRECTORYHANDLER_H
 
-Directory::Directory(QObject* parent) : QObject(parent) {
+#include "directoryhandler.h"
 
-}
+class TrashDirectoryHandler : public DirectoryHandler {
+        Q_OBJECT
+    public:
+        explicit TrashDirectoryHandler(QObject* parent = nullptr);
+
+    signals:
+
+
+        // DirectoryHandler interface
+    public:
+        DirectoryPtr directoryForUrl(QUrl url);
+        DirectoryPtr parentDirectoryForUrl(QUrl url);
+        QString relativePath(QUrl from, QUrl to);
+};
+
+#endif // TRASHDIRECTORYHANDLER_H

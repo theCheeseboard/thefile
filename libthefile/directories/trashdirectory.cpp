@@ -17,34 +17,45 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "trashschemehandler.h"
-#if 0
+#include "trashdirectory.h"
+
 #include "localfilesystemdirectory.h"
 #include "resourcemanager.h"
 #include <QStandardPaths>
 #include <QFileIconProvider>
+#include <QFileInfo>
 
-struct TrashSchemeHandlerPrivate {
+struct TrashDirectoryPrivate {
     QFileIconProvider iconProvider;
+    QUrl url;
+
+    QFileSystemWatcher* watcher;
 };
 
-TrashSchemeHandler::TrashSchemeHandler(QObject* parent) : Directory(parent) {
-    d = new TrashSchemeHandlerPrivate();
+TrashDirectory::TrashDirectory(QUrl url, QObject* parent) : Directory(parent) {
+    d = new TrashDirectoryPrivate();
+    d->url = url;
+
+    d->watcher = new QFileSystemWatcher();
+    d->watcher->addPath(trashDirs().first().absoluteFilePath("info"));
+    connect(d->watcher, &QFileSystemWatcher::directoryChanged, this, &LocalFilesystemDirectory::contentsChanged);
+    connect(d->watcher, &QFileSystemWatcher::fileChanged, this, &LocalFilesystemDirectory::contentsChanged);
 }
 
-TrashSchemeHandler::~TrashSchemeHandler() {
+TrashDirectory::~TrashDirectory() {
+    d->watcher->deleteLater();
     delete d;
 }
 
-QList<QDir> TrashSchemeHandler::trashDirs() {
+QList<QDir> TrashDirectory::trashDirs() {
     QList<QDir> trashDirs;
     QString dataHome = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     trashDirs.append(QDir(dataHome).absoluteFilePath("Trash"));
     return trashDirs;
 }
 
-QUrl TrashSchemeHandler::trashedFile(QUrl url) {
-    QUrlQuery queryString(url);
+QUrl TrashDirectory::trashedFile(QString filename) {
+    QUrlQuery queryString(QByteArray::fromBase64(filename.toUtf8(), QByteArray::Base64UrlEncoding));
     if (queryString.hasQueryItem("trashedFile")) {
         //Open the trashed file
         return QUrl::fromLocalFile(queryString.queryItemValue("trashedFile"));
@@ -52,8 +63,8 @@ QUrl TrashSchemeHandler::trashedFile(QUrl url) {
     return QUrl();
 }
 
-QUrl TrashSchemeHandler::trashInfoFile(QUrl url) {
-    QUrlQuery queryString(url);
+QUrl TrashDirectory::trashInfoFile(QString filename) {
+    QUrlQuery queryString(QByteArray::fromBase64(filename.toUtf8(), QByteArray::Base64UrlEncoding));
     if (queryString.hasQueryItem("trashInfo")) {
         //Open the trashed file
         return QUrl::fromLocalFile(queryString.queryItemValue("trashInfo"));
@@ -61,9 +72,9 @@ QUrl TrashSchemeHandler::trashInfoFile(QUrl url) {
     return QUrl();
 }
 
-Directory::FileInformation TrashSchemeHandler::internalFileInformation(QUrl url) {
-    QFileInfo trashedFile(this->trashedFile(url).toLocalFile());
-    QFileInfo trashInfoFile(this->trashInfoFile(url).toLocalFile());
+Directory::FileInformation TrashDirectory::internalFileInformation(QString filename) {
+    QFileInfo trashedFile(this->trashedFile(filename).toLocalFile());
+    QFileInfo trashInfoFile(this->trashInfoFile(filename).toLocalFile());
 
     QSettings infoFile(trashInfoFile.filePath(), QSettings::IniFormat);
     infoFile.beginGroup("Trash Info");
@@ -74,21 +85,28 @@ Directory::FileInformation TrashSchemeHandler::internalFileInformation(QUrl url)
     fileInformation.name = restoreUrl.fileName();
     fileInformation.isHidden = false;
     fileInformation.icon = d->iconProvider.icon(trashedFile);
-    fileInformation.resource = url;
+    fileInformation.resource = QUrl("trash:///" + filename);
     fileInformation.size = trashedFile.size();
+    fileInformation.pathSegment = filename;
+    fileInformation.filenameForFileOperations = restoreUrl.fileName();
 
     return fileInformation;
 }
 
-bool TrashSchemeHandler::isFile(QString filename) {
-    return filename.hasQuery();
+bool TrashDirectory::isFile(QString filename) {
+//    return filename.hasQuery();
+    return true;
 }
 
-tPromise<QList<Directory::FileInformation>>* TrashSchemeHandler::list(QDir::Filters filters, QDir::SortFlags sortFlags) {
+QUrl TrashDirectory::url() {
+    return d->url;
+}
+
+tPromise<QList<Directory::FileInformation>>* TrashDirectory::list(QDir::Filters filters, QDir::SortFlags sortFlags) {
     return TPROMISE_CREATE_NEW_THREAD(FileInformationList, {
         Q_UNUSED(rej)
 
-        if (url.path() == "/" || url.path().isEmpty()) {
+        if (d->url.path() == "/" || d->url.path().isEmpty()) {
             FileInformationList information;
             for (QDir trashDir : trashDirs()) {
                 QDir infoDir = trashDir.absoluteFilePath("info");
@@ -106,7 +124,7 @@ tPromise<QList<Directory::FileInformation>>* TrashSchemeHandler::list(QDir::Filt
                     queryString.setQueryItems({{"trashInfo", file.filePath()}, {"trashedFile", trashedFile.filePath()}});
                     resource.setQuery(queryString);
 
-                    information.append(internalFileInformation(resource));
+                    information.append(internalFileInformation(queryString.toString().toUtf8().toBase64(QByteArray::Base64UrlEncoding)));
                 }
 
             }
@@ -117,18 +135,18 @@ tPromise<QList<Directory::FileInformation>>* TrashSchemeHandler::list(QDir::Filt
     });
 }
 
-tPromise<Directory::FileInformation>* TrashSchemeHandler::fileInformation(QString filename) {
+tPromise<Directory::FileInformation>* TrashDirectory::fileInformation(QString filename) {
     return TPROMISE_CREATE_SAME_THREAD(FileInformation, {
         Q_UNUSED(rej);
-        res(internalFileInformation(url));
+        res(internalFileInformation(filename));
     });
 }
 
-tPromise<QIODevice*>* TrashSchemeHandler::open(QString filename, QIODevice::OpenMode mode) {
+tPromise<QIODevice*>* TrashDirectory::open(QString filename, QIODevice::OpenMode mode) {
     QUrl trashedFile = this->trashedFile(filename);
     if (trashedFile.isValid()) {
         //Open the trashed file
-        return ResourceManager::open(trashedFile, mode);
+        return ResourceManager::parentDirectoryForUrl(trashedFile)->open(trashedFile.fileName(), mode);
     }
     return TPROMISE_CREATE_SAME_THREAD(QIODevice*, {
         Q_UNUSED(res);
@@ -136,19 +154,19 @@ tPromise<QIODevice*>* TrashSchemeHandler::open(QString filename, QIODevice::Open
     });
 }
 
-tPromise<void>* TrashSchemeHandler::mkpath(QString filename) {
+tPromise<void>* TrashDirectory::mkpath(QString filename) {
     return TPROMISE_CREATE_SAME_THREAD(void, {
         Q_UNUSED(res);
         rej("Operation not supported");
     });
 }
 
-bool TrashSchemeHandler::canTrash(QString filename) {
+bool TrashDirectory::canTrash(QString filename) {
     Q_UNUSED(filename);
     return false;
 }
 
-tPromise<QUrl>* TrashSchemeHandler::trash(QString filename) {
+tPromise<QUrl>* TrashDirectory::trash(QString filename) {
     Q_UNUSED(filename);
     return TPROMISE_CREATE_SAME_THREAD(QUrl, {
         Q_UNUSED(res);
@@ -156,7 +174,7 @@ tPromise<QUrl>* TrashSchemeHandler::trash(QString filename) {
     });
 }
 
-tPromise<void>* TrashSchemeHandler::deleteFile(QString filename) {
+tPromise<void>* TrashDirectory::deleteFile(QString filename) {
     QUrl trashedFile = this->trashedFile(filename);
     QUrl trashInfoFile = this->trashInfoFile(filename);
 
@@ -165,7 +183,11 @@ tPromise<void>* TrashSchemeHandler::deleteFile(QString filename) {
             Q_UNUSED(rej)
 
             //Delete the trash info files
-            QFile::remove(trashedFile.toLocalFile());
+            if (QFileInfo(trashedFile.toLocalFile()).isDir()) {
+                QDir(trashedFile.toLocalFile()).removeRecursively();
+            } else {
+                QFile::remove(trashedFile.toLocalFile());
+            }
             QFile::remove(trashInfoFile.toLocalFile());
             res();
         });
@@ -176,20 +198,20 @@ tPromise<void>* TrashSchemeHandler::deleteFile(QString filename) {
     });
 }
 
-bool TrashSchemeHandler::canMove(QString filename, QUrl to) {
+bool TrashDirectory::canMove(QString filename, QUrl to) {
     QUrl trashedFile = this->trashedFile(filename);
     if (trashedFile.isValid()) {
-        return ResourceManager::canMove(trashedFile, to);
+        return ResourceManager::parentDirectoryForUrl(trashedFile)->canMove(trashedFile.fileName(), to);
     }
     return false;
 }
 
-tPromise<void>* TrashSchemeHandler::move(QString filename, QUrl to) {
+tPromise<void>* TrashDirectory::move(QString filename, QUrl to) {
     QUrl trashedFile = this->trashedFile(filename);
     QUrl trashInfoFile = this->trashInfoFile(filename);
     if (trashedFile.isValid() && trashInfoFile.isValid()) {
         return TPROMISE_CREATE_SAME_THREAD_WITH_CALLBACK_NAMES(void, outerRes, outerRej, {
-            ResourceManager::move(trashedFile, to)->then([ = ] {
+            ResourceManager::parentDirectoryForUrl(trashedFile)->move(trashedFile.fileName(), to)->then([ = ] {
                 QFile::remove(trashInfoFile.toLocalFile());
                 outerRes();
             })->error(outerRej);
@@ -201,14 +223,10 @@ tPromise<void>* TrashSchemeHandler::move(QString filename, QUrl to) {
     });
 }
 
-SchemePathWatcher* TrashSchemeHandler::watch(QUrl url) {
-    return new FileSchemePathWatcher(QUrl::fromLocalFile(trashDirs().first().absoluteFilePath("info")));
-}
-
-QVariant TrashSchemeHandler::special(QString operation, QVariantMap args) {
+QVariant TrashDirectory::special(QString operation, QVariantMap args) {
     if (operation == "restorePath") {
         QUrl url = args.value("url").toUrl();
-        QUrl trashInfoFile = this->trashInfoFile(url);
+        QUrl trashInfoFile = this->trashInfoFile(url.fileName());
         if (trashInfoFile.isValid()) {
             QSettings infoFile(trashInfoFile.toLocalFile(), QSettings::IniFormat);
             infoFile.beginGroup("Trash Info");
@@ -220,4 +238,3 @@ QVariant TrashSchemeHandler::special(QString operation, QVariantMap args) {
     }
     return QVariant();
 }
-#endif

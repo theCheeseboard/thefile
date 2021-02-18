@@ -21,7 +21,7 @@
 
 #include <QMap>
 #include "directoryHandlers/localfiledirectoryhandler.h"
-//#include "schemeHandlers/trashschemehandler.h"
+#include "directoryHandlers/trashdirectoryhandler.h"
 
 struct ResourceManagerPrivate {
     QList<DirectoryHandler*> schemeHandlers;
@@ -30,7 +30,7 @@ struct ResourceManagerPrivate {
 ResourceManager::ResourceManager(QObject* parent) : QObject(parent) {
     d = new ResourceManagerPrivate();
     registerDirectoryHandler(new LocalFileDirectoryHandler());
-//    registerSchemeHandler("trash", new TrashSchemeHandler());
+    registerDirectoryHandler(new TrashDirectoryHandler());
 }
 
 ResourceManager* ResourceManager::instance() {

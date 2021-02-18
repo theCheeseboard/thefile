@@ -22,17 +22,6 @@
 
 #include "directory.h"
 
-struct FileSchemePathWatcherPrivate;
-class FileSchemePathWatcher : public SchemePathWatcher {
-        Q_OBJECT
-    public:
-        explicit FileSchemePathWatcher(QUrl url, QObject* parent = nullptr);
-        ~FileSchemePathWatcher();
-
-    private:
-        FileSchemePathWatcherPrivate* d;
-};
-
 struct LocalFilesystemDirectoryPrivate;
 class LocalFilesystemDirectory : public Directory {
         Q_OBJECT
@@ -45,6 +34,8 @@ class LocalFilesystemDirectory : public Directory {
 
     private:
         LocalFilesystemDirectoryPrivate* d;
+
+        static bool canMove(QUrl from, QString filename, QUrl to);
 
         // Directory interface
     public:

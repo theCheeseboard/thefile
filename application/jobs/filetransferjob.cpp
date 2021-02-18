@@ -135,10 +135,13 @@ void FileTransferJob::fileDiscovery() {
         //TODO: Automatically rename files if a copy exists
 
         DiscoveryResults results;
-        for (QUrl baseUrl : d->source) {
+        for (QUrl baseUrl : qAsConst(d->source)) {
             DirectoryPtr baseDirectory = ResourceManager::parentDirectoryForUrl(baseUrl);
+            Directory::FileInformation baseFileInfo = baseDirectory->fileInformation(baseUrl.fileName())->await().result;
+
             if (baseDirectory->isFile(baseUrl.fileName())) {
-                QUrl relativePath(baseUrl.path().remove(baseUrl.resolved(QUrl(".")).path()));
+//                QUrl relativePath(baseUrl.path().remove(baseUrl.resolved(QUrl(".")).path()));
+                QUrl relativePath(baseFileInfo.filenameForFileOperations);
 
                 QUrl destUrl = d->destination->url();
                 if (!destUrl.path().endsWith("/")) destUrl.setPath(destUrl.path() + "/");
@@ -159,8 +162,10 @@ void FileTransferJob::fileDiscovery() {
                 while (!sourceUrls.isEmpty()) {
                     QUrl sourceUrl = sourceUrls.takeFirst();
                     DirectoryPtr sourceDirectory = ResourceManager::parentDirectoryForUrl(sourceUrl);
+                    Directory::FileInformation sourceFileInfo = baseDirectory->fileInformation(sourceUrl.fileName())->await().result;
                     if (sourceDirectory->isFile(sourceUrl.fileName())) {
-                        QString relativePathString = sourceUrl.path().remove(baseUrl.resolved(QUrl(".")).path());
+                        QString relativePathString = sourceUrl.path().remove(baseUrl.resolved(QUrl(".")).path()).chopped(sourceFileInfo.pathSegment.length()).append(sourceFileInfo.filenameForFileOperations);
+//                        QString relativePathString = sourceFileInfo.filenameForFileOperations;
                         if (relativePathString.startsWith("/")) relativePathString.remove(0, 1);
 
                         QUrl destUrl = d->destination->url();

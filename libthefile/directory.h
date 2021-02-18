@@ -25,16 +25,6 @@
 #include <QUrl>
 #include <QDir>
 #include <tpromise.h>
-
-class SchemePathWatcher : public QObject {
-        Q_OBJECT
-    public:
-        explicit SchemePathWatcher(QObject* parent = nullptr);
-
-    signals:
-        void changed();
-};
-
 class Directory : public QObject {
         Q_OBJECT
     public:
@@ -46,6 +36,7 @@ class Directory : public QObject {
             QUrl resource;
             quint64 size;
             QString pathSegment;
+            QString filenameForFileOperations;
 
             bool isHidden;
         };

@@ -57,6 +57,8 @@ void FileTab::setCurrentUrl(QUrl url) {
 }
 
 void FileTab::setCurrentDir(DirectoryPtr directory) {
+    if (!directory) return;
+
     QList<DirectoryPtr> directories;
     directories.append(directory);
 

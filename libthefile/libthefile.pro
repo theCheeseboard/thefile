@@ -11,17 +11,19 @@ CONFIG += c++11
 
 SOURCES += \
     directories/localfilesystemdirectory.cpp \
-    directories/trashschemehandler.cpp \
+    directories/trashdirectory.cpp \
     directory.cpp \
     directoryHandlers/localfiledirectoryhandler.cpp \
+    directoryHandlers/trashdirectoryhandler.cpp \
     directoryhandler.cpp \
     resourcemanager.cpp
 
 HEADERS += \
     directories/localfilesystemdirectory.h \
-    directories/trashschemehandler.h \
+    directories/trashdirectory.h \
     directory.h \
     directoryHandlers/localfiledirectoryhandler.h \
+    directoryHandlers/trashdirectoryhandler.h \
     directoryhandler.h \
     libthefile_global.h \
     resourcemanager.h
