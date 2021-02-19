@@ -33,6 +33,7 @@
 #include <tpopover.h>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QShortcut>
 #include <MimeAssociations/mimeassociationmanager.h>
 #include "hiddenfilesproxymodel.h"
 #include "jobs/filetransferjob.h"
@@ -59,6 +60,24 @@ FileColumn::FileColumn(DirectoryPtr directory, QWidget* parent) :
     ui->folderView->setModel(d->proxy);
     ui->folderView->setItemDelegate(new FileDelegate(this));
     ui->folderView->viewport()->installEventFilter(this);
+
+    QShortcut* copyShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_C), this);
+    connect(copyShortcut, &QShortcut::activated, this, &FileColumn::copy);
+    QShortcut* cutShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_X), this);
+    connect(cutShortcut, &QShortcut::activated, this, &FileColumn::cut);
+    QShortcut* pasteShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_V), this);
+    connect(pasteShortcut, &QShortcut::activated, this, &FileColumn::paste);
+    QShortcut* deleteShortcut = new QShortcut(QKeySequence(Qt::Key_Delete), this);
+    connect(deleteShortcut, &QShortcut::activated, this, [ = ] {
+        if (d->directory->url().scheme() == "trash") {
+            //Delete Permanently
+            deleteFile();
+        } else {
+            moveToTrash();
+        }
+    });
+    QShortcut* deletePermanentlyShortcut = new QShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete), this);
+    connect(deletePermanentlyShortcut, &QShortcut::activated, this, &FileColumn::deleteFile);
 
     reload();
 }
@@ -173,6 +192,8 @@ void FileColumn::moveToTrash() {
     toast->setText(tr("Moved %n items to the trash", nullptr, sel.count()));
     connect(toast, &tToast::dismissed, toast, &tToast::deleteLater);
     toast->show(this->window());
+
+    emit navigate(d->directory);
 }
 
 void FileColumn::deleteFile() {
@@ -191,6 +212,8 @@ void FileColumn::deleteFile() {
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
     popover->show(this->window());
+
+    emit navigate(d->directory);
 }
 
 void FileColumn::rename() {
@@ -234,7 +257,13 @@ void FileColumn::reload() {
 
 void FileColumn::updateItems() {
     QString error = d->model->currentError();
-    if (error.isEmpty()) {
+    if (d->model->isFile()) {
+        ResourceManager::parentDirectoryForUrl(d->directory->url())->fileInformation(d->directory->url().fileName())->then([ = ] (Directory::FileInformation fileInfo) {
+            ui->fileIconLabel->setPixmap(fileInfo.icon.pixmap(SC_DPI_T(QSize(128, 128), QSize)));
+            ui->filenameLabel->setText(fileInfo.name);
+            ui->stackedWidget->setCurrentWidget(ui->filePage);
+        });
+    } else if (error.isEmpty()) {
         ui->stackedWidget->setCurrentWidget(ui->folderPage);
     } else {
         QIcon icon;
@@ -370,7 +399,7 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
 
         //TODO: Asynchronous
         DirectoryPtr dir = ResourceManager::directoryForUrl(url);
-        if (dir->exists()->await().result) {
+        if (dir && dir->exists()->await().result) {
             menu->addSeparator();
             menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"));
         }
@@ -415,4 +444,8 @@ bool FileColumn::eventFilter(QObject* watched, QEvent* event) {
         }
     }
     return false;
+}
+
+void FileColumn::on_openFileButton_clicked() {
+    QDesktopServices::openUrl(d->directory->url());
 }

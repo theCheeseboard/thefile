@@ -99,6 +99,9 @@ void MainWindow::newTab() {
     connect(ui->stackedWidget, &tStackedWidget::switchingFrame, button, [ = ](int frame) {
         if (ui->stackedWidget->widget(frame) == tab) button->setChecked(true);
     });
+    connect(ui->stackedWidget, &tStackedWidget::currentChanged, button, [ = ](int frame) {
+        if (ui->stackedWidget->widget(frame) == tab) button->setChecked(true);
+    });
     connect(tab, &FileTab::tabTitleChanged, this, [ = ] {
         button->setText(tab->tabTitle());
     });
@@ -108,6 +111,8 @@ void MainWindow::newTab() {
         button->deleteLater();
         tab->deleteLater();
     });
+
+    ui->stackedWidget->setCurrentWidget(tab);
 }
 
 void MainWindow::on_actionExit_triggered() {

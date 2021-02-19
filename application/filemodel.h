@@ -45,7 +45,12 @@ class FileModel : public QAbstractListModel {
         QMimeData* mimeData(const QModelIndexList& indexes) const override;
         Qt::ItemFlags flags(const QModelIndex& index) const override;
 
+        bool isFile();
+
         QString currentError();
+
+    signals:
+        void isFileChanged();
 
     private:
         FileModelPrivate* d;

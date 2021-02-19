@@ -27,6 +27,7 @@
 struct FileModelPrivate {
     DirectoryPtr currentDir;
     QList<Directory::FileInformation> files;
+    bool isFile = false;
 
     QString currentError;
 };
@@ -92,6 +93,10 @@ void FileModel::reloadData() {
         d->currentError = error;
         endResetModel();
     });
+    d->currentDir->exists()->then([ = ](bool exists) {
+        d->isFile = !exists;
+        emit isFileChanged();
+    });
 }
 
 
@@ -115,4 +120,8 @@ QMimeData* FileModel::mimeData(const QModelIndexList& indexes) const {
 
 Qt::ItemFlags FileModel::flags(const QModelIndex& index) const {
     return QAbstractListModel::flags(index);
+}
+
+bool FileModel::isFile() {
+    return d->isFile;
 }

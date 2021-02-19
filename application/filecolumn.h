@@ -61,6 +61,8 @@ class FileColumn : public QWidget {
 
         void on_folderView_doubleClicked(const QModelIndex& index);
 
+        void on_openFileButton_clicked();
+
     private:
         Ui::FileColumn* ui;
         FileColumnPrivate* d;

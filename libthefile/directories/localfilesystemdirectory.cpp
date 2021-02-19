@@ -125,12 +125,13 @@ tPromise<Directory::FileInformation>* LocalFilesystemDirectory::fileInformation(
         Q_UNUSED(rej)
 
         QFileInfo file(QDir(url.toLocalFile()).absoluteFilePath(filename));
+        QFileIconProvider provider;
 
         FileInformation fileInfo;
         fileInfo.name = file.fileName();
         fileInfo.resource = QUrl::fromLocalFile(file.filePath());
         fileInfo.size = file.size();
-        fileInfo.icon = d->iconProvider.icon(file);
+        fileInfo.icon = provider.icon(file);
         fileInfo.isHidden = file.isHidden();
         fileInfo.pathSegment = file.fileName();
         fileInfo.filenameForFileOperations = file.fileName();
