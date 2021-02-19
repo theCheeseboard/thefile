@@ -218,6 +218,12 @@ bool LocalFilesystemDirectory::canMove(QUrl from, QString filename, QUrl to) {
     return fromVol.rootPath() == toVol.rootPath();
 }
 
+tPromise<bool>* LocalFilesystemDirectory::exists() {
+    return TPROMISE_CREATE_SAME_THREAD(bool, {
+        res(QFileInfo(d->url.toLocalFile()).isDir());
+    });
+}
+
 tPromise<void>* LocalFilesystemDirectory::move(QString filename, QUrl to) {
     QUrl url = d->url;
     return TPROMISE_CREATE_NEW_THREAD(void, {

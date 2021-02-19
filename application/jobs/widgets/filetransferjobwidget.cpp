@@ -67,17 +67,12 @@ FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* pare
         });
     }, Qt::QueuedConnection);
     connect(job, &FileTransferJob::transferStageChanged, this, TransferStageChangedHandler, Qt::QueuedConnection);
-    connect(job, &FileTransferJob::stateChanged, this, [ = ](tJob::State state) {
-        if (job->cancelled() || state != tJob::Processing) {
-            ui->cancelButton->setEnabled(false);
-        } else {
-            ui->cancelButton->setEnabled(true);
-        }
-    }, Qt::QueuedConnection);
+    connect(job, &FileTransferJob::stateChanged, this, &FileTransferJobWidget::updateState, Qt::QueuedConnection);
+    updateState();
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
 
-    this->setFixedHeight(ui->stackedWidget->currentWidget()->sizeHint().height());
+    this->setFixedHeight(ui->stackedWidget->widget(ui->stackedWidget->currentIndex())->sizeHint().height());
 }
 
 FileTransferJobWidget::~FileTransferJobWidget() {
@@ -100,7 +95,7 @@ void FileTransferJobWidget::on_replaceAllConflictsButton_clicked() {
 void FileTransferJobWidget::on_skipAllConflictsButton_clicked() {
     //Resolve each conflict with an invalid URL
     QMap<QUrl, QUrl> conflicting = d->job->conflictingFiles();
-    for (QUrl source : conflicting.keys()) {
+    for (const QUrl& source : conflicting.keys()) {
         d->job->resolveConflict(source, QUrl());
     }
 }
@@ -126,6 +121,22 @@ void FileTransferJobWidget::performResize() {
         d->heightAnim = nullptr;
     });
     d->heightAnim->start();
+}
+
+void FileTransferJobWidget::updateState() {
+    if (d->job->cancelled() || d->job->state() != tJob::Processing) {
+        ui->cancelButton->setEnabled(false);
+    } else {
+        ui->cancelButton->setEnabled(true);
+    }
+
+    if (d->job->state() == tJob::Failed || d->job->state() == tJob::Finished) {
+        ui->progressWidget->setVisible(false);
+    } else {
+        ui->progressWidget->setVisible(true);
+    }
+
+    performResize();
 }
 
 void FileTransferJobWidget::on_cancelButton_clicked() {

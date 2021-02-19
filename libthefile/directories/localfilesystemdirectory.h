@@ -39,6 +39,7 @@ class LocalFilesystemDirectory : public Directory {
 
         // Directory interface
     public:
+        tPromise<bool>* exists();
         bool isFile(QString filename);
         QUrl url();
         tPromise<FileInformationList>* list(QDir::Filters filters, QDir::SortFlags sortFlags);

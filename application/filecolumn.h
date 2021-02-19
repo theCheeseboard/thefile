@@ -65,6 +65,8 @@ class FileColumn : public QWidget {
         Ui::FileColumn* ui;
         FileColumnPrivate* d;
 
+        bool eventFilter(QObject* watched, QEvent* event);
+
         void reload();
         void updateItems();
 

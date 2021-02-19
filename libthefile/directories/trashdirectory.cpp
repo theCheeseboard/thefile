@@ -93,6 +93,12 @@ Directory::FileInformation TrashDirectory::internalFileInformation(QString filen
     return fileInformation;
 }
 
+tPromise<bool>* TrashDirectory::exists() {
+    return TPROMISE_CREATE_SAME_THREAD(bool, {
+        res(d->url.path() == "/");
+    });
+}
+
 bool TrashDirectory::isFile(QString filename) {
 //    return filename.hasQuery();
     return true;

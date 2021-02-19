@@ -42,6 +42,7 @@ class Directory : public QObject {
         };
 
 
+        virtual tPromise<bool>* exists() = 0;
         virtual bool isFile(QString path) = 0;
         virtual QUrl url() = 0;
         virtual tPromise<QList<FileInformation>>* list(QDir::Filters filters, QDir::SortFlags sortFlags) = 0;

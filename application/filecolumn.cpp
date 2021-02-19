@@ -43,6 +43,8 @@ struct FileColumnPrivate {
     QUrl selectedUrl;
     FileModel* model = nullptr;
     HiddenFilesProxyModel* proxy;
+
+    bool listenToSelection = true;
 };
 
 FileColumn::FileColumn(DirectoryPtr directory, QWidget* parent) :
@@ -53,10 +55,10 @@ FileColumn::FileColumn(DirectoryPtr directory, QWidget* parent) :
     d = new FileColumnPrivate();
     d->directory = directory;
 
-    d->proxy = new HiddenFilesProxyModel();
+    d->proxy = new HiddenFilesProxyModel(this);
     ui->folderView->setModel(d->proxy);
-
-    ui->folderView->setItemDelegate(new FileDelegate());
+    ui->folderView->setItemDelegate(new FileDelegate(this));
+    ui->folderView->viewport()->installEventFilter(this);
 
     reload();
 }
@@ -99,7 +101,7 @@ void FileColumn::cut() {
 
     QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
     QList<QUrl> urls;
-    for (QModelIndex index : sel) {
+    for (QModelIndex index : qAsConst(sel)) {
         urls.append(index.data(FileModel::UrlRole).toUrl());
     }
     clipboardData.append(QUrl::toStringList(urls));
@@ -120,7 +122,7 @@ void FileColumn::copy() {
 
     QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
     QList<QUrl> urls;
-    for (QModelIndex index : sel) {
+    for (QModelIndex index : qAsConst(sel)) {
         urls.append(index.data(FileModel::UrlRole).toUrl());
     }
     clipboardData.append(QUrl::toStringList(urls));
@@ -220,9 +222,12 @@ void FileColumn::reload() {
 
     d->proxy->setSourceModel(d->model);
     ui->folderNameLabel->setText(columnTitle());
-    connect(ui->folderView->selectionModel(), &QItemSelectionModel::currentChanged, this, [ = ] {
-        if (ui->folderView->currentIndex().isValid()) {
+    connect(ui->folderView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [ = ] {
+        if (!d->listenToSelection) return;
+        if (ui->folderView->selectionModel()->selectedIndexes().count() == 1) {
             emit navigate(ResourceManager::directoryForUrl(ui->folderView->currentIndex().data(FileModel::UrlRole).toUrl()));
+        } else if (ui->folderView->selectionModel()->selectedIndexes().isEmpty()) {
+            emit navigate(d->directory);
         }
     });
 }
@@ -272,6 +277,7 @@ void FileColumn::addFolderMenuItems(QMenu* menu) {
 }
 
 void FileColumn::ensureUrlSelected() {
+    d->listenToSelection = false;
     if (d->selectedUrl.isValid()) {
         for (int i = 0; i < ui->folderView->model()->rowCount(); i++) {
             QModelIndex index = ui->folderView->model()->index(i, 0);
@@ -283,6 +289,7 @@ void FileColumn::ensureUrlSelected() {
     } else {
         ui->folderView->clearSelection();
     }
+    d->listenToSelection = true;
 }
 
 void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
@@ -358,6 +365,17 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
         }
     }
 
+    if (sel.count() == 1) {
+        QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
+
+        //TODO: Asynchronous
+        DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+        if (dir->exists()->await().result) {
+            menu->addSeparator();
+            menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"));
+        }
+    }
+
     addFolderMenuItems(menu);
 
     menu->popup(ui->folderView->mapToGlobal(pos));
@@ -373,7 +391,28 @@ void FileColumn::on_folderErrorPage_customContextMenuRequested(const QPoint& pos
 
 void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
     QUrl url = index.data(FileModel::UrlRole).toUrl();
-    if (!ResourceManager::directoryForUrl(url)) {
+    DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+    if (dir) {
+        dir->exists()->then([ = ](bool exists) {
+            if (!exists) {
+                QDesktopServices::openUrl(url);
+            }
+        });
+    } else {
         QDesktopServices::openUrl(url);
     }
+}
+
+bool FileColumn::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->folderView->viewport()) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            QMouseEvent* e = static_cast<QMouseEvent*>(event);
+            if (!ui->folderView->indexAt(e->pos()).isValid()) {
+                ui->folderView->selectionModel()->clear();
+                ui->folderView->selectionModel()->clear();
+                return true;
+            }
+        }
+    }
+    return false;
 }

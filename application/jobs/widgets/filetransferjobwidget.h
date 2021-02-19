@@ -51,6 +51,7 @@ class FileTransferJobWidget : public QWidget {
         FileTransferJobWidgetPrivate* d;
 
         void performResize();
+        void updateState();
 };
 
 #endif // FILETRANSFERJOBWIDGET_H

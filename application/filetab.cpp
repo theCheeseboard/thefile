@@ -31,6 +31,7 @@
 #include <resourcemanager.h>
 
 struct FileTabPrivate {
+    DirectoryPtr currentDirectory;
     QList<DirectoryPtr> currentColumns;
     QList<FileColumn*> currentColumnWidgets;
 };
@@ -58,6 +59,8 @@ void FileTab::setCurrentUrl(QUrl url) {
 
 void FileTab::setCurrentDir(DirectoryPtr directory) {
     if (!directory) return;
+
+    d->currentDirectory = directory;
 
     QList<DirectoryPtr> directories;
     directories.append(directory);
@@ -175,7 +178,7 @@ void FileTab::closeTab() {
 }
 
 FileTab::ViewType FileTab::effectiveViewType() {
-    if (currentUrl().scheme() == "trash") {
+    if (d->currentDirectory->url().scheme() == "trash") {
         return Trash;
     } else {
         return Columns;

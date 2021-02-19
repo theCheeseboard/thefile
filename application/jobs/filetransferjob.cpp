@@ -25,6 +25,7 @@
 #include <tpromise.h>
 #include <resourcemanager.h>
 #include <tlogger.h>
+#include <tnotification.h>
 #include "widgets/filetransferjobwidget.h"
 
 struct FileTransferJobPrivate {
@@ -254,6 +255,18 @@ void FileTransferJob::conflictCheck() {
 
             if (d->timer.elapsed() < 2000 && d->jobsPopover) {
                 tJobManager::showJobsPopover(d->jobsPopover);
+            } else {
+                tNotification* n = new tNotification();
+                n->setSummary(tr("File Conflicts"));
+                n->setText(tr("%n files in the destination folder have the same file name. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
+                n->insertAction("resolve", tr("Resolve File Conflicts"));
+                connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
+                    if (key == "resolve") {
+                        tJobManager::showJobsPopover(d->jobsPopover);
+                        d->jobsPopover->window()->activateWindow();
+                    }
+                });
+                n->post();
             }
         }
     });
@@ -294,8 +307,22 @@ void FileTransferJob::transferNextFile() {
         d->state = Finished;
         emit stateChanged(Finished);
 
-        d->description = tr("Copied %n files", nullptr, d->totalFilesTransferred);
+        QString notificationText;
+        if (d->type == Move) {
+            d->description = tr("Moved %n files", nullptr, d->totalFilesTransferred);
+            notificationText = tr("Successfully moved %n files", nullptr, d->totalFilesTransferred);
+        } else if (d->type == Copy) {
+            d->description = tr("Copied %n files", nullptr, d->totalFilesTransferred);
+            notificationText = tr("Successfully copied %n files", nullptr, d->totalFilesTransferred);
+        }
         emit descriptionChanged(d->description);
+
+        if (d->timer.elapsed() >= 2000) {
+            tNotification* n = new tNotification();
+            n->setSummary(tr("Files Transferred"));
+            n->setText(notificationText);
+            n->post();
+        }
     } else {
         QUrl sourceUrl = d->sourceMappings.keys().first();
         QUrl destinationUrl = d->sourceMappings.take(sourceUrl);

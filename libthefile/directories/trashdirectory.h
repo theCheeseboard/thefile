@@ -43,6 +43,7 @@ class TrashDirectory : public Directory {
 
         // SchemeHandler interface
     public:
+        tPromise<bool>* exists();
         bool isFile(QString filename);
         QUrl url();
         tPromise<QList<FileInformation>>* list(QDir::Filters filters, QDir::SortFlags sortFlags);
