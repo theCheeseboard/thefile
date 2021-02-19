@@ -36,6 +36,7 @@ class LocalFilesystemDirectory : public Directory {
         LocalFilesystemDirectoryPrivate* d;
 
         static bool canMove(QUrl from, QString filename, QUrl to);
+        FileInformation fileInfo(QFileInfo file);
 
         // Directory interface
     public:

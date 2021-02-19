@@ -253,12 +253,13 @@ void FileTransferJob::conflictCheck() {
             d->description = tr("Waiting for conflict resolution");
             emit descriptionChanged(d->description);
 
-            if (d->timer.elapsed() < 2000 && d->jobsPopover) {
+            if (d->timer.elapsed() < 2000 && d->jobsPopover && false) {
                 tJobManager::showJobsPopover(d->jobsPopover);
             } else {
                 tNotification* n = new tNotification();
                 n->setSummary(tr("File Conflicts"));
-                n->setText(tr("%n files in the destination folder have the same file name. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
+                n->setText(tr("%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
+//                n->setText(tr("Transferring files will result in %n files coexisting with the same name in the destination. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
                 n->insertAction("resolve", tr("Resolve File Conflicts"));
                 connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
                     if (key == "resolve") {

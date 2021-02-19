@@ -40,7 +40,7 @@ FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* pare
     auto TransferStageChangedHandler = [ = ](FileTransferJob::TransferStage stage) {
         if (stage == FileTransferJob::ConflictResolution) {
             ui->stackedWidget->setCurrentWidget(ui->conflictResolutionPage);
-            ui->conflictDescriptionLabel->setText(tr("%n files in the destination folder have the same file name", nullptr, job->conflictingFiles().count()));
+            ui->conflictDescriptionLabel->setText(tr("%n files in the destination folder have the same file name as files being transferred", nullptr, job->conflictingFiles().count()));
         } else {
             ui->stackedWidget->setCurrentWidget(ui->progressPage);
         }

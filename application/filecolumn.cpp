@@ -38,12 +38,15 @@
 #include "hiddenfilesproxymodel.h"
 #include "jobs/filetransferjob.h"
 #include "popovers/deletepermanentlypopover.h"
+#include "filecolumnaction.h"
 
 struct FileColumnPrivate {
     DirectoryPtr directory;
     QUrl selectedUrl;
     FileModel* model = nullptr;
     HiddenFilesProxyModel* proxy;
+
+    QList<FileColumnAction*> actions;
 
     bool listenToSelection = true;
 };
@@ -288,6 +291,25 @@ void FileColumn::updateItems() {
         theLibsGlobal::tintImage(iconImage, this->palette().color(QPalette::WindowText));
         ui->folderErrorIcon->setPixmap(QPixmap::fromImage(iconImage));
         ui->stackedWidget->setCurrentWidget(ui->folderErrorPage);
+    }
+
+    //Add actions
+    for (FileColumnAction* action : d->actions) {
+        ui->actionsLayout->removeWidget(action);
+        action->deleteLater();
+    }
+    d->actions.clear();
+
+    if (d->directory->url().scheme() == "trash") {
+        FileColumnAction* trashAction = new FileColumnAction(this);
+        trashAction->setText(tr("Trash"));
+        trashAction->setButtonText(tr("Empty Trash"));
+        connect(trashAction, &FileColumnAction::actionClicked, this, [ = ] {
+            ui->folderView->selectAll();
+            deleteFile();
+        });
+        ui->actionsLayout->addWidget(trashAction);
+        d->actions.append(trashAction);
     }
 }
 

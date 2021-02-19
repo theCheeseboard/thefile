@@ -49,7 +49,7 @@ Sidebar::Sidebar(QWidget* parent) :
         QUrl location;
     };
 
-    for (Place place : QList<Place>({
+    for (const Place& place : QList<Place>({
     {tr("Home"), QIcon::fromTheme("go-home"), QUrl::fromLocalFile(QDir::homePath())},
         {tr("Documents"), QIcon::fromTheme("folder-documents"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))},
         {tr("Downloads"), QIcon::fromTheme("folder-downloads"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))},

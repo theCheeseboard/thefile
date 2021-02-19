@@ -61,6 +61,13 @@
       </widget>
      </item>
      <item>
+      <layout class="QVBoxLayout" name="actionsLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+      </layout>
+     </item>
+     <item>
       <widget class="tStackedWidget" name="stackedWidget">
        <property name="currentIndex">
         <number>2</number>
@@ -208,7 +215,7 @@
               <x>0</x>
               <y>0</y>
               <width>397</width>
-              <height>615</height>
+              <height>613</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -250,7 +257,7 @@
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>517</height>
+                 <height>515</height>
                 </size>
                </property>
               </spacer>

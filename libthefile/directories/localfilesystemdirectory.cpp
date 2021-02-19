@@ -103,15 +103,7 @@ tPromise<FileInformationList>* LocalFilesystemDirectory::list(QDir::Filters filt
         FileInformationList fileInfoList;
 
         for (QFileInfo file : files) {
-            FileInformation fileInfo;
-            fileInfo.name = file.fileName();
-            fileInfo.resource = QUrl::fromLocalFile(file.filePath());
-            fileInfo.size = file.size();
-            fileInfo.icon = d->iconProvider.icon(file);
-            fileInfo.isHidden = file.isHidden();
-            fileInfo.pathSegment = file.fileName();
-            fileInfo.filenameForFileOperations = file.fileName();
-            fileInfoList.append(fileInfo);
+            fileInfoList.append(fileInfo(file));
         }
 
         res(fileInfoList);
@@ -125,18 +117,7 @@ tPromise<Directory::FileInformation>* LocalFilesystemDirectory::fileInformation(
         Q_UNUSED(rej)
 
         QFileInfo file(QDir(url.toLocalFile()).absoluteFilePath(filename));
-        QFileIconProvider provider;
-
-        FileInformation fileInfo;
-        fileInfo.name = file.fileName();
-        fileInfo.resource = QUrl::fromLocalFile(file.filePath());
-        fileInfo.size = file.size();
-        fileInfo.icon = provider.icon(file);
-        fileInfo.isHidden = file.isHidden();
-        fileInfo.pathSegment = file.fileName();
-        fileInfo.filenameForFileOperations = file.fileName();
-
-        res(fileInfo);
+        res(fileInfo(file));
     });
 }
 
@@ -217,6 +198,36 @@ bool LocalFilesystemDirectory::canMove(QUrl from, QString filename, QUrl to) {
     QStorageInfo toVol(toDir);
 
     return fromVol.rootPath() == toVol.rootPath();
+}
+
+Directory::FileInformation LocalFilesystemDirectory::fileInfo(QFileInfo file) {
+    QFileIconProvider provider;
+
+    FileInformation fileInfo;
+    fileInfo.name = file.fileName();
+    fileInfo.resource = QUrl::fromLocalFile(file.filePath());
+    fileInfo.size = file.size();
+    fileInfo.isHidden = file.isHidden();
+    fileInfo.pathSegment = file.fileName();
+    fileInfo.filenameForFileOperations = file.fileName();
+    fileInfo.icon = provider.icon(file);
+
+    QMap<QStandardPaths::StandardLocation, QString> specialIcons = {
+        {QStandardPaths::DocumentsLocation, "folder-documents"},
+        {QStandardPaths::DownloadLocation, "folder-downloads"},
+        {QStandardPaths::MusicLocation, "folder-music"},
+        {QStandardPaths::PicturesLocation, "folder-pictures"},
+        {QStandardPaths::MoviesLocation, "folder-videos"}
+    };
+    for (QStandardPaths::StandardLocation location : specialIcons.keys()) {
+        for (const QString& locationPath : QStandardPaths::standardLocations(location)) {
+            if (file.filePath() == locationPath) {
+                fileInfo.icon = QIcon::fromTheme(specialIcons.value(location));
+            }
+        }
+    }
+
+    return fileInfo;
 }
 
 tPromise<bool>* LocalFilesystemDirectory::exists() {

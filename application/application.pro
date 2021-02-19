@@ -11,6 +11,7 @@ CONFIG += c++11
 
 SOURCES += \
     filecolumn.cpp \
+    filecolumnaction.cpp \
     filemodel.cpp \
     filetab.cpp \
     hiddenfilesproxymodel.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     filecolumn.h \
+    filecolumnaction.h \
     filemodel.h \
     filetab.h \
     hiddenfilesproxymodel.h \
@@ -36,6 +38,7 @@ HEADERS += \
 
 FORMS += \
     filecolumn.ui \
+    filecolumnaction.ui \
     filetab.ui \
     jobs/widgets/filetransferjobwidget.ui \
     mainwindow.ui \
