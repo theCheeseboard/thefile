@@ -42,12 +42,28 @@ class ItemPropertiesPopover : public QWidget {
 
         void on_permissionsButton_toggled(bool checked);
 
+        void on_ownerReadBox_toggled(bool checked);
+
+        void on_ownerWriteBox_toggled(bool checked);
+
+        void on_groupReadBox_toggled(bool checked);
+
+        void on_groupWriteBox_toggled(bool checked);
+
+        void on_otherReadBox_toggled(bool checked);
+
+        void on_otherWriteBox_toggled(bool checked);
+
+        void on_executableBox_toggled(bool checked);
+
     signals:
         void done();
 
     private:
         Ui::ItemPropertiesPopover* ui;
         ItemPropertiesPopoverPrivate* d;
+
+        void setPermissions();
 };
 
 struct CountDirectorySizesRunnablePrivate;

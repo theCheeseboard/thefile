@@ -101,6 +101,9 @@
    </item>
    <item alignment="Qt::AlignHCenter">
     <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="detailsPage">
       <layout class="QGridLayout" name="gridLayout">
        <item row="6" column="0">
@@ -241,7 +244,146 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="permissionsPage"/>
+     <widget class="QWidget" name="permissionsPage">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Others</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="groupReadBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="ownerWriteBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="groupWriteBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="otherReadBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="otherWriteBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Read</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Owner</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Group</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label_5">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>ACCESS CONTROLS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="4">
+        <widget class="QCheckBox" name="executableBox">
+         <property name="text">
+          <string>Executable</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Write</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>289</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="2" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="ownerReadBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="fileOwnerLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="fileGroupLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

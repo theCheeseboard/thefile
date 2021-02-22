@@ -385,39 +385,74 @@ Total progress: %4 of %5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="109"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="112"/>
         <source>Last Accessed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="135"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="138"/>
         <source>DETAILS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="142"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="145"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="163"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="166"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="190"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="193"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="149"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="204"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="211"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="252"/>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="294"/>
+        <source>Read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="304"/>
+        <source>Owner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="311"/>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="324"/>
+        <source>ACCESS CONTROLS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="338"/>
+        <source>Write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="331"/>
+        <source>Executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="152"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="207"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="214"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="156"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="159"/>
         <source>Last Modified</source>
         <translation type="unfinished"></translation>
     </message>

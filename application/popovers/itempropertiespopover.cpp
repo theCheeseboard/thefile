@@ -79,6 +79,26 @@ ItemPropertiesPopover::ItemPropertiesPopover(QUrl url, QWidget* parent) :
             ui->filesizeBytesLabel->setText(tr("%1 bytes").arg(QLocale().toString(file.size())));
             ui->filesizeSpinner->setVisible(false);
         }
+
+        //Permissions
+        QSignalBlocker blockers[] = {
+            QSignalBlocker(ui->ownerReadBox),
+            QSignalBlocker(ui->ownerWriteBox),
+            QSignalBlocker(ui->groupReadBox),
+            QSignalBlocker(ui->groupWriteBox),
+            QSignalBlocker(ui->otherReadBox),
+            QSignalBlocker(ui->otherWriteBox),
+            QSignalBlocker(ui->executableBox)
+        };
+        ui->ownerReadBox->setChecked(file.permission(QFile::ReadOwner));
+        ui->ownerWriteBox->setChecked(file.permission(QFile::WriteOwner));
+        ui->groupReadBox->setChecked(file.permission(QFile::ReadGroup));
+        ui->groupWriteBox->setChecked(file.permission(QFile::WriteGroup));
+        ui->otherReadBox->setChecked(file.permission(QFile::ReadOther));
+        ui->otherWriteBox->setChecked(file.permission(QFile::WriteOther));
+        ui->executableBox->setChecked(file.permission(QFile::ExeOwner));
+        ui->fileOwnerLabel->setText(file.owner());
+        ui->fileGroupLabel->setText(file.group());
     }
 }
 
@@ -101,6 +121,18 @@ void ItemPropertiesPopover::on_permissionsButton_toggled(bool checked) {
     if (checked) {
         ui->stackedWidget->setCurrentWidget(ui->permissionsPage);
     }
+}
+
+void ItemPropertiesPopover::setPermissions() {
+    QFile::Permissions permissions;
+    if (ui->ownerReadBox->isChecked()) permissions |= QFile::ReadOwner;
+    if (ui->ownerWriteBox->isChecked()) permissions |= QFile::WriteOwner;
+    if (ui->groupReadBox->isChecked()) permissions |= QFile::ReadGroup;
+    if (ui->groupWriteBox->isChecked()) permissions |= QFile::WriteGroup;
+    if (ui->otherReadBox->isChecked()) permissions |= QFile::ReadOther;
+    if (ui->otherWriteBox->isChecked()) permissions |= QFile::WriteOther;
+    if (ui->executableBox->isChecked()) permissions |= QFile::ExeOwner | QFile::ExeGroup | QFile::ExeOther;
+    QFile::setPermissions(d->url.toLocalFile(), permissions);
 }
 
 CountDirectorySizesRunnable::CountDirectorySizesRunnable(QUrl url, ItemPropertiesPopover* parent) : QObject(nullptr), QRunnable() {
@@ -128,4 +160,39 @@ void CountDirectorySizesRunnable::run() {
     }
 
     emit progress(count, bytes, true);
+}
+
+void ItemPropertiesPopover::on_ownerReadBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
+}
+
+void ItemPropertiesPopover::on_ownerWriteBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
+}
+
+void ItemPropertiesPopover::on_groupReadBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
+}
+
+void ItemPropertiesPopover::on_groupWriteBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
+}
+
+void ItemPropertiesPopover::on_otherReadBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
+}
+
+void ItemPropertiesPopover::on_otherWriteBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
+}
+
+void ItemPropertiesPopover::on_executableBox_toggled(bool checked) {
+    Q_UNUSED(checked)
+    setPermissions();
 }
