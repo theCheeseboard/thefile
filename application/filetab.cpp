@@ -36,6 +36,8 @@ struct FileTabPrivate {
     DirectoryPtr currentDirectory;
     QList<DirectoryPtr> currentColumns;
     QList<FileColumn*> currentColumnWidgets;
+
+    bool keepAtEnd = true;
 };
 
 FileTab::FileTab(QWidget* parent) :
@@ -47,6 +49,20 @@ FileTab::FileTab(QWidget* parent) :
 
     ui->sidebar->setFixedWidth(SC_DPI(200));
     connect(ui->sidebar, &Sidebar::navigate, this, &FileTab::setCurrentUrl);
+
+    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [ = ](int value) {
+        d->keepAtEnd = ui->scrollArea->horizontalScrollBar()->maximum() == value;
+        int max = 0;
+        for (FileColumn* c : d->currentColumnWidgets) max += c->width();
+
+        int margin = value + ui->scrollArea->width() - max;
+        if (margin >= 0) ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+    });
+    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [ = ](int min, int max) {
+        if (d->keepAtEnd) {
+            ui->scrollArea->horizontalScrollBar()->setValue(max);
+        }
+    });
 
     setCurrentUrl(QUrl::fromLocalFile(QDir::homePath()));
 }
@@ -62,6 +78,8 @@ void FileTab::setCurrentUrl(QUrl url) {
 
 void FileTab::setCurrentDir(DirectoryPtr directory) {
     if (!directory) return;
+
+    int currentWidth = ui->scrollArea->horizontalScrollBar()->value();
 
     d->currentDirectory = directory;
 
@@ -84,6 +102,9 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
     }
 
     std::reverse(directories.begin(), directories.end());
+
+    bool columnsAdded = directories.count() > d->currentColumns.count();
+    bool columnsRemoved = directories.count() < d->currentColumns.count();
 
     //Modify the current columns
     for (int i = 0; i < directories.count(); i++) {
@@ -144,21 +165,40 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
 
     d->currentColumns = directories;
 
-    //Scroll to the end
-    tVariantAnimation* anim = new tVariantAnimation(this);
-    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [ = ](int min, int max) {
-        Q_UNUSED(min)
-        anim->setEndValue(max);
-    });
-    anim->setStartValue(ui->scrollArea->horizontalScrollBar()->value());
-    anim->setStartValue(ui->scrollArea->horizontalScrollBar()->maximum());
-    anim->setDuration(100);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
-        ui->scrollArea->horizontalScrollBar()->setValue(value.toInt());
-    });
-    connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
-    anim->start();
+    if (columnsRemoved) {
+        //Keep the scrollbar where it is
+        int max = -ui->scrollArea->width();
+        for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
+        if (max < currentWidth) {
+            int margin = currentWidth - max;
+            ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+        }
+    } else {
+        int max = 0;
+        for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
+
+        int margin = ui->scrollArea->horizontalScrollBar()->value() + ui->scrollArea->width() - max;
+        if (margin >= 0) ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+    }
+    if (columnsAdded) {
+        QTimer::singleShot(0, this, [ = ] {
+            //Scroll to the end
+            tVariantAnimation* anim = new tVariantAnimation(this);
+            connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [ = ](int min, int max) {
+                Q_UNUSED(min)
+                anim->setEndValue(max);
+            });
+            anim->setStartValue(ui->scrollArea->horizontalScrollBar()->value());
+            anim->setStartValue(ui->scrollArea->horizontalScrollBar()->maximum());
+            anim->setDuration(100);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+                ui->scrollArea->horizontalScrollBar()->setValue(value.toInt());
+            });
+            connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
+            anim->start();
+        });
+    }
 
     emit tabTitleChanged();
 }
