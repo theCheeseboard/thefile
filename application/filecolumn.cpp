@@ -42,6 +42,7 @@
 #include "filecolumnaction.h"
 #include "filecolumnfloater.h"
 #include "filecolumnmanager.h"
+#include "popovers/itempropertiespopover.h"
 
 struct FileColumnPrivate {
     FileColumnManager* manager;
@@ -562,6 +563,19 @@ void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos)
 
     if (sel.count() == 1) {
         QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
+
+        if (url.scheme() == "file") {
+            menu->addAction(QIcon::fromTheme("configure"), tr("Properties"), this, [ = ] {
+                ItemPropertiesPopover* jp = new ItemPropertiesPopover(url);
+                tPopover* popover = new tPopover(jp);
+                popover->setPopoverWidth(SC_DPI(-200));
+                popover->setPopoverSide(tPopover::Bottom);
+                connect(jp, &ItemPropertiesPopover::done, popover, &tPopover::dismiss);
+                connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+                connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
+                popover->show(this->window());
+            });
+        }
 
         //TODO: Asynchronous
         DirectoryPtr dir = ResourceManager::directoryForUrl(url);

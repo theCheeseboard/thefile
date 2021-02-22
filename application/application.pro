@@ -22,6 +22,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     popovers/deletepermanentlypopover.cpp \
+    popovers/itempropertiespopover.cpp \
     sidebar/devicesmodel.cpp \
     sidebar/sidebar.cpp
 
@@ -37,6 +38,7 @@ HEADERS += \
     jobs/widgets/filetransferjobwidget.h \
     mainwindow.h \
     popovers/deletepermanentlypopover.h \
+    popovers/itempropertiespopover.h \
     sidebar/devicesmodel.h \
     sidebar/sidebar.h
 
@@ -48,6 +50,7 @@ FORMS += \
     jobs/widgets/filetransferjobwidget.ui \
     mainwindow.ui \
     popovers/deletepermanentlypopover.ui \
+    popovers/itempropertiespopover.ui \
     sidebar/sidebar.ui
 
 
