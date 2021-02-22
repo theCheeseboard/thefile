@@ -125,3 +125,4 @@ Qt::ItemFlags FileModel::flags(const QModelIndex& index) const {
 bool FileModel::isFile() {
     return d->isFile;
 }
+

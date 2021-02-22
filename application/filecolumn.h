@@ -28,13 +28,14 @@ namespace Ui {
     class FileColumn;
 }
 
+class FileColumnManager;
 class QMenu;
 struct FileColumnPrivate;
 class FileColumn : public QWidget {
         Q_OBJECT
 
     public:
-        explicit FileColumn(DirectoryPtr directory, QWidget* parent = nullptr);
+        explicit FileColumn(DirectoryPtr directory, FileColumnManager* manager, QWidget* parent = nullptr);
         ~FileColumn();
 
         void setDirectory(DirectoryPtr directory);
@@ -55,22 +56,28 @@ class FileColumn : public QWidget {
         void directoryChanged();
 
     private slots:
-        void on_folderView_customContextMenuRequested(const QPoint& pos);
-
         void on_folderErrorPage_customContextMenuRequested(const QPoint& pos);
 
         void on_folderView_doubleClicked(const QModelIndex& index);
 
         void on_openFileButton_clicked();
 
+        void on_folderScroller_customContextMenuRequested(const QPoint& pos);
+
     private:
         Ui::FileColumn* ui;
         FileColumnPrivate* d;
 
         bool eventFilter(QObject* watched, QEvent* event);
+        void resizeEvent(QResizeEvent* event);
+        void focusInEvent(QFocusEvent* event);
 
         void reload();
         void updateItems();
+
+        void showFloater();
+        void hideFloater();
+        void updateFloater();
 
         void addFolderMenuItems(QMenu* menu);
         void ensureUrlSelected();

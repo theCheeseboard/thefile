@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2020");
+    a.setCopyrightYear("2021");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thefile/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theFile"));
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     a.registerCrashTrap();
 
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
-    tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
+    tSettings::registerDefaults("/etc/theSuite/theFile/defaults.conf");
 
     MainWindow w;
     w.show();

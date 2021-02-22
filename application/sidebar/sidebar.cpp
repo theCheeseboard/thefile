@@ -30,6 +30,7 @@
 #include <DriveObjects/driveinterface.h>
 #include <QPainter>
 #include <QMenu>
+#include <tmessagebox.h>
 #include <tlogger.h>
 #include "devicesmodel.h"
 
@@ -67,7 +68,6 @@ Sidebar::Sidebar(QWidget* parent) :
     }
 
     ui->placesWidget->setItemDelegate(new SidebarDelegate());
-
     ui->placesWidget->setFixedHeight(ui->placesWidget->sizeHintForRow(0) * ui->placesWidget->count());
 
     d->devicesModel = new DevicesModel();
@@ -190,14 +190,28 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
             });
         } else {
             menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), [ = ] {
-                fs->unmount();
+                fs->unmount()->error([ = ](QString error) {
+                    tMessageBox* box = new tMessageBox(this);
+                    box->setWindowTitle(tr("Couldn't unmount"));
+                    box->setText(tr("Unmounting the drive failed."));
+                    box->setInformativeText(error);
+                    connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
+                    box->open();
+                });
             });
         }
     }
 
     if (drive) {
         if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), [ = ] {
-            drive->eject();
+            drive->eject()->error([ = ](QString error) {
+                tMessageBox* box = new tMessageBox(this);
+                box->setWindowTitle(tr("Couldn't eject"));
+                box->setText(tr("Ejecting the drive failed."));
+                box->setInformativeText(error);
+                connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
+                box->open();
+            });
         });
     }
     menu->popup(ui->devicesView->mapToGlobal(pos));

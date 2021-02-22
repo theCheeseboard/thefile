@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());
     });
+    ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
 
     newTab();
 }

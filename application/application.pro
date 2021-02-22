@@ -1,5 +1,5 @@
 QT       += core gui thelib concurrent frisbee tdesktopenvironment
-TARGET = thefile
+SHARE_APP_NAME=thefile
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,6 +12,8 @@ CONFIG += c++11
 SOURCES += \
     filecolumn.cpp \
     filecolumnaction.cpp \
+    filecolumnfloater.cpp \
+    filecolumnmanager.cpp \
     filemodel.cpp \
     filetab.cpp \
     hiddenfilesproxymodel.cpp \
@@ -26,6 +28,8 @@ SOURCES += \
 HEADERS += \
     filecolumn.h \
     filecolumnaction.h \
+    filecolumnfloater.h \
+    filecolumnmanager.h \
     filemodel.h \
     filetab.h \
     hiddenfilesproxymodel.h \
@@ -39,25 +43,49 @@ HEADERS += \
 FORMS += \
     filecolumn.ui \
     filecolumnaction.ui \
+    filecolumnfloater.ui \
     filetab.ui \
     jobs/widgets/filetransferjobwidget.ui \
     mainwindow.ui \
     popovers/deletepermanentlypopover.ui \
     sidebar/sidebar.ui
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libthefile/release/ -llibthefile
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libthefile/debug/ -llibthefile
-else:unix: LIBS += -L$$OUT_PWD/../libthefile/ -llibthefile
+unix:!macx {
+    # Include the-libs build tools
+    include(/usr/share/the-libs/pri/buildmaster.pri)
+
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+
+    QT += thelib
+    TARGET = thefile
+
+    LIBS += -L$$OUT_PWD/../libthefile/ -llibthefile
+
+    target.path = /usr/bin
+
+    desktop.path = /usr/share/applications
+    blueprint {
+#        desktop.files = com.vicr123.thefile-blueprint.desktop
+    } else {
+        desktop.files = com.vicr123.thefile.desktop
+    }
+
+    icon.path = /usr/share/icons/hicolor/scalable/apps/
+    icon.files = icons/thefile.svg
+
+    defaults.files = defaults.conf
+    defaults.path = /etc/theSuite/theBeat/
+
+    INSTALLS += target desktop icon defaults
+}
+
 
 INCLUDEPATH += $$PWD/../libthefile
 DEPENDPATH += $$PWD/../libthefile
 
 DISTFILES += \
+    com.vicr123.thefile.desktop \
     defaults.conf
 
 RESOURCES += \

@@ -24,6 +24,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include "filecolumn.h"
+#include "filecolumnmanager.h"
 #include <QListView>
 #include <tvariantanimation.h>
 #include <QScrollBar>
@@ -31,6 +32,7 @@
 #include <resourcemanager.h>
 
 struct FileTabPrivate {
+    FileColumnManager* columnManager;
     DirectoryPtr currentDirectory;
     QList<DirectoryPtr> currentColumns;
     QList<FileColumn*> currentColumnWidgets;
@@ -41,6 +43,7 @@ FileTab::FileTab(QWidget* parent) :
     ui(new Ui::FileTab) {
     ui->setupUi(this);
     d = new FileTabPrivate();
+    d->columnManager = new FileColumnManager(this);
 
     ui->sidebar->setFixedWidth(SC_DPI(200));
     connect(ui->sidebar, &Sidebar::navigate, this, &FileTab::setCurrentUrl);
@@ -98,7 +101,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
             col->setSelected(nextPath);
         } else if (d->currentColumns.count() <= i) {
             //We need to add a new column
-            col = new FileColumn(directory);
+            col = new FileColumn(directory, d->columnManager);
             col->setSelected(nextPath);
             connect(col, &FileColumn::navigate, this, &FileTab::setCurrentDir);
             connect(col, &FileColumn::directoryChanged, this, &FileTab::tabTitleChanged);

@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=theFile
+GenericName=File Manager
+GenericName[vi]=Bộ duyệt tệp
+Categories=Utility;FileManager;
+Exec=thefile %U
+Icon=thefile

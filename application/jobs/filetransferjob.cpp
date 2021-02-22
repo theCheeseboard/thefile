@@ -253,7 +253,7 @@ void FileTransferJob::conflictCheck() {
             d->description = tr("Waiting for conflict resolution");
             emit descriptionChanged(d->description);
 
-            if (d->timer.elapsed() < 2000 && d->jobsPopover && false) {
+            if (d->timer.elapsed() < 2000 && d->jobsPopover) {
                 tJobManager::showJobsPopover(d->jobsPopover);
             } else {
                 tNotification* n = new tNotification();

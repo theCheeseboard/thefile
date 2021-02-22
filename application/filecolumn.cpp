@@ -34,35 +34,47 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QShortcut>
+#include <QScrollBar>
 #include <MimeAssociations/mimeassociationmanager.h>
 #include "hiddenfilesproxymodel.h"
 #include "jobs/filetransferjob.h"
 #include "popovers/deletepermanentlypopover.h"
 #include "filecolumnaction.h"
+#include "filecolumnfloater.h"
+#include "filecolumnmanager.h"
 
 struct FileColumnPrivate {
+    FileColumnManager* manager;
     DirectoryPtr directory;
     QUrl selectedUrl;
     FileModel* model = nullptr;
+    FileDelegate* delegate;
     HiddenFilesProxyModel* proxy;
+
+    FileColumnFloater* floater;
+    tVariantAnimation* floaterAnim;
 
     QList<FileColumnAction*> actions;
 
     bool listenToSelection = true;
+    bool isFloaterVisible = true;
 };
 
-FileColumn::FileColumn(DirectoryPtr directory, QWidget* parent) :
+FileColumn::FileColumn(DirectoryPtr directory, FileColumnManager* manager, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::FileColumn) {
     ui->setupUi(this);
 
     d = new FileColumnPrivate();
     d->directory = directory;
+    d->manager = manager;
+
+    d->delegate = new FileDelegate(this);
 
     d->proxy = new HiddenFilesProxyModel(this);
     ui->folderView->setModel(d->proxy);
-    ui->folderView->setItemDelegate(new FileDelegate(this));
-    ui->folderView->viewport()->installEventFilter(this);
+    ui->folderView->setItemDelegate(d->delegate);
+    ui->folderView->installEventFilter(this);
 
     QShortcut* copyShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_C), this);
     connect(copyShortcut, &QShortcut::activated, this, &FileColumn::copy);
@@ -81,6 +93,22 @@ FileColumn::FileColumn(DirectoryPtr directory, QWidget* parent) :
     });
     QShortcut* deletePermanentlyShortcut = new QShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete), this);
     connect(deletePermanentlyShortcut, &QShortcut::activated, this, &FileColumn::deleteFile);
+
+    d->floater = new FileColumnFloater(this);
+    d->floater->setVisible(false);
+
+    d->floaterAnim = new tVariantAnimation(this);
+    d->floaterAnim->setDuration(500);
+    d->floaterAnim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(d->floaterAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+        d->floater->setGeometry(value.toRect());
+        ui->folderScrollerWidget->layout()->setContentsMargins(0, 0, 0, this->height() - value.toRect().top() + SC_DPI(9));
+    });
+    hideFloater();
+
+    ui->folderView->setFixedWidth(this->width());
+    ui->folderScroller->viewport()->installEventFilter(this);
+    connect(d->manager, &FileColumnManager::currentChanged, this, &FileColumn::updateFloater);
 
     reload();
 }
@@ -236,6 +264,7 @@ void FileColumn::rename() {
 
 void FileColumn::reload() {
     d->model = new FileModel(d->directory);
+    d->proxy->setSourceModel(d->model);
     connect(d->model, &FileModel::modelAboutToBeReset, this, [ = ] {
         ui->folderView->selectionModel()->blockSignals(true);
     });
@@ -243,17 +272,23 @@ void FileColumn::reload() {
     connect(d->model, &FileModel::modelReset, this, &FileColumn::ensureUrlSelected);
     connect(d->model, &FileModel::modelReset, this, [ = ] {
         ui->folderView->selectionModel()->blockSignals(false);
+        ui->folderView->setFixedHeight(ui->folderView->sizeHintForRow(0) * d->proxy->rowCount());
     });
     updateItems();
+    ui->folderView->setFixedHeight(ui->folderView->sizeHintForRow(0) * d->proxy->rowCount());
 
-    d->proxy->setSourceModel(d->model);
     ui->folderNameLabel->setText(columnTitle());
     connect(ui->folderView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [ = ] {
+        updateFloater();
+
         if (!d->listenToSelection) return;
         if (ui->folderView->selectionModel()->selectedIndexes().count() == 1) {
-            emit navigate(ResourceManager::directoryForUrl(ui->folderView->currentIndex().data(FileModel::UrlRole).toUrl()));
+            d->floater->setText(ui->folderView->selectionModel()->selectedIndexes().at(0).data().toString());
+            emit navigate(ResourceManager::directoryForUrl(ui->folderView->selectionModel()->selectedIndexes().at(0).data(FileModel::UrlRole).toUrl()));
         } else if (ui->folderView->selectionModel()->selectedIndexes().isEmpty()) {
             emit navigate(d->directory);
+        } else {
+            d->floater->setText(tr("%n items", nullptr, ui->folderView->selectionModel()->selectedIndexes().count()));
         }
     });
 }
@@ -264,6 +299,11 @@ void FileColumn::updateItems() {
         ResourceManager::parentDirectoryForUrl(d->directory->url())->fileInformation(d->directory->url().fileName())->then([ = ] (Directory::FileInformation fileInfo) {
             ui->fileIconLabel->setPixmap(fileInfo.icon.pixmap(SC_DPI_T(QSize(128, 128), QSize)));
             ui->filenameLabel->setText(fileInfo.name);
+
+            QStringList fileInfoText;
+            fileInfoText.append(QLocale().formattedDataSize(fileInfo.size));
+            ui->fileInfoLabel->setText(fileInfoText.join(" · "));
+
             ui->stackedWidget->setCurrentWidget(ui->filePage);
         });
     } else if (error.isEmpty()) {
@@ -313,6 +353,45 @@ void FileColumn::updateItems() {
     }
 }
 
+void FileColumn::showFloater() {
+    if (d->isFloaterVisible) return;
+    d->floaterAnim->setStartValue(d->floater->geometry());
+
+    QRect endGeometry;
+    endGeometry.setHeight(d->floater->sizeHint().height());
+    endGeometry.moveBottom(this->height() - SC_DPI(9));
+    endGeometry.setLeft(SC_DPI(9));
+    endGeometry.setRight(this->width() - SC_DPI(9));
+    d->floaterAnim->setEndValue(endGeometry);
+    d->floaterAnim->start();
+
+    d->floater->setVisible(true);
+    d->isFloaterVisible = true;
+}
+
+void FileColumn::hideFloater() {
+    if (!d->isFloaterVisible) return;
+    d->floaterAnim->setStartValue(d->floater->geometry());
+
+    QRect endGeometry;
+    endGeometry.setHeight(d->floater->sizeHint().height());
+    endGeometry.moveTop(this->height() + SC_DPI(9));
+    endGeometry.setLeft(SC_DPI(9));
+    endGeometry.setRight(this->width() - SC_DPI(9));
+    d->floaterAnim->setEndValue(endGeometry);
+    d->floaterAnim->start();
+
+    d->isFloaterVisible = false;
+}
+
+void FileColumn::updateFloater() {
+    if (ui->folderView->selectionModel()->selectedIndexes().isEmpty() || d->manager->current() != this) {
+        hideFloater();
+    } else {
+        showFloater();
+    }
+}
+
 void FileColumn::addFolderMenuItems(QMenu* menu) {
     if (d->model) {
         if (d->directory->url().scheme() == "trash") {
@@ -343,7 +422,72 @@ void FileColumn::ensureUrlSelected() {
     d->listenToSelection = true;
 }
 
-void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
+void FileColumn::on_folderErrorPage_customContextMenuRequested(const QPoint& pos) {
+    QMenu* menu = new QMenu(this);
+    addFolderMenuItems(menu);
+    menu->popup(ui->folderView->mapToGlobal(pos));
+    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+}
+
+void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
+    QUrl url = index.data(FileModel::UrlRole).toUrl();
+    DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+    if (dir) {
+        dir->exists()->then([ = ](bool exists) {
+            if (!exists) {
+                QDesktopServices::openUrl(url);
+            }
+        });
+    } else {
+        QDesktopServices::openUrl(url);
+    }
+}
+
+bool FileColumn::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->folderScroller->viewport()) {
+        if (event->type() == QEvent::MouseButtonPress) {
+//            QMouseEvent* e = static_cast<QMouseEvent*>(event);
+//            if (!ui->folderView->indexAt(e->pos()).isValid()) {
+            ui->folderView->selectionModel()->clear();
+            ui->folderView->selectionModel()->clear();
+            d->manager->setCurrent(this);
+            return true;
+//            }
+        }
+    } else if (watched == ui->folderView) {
+        if (event->type() == QEvent::FocusIn) {
+            d->manager->setCurrent(this);
+        }
+    }
+    return false;
+}
+
+void FileColumn::resizeEvent(QResizeEvent* event) {
+    QRect endGeometry;
+    endGeometry.setHeight(d->floater->sizeHint().height());
+    if (d->isFloaterVisible) {
+        endGeometry.moveBottom(this->height() - SC_DPI(9));
+    } else {
+        endGeometry.moveTop(this->height() + SC_DPI(9));
+    }
+    endGeometry.setLeft(SC_DPI(9));
+    endGeometry.setRight(this->width() - SC_DPI(9));
+    d->floater->setGeometry(endGeometry);
+    d->floaterAnim->setEndValue(endGeometry);
+
+    ui->folderView->setFixedWidth(this->width());
+}
+
+void FileColumn::on_openFileButton_clicked() {
+    QDesktopServices::openUrl(d->directory->url());
+}
+
+
+void FileColumn::focusInEvent(QFocusEvent* event) {
+    d->manager->setCurrent(this);
+}
+
+void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos) {
     QMenu* menu = new QMenu(this);
 
     QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
@@ -429,45 +573,6 @@ void FileColumn::on_folderView_customContextMenuRequested(const QPoint& pos) {
 
     addFolderMenuItems(menu);
 
-    menu->popup(ui->folderView->mapToGlobal(pos));
+    menu->popup(ui->folderScroller->mapToGlobal(pos));
     connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
-}
-
-void FileColumn::on_folderErrorPage_customContextMenuRequested(const QPoint& pos) {
-    QMenu* menu = new QMenu(this);
-    addFolderMenuItems(menu);
-    menu->popup(ui->folderView->mapToGlobal(pos));
-    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
-}
-
-void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
-    QUrl url = index.data(FileModel::UrlRole).toUrl();
-    DirectoryPtr dir = ResourceManager::directoryForUrl(url);
-    if (dir) {
-        dir->exists()->then([ = ](bool exists) {
-            if (!exists) {
-                QDesktopServices::openUrl(url);
-            }
-        });
-    } else {
-        QDesktopServices::openUrl(url);
-    }
-}
-
-bool FileColumn::eventFilter(QObject* watched, QEvent* event) {
-    if (watched == ui->folderView->viewport()) {
-        if (event->type() == QEvent::MouseButtonPress) {
-            QMouseEvent* e = static_cast<QMouseEvent*>(event);
-            if (!ui->folderView->indexAt(e->pos()).isValid()) {
-                ui->folderView->selectionModel()->clear();
-                ui->folderView->selectionModel()->clear();
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-void FileColumn::on_openFileButton_clicked() {
-    QDesktopServices::openUrl(d->directory->url());
 }
