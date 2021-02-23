@@ -94,11 +94,6 @@
 <context>
     <name>BurnJobProgress</name>
     <message>
-        <location filename="../jobs/widgets/burnjobprogress.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
         <source>Burn to %1</source>
         <translation type="unfinished"></translation>
@@ -106,11 +101,6 @@
 </context>
 <context>
     <name>BurnPopover</name>
-    <message>
-        <location filename="../popovers/burnpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="83"/>
         <source>BURN OPTIONS</source>
@@ -123,8 +113,14 @@
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="100"/>
-        <location filename="../popovers/burnpopover.ui" line="219"/>
         <source>Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="207"/>
+        <source>The disc in the drive is not blank. To burn these files to the disc, the disc will need to be erased.
+
+Once the disc in the drive is erased, all the data on it will be gone forever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -148,25 +144,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="207"/>
-        <source>The disc in the drive is not blank. To restore an image to the disc, the disc will need to be erased.
-
-Once the disc in the drive is erased, all the data on it will be gone forever.</source>
+        <location filename="../popovers/burnpopover.ui" line="219"/>
+        <source>Erase and Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.cpp" line="70"/>
-        <location filename="../popovers/burnpopover.cpp" line="71"/>
+        <location filename="../popovers/burnpopover.cpp" line="72"/>
+        <location filename="../popovers/burnpopover.cpp" line="73"/>
         <source>Burn %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.cpp" line="88"/>
+        <location filename="../popovers/burnpopover.cpp" line="90"/>
         <source>Insert a burnable disc into the drive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.cpp" line="92"/>
+        <location filename="../popovers/burnpopover.cpp" line="94"/>
         <source>The disc in the drive has already been written.</source>
         <translation type="unfinished"></translation>
     </message>

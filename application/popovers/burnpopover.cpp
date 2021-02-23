@@ -44,6 +44,8 @@ BurnPopover::BurnPopover(DirectoryPtr dir, QWidget* parent) :
 
     ui->titleLabel->setBackButtonShown(true);
     ui->titleLabel_2->setBackButtonShown(true);
+    ui->doBurnButton->setProperty("type", "destructive");
+    ui->mainStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
     ui->discNameEdit->setText(dir->url().fileName());
 

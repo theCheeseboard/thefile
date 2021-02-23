@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -204,7 +204,7 @@
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>The disc in the drive is not blank. To restore an image to the disc, the disc will need to be erased.
+             <string>The disc in the drive is not blank. To burn these files to the disc, the disc will need to be erased.
 
 Once the disc in the drive is erased, all the data on it will be gone forever.</string>
             </property>
@@ -216,7 +216,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
           <item>
            <widget class="QPushButton" name="doBurnButton">
             <property name="text">
-             <string>Burn</string>
+             <string>Erase and Burn</string>
             </property>
             <property name="icon">
              <iconset theme="tools-media-optical-burn">
