@@ -56,7 +56,7 @@ FileTab::FileTab(QWidget* parent) :
         for (FileColumn* c : d->currentColumnWidgets) max += c->width();
 
         int margin = value + ui->scrollArea->width() - max;
-        if (margin >= 0) ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+        ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
     });
     connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [ = ](int min, int max) {
         if (d->keepAtEnd) {
@@ -167,6 +167,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
 
     if (columnsRemoved) {
         //Keep the scrollbar where it is
+        //TODO: Adjust the scrollbar so that at least one panel is visible
         int max = -ui->scrollArea->width();
         for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
         if (max < currentWidth) {
@@ -174,11 +175,12 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
             ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
         }
     } else {
+        //Reduce the extra margin at the end
         int max = 0;
         for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
 
         int margin = ui->scrollArea->horizontalScrollBar()->value() + ui->scrollArea->width() - max;
-        if (margin >= 0) ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+        ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
     }
     if (columnsAdded) {
         QTimer::singleShot(0, this, [ = ] {

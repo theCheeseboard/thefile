@@ -17,35 +17,22 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef FILECOLUMNFLOATER_H
-#define FILECOLUMNFLOATER_H
+#ifndef TABBUTTON_H
+#define TABBUTTON_H
 
-#include "filecolumn.h"
+#include <QPushButton>
 
-namespace Ui {
-    class FileColumnFloater;
-}
-
-struct FileColumnFloaterPrivate;
-class FileColumnFloater : public QWidget {
+class TabButton : public QPushButton {
         Q_OBJECT
-
     public:
-        explicit FileColumnFloater(FileColumn* parent = nullptr);
-        ~FileColumnFloater();
+        explicit TabButton(QWidget* parent = nullptr);
 
-        void setIndices(QModelIndexList indices);
+    signals:
 
-    private slots:
-        void on_cutButton_clicked();
 
-        void on_copyButton_clicked();
-
-    private:
-        Ui::FileColumnFloater* ui;
-        FileColumnFloaterPrivate* d;
-
-        void mousePressEvent(QMouseEvent* event);
+        // QWidget interface
+    protected:
+        void dragEnterEvent(QDragEnterEvent* event);
 };
 
-#endif // FILECOLUMNFLOATER_H
+#endif // TABBUTTON_H

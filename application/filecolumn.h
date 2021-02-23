@@ -71,6 +71,8 @@ class FileColumn : public QWidget {
         bool eventFilter(QObject* watched, QEvent* event);
         void resizeEvent(QResizeEvent* event);
         void focusInEvent(QFocusEvent* event);
+        void dragEnterEvent(QDragEnterEvent* event);
+        void dropEvent(QDropEvent* event);
 
         void reload();
         void updateItems();

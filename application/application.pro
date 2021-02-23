@@ -24,7 +24,8 @@ SOURCES += \
     popovers/deletepermanentlypopover.cpp \
     popovers/itempropertiespopover.cpp \
     sidebar/devicesmodel.cpp \
-    sidebar/sidebar.cpp
+    sidebar/sidebar.cpp \
+    tabbutton.cpp
 
 HEADERS += \
     filecolumn.h \
@@ -40,7 +41,8 @@ HEADERS += \
     popovers/deletepermanentlypopover.h \
     popovers/itempropertiespopover.h \
     sidebar/devicesmodel.h \
-    sidebar/sidebar.h
+    sidebar/sidebar.h \
+    tabbutton.h
 
 FORMS += \
     filecolumn.ui \

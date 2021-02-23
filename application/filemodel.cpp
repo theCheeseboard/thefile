@@ -115,11 +115,22 @@ void FileDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, 
 }
 
 QMimeData* FileModel::mimeData(const QModelIndexList& indexes) const {
-    return QAbstractListModel::mimeData(indexes);
+    QList<QUrl> urls;
+    for (QModelIndex index : indexes) {
+        urls.append(index.data(UrlRole).toUrl());
+    }
+
+    QMimeData* mimeData = new QMimeData;
+    mimeData->setUrls(urls);
+    return mimeData;
 }
 
 Qt::ItemFlags FileModel::flags(const QModelIndex& index) const {
-    return QAbstractListModel::flags(index);
+    Qt::ItemFlags flags = QAbstractListModel::flags(index);
+    if (index.isValid()) {
+        flags |= Qt::ItemIsDragEnabled;
+    }
+    return flags;
 }
 
 bool FileModel::isFile() {

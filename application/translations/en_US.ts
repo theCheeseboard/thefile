@@ -29,63 +29,56 @@
 <context>
     <name>FileColumn</name>
     <message>
-        <location filename="../filecolumn.ui" line="317"/>
-        <location filename="../filecolumn.cpp" line="500"/>
+        <location filename="../filecolumn.ui" line="323"/>
+        <location filename="../filecolumn.cpp" line="549"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="137"/>
+        <location filename="../filecolumn.cpp" line="139"/>
         <source>Root</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="138"/>
-        <location filename="../filecolumn.cpp" line="223"/>
+        <location filename="../filecolumn.cpp" line="140"/>
+        <location filename="../filecolumn.cpp" line="225"/>
         <location filename="../filecolumn.cpp" line="346"/>
         <source>Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="142"/>
+        <location filename="../filecolumn.cpp" line="144"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="210"/>
+        <location filename="../filecolumn.cpp" line="212"/>
         <location filename="../filecolumn.cpp" line="403"/>
         <source>New Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="210"/>
+        <location filename="../filecolumn.cpp" line="212"/>
         <source>Folder name</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="224"/>
+        <location filename="../filecolumn.cpp" line="226"/>
         <source>Moved %n items to the trash</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="257"/>
-        <location filename="../filecolumn.cpp" line="560"/>
+        <location filename="../filecolumn.cpp" line="259"/>
+        <location filename="../filecolumn.cpp" line="609"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="257"/>
+        <location filename="../filecolumn.cpp" line="259"/>
         <source>Enter a new name</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="292"/>
-        <source>%n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="315"/>
@@ -134,6 +127,7 @@
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="402"/>
+        <location filename="../filecolumn.cpp" line="524"/>
         <source>For this folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -143,59 +137,80 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="497"/>
+        <location filename="../filecolumn.cpp" line="512"/>
+        <location filename="../filecolumn.cpp" line="546"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="508"/>
+        <location filename="../filecolumn.cpp" line="513"/>
+        <source>Copy In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filecolumn.cpp" line="517"/>
+        <source>Move In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filecolumn.cpp" line="525"/>
+        <source>Copy Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filecolumn.cpp" line="529"/>
+        <source>Move Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filecolumn.cpp" line="557"/>
         <source>Open With...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="524"/>
+        <location filename="../filecolumn.cpp" line="573"/>
         <source>Another app...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="532"/>
+        <location filename="../filecolumn.cpp" line="581"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="535"/>
+        <location filename="../filecolumn.cpp" line="584"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="536"/>
+        <location filename="../filecolumn.cpp" line="585"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="538"/>
+        <location filename="../filecolumn.cpp" line="587"/>
         <source>Put Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="551"/>
+        <location filename="../filecolumn.cpp" line="600"/>
         <source>Delete Permanently</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="553"/>
+        <location filename="../filecolumn.cpp" line="602"/>
         <source>Move to Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="568"/>
+        <location filename="../filecolumn.cpp" line="617"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="584"/>
+        <location filename="../filecolumn.cpp" line="633"/>
         <source>Burn Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -211,6 +226,13 @@
         <location filename="../filecolumnfloater.ui" line="65"/>
         <source>Floater</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../filecolumnfloater.cpp" line="49"/>
+        <source>%n items</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>

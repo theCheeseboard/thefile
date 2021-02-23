@@ -70,6 +70,8 @@ FileColumn::FileColumn(DirectoryPtr directory, FileColumnManager* manager, QWidg
     d->directory = directory;
     d->manager = manager;
 
+    this->setAcceptDrops(true);
+
     d->delegate = new FileDelegate(this);
 
     d->proxy = new HiddenFilesProxyModel(this);
@@ -283,13 +285,11 @@ void FileColumn::reload() {
         updateFloater();
 
         if (!d->listenToSelection) return;
+        d->floater->setIndices(ui->folderView->selectionModel()->selectedIndexes());
         if (ui->folderView->selectionModel()->selectedIndexes().count() == 1) {
-            d->floater->setText(ui->folderView->selectionModel()->selectedIndexes().at(0).data().toString());
             emit navigate(ResourceManager::directoryForUrl(ui->folderView->selectionModel()->selectedIndexes().at(0).data(FileModel::UrlRole).toUrl()));
         } else if (ui->folderView->selectionModel()->selectedIndexes().isEmpty()) {
             emit navigate(d->directory);
-        } else {
-            d->floater->setText(tr("%n items", nullptr, ui->folderView->selectionModel()->selectedIndexes().count()));
         }
     });
 }
@@ -488,6 +488,55 @@ void FileColumn::focusInEvent(QFocusEvent* event) {
     d->manager->setCurrent(this);
 }
 
+void FileColumn::dragEnterEvent(QDragEnterEvent* event) {
+    if (ui->stackedWidget->currentWidget() == ui->filePage) {
+        event->setDropAction(Qt::IgnoreAction);
+        return;
+    }
+
+    event->acceptProposedAction();
+}
+
+void FileColumn::dropEvent(QDropEvent* event) {
+    const QMimeData* mimeData = event->mimeData();
+    tDebug("FileColumn") << mimeData->formats();
+    QModelIndex index = ui->folderView->indexAt(ui->folderView->mapFrom(this, event->pos()));
+
+    if (mimeData->hasUrls()) {
+        QList<QUrl> urls = mimeData->urls();
+        QMenu* menu = new QMenu();
+        if (index.isValid()) {
+            QUrl url = index.data(FileModel::UrlRole).toUrl();
+            DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+            if (dir && dir->exists()->await().result) {
+                menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
+                menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [ = ] {
+                    FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, urls, dir, this->window());
+                    tJobManager::trackJobDelayed(job);
+                });
+                menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [ = ] {
+                    FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, urls, dir, this->window());
+                    tJobManager::trackJobDelayed(job);
+                });
+            }
+        }
+
+        menu->addSection(tr("For this folder"));
+        menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy Here"), this, [ = ] {
+            FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, urls, d->directory, this->window());
+            tJobManager::trackJobDelayed(job);
+        });
+        menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move Here"), this, [ = ] {
+            FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, urls, d->directory, this->window());
+            tJobManager::trackJobDelayed(job);
+        });
+
+        menu->popup(this->mapToGlobal(event->pos()));
+        connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+    }
+    event->setDropAction(Qt::CopyAction);
+}
+
 void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos) {
     QMenu* menu = new QMenu(this);
 
@@ -508,7 +557,7 @@ void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos)
                 otherApps->setTitle(tr("Open With..."));
 
                 QList<ApplicationPointer> apps = MimeAssociationManager::applicationsForMimeType(mimeType.name());
-                for (ApplicationPointer app : apps) {
+                for (ApplicationPointer app : qAsConst(apps)) {
                     otherApps->addAction(QIcon::fromTheme(app->getProperty("Icon").toString()), app->getProperty("Name").toString(), this, [ = ] {
 
                         QMap<QString, QString> launchArgs;

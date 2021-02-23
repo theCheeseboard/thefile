@@ -23,7 +23,6 @@
 #include <tcsdtools.h>
 #include <thelpmenu.h>
 #include <tjobmanager.h>
-#include <QPushButton>
 #include <QUrl>
 #include <QFileInfo>
 #include <QInputDialog>
@@ -31,6 +30,7 @@
 #include <resourcemanager.h>
 #include <tsettings.h>
 #include "filetab.h"
+#include "tabbutton.h"
 
 struct MainWindowPrivate {
     tCsdTools csd;
@@ -83,7 +83,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::newTab() {
-    QPushButton* button = new QPushButton();
+    TabButton* button = new TabButton();
     button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     button->setCheckable(true);
     button->setAutoExclusive(true);
@@ -94,7 +94,7 @@ void MainWindow::newTab() {
 
     button->setText(QFileInfo(QFileInfo(tab->currentUrl().path()).canonicalFilePath()).fileName());
 
-    connect(button, &QPushButton::clicked, this, [ = ] {
+    connect(button, &TabButton::clicked, this, [ = ] {
         ui->stackedWidget->setCurrentWidget(tab);
     });
     connect(ui->stackedWidget, &tStackedWidget::switchingFrame, button, [ = ](int frame) {

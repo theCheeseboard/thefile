@@ -20,8 +20,12 @@
 #include "filecolumnfloater.h"
 #include "ui_filecolumnfloater.h"
 
+#include <QMouseEvent>
+#include <QDrag>
+
 struct FileColumnFloaterPrivate {
     FileColumn* parent;
+    QModelIndexList indices;
 };
 
 FileColumnFloater::FileColumnFloater(FileColumn* parent) :
@@ -37,8 +41,13 @@ FileColumnFloater::~FileColumnFloater() {
     delete d;
 }
 
-void FileColumnFloater::setText(QString text) {
-    ui->floaterText->setText(text);
+void FileColumnFloater::setIndices(QModelIndexList indices) {
+    d->indices = indices;
+    if (indices.count() == 1) {
+        ui->floaterText->setText(indices.at(0).data().toString());
+    } else {
+        ui->floaterText->setText(tr("%n items", nullptr, indices.count()));
+    }
 }
 
 void FileColumnFloater::on_cutButton_clicked() {
@@ -47,4 +56,13 @@ void FileColumnFloater::on_cutButton_clicked() {
 
 void FileColumnFloater::on_copyButton_clicked() {
     d->parent->copy();
+}
+
+void FileColumnFloater::mousePressEvent(QMouseEvent* event) {
+    if (event->button() == Qt::LeftButton && !d->indices.isEmpty()) {
+        const QAbstractItemModel* model = d->indices.at(0).model();
+        QDrag* drag = new QDrag(this);
+        drag->setMimeData(model->mimeData(d->indices));
+        drag->exec(Qt::CopyAction);
+    }
 }
