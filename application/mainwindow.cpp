@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget* parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    this->resize(SC_DPI_T(this->size(), QSize));
+
     d = new MainWindowPrivate();
     d->csd.installMoveAction(ui->topWidget);
     d->csd.installResizeAction(this);
@@ -67,7 +69,6 @@ MainWindow::MainWindow(QWidget* parent)
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
     ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
-
 
     connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());

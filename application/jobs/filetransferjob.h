@@ -37,6 +37,7 @@ class FileTransferJob : public tJob {
             ConflictChecking,
             ConflictResolution,
             FileTransfer,
+            ErrorResolution,
             Done
         };
 
@@ -50,6 +51,7 @@ class FileTransferJob : public tJob {
 
         QMap<QUrl, QUrl> conflictingFiles();
         void resolveConflict(QUrl sourceFile, QUrl resolveTo);
+        void resolveError(bool skip);
 
         void cancel();
         bool cancelled();

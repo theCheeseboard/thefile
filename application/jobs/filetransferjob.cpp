@@ -50,6 +50,8 @@ struct FileTransferJobPrivate {
     FileTransferJob::TransferStage stage = FileTransferJob::FileDiscovery;
     QString description;
 
+    QUrl errorSourceUrl, errorDestUrl;
+
     QPointer<QWidget> jobsPopover;
 
     bool cancelled = false;
@@ -108,9 +110,26 @@ void FileTransferJob::resolveConflict(QUrl sourceFile, QUrl resolveTo) {
     }
 }
 
+void FileTransferJob::resolveError(bool skip) {
+    if (!skip) {
+        d->sourceMappings.insert(d->errorSourceUrl, d->errorDestUrl);
+    }
+
+    d->stage = FileTransfer;
+    emit transferStageChanged(FileTransfer);
+
+    d->state = Processing;
+    emit stateChanged(Processing);
+
+    d->description = tr("Copying Files");
+    emit descriptionChanged(d->description);
+
+    transferNextFile();
+}
+
 void FileTransferJob::cancel() {
     d->cancelled = true;
-    if (d->stage == ConflictResolution) setJobCancelled();
+    if (d->stage == ConflictResolution || d->stage == ErrorResolution) setJobCancelled();
 }
 
 bool FileTransferJob::cancelled() {
@@ -288,8 +307,6 @@ void FileTransferJob::transferFiles() {
     emit totalProgressChanged(d->totalProgress);
 
     //Start copying
-    //TODO: If this is a move operation AND we're on the same filesystem, do a rename
-
     transferNextFile();
 }
 
@@ -429,8 +446,34 @@ void FileTransferJob::transferNextFile() {
         })->then([ = ] {
             transferNextFile();
         })->error([ = ](QString error) {
-            //TODO: Alert the user and ask if they want to retry or skip
-            transferNextFile();
+            //Enter error resolution mode
+            d->stage = ErrorResolution;
+            emit transferStageChanged(ErrorResolution);
+
+            d->state = RequiresAttention;
+            emit stateChanged(RequiresAttention);
+
+            d->description = tr("Waiting for error resolution");
+            emit descriptionChanged(d->description);
+
+            if (d->timer.elapsed() < 2000 && d->jobsPopover) {
+                tJobManager::showJobsPopover(d->jobsPopover);
+            } else {
+                tNotification* n = new tNotification();
+                n->setSummary(tr("File Transfer Error"));
+                n->setText(tr("An error occurred trying to transfer files."));
+                n->insertAction("resolve", tr("Resolve"));
+                connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
+                    if (key == "resolve") {
+                        tJobManager::showJobsPopover(d->jobsPopover);
+                        d->jobsPopover->window()->activateWindow();
+                    }
+                });
+                n->post();
+            }
+
+            d->errorSourceUrl = sourceUrl;
+            d->errorDestUrl = destinationUrl;
         });
     }
 }

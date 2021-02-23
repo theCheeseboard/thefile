@@ -41,6 +41,14 @@ FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* pare
         if (stage == FileTransferJob::ConflictResolution) {
             ui->stackedWidget->setCurrentWidget(ui->conflictResolutionPage);
             ui->conflictDescriptionLabel->setText(tr("%n files in the destination folder have the same file name as files being transferred", nullptr, job->conflictingFiles().count()));
+        } else if (stage == FileTransferJob::ErrorResolution) {
+            ui->stackedWidget->setCurrentWidget(ui->errorResolutionPage);
+
+            if (job->type() == FileTransferJob::Copy) {
+                ui->errorDescriptionLabel->setText(tr("An error occurred while trying to copy a file."));
+            } else {
+                ui->errorDescriptionLabel->setText(tr("An error occurred while trying to move a file."));
+            }
         } else {
             ui->stackedWidget->setCurrentWidget(ui->progressPage);
         }
@@ -145,5 +153,17 @@ void FileTransferJobWidget::on_cancelButton_clicked() {
 }
 
 void FileTransferJobWidget::on_cancelConflictsButton_clicked() {
+    d->job->cancel();
+}
+
+void FileTransferJobWidget::on_skipErrorButton_clicked() {
+    d->job->resolveError(true);
+}
+
+void FileTransferJobWidget::on_retryErrorButton_clicked() {
+    d->job->resolveError(false);
+}
+
+void FileTransferJobWidget::on_cancelErrorButton_clicked() {
     d->job->cancel();
 }

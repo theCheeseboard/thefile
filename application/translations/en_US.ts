@@ -238,90 +238,91 @@
 <context>
     <name>FileTransferJob</name>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="124"/>
+        <location filename="../jobs/filetransferjob.cpp" line="143"/>
         <source>Counting files to transfer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="156"/>
-        <location filename="../jobs/filetransferjob.cpp" line="193"/>
+        <location filename="../jobs/filetransferjob.cpp" line="175"/>
+        <location filename="../jobs/filetransferjob.cpp" line="212"/>
         <source>Counted %n files to transfer...</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="224"/>
+        <location filename="../jobs/filetransferjob.cpp" line="243"/>
         <source>Checking for file conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="253"/>
+        <location filename="../jobs/filetransferjob.cpp" line="272"/>
         <source>Waiting for conflict resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="260"/>
+        <location filename="../jobs/filetransferjob.cpp" line="279"/>
         <source>File Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="261"/>
+        <location filename="../jobs/filetransferjob.cpp" line="280"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="263"/>
+        <location filename="../jobs/filetransferjob.cpp" line="282"/>
         <source>Resolve File Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="284"/>
+        <location filename="../jobs/filetransferjob.cpp" line="124"/>
+        <location filename="../jobs/filetransferjob.cpp" line="303"/>
         <source>Copying Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="313"/>
+        <location filename="../jobs/filetransferjob.cpp" line="330"/>
         <source>Moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="314"/>
+        <location filename="../jobs/filetransferjob.cpp" line="331"/>
         <source>Successfully moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="316"/>
+        <location filename="../jobs/filetransferjob.cpp" line="333"/>
         <source>Copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="317"/>
+        <location filename="../jobs/filetransferjob.cpp" line="334"/>
         <source>Successfully copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="323"/>
+        <location filename="../jobs/filetransferjob.cpp" line="340"/>
         <source>Files Transferred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="342"/>
+        <location filename="../jobs/filetransferjob.cpp" line="359"/>
         <source>Moving %n</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="396"/>
+        <location filename="../jobs/filetransferjob.cpp" line="413"/>
         <source>Copying %1
 %2 of %3
 
@@ -329,12 +330,32 @@ Total progress: %4 of %5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="413"/>
+        <location filename="../jobs/filetransferjob.cpp" line="430"/>
         <source>Cancelling operation...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="445"/>
+        <location filename="../jobs/filetransferjob.cpp" line="456"/>
+        <source>Waiting for error resolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/filetransferjob.cpp" line="463"/>
+        <source>File Transfer Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/filetransferjob.cpp" line="464"/>
+        <source>An error occurred trying to transfer files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/filetransferjob.cpp" line="465"/>
+        <source>Resolve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/filetransferjob.cpp" line="488"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -363,7 +384,23 @@ Total progress: %4 of %5</source>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="154"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="209"/>
         <source>Cancel Operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="173"/>
+        <source>TRANSFER ERROR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="195"/>
+        <source>Skip this file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="202"/>
+        <source>Try Again</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
@@ -374,12 +411,22 @@ Total progress: %4 of %5</source>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="49"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="48"/>
+        <source>An error occurred while trying to copy a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="50"/>
+        <source>An error occurred while trying to move a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
         <source>COPYING FILES</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="49"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
         <source>MOVING FILES</source>
         <translation type="unfinished"></translation>
     </message>
@@ -547,7 +594,7 @@ Total progress: %4 of %5</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
@@ -557,7 +604,7 @@ Total progress: %4 of %5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Enter a location to go to</source>
         <translation type="unfinished"></translation>
     </message>

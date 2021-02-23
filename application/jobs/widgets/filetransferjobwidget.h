@@ -46,6 +46,12 @@ class FileTransferJobWidget : public QWidget {
 
         void on_cancelConflictsButton_clicked();
 
+        void on_skipErrorButton_clicked();
+
+        void on_retryErrorButton_clicked();
+
+        void on_cancelErrorButton_clicked();
+
     private:
         Ui::FileTransferJobWidget* ui;
         FileTransferJobWidgetPrivate* d;
