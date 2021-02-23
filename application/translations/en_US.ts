@@ -2,6 +2,176 @@
 <!DOCTYPE TS>
 <TS version="2.1" sourcelanguage="en_US">
 <context>
+    <name>BurnJob</name>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="187"/>
+        <location filename="../jobs/burnjob.cpp" line="239"/>
+        <source>Preparing to burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="139"/>
+        <source>Waiting for other jobs to finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="91"/>
+        <source>Failed to stage files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="98"/>
+        <source>Staging files for burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="107"/>
+        <source>Generating Disc Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="207"/>
+        <source>Failed to burn disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="212"/>
+        <source>Couldn&apos;t Burn %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="213"/>
+        <source>Could not burn %1 to disc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="255"/>
+        <source>Burning Files (%1)
+%2 of %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="258"/>
+        <source>Burning Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="312"/>
+        <source>Burn Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="318"/>
+        <source>Burned %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="319"/>
+        <source>The folder %1 has been burned to disc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="249"/>
+        <source>Erasing Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="163"/>
+        <source>Failed to burn files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="269"/>
+        <source>Finalizing Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="304"/>
+        <source>Ejecting Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BurnJobProgress</name>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
+        <source>Burn to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BurnPopover</name>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="83"/>
+        <source>BURN OPTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="93"/>
+        <source>Disc Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="100"/>
+        <location filename="../popovers/burnpopover.ui" line="219"/>
+        <source>Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="70"/>
+        <source>Burner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="129"/>
+        <source>HEADS UP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="184"/>
+        <source>Burn Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="200"/>
+        <source>DISC NOT BLANK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.ui" line="207"/>
+        <source>The disc in the drive is not blank. To restore an image to the disc, the disc will need to be erased.
+
+Once the disc in the drive is erased, all the data on it will be gone forever.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.cpp" line="70"/>
+        <location filename="../popovers/burnpopover.cpp" line="71"/>
+        <source>Burn %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.cpp" line="88"/>
+        <source>Insert a burnable disc into the drive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/burnpopover.cpp" line="92"/>
+        <source>The disc in the drive has already been written.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DeletePermanentlyPopover</name>
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="35"/>
@@ -30,187 +200,187 @@
     <name>FileColumn</name>
     <message>
         <location filename="../filecolumn.ui" line="323"/>
-        <location filename="../filecolumn.cpp" line="549"/>
+        <location filename="../filecolumn.cpp" line="551"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="139"/>
+        <location filename="../filecolumn.cpp" line="141"/>
         <source>Root</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="140"/>
-        <location filename="../filecolumn.cpp" line="225"/>
-        <location filename="../filecolumn.cpp" line="346"/>
+        <location filename="../filecolumn.cpp" line="142"/>
+        <location filename="../filecolumn.cpp" line="227"/>
+        <location filename="../filecolumn.cpp" line="348"/>
         <source>Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="144"/>
+        <location filename="../filecolumn.cpp" line="146"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="212"/>
-        <location filename="../filecolumn.cpp" line="403"/>
+        <location filename="../filecolumn.cpp" line="214"/>
+        <location filename="../filecolumn.cpp" line="405"/>
         <source>New Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="212"/>
+        <location filename="../filecolumn.cpp" line="214"/>
         <source>Folder name</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="226"/>
+        <location filename="../filecolumn.cpp" line="228"/>
         <source>Moved %n items to the trash</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="259"/>
-        <location filename="../filecolumn.cpp" line="609"/>
+        <location filename="../filecolumn.cpp" line="261"/>
+        <location filename="../filecolumn.cpp" line="611"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="259"/>
+        <location filename="../filecolumn.cpp" line="261"/>
         <source>Enter a new name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="315"/>
+        <location filename="../filecolumn.cpp" line="317"/>
         <source>No items here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="316"/>
+        <location filename="../filecolumn.cpp" line="318"/>
         <source>This folder is empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="319"/>
+        <location filename="../filecolumn.cpp" line="321"/>
         <source>Not Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="320"/>
+        <location filename="../filecolumn.cpp" line="322"/>
         <source>This folder doesn&apos;t exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="323"/>
+        <location filename="../filecolumn.cpp" line="325"/>
         <source>Permission Denied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="324"/>
+        <location filename="../filecolumn.cpp" line="326"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="327"/>
+        <location filename="../filecolumn.cpp" line="329"/>
         <source>Can&apos;t view this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="328"/>
+        <location filename="../filecolumn.cpp" line="330"/>
         <source>We can&apos;t show you the contents of this folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="347"/>
+        <location filename="../filecolumn.cpp" line="349"/>
         <source>Empty Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="402"/>
-        <location filename="../filecolumn.cpp" line="524"/>
+        <location filename="../filecolumn.cpp" line="404"/>
+        <location filename="../filecolumn.cpp" line="526"/>
         <source>For this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="404"/>
+        <location filename="../filecolumn.cpp" line="406"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="512"/>
-        <location filename="../filecolumn.cpp" line="546"/>
+        <location filename="../filecolumn.cpp" line="514"/>
+        <location filename="../filecolumn.cpp" line="548"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="513"/>
+        <location filename="../filecolumn.cpp" line="515"/>
         <source>Copy In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="517"/>
+        <location filename="../filecolumn.cpp" line="519"/>
         <source>Move In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="525"/>
+        <location filename="../filecolumn.cpp" line="527"/>
         <source>Copy Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="529"/>
+        <location filename="../filecolumn.cpp" line="531"/>
         <source>Move Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="557"/>
+        <location filename="../filecolumn.cpp" line="559"/>
         <source>Open With...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="573"/>
+        <location filename="../filecolumn.cpp" line="575"/>
         <source>Another app...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="581"/>
+        <location filename="../filecolumn.cpp" line="583"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="584"/>
+        <location filename="../filecolumn.cpp" line="586"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="585"/>
+        <location filename="../filecolumn.cpp" line="587"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="587"/>
+        <location filename="../filecolumn.cpp" line="589"/>
         <source>Put Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="600"/>
+        <location filename="../filecolumn.cpp" line="602"/>
         <source>Delete Permanently</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="602"/>
+        <location filename="../filecolumn.cpp" line="604"/>
         <source>Move to Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="617"/>
+        <location filename="../filecolumn.cpp" line="619"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="633"/>
+        <location filename="../filecolumn.cpp" line="636"/>
         <source>Burn Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,91 +403,91 @@
 <context>
     <name>FileTransferJob</name>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="143"/>
+        <location filename="../jobs/filetransferjob.cpp" line="148"/>
         <source>Counting files to transfer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="175"/>
-        <location filename="../jobs/filetransferjob.cpp" line="212"/>
+        <location filename="../jobs/filetransferjob.cpp" line="180"/>
+        <location filename="../jobs/filetransferjob.cpp" line="217"/>
         <source>Counted %n files to transfer...</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="243"/>
+        <location filename="../jobs/filetransferjob.cpp" line="248"/>
         <source>Checking for file conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="272"/>
+        <location filename="../jobs/filetransferjob.cpp" line="277"/>
         <source>Waiting for conflict resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="279"/>
+        <location filename="../jobs/filetransferjob.cpp" line="285"/>
         <source>File Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="280"/>
+        <location filename="../jobs/filetransferjob.cpp" line="286"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="282"/>
+        <location filename="../jobs/filetransferjob.cpp" line="288"/>
         <source>Resolve File Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="124"/>
-        <location filename="../jobs/filetransferjob.cpp" line="303"/>
+        <location filename="../jobs/filetransferjob.cpp" line="125"/>
+        <location filename="../jobs/filetransferjob.cpp" line="310"/>
         <source>Copying Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="330"/>
+        <location filename="../jobs/filetransferjob.cpp" line="337"/>
         <source>Moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="331"/>
+        <location filename="../jobs/filetransferjob.cpp" line="338"/>
         <source>Successfully moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="333"/>
+        <location filename="../jobs/filetransferjob.cpp" line="340"/>
         <source>Copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="334"/>
+        <location filename="../jobs/filetransferjob.cpp" line="341"/>
         <source>Successfully copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="340"/>
+        <location filename="../jobs/filetransferjob.cpp" line="348"/>
         <source>Files Transferred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="359"/>
+        <location filename="../jobs/filetransferjob.cpp" line="368"/>
         <source>Moving %n</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="413"/>
+        <location filename="../jobs/filetransferjob.cpp" line="422"/>
         <source>Copying %1
 %2 of %3
 
@@ -325,32 +495,32 @@ Total progress: %4 of %5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="430"/>
+        <location filename="../jobs/filetransferjob.cpp" line="439"/>
         <source>Cancelling operation...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="456"/>
+        <location filename="../jobs/filetransferjob.cpp" line="465"/>
         <source>Waiting for error resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="463"/>
+        <location filename="../jobs/filetransferjob.cpp" line="473"/>
         <source>File Transfer Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="464"/>
+        <location filename="../jobs/filetransferjob.cpp" line="474"/>
         <source>An error occurred trying to transfer files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="465"/>
+        <location filename="../jobs/filetransferjob.cpp" line="475"/>
         <source>Resolve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="488"/>
+        <location filename="../jobs/filetransferjob.cpp" line="499"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>

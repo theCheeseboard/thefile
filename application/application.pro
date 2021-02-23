@@ -17,10 +17,13 @@ SOURCES += \
     filemodel.cpp \
     filetab.cpp \
     hiddenfilesproxymodel.cpp \
+    jobs/burnjob.cpp \
     jobs/filetransferjob.cpp \
+    jobs/widgets/burnjobprogress.cpp \
     jobs/widgets/filetransferjobwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    popovers/burnpopover.cpp \
     popovers/deletepermanentlypopover.cpp \
     popovers/itempropertiespopover.cpp \
     sidebar/devicesmodel.cpp \
@@ -35,9 +38,12 @@ HEADERS += \
     filemodel.h \
     filetab.h \
     hiddenfilesproxymodel.h \
+    jobs/burnjob.h \
     jobs/filetransferjob.h \
+    jobs/widgets/burnjobprogress.h \
     jobs/widgets/filetransferjobwidget.h \
     mainwindow.h \
+    popovers/burnpopover.h \
     popovers/deletepermanentlypopover.h \
     popovers/itempropertiespopover.h \
     sidebar/devicesmodel.h \
@@ -49,8 +55,10 @@ FORMS += \
     filecolumnaction.ui \
     filecolumnfloater.ui \
     filetab.ui \
+    jobs/widgets/burnjobprogress.ui \
     jobs/widgets/filetransferjobwidget.ui \
     mainwindow.ui \
+    popovers/burnpopover.ui \
     popovers/deletepermanentlypopover.ui \
     popovers/itempropertiespopover.ui \
     sidebar/sidebar.ui

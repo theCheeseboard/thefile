@@ -55,6 +55,7 @@ struct FileTransferJobPrivate {
     QPointer<QWidget> jobsPopover;
 
     bool cancelled = false;
+    bool silent = false;
 };
 
 FileTransferJob::FileTransferJob(TransferType type, QList<QUrl> source, DirectoryPtr destination, QWidget* jobsPopover, QObject* parent) : tJob(parent) {
@@ -125,6 +126,10 @@ void FileTransferJob::resolveError(bool skip) {
     emit descriptionChanged(d->description);
 
     transferNextFile();
+}
+
+void FileTransferJob::setSilent(bool silent) {
+    d->silent = silent;
 }
 
 void FileTransferJob::cancel() {
@@ -275,18 +280,20 @@ void FileTransferJob::conflictCheck() {
             if (d->timer.elapsed() < 2000 && d->jobsPopover) {
                 tJobManager::showJobsPopover(d->jobsPopover);
             } else {
-                tNotification* n = new tNotification();
-                n->setSummary(tr("File Conflicts"));
-                n->setText(tr("%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
+                if (!d->silent) {
+                    tNotification* n = new tNotification();
+                    n->setSummary(tr("File Conflicts"));
+                    n->setText(tr("%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
 //                n->setText(tr("Transferring files will result in %n files coexisting with the same name in the destination. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
-                n->insertAction("resolve", tr("Resolve File Conflicts"));
-                connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
-                    if (key == "resolve") {
-                        tJobManager::showJobsPopover(d->jobsPopover);
-                        d->jobsPopover->window()->activateWindow();
-                    }
-                });
-                n->post();
+                    n->insertAction("resolve", tr("Resolve File Conflicts"));
+                    connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
+                        if (key == "resolve") {
+                            tJobManager::showJobsPopover(d->jobsPopover);
+                            d->jobsPopover->window()->activateWindow();
+                        }
+                    });
+                    n->post();
+                }
             }
         }
     });
@@ -336,10 +343,12 @@ void FileTransferJob::transferNextFile() {
         emit descriptionChanged(d->description);
 
         if (d->timer.elapsed() >= 2000) {
-            tNotification* n = new tNotification();
-            n->setSummary(tr("Files Transferred"));
-            n->setText(notificationText);
-            n->post();
+            if (!d->silent) {
+                tNotification* n = new tNotification();
+                n->setSummary(tr("Files Transferred"));
+                n->setText(notificationText);
+                n->post();
+            }
         }
     } else {
         QUrl sourceUrl = d->sourceMappings.keys().first();
@@ -459,17 +468,19 @@ void FileTransferJob::transferNextFile() {
             if (d->timer.elapsed() < 2000 && d->jobsPopover) {
                 tJobManager::showJobsPopover(d->jobsPopover);
             } else {
-                tNotification* n = new tNotification();
-                n->setSummary(tr("File Transfer Error"));
-                n->setText(tr("An error occurred trying to transfer files."));
-                n->insertAction("resolve", tr("Resolve"));
-                connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
-                    if (key == "resolve") {
-                        tJobManager::showJobsPopover(d->jobsPopover);
-                        d->jobsPopover->window()->activateWindow();
-                    }
-                });
-                n->post();
+                if (!d->silent) {
+                    tNotification* n = new tNotification();
+                    n->setSummary(tr("File Transfer Error"));
+                    n->setText(tr("An error occurred trying to transfer files."));
+                    n->insertAction("resolve", tr("Resolve"));
+                    connect(n, &tNotification::actionClicked, this, [ = ](QString key) {
+                        if (key == "resolve") {
+                            tJobManager::showJobsPopover(d->jobsPopover);
+                            d->jobsPopover->window()->activateWindow();
+                        }
+                    });
+                    n->post();
+                }
             }
 
             d->errorSourceUrl = sourceUrl;

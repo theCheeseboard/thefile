@@ -43,6 +43,8 @@
 #include "filecolumnfloater.h"
 #include "filecolumnmanager.h"
 #include "popovers/itempropertiespopover.h"
+#include "popovers/burnpopover.h"
+#include <driveobjectmanager.h>
 
 struct FileColumnPrivate {
     FileColumnManager* manager;
@@ -629,8 +631,19 @@ void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos)
         //TODO: Asynchronous
         DirectoryPtr dir = ResourceManager::directoryForUrl(url);
         if (dir && dir->exists()->await().result) {
-            menu->addSeparator();
-            menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"));
+            if (!DriveObjectManager::opticalDisks().isEmpty()) {
+                menu->addSeparator();
+                menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [ = ] {
+                    BurnPopover* jp = new BurnPopover(dir);
+                    tPopover* popover = new tPopover(jp);
+                    popover->setPopoverWidth(SC_DPI(-200));
+                    popover->setPopoverSide(tPopover::Bottom);
+                    connect(jp, &BurnPopover::done, popover, &tPopover::dismiss);
+                    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+                    connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
+                    popover->show(this->window());
+                });
+            }
         }
     }
 

@@ -53,6 +53,8 @@ class FileTransferJob : public tJob {
         void resolveConflict(QUrl sourceFile, QUrl resolveTo);
         void resolveError(bool skip);
 
+        void setSilent(bool silent);
+
         void cancel();
         bool cancelled();
 
