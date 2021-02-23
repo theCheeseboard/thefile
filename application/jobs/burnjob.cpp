@@ -239,11 +239,10 @@ void BurnJob::runNextStage() {
                         d->description = tr("Preparing to burn");
                         emit descriptionChanged(d->description);
 
-                        d->progress = 0;
+                        d->progress = 1;
                         emit progressChanged(d->progress);
 
-
-                        d->totalProgress = 0;
+                        d->totalProgress = 2;
                         emit totalProgressChanged(d->totalProgress);
                     } else if (line.startsWith("Blanking")) {
                         d->description = tr("Erasing Disc");

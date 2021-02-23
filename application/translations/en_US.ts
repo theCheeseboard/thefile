@@ -45,33 +45,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="255"/>
+        <location filename="../jobs/burnjob.cpp" line="254"/>
         <source>Burning Files (%1)
 %2 of %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="258"/>
+        <location filename="../jobs/burnjob.cpp" line="257"/>
         <source>Burning Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="312"/>
+        <location filename="../jobs/burnjob.cpp" line="311"/>
         <source>Burn Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="318"/>
+        <location filename="../jobs/burnjob.cpp" line="317"/>
         <source>Burned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="319"/>
+        <location filename="../jobs/burnjob.cpp" line="318"/>
         <source>The folder %1 has been burned to disc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="249"/>
+        <location filename="../jobs/burnjob.cpp" line="248"/>
         <source>Erasing Disc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,12 +81,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="269"/>
+        <location filename="../jobs/burnjob.cpp" line="268"/>
         <source>Finalizing Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="304"/>
+        <location filename="../jobs/burnjob.cpp" line="303"/>
         <source>Ejecting Disc</source>
         <translation type="unfinished"></translation>
     </message>
