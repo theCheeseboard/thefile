@@ -218,11 +218,6 @@
 <context>
     <name>FileColumnFloater</name>
     <message>
-        <location filename="../filecolumnfloater.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../filecolumnfloater.ui" line="65"/>
         <source>Floater</source>
         <translation type="unfinished"></translation>
@@ -433,11 +428,6 @@ Total progress: %4 of %5</source>
 </context>
 <context>
     <name>ItemPropertiesPopover</name>
-    <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="35"/>
         <source>Properties</source>
