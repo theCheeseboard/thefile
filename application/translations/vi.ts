@@ -359,7 +359,7 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
     <message>
         <location filename="../filecolumn.cpp" line="589"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Khôi phục</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="602"/>
@@ -641,7 +641,7 @@ Tổng cộng: %4 tren %5</translation>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="248"/>
         <source>Free Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Dung lượng trống</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="266"/>
