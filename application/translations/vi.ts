@@ -7,88 +7,89 @@
         <location filename="../jobs/burnjob.cpp" line="187"/>
         <location filename="../jobs/burnjob.cpp" line="239"/>
         <source>Preparing to burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chuẩn bị ghi đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="139"/>
         <source>Waiting for other jobs to finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ hoạt động khác kết thúc</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="91"/>
         <source>Failed to stage files</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể sao lưu tệp để ghi</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="98"/>
         <source>Staging files for burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang sao lưu các tệp để ghi</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="107"/>
         <source>Generating Disc Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang tạo ảnh đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="207"/>
         <source>Failed to burn disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể ghi đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="212"/>
         <source>Couldn&apos;t Burn %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể ghi %1</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="213"/>
         <source>Could not burn %1 to disc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể ghi %1 vào đĩa.</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="254"/>
         <source>Burning Files (%1)
 %2 of %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang ghi tệp vào đĩa (%1)
+%2 tren %3</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="257"/>
         <source>Burning Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang ghi tệp vào đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="311"/>
         <source>Burn Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi đĩa hoàn thành</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="317"/>
         <source>Burned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã ghi %1</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="318"/>
         <source>The folder %1 has been burned to disc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục %1 đã bị ghi vào đĩa thành công.</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="248"/>
         <source>Erasing Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang xóa đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="163"/>
         <source>Failed to burn files</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể ghi tệp vào đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="268"/>
         <source>Finalizing Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang hoàn thiện đĩa</translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="303"/>
         <source>Ejecting Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang nhổ đĩa ra</translation>
     </message>
 </context>
 <context>
@@ -96,7 +97,7 @@
     <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
         <source>Burn to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi vào</translation>
     </message>
 </context>
 <context>
@@ -104,65 +105,67 @@
     <message>
         <location filename="../popovers/burnpopover.ui" line="83"/>
         <source>BURN OPTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>TÙY CHỌN GHI ĐĨA</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="93"/>
         <source>Disc Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên đĩa</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="100"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi đĩa</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="207"/>
         <source>The disc in the drive is not blank. To burn these files to the disc, the disc will need to be erased.
 
 Once the disc in the drive is erased, all the data on it will be gone forever.</source>
-        <translation type="unfinished"></translation>
+        <translation>Đĩa trong ổ không có trống. Để ghi tệp này vào đĩa đó, nó sẽ phải bị xóa.
+
+Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mãi.</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="70"/>
         <source>Burner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ổ</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="129"/>
         <source>HEADS UP</source>
-        <translation type="unfinished"></translation>
+        <translation>CẨN THẬN</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="184"/>
         <source>Burn Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi đĩa</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="200"/>
         <source>DISC NOT BLANK</source>
-        <translation type="unfinished"></translation>
+        <translation>Đĩa không trống</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="219"/>
         <source>Erase and Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa và ghi</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.cpp" line="72"/>
         <location filename="../popovers/burnpopover.cpp" line="73"/>
         <source>Burn %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi %1 vào đĩa</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.cpp" line="90"/>
         <source>Insert a burnable disc into the drive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chèn một đĩa có thể ghi vào ổ.</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.cpp" line="94"/>
         <source>The disc in the drive has already been written.</source>
-        <translation type="unfinished"></translation>
+        <translation>Đĩa trong ổ đĩa đã bị ghi.</translation>
     </message>
 </context>
 <context>
@@ -170,23 +173,23 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="35"/>
         <source>Delete Permanently</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa vĩnh viễn</translation>
     </message>
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="51"/>
         <source>THIS IS IT</source>
-        <translation type="unfinished"></translation>
+        <translation>SẴN SÀNG CHƯA?</translation>
     </message>
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="58"/>
         <source>Once the files are gone, they&apos;re gone forever.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sau khi tệp bị xóa, nó sẽ bị mất mãi mãi.</translation>
     </message>
     <message numerus="yes">
         <location filename="../popovers/deletepermanentlypopover.cpp" line="39"/>
         <source>Delete %n files</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Xoá %n tệp</numerusform>
         </translation>
     </message>
 </context>
@@ -196,187 +199,187 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <location filename="../filecolumn.ui" line="323"/>
         <location filename="../filecolumn.cpp" line="551"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="141"/>
         <source>Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Gốc hệ thống</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="142"/>
         <location filename="../filecolumn.cpp" line="227"/>
         <location filename="../filecolumn.cpp" line="348"/>
         <source>Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Thùng rác</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="146"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục chính</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="214"/>
         <location filename="../filecolumn.cpp" line="405"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục mới</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="214"/>
         <source>Folder name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên thư mục</translation>
     </message>
     <message numerus="yes">
         <location filename="../filecolumn.cpp" line="228"/>
         <source>Moved %n items to the trash</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã chuyển %n mục vào thùng rác</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="261"/>
         <location filename="../filecolumn.cpp" line="611"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi tên</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="261"/>
         <source>Enter a new name</source>
-        <translation type="unfinished"></translation>
+        <translation>Điền vào một tên mới</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="317"/>
         <source>No items here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có tệp nào đây!</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="318"/>
         <source>This folder is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục này rõng.</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="321"/>
         <source>Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm được</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="322"/>
         <source>This folder doesn&apos;t exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục này không có tồn tại.</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="325"/>
         <source>Permission Denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có quyền</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="326"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Có vẻ như bạn không có quyền xem thư mục này.</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="329"/>
         <source>Can&apos;t view this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể xem thư mục</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="330"/>
         <source>We can&apos;t show you the contents of this folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chúng tôi không thể hiện nội dung thư mục này.</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="349"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổ rác</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="404"/>
         <location filename="../filecolumn.cpp" line="526"/>
         <source>For this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho thư mục này</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="406"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Dán</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="514"/>
         <location filename="../filecolumn.cpp" line="548"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho %1</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="515"/>
         <source>Copy In</source>
-        <translation type="unfinished"></translation>
+        <translation>Chép vào</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="519"/>
         <source>Move In</source>
-        <translation type="unfinished"></translation>
+        <translation>Chuyển vào</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="527"/>
         <source>Copy Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Chép đây</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="531"/>
         <source>Move Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Chuyển đây</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="559"/>
         <source>Open With...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở bằng...</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="575"/>
         <source>Another app...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ứng dụng khác...</translation>
     </message>
     <message numerus="yes">
         <location filename="../filecolumn.cpp" line="583"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="586"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Cắt</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="587"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Chép</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="589"/>
         <source>Put Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoàn lại</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="602"/>
         <source>Delete Permanently</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa vĩnh viễn</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="604"/>
         <source>Move to Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Chuyển vào thùng rác</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="619"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Thuộc tính</translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="636"/>
         <source>Burn Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi nội dung</translation>
     </message>
 </context>
 <context>
@@ -384,13 +387,13 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
     <message>
         <location filename="../filecolumnfloater.ui" line="65"/>
         <source>Floater</source>
-        <translation type="unfinished"></translation>
+        <translation>Hộp bay</translation>
     </message>
     <message numerus="yes">
         <location filename="../filecolumnfloater.cpp" line="49"/>
         <source>%n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n mục</numerusform>
         </translation>
     </message>
 </context>
@@ -399,86 +402,86 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="148"/>
         <source>Counting files to transfer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang đếm tệp để chuyển...</translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="180"/>
         <location filename="../jobs/filetransferjob.cpp" line="217"/>
         <source>Counted %n files to transfer...</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã đếm %n tệp để chuyển...</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="248"/>
         <source>Checking for file conflicts</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang kiểm tra xung đột tệp</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="277"/>
         <source>Waiting for conflict resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ quyết định xung đột</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="285"/>
         <source>File Conflicts</source>
-        <translation type="unfinished"></translation>
+        <translation>Xung đột tệp</translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="286"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã tìm thấy %n tệp trong thư mục đích có tên cùng với tệp đang bị chuyển. Giải quyết các xung đột để tiếp tục chuyển tệp.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="288"/>
         <source>Resolve File Conflicts</source>
-        <translation type="unfinished"></translation>
+        <translation>Giải quyết xung đột</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="125"/>
         <location filename="../jobs/filetransferjob.cpp" line="310"/>
         <source>Copying Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chép tệp</translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="337"/>
         <source>Moved %n files</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã chuyển %n tệp</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="338"/>
         <source>Successfully moved %n files</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã chuyển %n tệp thành công</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="340"/>
         <source>Copied %n files</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã chép %n tệp</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="341"/>
         <source>Successfully copied %n files</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã chép %n tệp thành công</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="348"/>
         <source>Files Transferred</source>
-        <translation type="unfinished"></translation>
+        <translation>Tệp đã bị chuyển</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="368"/>
         <source>Moving %n</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chuyển %n</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="422"/>
@@ -486,37 +489,40 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
 %2 of %3
 
 Total progress: %4 of %5</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chép %1
+%2 tren %3
+
+Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="439"/>
         <source>Cancelling operation...</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang hủy hoạt động...</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="465"/>
         <source>Waiting for error resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ quyết định lỗi</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="473"/>
         <source>File Transfer Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi chuyển tệp</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="474"/>
         <source>An error occurred trying to transfer files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi xảy ra khi cố chuyển tệp.</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="475"/>
         <source>Resolve</source>
-        <translation type="unfinished"></translation>
+        <translation>Giải quyết</translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="499"/>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã hủy</translation>
     </message>
 </context>
 <context>
@@ -524,70 +530,70 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="111"/>
         <source>FILE CONFLICTS</source>
-        <translation type="unfinished"></translation>
+        <translation>XUNG ĐỘT TỆP</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="133"/>
         <source>Replace All</source>
-        <translation type="unfinished"></translation>
+        <translation>Thay thế tất cả</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="140"/>
         <source>Skip Conflicting</source>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua các xung đột</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="147"/>
         <source>Manually Resolve Conflicts</source>
-        <translation type="unfinished"></translation>
+        <translation>Giải quyết thủ công</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="154"/>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="209"/>
         <source>Cancel Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="173"/>
         <source>TRANSFER ERROR</source>
-        <translation type="unfinished"></translation>
+        <translation>LỖI CHUYỂN TỆP</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="195"/>
         <source>Skip this file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua tệp này</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="202"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Thử lại</translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="43"/>
         <source>%n files in the destination folder have the same file name as files being transferred</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Đã tìm thấy %n tệp trong thư mục đích có tên cùng với tệp đang bị chuyển</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="48"/>
         <source>An error occurred while trying to copy a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi xảy ra khi cố chép một tệp</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="50"/>
         <source>An error occurred while trying to move a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi xảy ra khi cố chuyển một tệp</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
         <source>COPYING FILES</source>
-        <translation type="unfinished"></translation>
+        <translation>ĐANG CHÉP TỆP</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
         <source>MOVING FILES</source>
-        <translation type="unfinished"></translation>
+        <translation>ĐANG CHUYỂN TỆP</translation>
     </message>
 </context>
 <context>
@@ -595,77 +601,77 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="35"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Thuộc tính</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="60"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Chi tiết</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="76"/>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Quyền hạn</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="112"/>
         <source>Last Accessed</source>
-        <translation type="unfinished"></translation>
+        <translation>Lần truy cập cuối</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="138"/>
         <source>DETAILS</source>
-        <translation type="unfinished"></translation>
+        <translation>CHI TIẾT</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="145"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kích cỡ</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="166"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="193"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Loại</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="252"/>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Người khác</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="294"/>
         <source>Read</source>
-        <translation type="unfinished"></translation>
+        <translation>Đọc</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="304"/>
         <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Chủ</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="311"/>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhóm</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="324"/>
         <source>ACCESS CONTROLS</source>
-        <translation type="unfinished"></translation>
+        <translation>KIỂM SOÁT TRUY CẬP</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="338"/>
         <source>Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="331"/>
         <source>Executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Có thể chạy</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="152"/>
@@ -677,26 +683,26 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="159"/>
         <source>Last Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Lần thay đổi cuối</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.cpp" line="63"/>
         <location filename="../popovers/itempropertiespopover.cpp" line="64"/>
         <source>Counting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang đếm...</translation>
     </message>
     <message numerus="yes">
         <location filename="../popovers/itempropertiespopover.cpp" line="70"/>
         <source>%n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n mục</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.cpp" line="73"/>
         <location filename="../popovers/itempropertiespopover.cpp" line="79"/>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 byte</translation>
     </message>
 </context>
 <context>
@@ -704,63 +710,63 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>theFile</source>
-        <translation type="unfinished"></translation>
+        <translation>theFile</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="141"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Thoát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="144"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab mới</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="156"/>
         <source>Ctrl+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="165"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Đóng tab</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="168"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="176"/>
         <source>Show Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiển thị tệp ẩn</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="179"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
         <location filename="../mainwindow.cpp" line="150"/>
         <source>Go</source>
-        <translation type="unfinished"></translation>
+        <translation>Đi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="191"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="150"/>
         <source>Enter a location to go to</source>
-        <translation type="unfinished"></translation>
+        <translation>Điền một vị trí để đi đến</translation>
     </message>
 </context>
 <context>
@@ -768,97 +774,97 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../sidebar/sidebar.ui" line="74"/>
         <source>PLACES</source>
-        <translation type="unfinished"></translation>
+        <translation>VỊ TRÍ</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.ui" line="103"/>
         <source>DRIVES</source>
-        <translation type="unfinished"></translation>
+        <translation>Ổ</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.ui" line="129"/>
         <source>DOCKED</source>
-        <translation type="unfinished"></translation>
+        <translation>CẬP</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="54"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục chính</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="55"/>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="56"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="57"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhạc</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="58"/>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Hình ảnh</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="59"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Phim</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="60"/>
         <source>Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Gốc hệ thống</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="61"/>
         <source>Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Thùng rác</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="185"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho %1</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="188"/>
         <source>Mount</source>
-        <translation type="unfinished"></translation>
+        <translation>Gán</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="192"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Tháo</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="195"/>
         <source>Couldn&apos;t unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể tháo</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="196"/>
         <source>Unmounting the drive failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoạt động tháo ổ bị thất bại</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="206"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhổ ra</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="209"/>
         <source>Couldn&apos;t eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể nhổ ra</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="210"/>
         <source>Ejecting the drive failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoạt động nhổ ổ ra bị thất bại</translation>
     </message>
 </context>
 <context>
@@ -866,7 +872,7 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../main.cpp" line="38"/>
         <source>File Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Trình quản lý tệp</translation>
     </message>
 </context>
 </TS>
