@@ -355,7 +355,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="589"/>
-        <source>Put Back</source>
+        <source>Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -670,13 +670,6 @@ Total progress: %4 of %5</source>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="345"/>
         <source>Executable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="145"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="172"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="200"/>
-        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

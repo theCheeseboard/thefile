@@ -358,8 +358,8 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="589"/>
-        <source>Put Back</source>
-        <translation>Hoàn lại</translation>
+        <source>Restore</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="602"/>
@@ -677,13 +677,6 @@ Tổng cộng: %4 tren %5</translation>
         <location filename="../popovers/itempropertiespopover.ui" line="345"/>
         <source>Executable</source>
         <translation>Có thể chạy</translation>
-    </message>
-    <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="145"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="172"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="200"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="193"/>
