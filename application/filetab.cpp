@@ -152,6 +152,43 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 col->deleteLater();
                 d->currentColumns.removeLast();
             }
+
+            if (columnsRemoved) {
+                //Keep the scrollbar where it is
+                //TODO: Adjust the scrollbar so that at least one panel is visible
+                int max = -ui->scrollArea->width();
+                for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
+                if (max < currentWidth) {
+                    int margin = currentWidth - max;
+                    ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+                }
+            } else {
+                //Reduce the extra margin at the end
+                int max = 0;
+                for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
+
+                int margin = ui->scrollArea->horizontalScrollBar()->value() + ui->scrollArea->width() - max;
+                ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
+            }
+            if (columnsAdded) {
+                QTimer::singleShot(0, this, [ = ] {
+                    //Scroll to the end
+                    tVariantAnimation* anim = new tVariantAnimation(this);
+                    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [ = ](int min, int max) {
+                        Q_UNUSED(min)
+                        anim->setEndValue(max);
+                    });
+                    anim->setStartValue(ui->scrollArea->horizontalScrollBar()->value());
+                    anim->setStartValue(ui->scrollArea->horizontalScrollBar()->maximum());
+                    anim->setDuration(100);
+                    anim->setEasingCurve(QEasingCurve::OutCubic);
+                    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+                        ui->scrollArea->horizontalScrollBar()->setValue(value.toInt());
+                    });
+                    connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
+                    anim->start();
+                });
+            }
             break;
         case FileTab::Trash:
             while (d->currentColumnWidgets.count() > 1) {
@@ -160,47 +197,11 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 col->deleteLater();
             }
             while (directories.count() > 1) directories.removeLast();
+            ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, 0, 0);
             break;
     }
 
     d->currentColumns = directories;
-
-    if (columnsRemoved) {
-        //Keep the scrollbar where it is
-        //TODO: Adjust the scrollbar so that at least one panel is visible
-        int max = -ui->scrollArea->width();
-        for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
-        if (max < currentWidth) {
-            int margin = currentWidth - max;
-            ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
-        }
-    } else {
-        //Reduce the extra margin at the end
-        int max = 0;
-        for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
-
-        int margin = ui->scrollArea->horizontalScrollBar()->value() + ui->scrollArea->width() - max;
-        ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
-    }
-    if (columnsAdded) {
-        QTimer::singleShot(0, this, [ = ] {
-            //Scroll to the end
-            tVariantAnimation* anim = new tVariantAnimation(this);
-            connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [ = ](int min, int max) {
-                Q_UNUSED(min)
-                anim->setEndValue(max);
-            });
-            anim->setStartValue(ui->scrollArea->horizontalScrollBar()->value());
-            anim->setStartValue(ui->scrollArea->horizontalScrollBar()->maximum());
-            anim->setDuration(100);
-            anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
-                ui->scrollArea->horizontalScrollBar()->setValue(value.toInt());
-            });
-            connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
-            anim->start();
-        });
-    }
 
     emit tabTitleChanged();
 }

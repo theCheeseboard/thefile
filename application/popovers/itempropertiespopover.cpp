@@ -24,6 +24,7 @@
 #include <QMimeDatabase>
 #include <QUrl>
 #include <QDateTime>
+#include <QStorageInfo>
 #include <tpromise.h>
 
 struct ItemPropertiesPopoverPrivate {
@@ -52,10 +53,12 @@ ItemPropertiesPopover::ItemPropertiesPopover(QUrl url, QWidget* parent) :
         QMimeDatabase db;
 
         QFileInfo file(url.toLocalFile());
+        QStorageInfo storage(file.dir());
         QMimeType mimeType = db.mimeTypeForFile(file);
         ui->filenameLabel->setText(file.fileName());
         ui->filetypeLabel->setText(mimeType.comment());
         ui->filemimeLabel->setText(mimeType.name());
+        ui->freeSpaceLabel->setText(QLocale().formattedDataSize(storage.bytesAvailable()));
         ui->fileAccessedLabel->setText(QLocale().toString(file.lastRead()));
         ui->fileModifiedLabel->setText(QLocale().toString(file.lastModified()));
 

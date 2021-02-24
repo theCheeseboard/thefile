@@ -124,7 +124,7 @@ void BurnJob::prepareIso(QString directory) {
         process->deleteLater();
     });
 
-    QStringList mkisofsargs = {"-o", QDir(d->tempDir.path()).absoluteFilePath("image.iso"), "-V", d->title.left(32), "-r", "-J", directory};
+    QStringList mkisofsargs = {"-o", QDir(d->tempDir.path()).absoluteFilePath("image.iso"), "-V", d->title.left(32), "-A", QApplication::applicationName(), "-r", "-J", directory};
     tDebug("cdrdao") << "Calling mkisofs with arguments" << mkisofsargs;
     process->start("mkisofs", mkisofsargs);
 }

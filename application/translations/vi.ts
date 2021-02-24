@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="vi">
+<TS version="2.1" language="vi" sourcelanguage="en_US">
 <context>
     <name>BurnJob</name>
     <message>
@@ -614,7 +614,7 @@ Tổng cộng: %4 tren %5</translation>
         <translation>Quyền hạn</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="112"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="186"/>
         <source>Last Accessed</source>
         <translation>Lần truy cập cuối</translation>
     </message>
@@ -624,83 +624,88 @@ Tổng cộng: %4 tren %5</translation>
         <translation>CHI TIẾT</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="145"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="125"/>
         <source>Size</source>
         <translation>Kích cỡ</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="166"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="234"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="193"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="165"/>
         <source>Type</source>
         <translation>Loại</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="252"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="248"/>
+        <source>Free Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/itempropertiespopover.ui" line="266"/>
         <source>Others</source>
         <translation>Người khác</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="294"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="308"/>
         <source>Read</source>
         <translation>Đọc</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="304"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="318"/>
         <source>Owner</source>
         <translation>Chủ</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="311"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="325"/>
         <source>Group</source>
         <translation>Nhóm</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="324"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="338"/>
         <source>ACCESS CONTROLS</source>
         <translation>KIỂM SOÁT TRUY CẬP</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="338"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="352"/>
         <source>Write</source>
         <translation>Ghi</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="331"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="345"/>
         <source>Executable</source>
         <translation>Có thể chạy</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="152"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="207"/>
-        <location filename="../popovers/itempropertiespopover.ui" line="214"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="145"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="172"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="200"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.ui" line="159"/>
+        <location filename="../popovers/itempropertiespopover.ui" line="193"/>
         <source>Last Modified</source>
         <translation>Lần thay đổi cuối</translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.cpp" line="63"/>
-        <location filename="../popovers/itempropertiespopover.cpp" line="64"/>
+        <location filename="../popovers/itempropertiespopover.cpp" line="66"/>
+        <location filename="../popovers/itempropertiespopover.cpp" line="67"/>
         <source>Counting...</source>
         <translation>Đang đếm...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../popovers/itempropertiespopover.cpp" line="70"/>
+        <location filename="../popovers/itempropertiespopover.cpp" line="73"/>
         <source>%n items</source>
         <translation>
             <numerusform>%n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../popovers/itempropertiespopover.cpp" line="73"/>
-        <location filename="../popovers/itempropertiespopover.cpp" line="79"/>
+        <location filename="../popovers/itempropertiespopover.cpp" line="76"/>
+        <location filename="../popovers/itempropertiespopover.cpp" line="82"/>
         <source>%1 bytes</source>
         <translation>%1 byte</translation>
     </message>
