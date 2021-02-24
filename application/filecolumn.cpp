@@ -586,7 +586,7 @@ void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos)
         menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
         menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
         if (d->directory->url().scheme() == "trash") {
-            menu->addAction(QIcon::fromTheme("trash-restore"), tr("Put Back"), this, [ = ] {
+            menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [ = ] {
                 for (QModelIndex index : sel) {
                     QUrl url = index.data(FileModel::UrlRole).toUrl();
                     QVariant restorePath = d->directory->special("restorePath", {{"url", url}});
