@@ -144,7 +144,7 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
     <message>
         <location filename="../popovers/burnpopover.ui" line="200"/>
         <source>DISC NOT BLANK</source>
-        <translation>Đĩa không trống</translation>
+        <translation>ĐĨA KHÔNG TRỐNG</translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="219"/>
