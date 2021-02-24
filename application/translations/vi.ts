@@ -578,12 +578,12 @@ Tổng cộng: %4 tren %5</translation>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="48"/>
         <source>An error occurred while trying to copy a file.</source>
-        <translation>Một lỗi xảy ra khi cố chép một tệp</translation>
+        <translation>Một lỗi xảy ra khi cố chép một tệp.</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="50"/>
         <source>An error occurred while trying to move a file.</source>
-        <translation>Một lỗi xảy ra khi cố chuyển một tệp</translation>
+        <translation>Một lỗi xảy ra khi cố chuyển một tệp.</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
@@ -854,7 +854,7 @@ Tổng cộng: %4 tren %5</translation>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="196"/>
         <source>Unmounting the drive failed.</source>
-        <translation>Hoạt động tháo ổ bị thất bại</translation>
+        <translation>Hoạt động tháo ổ bị thất bại.</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="206"/>
@@ -869,7 +869,7 @@ Tổng cộng: %4 tren %5</translation>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="210"/>
         <source>Ejecting the drive failed.</source>
-        <translation>Hoạt động nhổ ổ ra bị thất bại</translation>
+        <translation>Hoạt động nhổ ổ ra bị thất bại.</translation>
     </message>
 </context>
 <context>
