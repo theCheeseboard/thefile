@@ -36,6 +36,8 @@ struct BurnJobPrivate {
 
     quint64 progress = 0;
     quint64 totalProgress = 0;
+    bool canCancel = true;
+    bool cancelled = false;
 
     QIODevice* source = nullptr;
     quint64 dataSize;
@@ -152,7 +154,17 @@ void BurnJob::startRestore(QIODevice* source, quint64 dataSize) {
     });
 }
 
+bool BurnJob::canCancel() {
+    return d->canCancel;
+}
+
+bool BurnJob::hasBurnStarted() {
+    return d->stage >= 1;
+}
+
 void BurnJob::cancel() {
+    if (!d->canCancel) return;
+    d->cancelled = true;
     if (d->stage == 0) {
         d->stage = -1;
 
@@ -166,6 +178,16 @@ void BurnJob::cancel() {
         d->tempDir.remove();
 
         tInfo("BurnJob") << "Burn operation cancelled";
+    } else if (d->stage == 1) {
+        //Terminate the burn process
+        d->burnProcess->terminate();
+
+        d->burnProcess->closeWriteChannel();
+        d->writtenBytes = d->dataSize;
+
+        d->canCancel = false;
+        emit canCancelChanged(d->canCancel);
+
     }
 }
 
@@ -175,6 +197,10 @@ DiskObject* BurnJob::disk() {
 
 QString BurnJob::description() {
     return d->description;
+}
+
+QString BurnJob::title() {
+    return d->title;
 }
 
 void BurnJob::runNextStage() {
@@ -273,6 +299,9 @@ void BurnJob::runNextStage() {
 
                         d->totalProgress = 0;
                         emit totalProgressChanged(d->totalProgress);
+
+                        d->canCancel = false;
+                        emit canCancelChanged(d->canCancel);
                     }
 
                     peek = d->burnProcess->peek(1024);
@@ -300,11 +329,12 @@ void BurnJob::runNextStage() {
             break;
         }
         case 2: {
-            d->description = tr("Ejecting Disc");
-            emit descriptionChanged(d->description);
+//            d->description = tr("Ejecting Disc");
+//            emit descriptionChanged(d->description);
 
-            //Eject the disc
-            d->disk->interface<BlockInterface>()->drive()->eject()->then([ = ] {
+//            //Eject the disc
+//            d->disk->interface<BlockInterface>()->drive()->eject()->then([ = ] {
+            d->disk->interface<BlockInterface>()->triggerReload()->then([ = ] {
                 d->state = Finished;
                 emit stateChanged(Finished);
 

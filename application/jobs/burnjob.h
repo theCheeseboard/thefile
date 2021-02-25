@@ -33,14 +33,19 @@ class BurnJob : public tJob {
 
         void prepareIso(QString directory);
         void startRestore(QIODevice* source, quint64 dataSize);
+
+        bool canCancel();
+        bool hasBurnStarted();
         void cancel();
 
         DiskObject* disk();
 
         QString description();
+        QString title();
 
     signals:
         void descriptionChanged(QString description);
+        void canCancelChanged(bool canCancel);
 
     private:
         BurnJobPrivate* d;

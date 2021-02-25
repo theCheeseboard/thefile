@@ -35,6 +35,15 @@ class BurnJobProgress : public QWidget {
         explicit BurnJobProgress(BurnJob* job, QWidget* parent = nullptr);
         ~BurnJobProgress();
 
+    private slots:
+        void on_continueBurnButton_clicked();
+
+        void on_doCancelButton_clicked();
+
+        void on_cancelButton_clicked();
+
+        void on_stackedWidget_currentChanged(int arg1);
+
     private:
         Ui::BurnJobProgress* ui;
         BurnJobProgressPrivate* d;

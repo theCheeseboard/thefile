@@ -35,11 +35,9 @@ BurnJobProgress::BurnJobProgress(BurnJob* job, QWidget* parent) :
     d = new BurnJobProgressPrivate();
     d->job = job;
 
-    ui->titleLabel->setText(tr("Burn to %1").arg(job->disk()->displayName()).toUpper());
+    ui->titleLabel->setText(tr("Burn %1").arg(QLocale().quoteString(job->title())).toUpper());
 
-    connect(job, &BurnJob::stateChanged, this, [ = ](BurnJob::State state) {
-        updateState();
-    });
+    connect(job, &BurnJob::stateChanged, this, &BurnJobProgress::updateState);
     connect(job, &BurnJob::totalProgressChanged, this, [ = ](quint64 totalProgress) {
         ui->progressBar->setMaximum(totalProgress);
     });
@@ -47,8 +45,15 @@ BurnJobProgress::BurnJobProgress(BurnJob* job, QWidget* parent) :
         ui->progressBar->setValue(progress);
     });
     connect(job, &BurnJob::descriptionChanged, ui->statusLabel, &QLabel::setText);
+    connect(job, &BurnJob::canCancelChanged, this, [ = ](bool canCancel) {
+        ui->cancelButton->setEnabled(canCancel);
+    });
     updateState();
     ui->statusLabel->setText(job->description());
+    ui->cancelButton->setEnabled(job->canCancel());
+
+    ui->doCancelButton->setProperty("type", "destructive");
+    this->setFixedHeight(ui->stackedWidget->currentWidget()->sizeHint().height());
 }
 
 BurnJobProgress::~BurnJobProgress() {
@@ -61,14 +66,38 @@ void BurnJobProgress::updateState() {
         case tJob::Processing:
             ui->progressBar->setMaximum(d->job->totalProgress());
             ui->progressBar->setValue(d->job->progress());
+            ui->progressWidget->setVisible(true);
             break;
         case tJob::Finished:
             ui->progressBar->setMaximum(1);
             ui->progressBar->setValue(1);
+            ui->progressWidget->setVisible(false);
             break;
         case tJob::Failed:
             ui->progressBar->setMaximum(1);
             ui->progressBar->setValue(1);
+            ui->progressWidget->setVisible(false);
             break;
     }
+}
+
+void BurnJobProgress::on_continueBurnButton_clicked() {
+    ui->stackedWidget->setCurrentWidget(ui->mainPage);
+}
+
+void BurnJobProgress::on_doCancelButton_clicked() {
+    d->job->cancel();
+    ui->stackedWidget->setCurrentWidget(ui->mainPage);
+}
+
+void BurnJobProgress::on_cancelButton_clicked() {
+    if (d->job->hasBurnStarted()) {
+        ui->stackedWidget->setCurrentWidget(ui->cancelPage);
+    } else {
+        d->job->cancel();
+    }
+}
+
+void BurnJobProgress::on_stackedWidget_currentChanged(int arg1) {
+    this->setFixedHeight(ui->stackedWidget->currentWidget()->sizeHint().height());
 }

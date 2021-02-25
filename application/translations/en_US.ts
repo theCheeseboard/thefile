@@ -4,98 +4,118 @@
 <context>
     <name>BurnJob</name>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="187"/>
-        <location filename="../jobs/burnjob.cpp" line="239"/>
+        <location filename="../jobs/burnjob.cpp" line="213"/>
+        <location filename="../jobs/burnjob.cpp" line="265"/>
         <source>Preparing to burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="139"/>
+        <location filename="../jobs/burnjob.cpp" line="141"/>
         <source>Waiting for other jobs to finish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="91"/>
+        <location filename="../jobs/burnjob.cpp" line="93"/>
         <source>Failed to stage files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="98"/>
+        <location filename="../jobs/burnjob.cpp" line="100"/>
         <source>Staging files for burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="107"/>
+        <location filename="../jobs/burnjob.cpp" line="109"/>
         <source>Generating Disc Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="207"/>
+        <location filename="../jobs/burnjob.cpp" line="233"/>
         <source>Failed to burn disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="212"/>
+        <location filename="../jobs/burnjob.cpp" line="238"/>
         <source>Couldn&apos;t Burn %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="213"/>
+        <location filename="../jobs/burnjob.cpp" line="239"/>
         <source>Could not burn %1 to disc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="254"/>
+        <location filename="../jobs/burnjob.cpp" line="280"/>
         <source>Burning Files (%1)
 %2 of %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="257"/>
+        <location filename="../jobs/burnjob.cpp" line="283"/>
         <source>Burning Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="311"/>
+        <location filename="../jobs/burnjob.cpp" line="341"/>
         <source>Burn Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="317"/>
+        <location filename="../jobs/burnjob.cpp" line="347"/>
         <source>Burned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="318"/>
+        <location filename="../jobs/burnjob.cpp" line="348"/>
         <source>The folder %1 has been burned to disc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="248"/>
+        <location filename="../jobs/burnjob.cpp" line="274"/>
         <source>Erasing Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="163"/>
+        <location filename="../jobs/burnjob.cpp" line="175"/>
         <source>Failed to burn files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="268"/>
+        <location filename="../jobs/burnjob.cpp" line="294"/>
         <source>Finalizing Disc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="303"/>
-        <source>Ejecting Disc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BurnJobProgress</name>
     <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="90"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="113"/>
+        <source>CANCEL BURN OPERATION?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="120"/>
+        <source>Cancelling the burn operation at this point may ruin the disc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="135"/>
+        <source>Continue Burning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="142"/>
+        <source>Cancel Anyway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
-        <source>Burn to %1</source>
+        <source>Burn %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
