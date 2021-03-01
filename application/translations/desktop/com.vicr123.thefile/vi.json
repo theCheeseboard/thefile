@@ -4,5 +4,9 @@
     },
     "Name": {
         "message": "theFile"
+    },
+    "Keywords": {
+        "message": "thu muc;chep;sao;sao chep;cat;may;tinh;may tinh;thiet bi;cd;dvd;",
+        "description": "A list of words that can be searched for. Please ensure that the list also ends with a semicolon!"
     }
 }
