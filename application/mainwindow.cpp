@@ -74,8 +74,6 @@ MainWindow::MainWindow(QWidget* parent)
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());
     });
     ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
-
-    newTab();
 }
 
 MainWindow::~MainWindow() {
@@ -84,6 +82,10 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::newTab() {
+    newTab(QUrl());
+}
+
+void MainWindow::newTab(QUrl url) {
     TabButton* button = new TabButton();
     button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     button->setCheckable(true);
@@ -91,6 +93,7 @@ void MainWindow::newTab() {
     ui->tabsLayout->addWidget(button);
 
     FileTab* tab = new FileTab();
+    if (url.isValid()) tab->setCurrentUrl(url);
     ui->stackedWidget->addWidget(tab);
 
     button->setText(QFileInfo(QFileInfo(tab->currentUrl().path()).canonicalFilePath()).fileName());

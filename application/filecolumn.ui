@@ -139,6 +139,9 @@
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
@@ -276,8 +279,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>397</width>
-              <height>613</height>
+              <width>98</width>
+              <height>112</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -323,7 +326,8 @@
                 <string>Open</string>
                </property>
                <property name="icon">
-                <iconset theme="document-open"/>
+                <iconset theme="document-open">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </widget>
              </item>

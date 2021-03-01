@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow {
         ~MainWindow();
 
         void newTab();
+        void newTab(QUrl url);
 
     private slots:
         void on_actionExit_triggered();

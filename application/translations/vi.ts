@@ -216,7 +216,7 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
 <context>
     <name>FileColumn</name>
     <message>
-        <location filename="../filecolumn.ui" line="323"/>
+        <location filename="../filecolumn.ui" line="326"/>
         <location filename="../filecolumn.cpp" line="551"/>
         <source>Open</source>
         <translation>Mở</translation>
@@ -772,7 +772,7 @@ Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="150"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Go</source>
         <translation>Đi</translation>
     </message>
@@ -782,7 +782,7 @@ Tổng cộng: %4 tren %5</translation>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="150"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Enter a location to go to</source>
         <translation>Điền một vị trí để đi đến</translation>
     </message>
@@ -888,9 +888,19 @@ Tổng cộng: %4 tren %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="38"/>
+        <location filename="../main.cpp" line="40"/>
         <source>File Manager</source>
         <translation>Trình quản lý tệp</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="65"/>
+        <source>folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="65"/>
+        <source>Folder to show</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

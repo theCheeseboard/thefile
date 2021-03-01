@@ -2,9 +2,11 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=theFile
-GenericName=File Manager
-GenericName[vi]=Bộ duyệt tệp
+Name[]=theFile
+GenericName[]=File Manager
 Categories=Utility;FileManager;
 Exec=thefile %U
 Icon=thefile
+#T:A list of words that can be searched for. Please ensure that the list also ends with a semicolon!
+Keywords=folder;copy;cut;computer;devices;cd;dvd;
+MimeType=inode/directory;

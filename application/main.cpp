@@ -22,6 +22,8 @@
 #include <tsettings.h>
 #include <QDir>
 #include <tapplication.h>
+#include <QCommandLineParser>
+#include <QJsonArray>
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
@@ -57,7 +59,58 @@ int main(int argc, char* argv[]) {
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theFile/defaults.conf");
 
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addPositionalArgument(a.translate("main", "folder"), a.translate("main", "Folder to show"), QStringLiteral("[%1]").arg(a.translate("main", "folder")));
+    parser.process(a);
+
+    MainWindow* w = new MainWindow();
+
+    QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
+        if (launchMessage.contains("files")) {
+            MainWindow* w = new MainWindow();
+
+            QJsonArray files = launchMessage.value("files").toArray();
+            if (files.isEmpty()) {
+                w->newTab();
+            } else {
+                for (const QJsonValue& file : qAsConst(files)) {
+                    w->newTab(QUrl::fromUserInput(file.toString()));
+                }
+            }
+
+            w->show();
+            w->activateWindow();
+        }
+    });
+    QObject::connect(&a, &tApplication::dockIconClicked, [ = ] {
+        w->show();
+        w->activateWindow();
+    });
+
+    QStringList files;
+    for (const QString& arg : parser.positionalArguments()) {
+        if (QUrl::fromLocalFile(arg).isValid()) {
+            files.append(QUrl::fromLocalFile(arg).toEncoded());
+        } else {
+            files.append(QUrl(arg).toEncoded());
+        }
+    }
+    a.ensureSingleInstance({
+        {"files", QJsonArray::fromStringList(files)}
+    });
+    w->show();
+
+    if (files.isEmpty()) {
+        w->newTab();
+    } else {
+        for (const QString& file : qAsConst(files)) {
+            w->newTab(QUrl::fromUserInput(file));
+        }
+    }
+
+    int retval = a.exec();
+
+    return retval;
 }

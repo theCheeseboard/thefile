@@ -1,103 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="tr">
+<TS version="2.1" language="tr" sourcelanguage="en_US">
 <context>
     <name>BurnJob</name>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="187"/>
-        <location filename="../jobs/burnjob.cpp" line="239"/>
-        <source>Preparing to burn</source>
-        <translation>Yanmaya hazırlanıyor</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="139"/>
-        <source>Waiting for other jobs to finish</source>
-        <translation>Diğer işlerin bitmesini bekliyorum</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="91"/>
-        <source>Failed to stage files</source>
-        <translation>Dosyalar aşamalandırılamadı</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="98"/>
-        <source>Staging files for burn</source>
-        <translation>Yazma için dosyaları hazırlama</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="107"/>
-        <source>Generating Disc Image</source>
-        <translation>Disk Resim Oluşturuluyor</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="207"/>
-        <source>Failed to burn disc</source>
-        <translation>Disk yazılamadı</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="212"/>
-        <source>Couldn&apos;t Burn %1</source>
-        <translation>%1 yazılamadı</translation>
-    </message>
-    <message>
         <location filename="../jobs/burnjob.cpp" line="213"/>
-        <source>Could not burn %1 to disc.</source>
-        <translation>%1 diske yazılamadı.</translation>
+        <location filename="../jobs/burnjob.cpp" line="265"/>
+        <source>Preparing to burn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="254"/>
+        <location filename="../jobs/burnjob.cpp" line="141"/>
+        <source>Waiting for other jobs to finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="93"/>
+        <source>Failed to stage files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="100"/>
+        <source>Staging files for burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="109"/>
+        <source>Generating Disc Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="233"/>
+        <source>Failed to burn disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="238"/>
+        <source>Couldn&apos;t Burn %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="239"/>
+        <source>Could not burn %1 to disc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="280"/>
         <source>Burning Files (%1)
 %2 of %3</source>
-        <translation>Dosyalar Yazılıyor (%1)
-%2 / %3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="257"/>
+        <location filename="../jobs/burnjob.cpp" line="283"/>
         <source>Burning Files</source>
-        <translation>Dosyaları Yazma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="311"/>
+        <location filename="../jobs/burnjob.cpp" line="341"/>
         <source>Burn Complete</source>
-        <translation>Yanık Tamamlandı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="317"/>
+        <location filename="../jobs/burnjob.cpp" line="347"/>
         <source>Burned %1</source>
-        <translation>%1 yandı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="318"/>
+        <location filename="../jobs/burnjob.cpp" line="348"/>
         <source>The folder %1 has been burned to disc.</source>
-        <translation>%1 klasörü diske yazıldı.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="248"/>
+        <location filename="../jobs/burnjob.cpp" line="274"/>
         <source>Erasing Disc</source>
-        <translation>Disk siliniyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="163"/>
+        <location filename="../jobs/burnjob.cpp" line="175"/>
         <source>Failed to burn files</source>
-        <translation>Dosya yazılamadı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="268"/>
+        <location filename="../jobs/burnjob.cpp" line="294"/>
         <source>Finalizing Disc</source>
-        <translation>Sonlandırma Diski</translation>
-    </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="303"/>
-        <source>Ejecting Disc</source>
-        <translation>Diski Çıkarıyor</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BurnJobProgress</name>
     <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="90"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="113"/>
+        <source>CANCEL BURN OPERATION?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="120"/>
+        <source>Cancelling the burn operation at this point may ruin the disc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="135"/>
+        <source>Continue Burning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/widgets/burnjobprogress.ui" line="142"/>
+        <source>Cancel Anyway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
-        <source>Burn to %1</source>
-        <translation>%1&apos;e yaz</translation>
+        <source>Burn %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -105,67 +124,65 @@
     <message>
         <location filename="../popovers/burnpopover.ui" line="83"/>
         <source>BURN OPTIONS</source>
-        <translation>YAKMA SEÇENEKLERİ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="93"/>
         <source>Disc Name</source>
-        <translation>Disk Adı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="100"/>
         <source>Burn</source>
-        <translation>Yanmak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="207"/>
         <source>The disc in the drive is not blank. To burn these files to the disc, the disc will need to be erased.
 
 Once the disc in the drive is erased, all the data on it will be gone forever.</source>
-        <translation>Sürücüdeki disk boş değil. Bu dosyaları diske yazmak için diskin silinmesi gerekecektir.
-
-Sürücüdeki disk silindikten sonra üzerindeki tüm veriler sonsuza kadar silinecektir.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="70"/>
         <source>Burner</source>
-        <translation>Brülör</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="129"/>
         <source>HEADS UP</source>
-        <translation>DİKKAT ET</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="184"/>
         <source>Burn Disc</source>
-        <translation>Disk yakmak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="200"/>
         <source>DISC NOT BLANK</source>
-        <translation>DİSK BOŞ DEĞİL</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.ui" line="219"/>
         <source>Erase and Burn</source>
-        <translation>Sil ve Yaz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.cpp" line="72"/>
         <location filename="../popovers/burnpopover.cpp" line="73"/>
         <source>Burn %1</source>
-        <translation>%1 Yak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.cpp" line="90"/>
         <source>Insert a burnable disc into the drive.</source>
-        <translation>Sürücüye yazdırılabilir bir disk yerleştirin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/burnpopover.cpp" line="94"/>
         <source>The disc in the drive has already been written.</source>
-        <translation>Sürücüdeki disk zaten yazılmıştır.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -173,213 +190,213 @@ Sürücüdeki disk silindikten sonra üzerindeki tüm veriler sonsuza kadar sili
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="35"/>
         <source>Delete Permanently</source>
-        <translation>Kalıcı olarak silin ve asla geri alamayacaksınız</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="51"/>
         <source>THIS IS IT</source>
-        <translation>SON BİLDİRİMİNİZ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/deletepermanentlypopover.ui" line="58"/>
         <source>Once the files are gone, they&apos;re gone forever.</source>
-        <translation>Dosyalar gittikten sonra sonsuza kadar kaybolurlar. Tekrar düşün.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../popovers/deletepermanentlypopover.cpp" line="39"/>
         <source>Delete %n files</source>
-        <translation>
-            <numerusform>%n dosya sil</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
 <context>
     <name>FileColumn</name>
     <message>
-        <location filename="../filecolumn.ui" line="323"/>
+        <location filename="../filecolumn.ui" line="326"/>
         <location filename="../filecolumn.cpp" line="551"/>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="141"/>
         <source>Root</source>
-        <translation>Kök</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="142"/>
         <location filename="../filecolumn.cpp" line="227"/>
         <location filename="../filecolumn.cpp" line="348"/>
         <source>Trash</source>
-        <translation>Çöp</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="146"/>
         <source>Home</source>
-        <translation>Ana Sayfa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="214"/>
         <location filename="../filecolumn.cpp" line="405"/>
         <source>New Folder</source>
-        <translation>Yeni dosya</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="214"/>
         <source>Folder name</source>
-        <translation>Klasör adı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../filecolumn.cpp" line="228"/>
         <source>Moved %n items to the trash</source>
-        <translation>
-            <numerusform>%n öğe çöp kutusuna taşındı</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="261"/>
         <location filename="../filecolumn.cpp" line="611"/>
         <source>Rename</source>
-        <translation>Adı değiştir</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="261"/>
         <source>Enter a new name</source>
-        <translation>Yeni bir adı girin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="317"/>
         <source>No items here!</source>
-        <translation>Burada hiç bir dosya var!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="318"/>
         <source>This folder is empty.</source>
-        <translation>Bu klasör boş.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="321"/>
         <source>Not Found</source>
-        <translation>Bulunamadı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="322"/>
         <source>This folder doesn&apos;t exist.</source>
-        <translation>Bu klasör mevcut değil.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="325"/>
         <source>Permission Denied</source>
-        <translation>İzin Reddedildi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="326"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
-        <translation>Görünüşe göre bu klasörü görüntüleme izniniz yok.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="329"/>
         <source>Can&apos;t view this folder</source>
-        <translation>Bu klasörü görüntüleyemiyorum</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="330"/>
         <source>We can&apos;t show you the contents of this folder.</source>
-        <translation>Size bu klasörün içeriğini gösteremiyoruz.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="349"/>
         <source>Empty Trash</source>
-        <translation>Boş çöp</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="404"/>
         <location filename="../filecolumn.cpp" line="526"/>
         <source>For this folder</source>
-        <translation>Bu klasör için</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="406"/>
         <source>Paste</source>
-        <translation>Yapıştırmak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="514"/>
         <location filename="../filecolumn.cpp" line="548"/>
         <source>For %1</source>
-        <translation>%1 için</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="515"/>
         <source>Copy In</source>
-        <translation>Bu klasöre kopyala</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="519"/>
         <source>Move In</source>
-        <translation>Bu klasöre taşı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="527"/>
         <source>Copy Here</source>
-        <translation>Burayı kopyala</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="531"/>
         <source>Move Here</source>
-        <translation>Buraya taşın</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="559"/>
         <source>Open With...</source>
-        <translation>Bununla Aç...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="575"/>
         <source>Another app...</source>
-        <translation>Başka bir uygulama...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../filecolumn.cpp" line="583"/>
         <source>For %n items</source>
-        <translation>
-            <numerusform>%n öğe için</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="586"/>
         <source>Cut</source>
-        <translation>Kes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="587"/>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="589"/>
         <source>Restore</source>
-        <translation>Onarmak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="602"/>
         <source>Delete Permanently</source>
-        <translation>Kalıcı olarak silin ve asla geri alamayacaksınız</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="604"/>
         <source>Move to Trash</source>
-        <translation>Çöp kutusuna taşıyın</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="619"/>
         <source>Properties</source>
-        <translation>Özellikleri</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="636"/>
         <source>Burn Contents</source>
-        <translation>İçeriği Yaz</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -387,13 +404,13 @@ Sürücüdeki disk silindikten sonra üzerindeki tüm veriler sonsuza kadar sili
     <message>
         <location filename="../filecolumnfloater.ui" line="65"/>
         <source>Floater</source>
-        <translation>Yüzer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../filecolumnfloater.cpp" line="49"/>
         <source>%n items</source>
-        <translation>
-            <numerusform>%n öğe</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -402,86 +419,86 @@ Sürücüdeki disk silindikten sonra üzerindeki tüm veriler sonsuza kadar sili
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="148"/>
         <source>Counting files to transfer...</source>
-        <translation>Aktarılacak dosyalar sayılıyor...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="180"/>
         <location filename="../jobs/filetransferjob.cpp" line="217"/>
         <source>Counted %n files to transfer...</source>
-        <translation>
-            <numerusform>Aktarmak için %n dosya sayıldı...</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="248"/>
         <source>Checking for file conflicts</source>
-        <translation>Dosya uyuşmazlıkları kontrol ediliyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="277"/>
         <source>Waiting for conflict resolution</source>
-        <translation>Çakışma çözümü bekleniyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="285"/>
         <source>File Conflicts</source>
-        <translation>Dosya Çakışmaları</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="286"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
-        <translation>
-            <numerusform>Hedef klasördeki %n dosya, aktarılan dosyalarla aynı dosya adına sahip. Dosyaları aktarmaya devam etmek için dosya çakışmalarını çözün.</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="288"/>
         <source>Resolve File Conflicts</source>
-        <translation>Dosya Çakışmalarını Çözme</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="125"/>
         <location filename="../jobs/filetransferjob.cpp" line="310"/>
         <source>Copying Files</source>
-        <translation>Dosyalar kopyalanıyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="337"/>
         <source>Moved %n files</source>
-        <translation>
-            <numerusform>%n dosya taşındı</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="338"/>
         <source>Successfully moved %n files</source>
-        <translation>
-            <numerusform>%n dosya başarıyla taşındı</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="340"/>
         <source>Copied %n files</source>
-        <translation>
-            <numerusform>%n dosya kopyalandı</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="341"/>
         <source>Successfully copied %n files</source>
-        <translation>
-            <numerusform>%n dosya başarıyla kopyalandı</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="348"/>
         <source>Files Transferred</source>
-        <translation>Aktarılan Dosyalar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="368"/>
         <source>Moving %n</source>
-        <translation>%n taşınıyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="422"/>
@@ -489,40 +506,37 @@ Sürücüdeki disk silindikten sonra üzerindeki tüm veriler sonsuza kadar sili
 %2 of %3
 
 Total progress: %4 of %5</source>
-        <translation>%1 kopyalanıyor
-%2 / %3
-
-Toplam ilerleme: %4 / %5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="439"/>
         <source>Cancelling operation...</source>
-        <translation>İşlem iptal ediliyor...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="465"/>
         <source>Waiting for error resolution</source>
-        <translation>Hata çözümü bekleniyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="473"/>
         <source>File Transfer Error</source>
-        <translation>Dosya Aktarım Hatası</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="474"/>
         <source>An error occurred trying to transfer files.</source>
-        <translation>Dosyaları aktarmaya çalışırken bir hata oluştu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="475"/>
         <source>Resolve</source>
-        <translation>Çözmek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="499"/>
         <source>Cancelled</source>
-        <translation>Vazgeçti</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -530,70 +544,70 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="111"/>
         <source>FILE CONFLICTS</source>
-        <translation>DOSYA ÇATIŞMALARI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="133"/>
         <source>Replace All</source>
-        <translation>Hepsini değiştir</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="140"/>
         <source>Skip Conflicting</source>
-        <translation>Çakışmayı Atla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="147"/>
         <source>Manually Resolve Conflicts</source>
-        <translation>Çatışmaları Manuel Olarak Çözme</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="154"/>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="209"/>
         <source>Cancel Operation</source>
-        <translation>İşlemi İptal Et</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="173"/>
         <source>TRANSFER ERROR</source>
-        <translation>TRANSFER HATASI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="195"/>
         <source>Skip this file</source>
-        <translation>Bu dosyayı atla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="202"/>
         <source>Try Again</source>
-        <translation>Tekrar deneyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="43"/>
         <source>%n files in the destination folder have the same file name as files being transferred</source>
-        <translation>
-            <numerusform>Hedef klasördeki %n dosya, aktarılan dosyalarla aynı dosya adına sahip</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="48"/>
         <source>An error occurred while trying to copy a file.</source>
-        <translation>Bir dosyayı kopyalamaya çalışırken bir hata oluştu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="50"/>
         <source>An error occurred while trying to move a file.</source>
-        <translation>Bir dosyayı taşımaya çalışırken bir hata oluştu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
         <source>COPYING FILES</source>
-        <translation>DOSYALAR KOPYALANIYOR</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
         <source>MOVING FILES</source>
-        <translation>DOSYALARI TAŞIYOR</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -601,12 +615,12 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="35"/>
         <source>Properties</source>
-        <translation>Özellikleri</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="60"/>
         <source>Details</source>
-        <translation>Detaylar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="76"/>
@@ -752,7 +766,7 @@ Toplam ilerleme: %4 / %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="150"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
@@ -762,7 +776,7 @@ Toplam ilerleme: %4 / %5</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="150"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Enter a location to go to</source>
         <translation type="unfinished"></translation>
     </message>
@@ -868,8 +882,18 @@ Toplam ilerleme: %4 / %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="38"/>
+        <location filename="../main.cpp" line="40"/>
         <source>File Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="65"/>
+        <source>folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="65"/>
+        <source>Folder to show</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

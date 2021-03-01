@@ -63,6 +63,8 @@ FORMS += \
     popovers/itempropertiespopover.ui \
     sidebar/sidebar.ui
 
+DESKTOP_FILE += \
+   com.vicr123.thefile.desktop
 
 unix:!macx {
     # Include the-libs build tools
@@ -77,20 +79,13 @@ unix:!macx {
 
     target.path = /usr/bin
 
-    desktop.path = /usr/share/applications
-    blueprint {
-#        desktop.files = com.vicr123.thefile-blueprint.desktop
-    } else {
-        desktop.files = com.vicr123.thefile.desktop
-    }
-
     icon.path = /usr/share/icons/hicolor/scalable/apps/
     icon.files = icons/thefile.svg
 
     defaults.files = defaults.conf
     defaults.path = /etc/theSuite/theBeat/
 
-    INSTALLS += target desktop icon defaults
+    INSTALLS += target icon defaults
 }
 
 
