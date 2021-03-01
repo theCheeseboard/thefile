@@ -8,5 +8,5 @@ Categories=Utility;FileManager;
 Exec=thefile %U
 Icon=thefile
 #T:A list of words that can be searched for. Please ensure that the list also ends with a semicolon!
-Keywords=folder;copy;cut;computer;devices;cd;dvd;
+Keywords[]=folder;copy;cut;computer;devices;cd;dvd;
 MimeType=inode/directory;
