@@ -93,7 +93,6 @@ INCLUDEPATH += $$PWD/../libthefile
 DEPENDPATH += $$PWD/../libthefile
 
 DISTFILES += \
-    com.vicr123.thefile.desktop \
     defaults.conf
 
 RESOURCES += \

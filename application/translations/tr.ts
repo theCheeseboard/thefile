@@ -86,11 +86,6 @@
         <source>Finalizing Disc</source>
         <translation>Sonlandırma Diski</translation>
     </message>
-    <message>
-        <location filename="../jobs/burnjob.cpp" line="303"/>
-        <source>Ejecting Disc</source>
-        <translation>Diski Çıkarıyor</translation>
-    </message>
 </context>
 <context>
     <name>BurnJobProgress</name>
@@ -121,8 +116,8 @@
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
-        <source>Burn to %1</source>
-        <translation>%1&apos;e yaz</translation>
+        <source>Burn %1</source>
+        <translation type="unfinished">%1 Yak</translation>
     </message>
 </context>
 <context>
@@ -718,7 +713,7 @@ Toplam ilerleme: %4 / %5</translation>
         <location filename="../popovers/itempropertiespopover.cpp" line="73"/>
         <source>%n items</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%n öğe</numerusform>
         </translation>
     </message>
     <message>
@@ -812,7 +807,7 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="54"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ana Sayfa</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="55"/>
@@ -842,17 +837,17 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="60"/>
         <source>Root</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kök</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="61"/>
         <source>Trash</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Çöp</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="185"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 için</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="188"/>
