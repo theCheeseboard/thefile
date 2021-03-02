@@ -84,10 +84,6 @@ int main(int argc, char* argv[]) {
             w->activateWindow();
         }
     });
-    QObject::connect(&a, &tApplication::dockIconClicked, [ = ] {
-        w->show();
-        w->activateWindow();
-    });
 
     QStringList files;
     for (const QString& arg : parser.positionalArguments()) {
