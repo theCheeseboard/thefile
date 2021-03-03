@@ -51,6 +51,7 @@ class FileColumn : public QWidget {
         void deleteFile();
         void deleteOrTrash();
         void rename();
+        void selectAll();
 
         bool isFile();
         bool canCopyCutTrash();

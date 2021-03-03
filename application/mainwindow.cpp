@@ -58,11 +58,15 @@ MainWindow::MainWindow(QWidget* parent)
 
     QMenu* menu = new QMenu(this);
     menu->addAction(ui->actionNewTab);
+    menu->addAction(ui->actionNew_Window);
     menu->addSeparator();
     menu->addAction(ui->actionCut);
     menu->addAction(ui->actionCopy);
     menu->addAction(ui->actionPaste);
     menu->addAction(ui->actionMove_to_Trash);
+    menu->addSeparator();
+    menu->addAction(ui->actionNew_Folder);
+    menu->addAction(ui->actionSelect_All);
     menu->addSeparator();
     menu->addAction(ui->actionGo);
     menu->addAction(ui->actionShowHiddenFiles);
@@ -218,4 +222,21 @@ void MainWindow::updateMenuActions() {
 
 void MainWindow::on_stackedWidget_switchingFrame(int ) {
     updateMenuActions();
+}
+
+void MainWindow::on_actionSelect_All_triggered() {
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab->currentColumn()) tab->currentColumn()->selectAll();
+}
+
+void MainWindow::on_actionNew_Window_triggered() {
+    MainWindow* w = new MainWindow();
+    w->newTab();
+    w->show();
+    w->activateWindow();
+}
+
+void MainWindow::on_actionNew_Folder_triggered() {
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab->lastColumn()) tab->lastColumn()->newFolder();
 }

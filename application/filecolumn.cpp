@@ -258,6 +258,10 @@ void FileColumn::rename() {
     }
 }
 
+void FileColumn::selectAll() {
+    ui->folderView->selectAll();
+}
+
 bool FileColumn::isFile() {
     return ui->stackedWidget->currentWidget() == ui->filePage;
 }

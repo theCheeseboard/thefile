@@ -60,6 +60,12 @@ class MainWindow : public QMainWindow {
 
         void on_stackedWidget_switchingFrame(int );
 
+        void on_actionSelect_All_triggered();
+
+        void on_actionNew_Window_triggered();
+
+        void on_actionNew_Folder_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
