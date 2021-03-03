@@ -30,8 +30,14 @@
 #include <DriveObjects/driveinterface.h>
 #include <QPainter>
 #include <QMenu>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <tmessagebox.h>
 #include <tlogger.h>
+#include <directory.h>
+#include <tjobmanager.h>
+#include <resourcemanager.h>
+#include "jobs/filetransferjob.h"
 #include "devicesmodel.h"
 
 struct SidebarPrivate {
@@ -77,6 +83,9 @@ Sidebar::Sidebar(QWidget* parent) :
         ui->devicesView->setFixedHeight(ui->devicesView->sizeHintForRow(0) * d->devicesModel->rowCount());
     });
     ui->devicesView->setFixedHeight(ui->devicesView->sizeHintForRow(0) * d->devicesModel->rowCount());
+
+    ui->placesWidget->setAcceptDrops(true);
+    ui->placesWidget->installEventFilter(this);
 }
 
 Sidebar::~Sidebar() {
@@ -215,4 +224,49 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
         });
     }
     menu->popup(ui->devicesView->mapToGlobal(pos));
+}
+
+bool Sidebar::eventFilter(QObject* watched, QEvent* event) {
+    QAbstractItemView* view = qobject_cast<QAbstractItemView*>(watched);
+    if (event->type() == QEvent::DragEnter) {
+        QDragEnterEvent* e = static_cast<QDragEnterEvent*>(event);
+        e->acceptProposedAction();
+        return true;
+    } else if (event->type() == QEvent::Drop) {
+        QDropEvent* e = static_cast<QDropEvent*>(event);
+
+        const QMimeData* mimeData = e->mimeData();
+        tDebug("FileColumn") << mimeData->formats();
+        QModelIndex index = view->indexAt(e->pos());
+
+        if (mimeData->hasUrls()) {
+            QList<QUrl> urls = mimeData->urls();
+            if (index.isValid()) {
+                QUrl url = index.data(Qt::UserRole).toUrl();
+                DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+                if (url.scheme() == "trash") {
+                    //Trash these items
+                    for (const QUrl& url : qAsConst(urls)) {
+                        ResourceManager::parentDirectoryForUrl(url)->trash(url.fileName());
+                    }
+                } else if (dir && dir->exists()->await().result) {
+                    QMenu* menu = new QMenu();
+                    menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
+                    menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [ = ] {
+                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, urls, dir, this->window());
+                        tJobManager::trackJobDelayed(job);
+                    });
+                    menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [ = ] {
+                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, urls, dir, this->window());
+                        tJobManager::trackJobDelayed(job);
+                    });
+                    menu->popup(this->mapToGlobal(e->pos()));
+                    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+                }
+            }
+        }
+        e->setDropAction(Qt::CopyAction);
+        return true;
+    }
+    return false;
 }

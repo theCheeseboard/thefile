@@ -50,6 +50,8 @@ class Sidebar : public QWidget {
     private:
         Ui::Sidebar* ui;
         SidebarPrivate* d;
+
+        bool eventFilter(QObject* watched, QEvent* event);
 };
 
 class SidebarDelegate : public QStyledItemDelegate {

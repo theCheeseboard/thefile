@@ -805,84 +805,95 @@ Tổng cộng: %4 tren %5</translation>
         <translation>CẬP</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="54"/>
+        <location filename="../sidebar/sidebar.cpp" line="60"/>
         <source>Home</source>
         <translation>Thư mục chính</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="55"/>
+        <location filename="../sidebar/sidebar.cpp" line="61"/>
         <source>Documents</source>
         <translation>Tài liệu</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="56"/>
+        <location filename="../sidebar/sidebar.cpp" line="62"/>
         <source>Downloads</source>
         <translation>Tải xuống</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="57"/>
+        <location filename="../sidebar/sidebar.cpp" line="63"/>
         <source>Music</source>
         <translation>Nhạc</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="58"/>
+        <location filename="../sidebar/sidebar.cpp" line="64"/>
         <source>Pictures</source>
         <translation>Hình ảnh</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="59"/>
+        <location filename="../sidebar/sidebar.cpp" line="65"/>
         <source>Videos</source>
         <translation>Phim</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="60"/>
+        <location filename="../sidebar/sidebar.cpp" line="66"/>
         <source>Root</source>
         <translation>Gốc hệ thống</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="61"/>
+        <location filename="../sidebar/sidebar.cpp" line="67"/>
         <source>Trash</source>
         <translation>Thùng rác</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="185"/>
+        <location filename="../sidebar/sidebar.cpp" line="194"/>
+        <location filename="../sidebar/sidebar.cpp" line="254"/>
         <source>For %1</source>
         <translation>Cho %1</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="188"/>
+        <location filename="../sidebar/sidebar.cpp" line="197"/>
         <source>Mount</source>
         <translation>Gán</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="192"/>
+        <location filename="../sidebar/sidebar.cpp" line="201"/>
         <source>Unmount</source>
         <translation>Tháo</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="195"/>
+        <location filename="../sidebar/sidebar.cpp" line="204"/>
         <source>Couldn&apos;t unmount</source>
         <translation>Không thể tháo</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="196"/>
+        <location filename="../sidebar/sidebar.cpp" line="205"/>
         <source>Unmounting the drive failed.</source>
         <translation>Hoạt động tháo ổ bị thất bại.</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="206"/>
+        <location filename="../sidebar/sidebar.cpp" line="215"/>
         <source>Eject</source>
         <translation>Nhổ ra</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="209"/>
+        <location filename="../sidebar/sidebar.cpp" line="218"/>
         <source>Couldn&apos;t eject</source>
         <translation>Không thể nhổ ra</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="210"/>
+        <location filename="../sidebar/sidebar.cpp" line="219"/>
         <source>Ejecting the drive failed.</source>
         <translation>Hoạt động nhổ ổ ra bị thất bại.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="255"/>
+        <source>Copy In</source>
+        <translation type="unfinished">Chép vào</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="259"/>
+        <source>Move In</source>
+        <translation type="unfinished">Chuyển vào</translation>
     </message>
 </context>
 <context>
