@@ -28,6 +28,7 @@
 #include <DriveObjects/filesysteminterface.h>
 #include <DriveObjects/blockinterface.h>
 #include <DriveObjects/driveinterface.h>
+#include <DriveObjects/encryptedinterface.h>
 #include <QPainter>
 #include <QMenu>
 #include <QDragEnterEvent>
@@ -37,6 +38,8 @@
 #include <directory.h>
 #include <tjobmanager.h>
 #include <resourcemanager.h>
+#include <tpopover.h>
+#include "popovers/unlockencryptedpopover.h"
 #include "jobs/filetransferjob.h"
 #include "devicesmodel.h"
 
@@ -103,19 +106,7 @@ void Sidebar::on_devicesView_activated(const QModelIndex& index) {
 
     //Mount and navigate to the item
     DiskObject* disk = index.data(DevicesModel::DiskObjectRole).value<DiskObject*>();
-    FilesystemInterface* fs = disk->interface<FilesystemInterface>();
-    if (fs) {
-        if (fs->mountPoints().isEmpty()) {
-            //We need to mount this disk first
-            fs->mount()->then([ = ] {
-                emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
-            })->error([ = ](QString error) {
-                tDebug("Sidebar") << "Could not mount" << disk->displayName() << "-" << error;
-            });
-        } else {
-            emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
-        }
-    }
+    mount(disk);
 }
 
 
@@ -194,11 +185,11 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
     menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(device.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
     if (fs) {
         if (fs->mountPoints().isEmpty()) {
-            menu->addAction(QIcon::fromTheme("media-mount"), tr("Mount"), [ = ] {
+            menu->addAction(QIcon::fromTheme("media-mount"), tr("Mount"), this, [ = ] {
                 fs->mount();
             });
         } else {
-            menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), [ = ] {
+            menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [ = ] {
                 fs->unmount()->error([ = ](QString error) {
                     tMessageBox* box = new tMessageBox(this);
                     box->setWindowTitle(tr("Couldn't unmount"));
@@ -212,7 +203,7 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
     }
 
     if (drive) {
-        if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), [ = ] {
+        if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [ = ] {
             drive->eject()->error([ = ](QString error) {
                 tMessageBox* box = new tMessageBox(this);
                 box->setWindowTitle(tr("Couldn't eject"));
@@ -221,6 +212,37 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
                 connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
                 box->open();
             });
+        });
+    }
+
+    if (block && block->cryptoBackingDevice()) {
+        menu->addAction(tr("Lock"), this, [ = ] {
+            auto performLock = [ = ] {
+                block->cryptoBackingDevice()->interface<EncryptedInterface>()->lock()->error([ = ](QString error) {
+                    tMessageBox* box = new tMessageBox(this);
+                    box->setWindowTitle(tr("Couldn't lock"));
+                    box->setText(tr("Locking the device failed."));
+                    box->setInformativeText(error);
+                    connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
+                    box->open();
+                });
+            };
+
+            //Unmount the drive first, and then lock it
+            if (fs->mountPoints().isEmpty()) {
+                performLock();
+            } else {
+                fs->unmount()->then([ = ] {
+                    performLock();
+                })->error([ = ](QString error) {
+                    tMessageBox* box = new tMessageBox(this);
+                    box->setWindowTitle(tr("Couldn't unmount"));
+                    box->setText(tr("Unmounting the drive failed."));
+                    box->setInformativeText(error);
+                    connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
+                    box->open();
+                });
+            }
         });
     }
     menu->popup(ui->devicesView->mapToGlobal(pos));
@@ -269,4 +291,35 @@ bool Sidebar::eventFilter(QObject* watched, QEvent* event) {
         return true;
     }
     return false;
+}
+
+void Sidebar::mount(DiskObject* disk) {
+    //Mount and navigate to the item
+    FilesystemInterface* fs = disk->interface<FilesystemInterface>();
+    EncryptedInterface* encrypted = disk->interface<EncryptedInterface>();
+    if (fs) {
+        if (fs->mountPoints().isEmpty()) {
+            //We need to mount this disk first
+            fs->mount()->then([ = ] {
+                emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
+            })->error([ = ](QString error) {
+                tDebug("Sidebar") << "Could not mount" << disk->displayName() << "-" << error;
+            });
+        } else {
+            emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
+        }
+    } else if (encrypted) {
+        UnlockEncryptedPopover* jp = new UnlockEncryptedPopover(disk);
+        tPopover* popover = new tPopover(jp);
+        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverSide(tPopover::Bottom);
+        connect(jp, &UnlockEncryptedPopover::reject, popover, &tPopover::dismiss);
+        connect(jp, &UnlockEncryptedPopover::accept, this, [ = ](DiskObject * cleartext) {
+            popover->dismiss();
+            mount(cleartext);
+        });
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        connect(popover, &tPopover::dismissed, jp, &UnlockEncryptedPopover::deleteLater);
+        popover->show(this->window());
+    }
 }

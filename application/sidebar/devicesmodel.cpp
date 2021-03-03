@@ -24,6 +24,7 @@
 #include <driveobjectmanager.h>
 #include <DriveObjects/filesysteminterface.h>
 #include <DriveObjects/diskobject.h>
+#include <DriveObjects/encryptedinterface.h>
 
 struct DevicesModelPrivate {
     QList<DiskObject*> filesystemDisks;
@@ -70,5 +71,9 @@ QVariant DevicesModel::data(const QModelIndex& index, int role) const {
 void DevicesModel::updateDisks() {
     beginResetModel();
     d->filesystemDisks = DriveObjectManager::filesystemDisks();
+    QList<DiskObject*> encrypted = DriveObjectManager::encryptedDisks();
+    for (DiskObject* disk : encrypted) {
+        if (!d->filesystemDisks.contains(disk->interface<EncryptedInterface>()->cleartextDevice())) d->filesystemDisks.append(disk);
+    }
     endResetModel();
 }

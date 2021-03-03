@@ -26,6 +26,7 @@ SOURCES += \
     popovers/burnpopover.cpp \
     popovers/deletepermanentlypopover.cpp \
     popovers/itempropertiespopover.cpp \
+    popovers/unlockencryptedpopover.cpp \
     sidebar/devicesmodel.cpp \
     sidebar/sidebar.cpp \
     tabbutton.cpp
@@ -46,6 +47,7 @@ HEADERS += \
     popovers/burnpopover.h \
     popovers/deletepermanentlypopover.h \
     popovers/itempropertiespopover.h \
+    popovers/unlockencryptedpopover.h \
     sidebar/devicesmodel.h \
     sidebar/sidebar.h \
     tabbutton.h
@@ -61,6 +63,7 @@ FORMS += \
     popovers/burnpopover.ui \
     popovers/deletepermanentlypopover.ui \
     popovers/itempropertiespopover.ui \
+    popovers/unlockencryptedpopover.ui \
     sidebar/sidebar.ui
 
 DESKTOP_FILE += \

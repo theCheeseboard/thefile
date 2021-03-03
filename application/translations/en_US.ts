@@ -795,98 +795,128 @@ Total progress: %4 of %5</source>
     </message>
     <message>
         <location filename="../sidebar/sidebar.ui" line="129"/>
-        <source>DOCKED</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="60"/>
-        <source>Home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="61"/>
-        <source>Documents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="62"/>
-        <source>Downloads</source>
+        <source>BOOKMARKS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="63"/>
-        <source>Music</source>
+        <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="64"/>
-        <source>Pictures</source>
+        <source>Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="65"/>
-        <source>Videos</source>
+        <source>Downloads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="66"/>
-        <source>Root</source>
+        <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="67"/>
+        <source>Pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="68"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="69"/>
+        <source>Root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="70"/>
         <source>Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="194"/>
-        <location filename="../sidebar/sidebar.cpp" line="254"/>
+        <location filename="../sidebar/sidebar.cpp" line="185"/>
+        <location filename="../sidebar/sidebar.cpp" line="276"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="197"/>
+        <location filename="../sidebar/sidebar.cpp" line="188"/>
         <source>Mount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="201"/>
+        <location filename="../sidebar/sidebar.cpp" line="192"/>
         <source>Unmount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="204"/>
+        <location filename="../sidebar/sidebar.cpp" line="195"/>
+        <location filename="../sidebar/sidebar.cpp" line="239"/>
         <source>Couldn&apos;t unmount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="205"/>
+        <location filename="../sidebar/sidebar.cpp" line="196"/>
+        <location filename="../sidebar/sidebar.cpp" line="240"/>
         <source>Unmounting the drive failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="215"/>
+        <location filename="../sidebar/sidebar.cpp" line="206"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="218"/>
+        <location filename="../sidebar/sidebar.cpp" line="209"/>
         <source>Couldn&apos;t eject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="219"/>
+        <location filename="../sidebar/sidebar.cpp" line="210"/>
         <source>Ejecting the drive failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="255"/>
+        <location filename="../sidebar/sidebar.cpp" line="219"/>
+        <source>Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="223"/>
+        <source>Couldn&apos;t lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="224"/>
+        <source>Locking the device failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sidebar.cpp" line="277"/>
         <source>Copy In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="259"/>
+        <location filename="../sidebar/sidebar.cpp" line="281"/>
         <source>Move In</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnlockEncryptedPopover</name>
+    <message>
+        <location filename="../popovers/unlockencryptedpopover.ui" line="35"/>
+        <source>Unlock Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/unlockencryptedpopover.ui" line="185"/>
+        <source>Enter the password for this device</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
