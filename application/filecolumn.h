@@ -49,11 +49,17 @@ class FileColumn : public QWidget {
         void newFolder();
         void moveToTrash();
         void deleteFile();
+        void deleteOrTrash();
         void rename();
+
+        bool isFile();
+        bool canCopyCutTrash();
+        bool canPaste();
 
     signals:
         void navigate(DirectoryPtr directory);
         void directoryChanged();
+        void canCopyCutTrashChanged(bool canCopyCutTrash);
 
     private slots:
         void on_folderErrorPage_customContextMenuRequested(const QPoint& pos);

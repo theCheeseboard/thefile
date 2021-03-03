@@ -27,6 +27,8 @@
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QShortcut>
+#include <filecolumn.h>
 #include <resourcemanager.h>
 #include <tsettings.h>
 #include "filetab.h"
@@ -57,12 +59,23 @@ MainWindow::MainWindow(QWidget* parent)
     QMenu* menu = new QMenu(this);
     menu->addAction(ui->actionNewTab);
     menu->addSeparator();
+    menu->addAction(ui->actionCut);
+    menu->addAction(ui->actionCopy);
+    menu->addAction(ui->actionPaste);
+    menu->addAction(ui->actionMove_to_Trash);
+    menu->addSeparator();
     menu->addAction(ui->actionGo);
     menu->addAction(ui->actionShowHiddenFiles);
     menu->addSeparator();
     menu->addMenu(new tHelpMenu(this));
     menu->addAction(ui->actionCloseTab);
     menu->addAction(ui->actionExit);
+
+    QShortcut* deleteShortcut = new QShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete), this);
+    connect(deleteShortcut, &QShortcut::activated, this, [ = ] {
+        FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+        if (tab->currentColumn()) tab->currentColumn()->deleteFile();
+    });
 
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
@@ -74,6 +87,8 @@ MainWindow::MainWindow(QWidget* parent)
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());
     });
     ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
+
+    updateMenuActions();
 }
 
 MainWindow::~MainWindow() {
@@ -116,6 +131,7 @@ void MainWindow::newTab(QUrl url) {
         button->deleteLater();
         tab->deleteLater();
     });
+    connect(tab, &FileTab::columnsChanged, this, &MainWindow::updateMenuActions);
 
     ui->stackedWidget->setCurrentWidget(tab);
 }
@@ -159,4 +175,47 @@ void MainWindow::on_actionGo_triggered() {
 //            QMessageBox::warning(this, tr("Can't open that URL"), tr("%1 URLs are not supported").arg(url.scheme()));
 //        }
     }
+}
+
+void MainWindow::on_actionCopy_triggered() {
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab->currentColumn()) tab->currentColumn()->copy();
+}
+
+void MainWindow::on_actionCut_triggered() {
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab->currentColumn()) tab->currentColumn()->cut();
+}
+
+void MainWindow::on_actionPaste_triggered() {
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab->lastColumn()) tab->lastColumn()->paste();
+}
+
+void MainWindow::on_actionMove_to_Trash_triggered() {
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab->currentColumn()) tab->currentColumn()->deleteOrTrash();
+}
+
+void MainWindow::updateMenuActions() {
+    bool copyCutTrash = false;
+    bool paste = false;
+
+    FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
+    if (tab) {
+        FileColumn* current = tab->currentColumn();
+        if (current) copyCutTrash = current->canCopyCutTrash();
+
+        FileColumn* last = tab->lastColumn();
+        if (last) paste = last->canPaste();
+    }
+
+    ui->actionCopy->setEnabled(copyCutTrash);
+    ui->actionCut->setEnabled(copyCutTrash);
+    ui->actionPaste->setEnabled(paste);
+    ui->actionMove_to_Trash->setEnabled(copyCutTrash);
+}
+
+void MainWindow::on_stackedWidget_switchingFrame(int ) {
+    updateMenuActions();
 }

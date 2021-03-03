@@ -160,7 +160,7 @@ void FileTransferJob::fileDiscovery() {
         //TODO: Automatically rename files if a copy exists
 
         DiscoveryResults results;
-        for (QUrl baseUrl : qAsConst(d->source)) {
+        for (const QUrl &baseUrl : qAsConst(d->source)) {
             DirectoryPtr baseDirectory = ResourceManager::parentDirectoryForUrl(baseUrl);
             Directory::FileInformation baseFileInfo = baseDirectory->fileInformation(baseUrl.fileName())->await().result;
 

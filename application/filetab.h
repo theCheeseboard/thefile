@@ -29,6 +29,7 @@ namespace Ui {
 }
 
 struct FileTabPrivate;
+class FileColumn;
 class FileTab : public QWidget {
         Q_OBJECT
 
@@ -45,6 +46,9 @@ class FileTab : public QWidget {
         void setCurrentDir(DirectoryPtr directory);
         QUrl currentUrl();
 
+        FileColumn* currentColumn();
+        FileColumn* lastColumn();
+
         QString tabTitle();
 
         void closeTab();
@@ -53,6 +57,7 @@ class FileTab : public QWidget {
         void currentUrlChanged(QUrl url);
         void tabClosed();
         void tabTitleChanged();
+        void columnsChanged();
 
     private:
         Ui::FileTab* ui;

@@ -81,24 +81,6 @@ FileColumn::FileColumn(DirectoryPtr directory, FileColumnManager* manager, QWidg
     ui->folderView->setItemDelegate(d->delegate);
     ui->folderView->installEventFilter(this);
 
-    QShortcut* copyShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_C), this);
-    connect(copyShortcut, &QShortcut::activated, this, &FileColumn::copy);
-    QShortcut* cutShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_X), this);
-    connect(cutShortcut, &QShortcut::activated, this, &FileColumn::cut);
-    QShortcut* pasteShortcut = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_V), this);
-    connect(pasteShortcut, &QShortcut::activated, this, &FileColumn::paste);
-    QShortcut* deleteShortcut = new QShortcut(QKeySequence(Qt::Key_Delete), this);
-    connect(deleteShortcut, &QShortcut::activated, this, [ = ] {
-        if (d->directory->url().scheme() == "trash") {
-            //Delete Permanently
-            deleteFile();
-        } else {
-            moveToTrash();
-        }
-    });
-    QShortcut* deletePermanentlyShortcut = new QShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete), this);
-    connect(deletePermanentlyShortcut, &QShortcut::activated, this, &FileColumn::deleteFile);
-
     d->floater = new FileColumnFloater(this);
     d->floater->setVisible(false);
 
@@ -252,6 +234,15 @@ void FileColumn::deleteFile() {
     emit navigate(d->directory);
 }
 
+void FileColumn::deleteOrTrash() {
+    if (d->directory->url().scheme() == "trash") {
+        //Delete Permanently
+        deleteFile();
+    } else {
+        moveToTrash();
+    }
+}
+
 void FileColumn::rename() {
     QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
     if (sel.count() == 1) {
@@ -265,6 +256,18 @@ void FileColumn::rename() {
             d->directory->move(item.data(FileModel::PathSegmentRole).toString(), newUrl);
         }
     }
+}
+
+bool FileColumn::isFile() {
+    return ui->stackedWidget->currentWidget() == ui->filePage;
+}
+
+bool FileColumn::canCopyCutTrash() {
+    return !ui->folderView->selectionModel()->selectedIndexes().isEmpty();
+}
+
+bool FileColumn::canPaste() {
+    return true;
 }
 
 void FileColumn::reload() {
@@ -285,6 +288,7 @@ void FileColumn::reload() {
     ui->folderNameLabel->setText(columnTitle());
     connect(ui->folderView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [ = ] {
         updateFloater();
+        emit canCopyCutTrashChanged(canCopyCutTrash());
 
         if (!d->listenToSelection) return;
         d->floater->setIndices(ui->folderView->selectionModel()->selectedIndexes());

@@ -217,187 +217,187 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
     <name>FileColumn</name>
     <message>
         <location filename="../filecolumn.ui" line="326"/>
-        <location filename="../filecolumn.cpp" line="551"/>
+        <location filename="../filecolumn.cpp" line="555"/>
         <source>Open</source>
         <translation>Mở</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="141"/>
+        <location filename="../filecolumn.cpp" line="123"/>
         <source>Root</source>
         <translation>Gốc hệ thống</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="142"/>
-        <location filename="../filecolumn.cpp" line="227"/>
-        <location filename="../filecolumn.cpp" line="348"/>
+        <location filename="../filecolumn.cpp" line="124"/>
+        <location filename="../filecolumn.cpp" line="209"/>
+        <location filename="../filecolumn.cpp" line="352"/>
         <source>Trash</source>
         <translation>Thùng rác</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="146"/>
+        <location filename="../filecolumn.cpp" line="128"/>
         <source>Home</source>
         <translation>Thư mục chính</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="214"/>
-        <location filename="../filecolumn.cpp" line="405"/>
+        <location filename="../filecolumn.cpp" line="196"/>
+        <location filename="../filecolumn.cpp" line="409"/>
         <source>New Folder</source>
         <translation>Thư mục mới</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="214"/>
+        <location filename="../filecolumn.cpp" line="196"/>
         <source>Folder name</source>
         <translation>Tên thư mục</translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="228"/>
+        <location filename="../filecolumn.cpp" line="210"/>
         <source>Moved %n items to the trash</source>
         <translation>
             <numerusform>Đã chuyển %n mục vào thùng rác</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="261"/>
-        <location filename="../filecolumn.cpp" line="611"/>
+        <location filename="../filecolumn.cpp" line="252"/>
+        <location filename="../filecolumn.cpp" line="615"/>
         <source>Rename</source>
         <translation>Đổi tên</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="261"/>
+        <location filename="../filecolumn.cpp" line="252"/>
         <source>Enter a new name</source>
         <translation>Điền vào một tên mới</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="317"/>
+        <location filename="../filecolumn.cpp" line="321"/>
         <source>No items here!</source>
         <translation>Không có tệp nào đây!</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="318"/>
+        <location filename="../filecolumn.cpp" line="322"/>
         <source>This folder is empty.</source>
         <translation>Thư mục này rõng.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="321"/>
+        <location filename="../filecolumn.cpp" line="325"/>
         <source>Not Found</source>
         <translation>Không tìm được</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="322"/>
+        <location filename="../filecolumn.cpp" line="326"/>
         <source>This folder doesn&apos;t exist.</source>
         <translation>Thư mục này không có tồn tại.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="325"/>
+        <location filename="../filecolumn.cpp" line="329"/>
         <source>Permission Denied</source>
         <translation>Không có quyền</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="326"/>
+        <location filename="../filecolumn.cpp" line="330"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
         <translation>Có vẻ như bạn không có quyền xem thư mục này.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="329"/>
+        <location filename="../filecolumn.cpp" line="333"/>
         <source>Can&apos;t view this folder</source>
         <translation>Không thể xem thư mục</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="330"/>
+        <location filename="../filecolumn.cpp" line="334"/>
         <source>We can&apos;t show you the contents of this folder.</source>
         <translation>Chúng tôi không thể hiện nội dung thư mục này.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="349"/>
+        <location filename="../filecolumn.cpp" line="353"/>
         <source>Empty Trash</source>
         <translation>Đổ rác</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="404"/>
-        <location filename="../filecolumn.cpp" line="526"/>
+        <location filename="../filecolumn.cpp" line="408"/>
+        <location filename="../filecolumn.cpp" line="530"/>
         <source>For this folder</source>
         <translation>Cho thư mục này</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="406"/>
+        <location filename="../filecolumn.cpp" line="410"/>
         <source>Paste</source>
         <translation>Dán</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="514"/>
-        <location filename="../filecolumn.cpp" line="548"/>
+        <location filename="../filecolumn.cpp" line="518"/>
+        <location filename="../filecolumn.cpp" line="552"/>
         <source>For %1</source>
         <translation>Cho %1</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="515"/>
+        <location filename="../filecolumn.cpp" line="519"/>
         <source>Copy In</source>
         <translation>Chép vào</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="519"/>
+        <location filename="../filecolumn.cpp" line="523"/>
         <source>Move In</source>
         <translation>Chuyển vào</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="527"/>
+        <location filename="../filecolumn.cpp" line="531"/>
         <source>Copy Here</source>
         <translation>Chép đây</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="531"/>
+        <location filename="../filecolumn.cpp" line="535"/>
         <source>Move Here</source>
         <translation>Chuyển đây</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="559"/>
+        <location filename="../filecolumn.cpp" line="563"/>
         <source>Open With...</source>
         <translation>Mở bằng...</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="575"/>
+        <location filename="../filecolumn.cpp" line="579"/>
         <source>Another app...</source>
         <translation>Ứng dụng khác...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="583"/>
+        <location filename="../filecolumn.cpp" line="587"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="586"/>
+        <location filename="../filecolumn.cpp" line="590"/>
         <source>Cut</source>
         <translation>Cắt</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="587"/>
+        <location filename="../filecolumn.cpp" line="591"/>
         <source>Copy</source>
         <translation>Chép</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="589"/>
+        <location filename="../filecolumn.cpp" line="593"/>
         <source>Restore</source>
         <translation>Khôi phục</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="602"/>
+        <location filename="../filecolumn.cpp" line="606"/>
         <source>Delete Permanently</source>
         <translation>Xóa vĩnh viễn</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="604"/>
+        <location filename="../filecolumn.cpp" line="608"/>
         <source>Move to Trash</source>
         <translation>Chuyển vào thùng rác</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="619"/>
+        <location filename="../filecolumn.cpp" line="623"/>
         <source>Properties</source>
         <translation>Thuộc tính</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="636"/>
+        <location filename="../filecolumn.cpp" line="640"/>
         <source>Burn Contents</source>
         <translation>Ghi nội dung</translation>
     </message>
@@ -772,7 +772,7 @@ Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="153"/>
+        <location filename="../mainwindow.cpp" line="169"/>
         <source>Go</source>
         <translation>Đi</translation>
     </message>
@@ -782,7 +782,47 @@ Tổng cộng: %4 tren %5</translation>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="153"/>
+        <location filename="../mainwindow.ui" line="199"/>
+        <source>Copy</source>
+        <translation type="unfinished">Chép</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="202"/>
+        <source>Ctrl+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="210"/>
+        <source>Cut</source>
+        <translation type="unfinished">Cắt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="213"/>
+        <source>Ctrl+X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="221"/>
+        <source>Paste</source>
+        <translation type="unfinished">Dán</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="224"/>
+        <source>Ctrl+V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="232"/>
+        <source>Move to Trash</source>
+        <translation type="unfinished">Chuyển vào thùng rác</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="235"/>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="169"/>
         <source>Enter a location to go to</source>
         <translation>Điền một vị trí để đi đến</translation>
     </message>

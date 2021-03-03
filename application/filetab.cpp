@@ -46,6 +46,7 @@ FileTab::FileTab(QWidget* parent) :
     ui->setupUi(this);
     d = new FileTabPrivate();
     d->columnManager = new FileColumnManager(this);
+    connect(d->columnManager, &FileColumnManager::currentChanged, this, &FileTab::columnsChanged);
 
     ui->sidebar->setFixedWidth(SC_DPI(200));
     connect(ui->sidebar, &Sidebar::navigate, this, &FileTab::setCurrentUrl);
@@ -126,6 +127,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
             col->setSelected(nextPath);
             connect(col, &FileColumn::navigate, this, &FileTab::setCurrentDir);
             connect(col, &FileColumn::directoryChanged, this, &FileTab::tabTitleChanged);
+            connect(col, &FileColumn::canCopyCutTrashChanged, this, &FileTab::columnsChanged);
             ui->dirsLayout->addWidget(col);
             d->currentColumnWidgets.append(col);
         } else {
@@ -204,11 +206,25 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
     d->currentColumns = directories;
 
     emit tabTitleChanged();
+    emit columnsChanged();
 }
 
 QUrl FileTab::currentUrl() {
     if (d->currentColumns.isEmpty()) return QUrl();
     return d->currentColumns.last()->url();
+}
+
+FileColumn* FileTab::currentColumn() {
+    return d->columnManager->current();
+}
+
+FileColumn* FileTab::lastColumn() {
+    for (auto widget = d->currentColumnWidgets.rbegin(); widget != d->currentColumnWidgets.rend(); widget++) {
+        if (!(*widget)->isFile()) {
+            return *widget;
+        }
+    }
+    return nullptr;
 }
 
 QString FileTab::tabTitle() {

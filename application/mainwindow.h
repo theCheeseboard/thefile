@@ -50,9 +50,20 @@ class MainWindow : public QMainWindow {
 
         void on_actionGo_triggered();
 
+        void on_actionCopy_triggered();
+
+        void on_actionCut_triggered();
+
+        void on_actionPaste_triggered();
+
+        void on_actionMove_to_Trash_triggered();
+
+        void on_stackedWidget_switchingFrame(int );
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
 
+        void updateMenuActions();
 };
 #endif // MAINWINDOW_H

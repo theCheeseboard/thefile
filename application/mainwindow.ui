@@ -14,7 +14,7 @@
    <string>theFile</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="thefile">
+   <iconset theme="thefile" resource="resources.qrc">
     <normaloff>:/icons/thefile.svg</normaloff>:/icons/thefile.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -77,7 +77,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset theme="thefile">
+          <iconset theme="thefile" resource="resources.qrc">
            <normaloff>:/icons/thefile.svg</normaloff>:/icons/thefile.svg</iconset>
          </property>
          <property name="popupMode">
@@ -191,6 +191,50 @@
     <string>Ctrl+L</string>
    </property>
   </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset theme="edit-copy"/>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset theme="edit-cut"/>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset theme="edit-paste"/>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionMove_to_Trash">
+   <property name="icon">
+    <iconset theme="edit-delete"/>
+   </property>
+   <property name="text">
+    <string>Move to Trash</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -203,6 +247,8 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
