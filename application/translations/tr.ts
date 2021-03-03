@@ -784,72 +784,72 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../mainwindow.ui" line="199"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopyala</translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="202"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="210"/>
         <source>Cut</source>
-        <translation type="unfinished">Kes</translation>
+        <translation>Kes</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="213"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="221"/>
         <source>Paste</source>
-        <translation type="unfinished">Yapıştırmak</translation>
+        <translation>Yapıştırmak</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="224"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="232"/>
         <source>Move to Trash</source>
-        <translation type="unfinished">Çöp kutusuna taşıyın</translation>
+        <translation>Çöp kutusuna taşıyın</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="235"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="243"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Hepsini seç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="246"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="254"/>
         <source>New Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Pencere</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="257"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="265"/>
         <source>New Folder</source>
-        <translation type="unfinished">Yeni dosya</translation>
+        <translation>Yeni Klasör</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="268"/>
         <source>Ctrl+Shift+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+ÜstKarakter+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="173"/>
@@ -872,7 +872,7 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../sidebar/sidebar.ui" line="129"/>
         <source>BOOKMARKS</source>
-        <translation type="unfinished"></translation>
+        <translation>İŞARETLER</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="63"/>
@@ -960,27 +960,27 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="219"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilit</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="223"/>
         <source>Couldn&apos;t lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilitlenemedi</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="224"/>
         <source>Locking the device failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihazın kilitlenmesi başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="277"/>
         <source>Copy In</source>
-        <translation type="unfinished">Bu klasöre kopyala</translation>
+        <translation>Bu klasöre kopyala</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="281"/>
         <source>Move In</source>
-        <translation type="unfinished">Bu klasöre taşı</translation>
+        <translation>Bu klasöre taşı</translation>
     </message>
 </context>
 <context>
@@ -988,12 +988,12 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../popovers/unlockencryptedpopover.ui" line="35"/>
         <source>Unlock Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihazın Kilidini Aç</translation>
     </message>
     <message>
         <location filename="../popovers/unlockencryptedpopover.ui" line="185"/>
         <source>Enter the password for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu cihaz için şifreyi girin</translation>
     </message>
 </context>
 <context>
