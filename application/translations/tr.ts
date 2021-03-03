@@ -92,32 +92,32 @@
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="90"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="113"/>
         <source>CANCEL BURN OPERATION?</source>
-        <translation type="unfinished"></translation>
+        <translation>YANIK İŞLEMİNİ İPTAL ETMEK Mİ?</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="120"/>
         <source>Cancelling the burn operation at this point may ruin the disc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu noktada yazma işlemini iptal etmek diski bozabilir.</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="135"/>
         <source>Continue Burning</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanmaya Devam Et</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="142"/>
         <source>Cancel Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Yine De İptal Et</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
         <source>Burn %1</source>
-        <translation type="unfinished">%1 Yak</translation>
+        <translation>%1 Yak</translation>
     </message>
 </context>
 <context>
@@ -631,88 +631,88 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="76"/>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>İzinler</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="186"/>
         <source>Last Accessed</source>
-        <translation type="unfinished"></translation>
+        <translation>Son Erişilen</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="138"/>
         <source>DETAILS</source>
-        <translation type="unfinished"></translation>
+        <translation>DETAYLAR</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="125"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyutlu</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="234"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="165"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="248"/>
         <source>Free Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş Alan</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="266"/>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Eller</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="308"/>
         <source>Read</source>
-        <translation type="unfinished"></translation>
+        <translation>Okumak</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="318"/>
         <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Sahip</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="325"/>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="338"/>
         <source>ACCESS CONTROLS</source>
-        <translation type="unfinished"></translation>
+        <translation>ERİŞİM DENETİMLERİ</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="352"/>
         <source>Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazmak</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="345"/>
         <source>Executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Yürütülebilir dosya</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.ui" line="193"/>
         <source>Last Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Son Değişiklik</translation>
     </message>
     <message>
         <location filename="../popovers/itempropertiespopover.cpp" line="66"/>
         <location filename="../popovers/itempropertiespopover.cpp" line="67"/>
         <source>Counting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayım…</translation>
     </message>
     <message numerus="yes">
         <location filename="../popovers/itempropertiespopover.cpp" line="73"/>
         <source>%n items</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n öğe</numerusform>
         </translation>
     </message>
@@ -720,7 +720,7 @@ Toplam ilerleme: %4 / %5</translation>
         <location filename="../popovers/itempropertiespopover.cpp" line="76"/>
         <location filename="../popovers/itempropertiespopover.cpp" line="82"/>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bayt</translation>
     </message>
 </context>
 <context>
@@ -728,58 +728,58 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>theFile</source>
-        <translation type="unfinished"></translation>
+        <translation>theFile</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="141"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Vazgeç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="144"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Sekme</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="156"/>
         <source>Ctrl+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="165"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="168"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="176"/>
         <source>Show Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Gizli dosyaları göster</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="179"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
         <location filename="../mainwindow.cpp" line="173"/>
         <source>Go</source>
-        <translation type="unfinished"></translation>
+        <translation>Git</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="191"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="199"/>
@@ -854,7 +854,7 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../mainwindow.cpp" line="173"/>
         <source>Enter a location to go to</source>
-        <translation type="unfinished"></translation>
+        <translation>Gitmek için bir konum girin</translation>
     </message>
 </context>
 <context>
@@ -862,12 +862,12 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../sidebar/sidebar.ui" line="74"/>
         <source>PLACES</source>
-        <translation type="unfinished"></translation>
+        <translation>YERLER</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.ui" line="103"/>
         <source>DRIVES</source>
-        <translation type="unfinished"></translation>
+        <translation>SÜRÜCÜLER</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.ui" line="129"/>
@@ -877,85 +877,85 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="63"/>
         <source>Home</source>
-        <translation type="unfinished">Ana Sayfa</translation>
+        <translation>Ana Sayfa</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="64"/>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyalar</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="65"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>İndirilenler</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="66"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Müzik</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="67"/>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Resimler</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="68"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Videolar</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="69"/>
         <source>Root</source>
-        <translation type="unfinished">Kök</translation>
+        <translation>Kök</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="70"/>
         <source>Trash</source>
-        <translation type="unfinished">Çöp</translation>
+        <translation>Çöp</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="185"/>
         <location filename="../sidebar/sidebar.cpp" line="276"/>
         <source>For %1</source>
-        <translation type="unfinished">%1 için</translation>
+        <translation>%1 için</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="188"/>
         <source>Mount</source>
-        <translation type="unfinished"></translation>
+        <translation>Montaj</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="192"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlantıyı kes</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="195"/>
         <location filename="../sidebar/sidebar.cpp" line="239"/>
         <source>Couldn&apos;t unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökülemedi</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="196"/>
         <location filename="../sidebar/sidebar.cpp" line="240"/>
         <source>Unmounting the drive failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürücünün sökülmesi başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="206"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkar</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="209"/>
         <source>Couldn&apos;t eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Fırlatılamadı</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="210"/>
         <source>Ejecting the drive failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürücüyü çıkarma başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="219"/>
@@ -1001,17 +1001,17 @@ Toplam ilerleme: %4 / %5</translation>
     <message>
         <location filename="../main.cpp" line="40"/>
         <source>File Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Yöneticisi</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="65"/>
         <source>folder</source>
-        <translation type="unfinished"></translation>
+        <translation>klasör</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="65"/>
         <source>Folder to show</source>
-        <translation type="unfinished"></translation>
+        <translation>Gösterilecek klasör</translation>
     </message>
 </context>
 </TS>
