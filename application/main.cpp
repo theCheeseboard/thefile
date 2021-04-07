@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
     }
     a.installTranslators();
 
-    a.setApplicationIcon(QIcon::fromTheme("thefile", QIcon(":/icons/thefile.svg")));
     a.setApplicationVersion("4.0");
     a.setGenericName(QApplication::translate("main", "File Manager"));
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
@@ -51,9 +50,11 @@ int main(int argc, char* argv[]) {
 #ifdef T_BLUEPRINT_BUILD
     a.setApplicationName("theFile Blueprint");
     a.setDesktopFileName("com.vicr123.thefile_blueprint");
+    a.setApplicationIcon(QIcon::fromTheme("thefile-blueprint", QIcon(":/icons/thefile-blueprint.svg")));
 #else
     a.setApplicationName("theFile");
     a.setDesktopFileName("com.vicr123.thefile");
+    a.setApplicationIcon(QIcon::fromTheme("thefile", QIcon(":/icons/thefile.svg")));
 #endif
 
     a.registerCrashTrap();

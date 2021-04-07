@@ -81,6 +81,12 @@ MainWindow::MainWindow(QWidget* parent)
         if (tab->currentColumn()) tab->currentColumn()->deleteFile();
     });
 
+#ifdef T_BLUEPRINT_BUILD
+    ui->menuButton->setIcon(QIcon(":/icons/thefile-blueprint.svg"));
+#else
+    ui->menuButton->setIcon(QIcon::fromTheme("com.vicr123.thefile", QIcon(":/icons/thefile.svg")));
+#endif
+
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);

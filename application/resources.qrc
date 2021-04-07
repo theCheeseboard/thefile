@@ -4,5 +4,6 @@
         <file>icons/aboutsplash.svg</file>
         <file>icons/folder-unavailable.svg</file>
         <file>icons/folder-empty.svg</file>
+        <file>icons/thefile-blueprint.svg</file>
     </qresource>
 </RCC>

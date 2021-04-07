@@ -772,7 +772,7 @@ Toplam ilerleme: %4 / %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="179"/>
         <source>Go</source>
         <translation>Git</translation>
     </message>
@@ -852,7 +852,7 @@ Toplam ilerleme: %4 / %5</translation>
         <translation>Ctrl+ÜstKarakter+N</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="179"/>
         <source>Enter a location to go to</source>
         <translation>Gitmek için bir konum girin</translation>
     </message>
@@ -999,17 +999,17 @@ Toplam ilerleme: %4 / %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="42"/>
+        <location filename="../main.cpp" line="41"/>
         <source>File Manager</source>
         <translation>Dosya Yöneticisi</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="67"/>
+        <location filename="../main.cpp" line="68"/>
         <source>folder</source>
         <translation>klasör</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="67"/>
+        <location filename="../main.cpp" line="68"/>
         <source>Folder to show</source>
         <translation>Gösterilecek klasör</translation>
     </message>

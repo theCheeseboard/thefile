@@ -772,7 +772,7 @@ Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="179"/>
         <source>Go</source>
         <translation>Đi</translation>
     </message>
@@ -852,7 +852,7 @@ Tổng cộng: %4 tren %5</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="179"/>
         <source>Enter a location to go to</source>
         <translation>Điền một vị trí để đi đến</translation>
     </message>
@@ -999,17 +999,17 @@ Tổng cộng: %4 tren %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="42"/>
+        <location filename="../main.cpp" line="41"/>
         <source>File Manager</source>
         <translation>Trình quản lý tệp</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="67"/>
+        <location filename="../main.cpp" line="68"/>
         <source>folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="67"/>
+        <location filename="../main.cpp" line="68"/>
         <source>Folder to show</source>
         <translation type="unfinished"></translation>
     </message>
