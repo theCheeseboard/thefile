@@ -100,7 +100,7 @@ unix:!macx {
     }
 
     icon.path = $$THELIBS_INSTALL_PREFIX/share/icons/hicolor/scalable/apps/
-    metainfo.path = $$THELIBS_INSTALL_PREFIX/share/metainf
+    metainfo.path = $$THELIBS_INSTALL_PREFIX/share/metainfo
 
     INSTALLS += target icon defaults metainfo
 }
