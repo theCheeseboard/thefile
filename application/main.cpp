@@ -24,6 +24,8 @@
 #include <tapplication.h>
 #include <QCommandLineParser>
 #include <QJsonArray>
+#include <tstylemanager.h>
+#include <tsettings.h>
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
@@ -48,7 +50,7 @@ int main(int argc, char* argv[]) {
     a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theFile/issues"));
 #ifdef T_BLUEPRINT_BUILD
     a.setApplicationName("theFile Blueprint");
-    a.setDesktopFileName("com.vicr123.thefile-blueprint");
+    a.setDesktopFileName("com.vicr123.thefile_blueprint");
 #else
     a.setApplicationName("theFile");
     a.setDesktopFileName("com.vicr123.thefile");
@@ -64,6 +66,15 @@ int main(int argc, char* argv[]) {
     parser.addVersionOption();
     parser.addPositionalArgument(a.translate("main", "folder"), a.translate("main", "Folder to show"), QStringLiteral("[%1]").arg(a.translate("main", "folder")));
     parser.process(a);
+
+    tSettings settings;
+    QObject::connect(&settings, &tSettings::settingChanged, [ = ](QString key, QVariant value) {
+        if (key == "theme/mode") {
+            tStyleManager::setOverrideStyleForApplication(value.toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
+        }
+    });
+    tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
+
 
     MainWindow* w = new MainWindow();
 

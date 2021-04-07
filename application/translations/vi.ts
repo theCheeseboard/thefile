@@ -999,17 +999,17 @@ Tổng cộng: %4 tren %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="40"/>
+        <location filename="../main.cpp" line="42"/>
         <source>File Manager</source>
         <translation>Trình quản lý tệp</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="65"/>
+        <location filename="../main.cpp" line="67"/>
         <source>folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="65"/>
+        <location filename="../main.cpp" line="67"/>
         <source>Folder to show</source>
         <translation type="unfinished"></translation>
     </message>

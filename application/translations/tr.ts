@@ -999,17 +999,17 @@ Toplam ilerleme: %4 / %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="40"/>
+        <location filename="../main.cpp" line="42"/>
         <source>File Manager</source>
         <translation>Dosya Yöneticisi</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="65"/>
+        <location filename="../main.cpp" line="67"/>
         <source>folder</source>
         <translation>klasör</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="65"/>
+        <location filename="../main.cpp" line="67"/>
         <source>Folder to show</source>
         <translation>Gösterilecek klasör</translation>
     </message>
