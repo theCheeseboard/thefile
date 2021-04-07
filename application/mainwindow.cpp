@@ -25,7 +25,7 @@
 #include <tjobmanager.h>
 #include <QUrl>
 #include <QFileInfo>
-#include <QInputDialog>
+#include <tinputdialog.h>
 #include <QMessageBox>
 #include <QShortcut>
 #include <filecolumn.h>
@@ -170,7 +170,7 @@ void MainWindow::on_actionGo_triggered() {
     }
 
     bool ok;
-    QString location = QInputDialog::getText(this, tr("Go"), tr("Enter a location to go to"), QLineEdit::Normal, text, &ok);
+    QString location = tInputDialog::getText(this, tr("Go"), tr("Enter a location to go to"), QLineEdit::Normal, text, &ok);
     if (ok) {
         QUrl url = QUrl::fromUserInput(location);
 //        if (ResourceManager::isDirectoryHandlerRegistered(url.scheme())) {

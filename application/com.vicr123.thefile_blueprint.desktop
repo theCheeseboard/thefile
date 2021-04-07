@@ -2,12 +2,12 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name[]=theFile
+Name[]=theFile Blueprint
 GenericName[]=File Manager
 Categories=Utility;FileManager;
 Exec=thefile %U
-Icon=com.vicr123.thefile
+Icon=com.vicr123.thefile_blueprint
 #T:A list of words that can be searched for. Please ensure that the list also ends with a semicolon!
 Keywords[]=folder;copy;cut;computer;devices;cd;dvd;
 MimeType=inode/directory;
-StartupWMClass=theFile
+StartupWMClass=theFile Blueprint

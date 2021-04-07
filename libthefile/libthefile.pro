@@ -30,6 +30,13 @@ HEADERS += \
 
 # Default rules for deployment.
 unix {
-    target.path = /usr/lib
+    # Include the-libs build tools
+    equals(THELIBS_BUILDTOOLS_PATH, "") {
+        THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
+
+    target.path = $$THELIBS_INSTALL_LIB
+
+    INSTALLS += target
 }
-!isEmpty(target.path): INSTALLS += target

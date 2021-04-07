@@ -95,7 +95,7 @@ void FileTransferJobWidget::on_stackedWidget_switchingFrame(int frame) {
 void FileTransferJobWidget::on_replaceAllConflictsButton_clicked() {
     //Resolve each conflict with the current file name
     QMap<QUrl, QUrl> conflicting = d->job->conflictingFiles();
-    for (QUrl source : conflicting.keys()) {
+    for (const QUrl &source : conflicting.keys()) {
         d->job->resolveConflict(source, conflicting.value(source));
     }
 }

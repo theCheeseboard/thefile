@@ -70,25 +70,39 @@ DESKTOP_FILE += \
    com.vicr123.thefile.desktop
 
 unix:!macx {
-    # Include the-libs build tools
-    include(/usr/share/the-libs/pri/buildmaster.pri)
+    DESKTOP_FILE = com.vicr123.thefile.desktop
+    DESKTOP_FILE_BLUEPRINT = com.vicr123.thefile_blueprint.desktop
 
-    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+    # Include the-libs build tools
+    equals(THELIBS_BUILDTOOLS_PATH, "") {
+        THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
+
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$THELIBS_INSTALL_LIB\\\"
 
     QT += thelib
     TARGET = thefile
 
     LIBS += -L$$OUT_PWD/../libthefile/ -llibthefile
 
-    target.path = /usr/bin
-
-    icon.path = /usr/share/icons/hicolor/scalable/apps/
-    icon.files = icons/thefile.svg
+    target.path = $$THELIBS_INSTALL_BIN
 
     defaults.files = defaults.conf
-    defaults.path = /etc/theSuite/theBeat/
+    defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theBeat/
 
-    INSTALLS += target icon defaults
+    blueprint {
+        metainfo.files = com.vicr123.thefile_blueprint.metainfo.xml
+        icon.files = icons/com.vicr123.thefile_blueprint.svg
+    } else {
+        metainfo.files = com.vicr123.thefile.metainfo.xml
+        icon.files = icons/com.vicr123.thefile.svg
+    }
+
+    icon.path = $$THELIBS_INSTALL_PREFIX/share/icons/hicolor/scalable/apps/
+    metainfo.path = $$THELIBS_INSTALL_PREFIX/share/metainf
+
+    INSTALLS += target icon defaults metainfo
 }
 
 
