@@ -81,7 +81,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/vicr123/thefrisbee
-#        branch: blueprint
+        branch: blueprint
   - name: thefile
     buildsystem: qmake
     builddir: true

@@ -1,0 +1,9 @@
+QT.thefile.VERSION = 1.0
+QT.thefile.MAJOR_VERSION = 1
+QT.thefile.MINOR_VERSION = 1
+QT.thefile.name = thefile
+QT.thefile.module = thefile
+QT.thefile.depends = core dbus frisbee
+QT.thefile.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/libthefile/
+QT.thefile.libs = $$QT_MODULE_LIB_BASE
+QT_MODULES += thefile

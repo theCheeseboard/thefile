@@ -44,9 +44,18 @@ unix {
 
     target.path = $$THELIBS_INSTALL_LIB
 
-    INSTALLS += target
+    headers.path = $$THELIBS_INSTALL_HEADERS/libthefile
+    headers.files = $$files(*.h, true)
+
+    module.files = qt_thefile.pri
+    module.path = $$THELIBS_INSTALL_MODULES
+
+    INSTALLS += target headers
 }
 
 FORMS += \
     popovers/unlockencryptedpopover.ui \
     sidebar/sidebar.ui
+
+DISTFILES += \
+    qt_thefile.pri
