@@ -1,7 +1,8 @@
-QT += gui widgets thelib frisbee
+QT += gui widgets thelib frisbee tdesktopenvironment
 
 TEMPLATE = lib
 DEFINES += LIBTHEFILE_LIBRARY
+TARGET = thefile
 
 CONFIG += c++11
 
@@ -16,6 +17,13 @@ SOURCES += \
     directoryHandlers/localfiledirectoryhandler.cpp \
     directoryHandlers/trashdirectoryhandler.cpp \
     directoryhandler.cpp \
+    filecolumn.cpp \
+    filecolumnaction.cpp \
+    filecolumnfloater.cpp \
+    filecolumnmanager.cpp \
+    filemodel.cpp \
+    filetab.cpp \
+    hiddenfilesproxymodel.cpp \
     popovers/unlockencryptedpopover.cpp \
     resourcemanager.cpp \
     sidebar/devicesmodel.cpp \
@@ -28,6 +36,13 @@ HEADERS += \
     directoryHandlers/localfiledirectoryhandler.h \
     directoryHandlers/trashdirectoryhandler.h \
     directoryhandler.h \
+    filecolumn.h \
+    filecolumnaction.h \
+    filecolumnfloater.h \
+    filecolumnmanager.h \
+    filemodel.h \
+    filetab.h \
+    hiddenfilesproxymodel.h \
     libthefile_global.h \
     popovers/unlockencryptedpopover.h \
     resourcemanager.h \
@@ -54,6 +69,10 @@ unix {
 }
 
 FORMS += \
+    filecolumn.ui \
+    filecolumnaction.ui \
+    filecolumnfloater.ui \
+    filetab.ui \
     popovers/unlockencryptedpopover.ui \
     sidebar/sidebar.ui
 

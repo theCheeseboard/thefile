@@ -30,8 +30,6 @@
 #include <QScrollBar>
 #include <tlogger.h>
 #include <resourcemanager.h>
-#include "jobs/filetransferjob.h"
-#include <tjobmanager.h>
 
 struct FileTabPrivate {
     FileColumnManager* columnManager;
@@ -52,14 +50,8 @@ FileTab::FileTab(QWidget* parent) :
 
     ui->sidebar->setFixedWidth(SC_DPI(200));
     connect(ui->sidebar, &Sidebar::navigate, this, &FileTab::setCurrentUrl);
-    connect(ui->sidebar, &Sidebar::moveFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
-        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, source, destination, this->window());
-        tJobManager::trackJobDelayed(job);
-    });
-    connect(ui->sidebar, &Sidebar::copyFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
-        FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, source, destination, this->window());
-        tJobManager::trackJobDelayed(job);
-    });
+    connect(ui->sidebar, &Sidebar::moveFiles, this, &FileTab::moveFiles);
+    connect(ui->sidebar, &Sidebar::copyFiles, this, &FileTab::copyFiles);
 
     connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [ = ](int value) {
         d->keepAtEnd = ui->scrollArea->horizontalScrollBar()->maximum() == value;
@@ -138,6 +130,11 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
             connect(col, &FileColumn::navigate, this, &FileTab::setCurrentDir);
             connect(col, &FileColumn::directoryChanged, this, &FileTab::tabTitleChanged);
             connect(col, &FileColumn::canCopyCutTrashChanged, this, &FileTab::columnsChanged);
+            connect(col, &FileColumn::copyFiles, this, &FileTab::copyFiles);
+            connect(col, &FileColumn::moveFiles, this, &FileTab::moveFiles);
+            connect(col, &FileColumn::deletePermanently, this, &FileTab::deletePermanently);
+            connect(col, &FileColumn::openItemProperties, this, &FileTab::openItemProperties);
+            connect(col, &FileColumn::burnDirectory, this, &FileTab::burnDirectory);
             ui->dirsLayout->addWidget(col);
             d->currentColumnWidgets.append(col);
         } else {
@@ -222,6 +219,26 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
 QUrl FileTab::currentUrl() {
     if (d->currentColumns.isEmpty()) return QUrl();
     return d->currentColumns.last()->url();
+}
+
+void FileTab::setFileTransfersSupported(bool supported) {
+    d->columnManager->setFileTransfersSupported(supported);
+}
+
+void FileTab::setCanOpenProperties(bool canOpen) {
+    d->columnManager->setCanOpenProperties(canOpen);
+}
+
+void FileTab::setOpenFileButtons(QList<OpenFileButton> buttons) {
+    d->columnManager->setOpenFileButtons(buttons);
+}
+
+void FileTab::setColumnActions(QList<ColumnAction> actions) {
+    d->columnManager->setColumnActions(actions);
+}
+
+void FileTab::setFilters(QList<Filter> filters) {
+    d->columnManager->setFilters(filters);
 }
 
 FileColumn* FileTab::currentColumn() {

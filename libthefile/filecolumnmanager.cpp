@@ -23,6 +23,11 @@
 
 struct FileColumnManagerPrivate {
     FileColumn* current = nullptr;
+    bool fileTransfersSupported = false;
+    bool canOpenProperties = false;
+    QList<FileTab::OpenFileButton> openFileButtons;
+    QList<FileTab::ColumnAction> columnActions;
+    QList<FileTab::Filter> filters;
 };
 
 FileColumnManager::FileColumnManager(QObject* parent) : QObject(parent) {
@@ -45,4 +50,47 @@ void FileColumnManager::setCurrent(FileColumn* col) {
 
 FileColumn* FileColumnManager::current() {
     return d->current;
+}
+
+void FileColumnManager::setFileTransfersSupported(bool supported) {
+    d->fileTransfersSupported = supported;
+}
+
+bool FileColumnManager::fileTransfersSupported() {
+    return d->fileTransfersSupported;
+}
+
+void FileColumnManager::setCanOpenProperties(bool canOpen) {
+    d->canOpenProperties = canOpen;
+}
+
+bool FileColumnManager::canOpenProperties() {
+    return d->canOpenProperties;
+}
+
+void FileColumnManager::setOpenFileButtons(QList<FileTab::OpenFileButton> buttons) {
+    d->openFileButtons = buttons;
+    emit openFileButtonsChanged(buttons);
+}
+
+QList<FileTab::OpenFileButton> FileColumnManager::openFileButtons() {
+    return d->openFileButtons;
+}
+
+void FileColumnManager::setColumnActions(QList<FileTab::ColumnAction> actions) {
+    d->columnActions = actions;
+    emit columnActionsChanged(actions);
+}
+
+QList<FileTab::ColumnAction> FileColumnManager::columnActions() {
+    return d->columnActions;
+}
+
+void FileColumnManager::setFilters(QList<FileTab::Filter> filters) {
+    d->filters = filters;
+    emit filtersChanged(filters);
+}
+
+QList<FileTab::Filter> FileColumnManager::filters() {
+    return d->filters;
 }

@@ -214,210 +214,6 @@ Sürücüdeki disk silindikten sonra üzerindeki tüm veriler sonsuza kadar sili
     </message>
 </context>
 <context>
-    <name>FileColumn</name>
-    <message>
-        <location filename="../filecolumn.ui" line="326"/>
-        <location filename="../filecolumn.cpp" line="559"/>
-        <source>Open</source>
-        <translation>Aç</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="123"/>
-        <source>Root</source>
-        <translation>Kök</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="124"/>
-        <location filename="../filecolumn.cpp" line="209"/>
-        <location filename="../filecolumn.cpp" line="356"/>
-        <source>Trash</source>
-        <translation>Çöp</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="128"/>
-        <source>Home</source>
-        <translation>Ana Sayfa</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="196"/>
-        <location filename="../filecolumn.cpp" line="413"/>
-        <source>New Folder</source>
-        <translation>Yeni dosya</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="196"/>
-        <source>Folder name</source>
-        <translation>Klasör adı</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="210"/>
-        <source>Moved %n items to the trash</source>
-        <translation>
-            <numerusform>%n öğe çöp kutusuna taşındı</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="252"/>
-        <location filename="../filecolumn.cpp" line="619"/>
-        <source>Rename</source>
-        <translation>Adı değiştir</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="252"/>
-        <source>Enter a new name</source>
-        <translation>Yeni bir adı girin</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="325"/>
-        <source>No items here!</source>
-        <translation>Burada hiç bir dosya var!</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="326"/>
-        <source>This folder is empty.</source>
-        <translation>Bu klasör boş.</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="329"/>
-        <source>Not Found</source>
-        <translation>Bulunamadı</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="330"/>
-        <source>This folder doesn&apos;t exist.</source>
-        <translation>Bu klasör mevcut değil.</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="333"/>
-        <source>Permission Denied</source>
-        <translation>İzin Reddedildi</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="334"/>
-        <source>Looks like you don&apos;t have permission to view this folder.</source>
-        <translation>Görünüşe göre bu klasörü görüntüleme izniniz yok.</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="337"/>
-        <source>Can&apos;t view this folder</source>
-        <translation>Bu klasörü görüntüleyemiyorum</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="338"/>
-        <source>We can&apos;t show you the contents of this folder.</source>
-        <translation>Size bu klasörün içeriğini gösteremiyoruz.</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="357"/>
-        <source>Empty Trash</source>
-        <translation>Boş çöp</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="412"/>
-        <location filename="../filecolumn.cpp" line="534"/>
-        <source>For this folder</source>
-        <translation>Bu klasör için</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="414"/>
-        <source>Paste</source>
-        <translation>Yapıştırmak</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="522"/>
-        <location filename="../filecolumn.cpp" line="556"/>
-        <source>For %1</source>
-        <translation>%1 için</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="523"/>
-        <source>Copy In</source>
-        <translation>Bu klasöre kopyala</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="527"/>
-        <source>Move In</source>
-        <translation>Bu klasöre taşı</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="535"/>
-        <source>Copy Here</source>
-        <translation>Burayı kopyala</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="539"/>
-        <source>Move Here</source>
-        <translation>Buraya taşın</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="567"/>
-        <source>Open With...</source>
-        <translation>Bununla Aç...</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="583"/>
-        <source>Another app...</source>
-        <translation>Başka bir uygulama...</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="591"/>
-        <source>For %n items</source>
-        <translation>
-            <numerusform>%n öğe için</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="594"/>
-        <source>Cut</source>
-        <translation>Kes</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="595"/>
-        <source>Copy</source>
-        <translation>Kopyala</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="597"/>
-        <source>Restore</source>
-        <translation>Onarmak</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="610"/>
-        <source>Delete Permanently</source>
-        <translation>Kalıcı olarak silin ve asla geri alamayacaksınız</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="612"/>
-        <source>Move to Trash</source>
-        <translation>Çöp kutusuna taşıyın</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="627"/>
-        <source>Properties</source>
-        <translation>Özellikleri</translation>
-    </message>
-    <message>
-        <location filename="../filecolumn.cpp" line="644"/>
-        <source>Burn Contents</source>
-        <translation>İçeriği Yaz</translation>
-    </message>
-</context>
-<context>
-    <name>FileColumnFloater</name>
-    <message>
-        <location filename="../filecolumnfloater.ui" line="65"/>
-        <source>Floater</source>
-        <translation>Yüzer</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../filecolumnfloater.cpp" line="49"/>
-        <source>%n items</source>
-        <translation>
-            <numerusform>%n öğe</numerusform>
-        </translation>
-    </message>
-</context>
-<context>
     <name>FileTransferJob</name>
     <message>
         <location filename="../jobs/filetransferjob.cpp" line="148"/>
@@ -772,7 +568,7 @@ Toplam ilerleme: %4 / %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="179"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Go</source>
         <translation>Git</translation>
     </message>
@@ -782,77 +578,82 @@ Toplam ilerleme: %4 / %5</translation>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="199"/>
+        <location filename="../mainwindow.ui" line="200"/>
         <source>Copy</source>
         <translation>Kopyala</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="202"/>
+        <location filename="../mainwindow.ui" line="203"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="210"/>
+        <location filename="../mainwindow.ui" line="212"/>
         <source>Cut</source>
         <translation>Kes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="213"/>
+        <location filename="../mainwindow.ui" line="215"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="221"/>
+        <location filename="../mainwindow.ui" line="224"/>
         <source>Paste</source>
         <translation>Yapıştırmak</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="224"/>
+        <location filename="../mainwindow.ui" line="227"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="232"/>
+        <location filename="../mainwindow.ui" line="236"/>
         <source>Move to Trash</source>
         <translation>Çöp kutusuna taşıyın</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="235"/>
+        <location filename="../mainwindow.ui" line="239"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="243"/>
+        <location filename="../mainwindow.ui" line="248"/>
         <source>Select All</source>
         <translation>Hepsini seç</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="246"/>
+        <location filename="../mainwindow.ui" line="251"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="254"/>
+        <location filename="../mainwindow.ui" line="260"/>
         <source>New Window</source>
         <translation>Yeni Pencere</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="257"/>
+        <location filename="../mainwindow.ui" line="263"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="265"/>
+        <location filename="../mainwindow.ui" line="272"/>
         <source>New Folder</source>
         <translation>Yeni Klasör</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="268"/>
+        <location filename="../mainwindow.ui" line="275"/>
         <source>Ctrl+Shift+N</source>
         <translation>Ctrl+ÜstKarakter+N</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="179"/>
+        <location filename="../mainwindow.cpp" line="193"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Enter a location to go to</source>
         <translation>Gitmek için bir konum girin</translation>
     </message>

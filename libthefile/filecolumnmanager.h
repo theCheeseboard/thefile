@@ -21,6 +21,7 @@
 #define FILECOLUMNMANAGER_H
 
 #include <QObject>
+#include "filetab.h"
 
 class FileColumn;
 struct FileColumnManagerPrivate;
@@ -33,8 +34,26 @@ class FileColumnManager : public QObject {
         void setCurrent(FileColumn* col);
         FileColumn* current();
 
+        void setFileTransfersSupported(bool supported);
+        bool fileTransfersSupported();
+
+        void setCanOpenProperties(bool canOpen);
+        bool canOpenProperties();
+
+        void setOpenFileButtons(QList<FileTab::OpenFileButton> buttons);
+        QList<FileTab::OpenFileButton> openFileButtons();
+
+        void setColumnActions(QList<FileTab::ColumnAction> actions);
+        QList<FileTab::ColumnAction> columnActions();
+
+        void setFilters(QList<FileTab::Filter> filters);
+        QList<FileTab::Filter> filters();
+
     signals:
         void currentChanged();
+        void openFileButtonsChanged(QList<FileTab::OpenFileButton> buttons);
+        void columnActionsChanged(QList<FileTab::ColumnAction> actions);
+        void filtersChanged(QList<FileTab::Filter> filters);
 
     private:
         FileColumnManagerPrivate* d;

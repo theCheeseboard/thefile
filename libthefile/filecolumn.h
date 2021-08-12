@@ -61,13 +61,16 @@ class FileColumn : public QWidget {
         void navigate(DirectoryPtr directory);
         void directoryChanged();
         void canCopyCutTrashChanged(bool canCopyCutTrash);
+        void moveFiles(QList<QUrl> source, DirectoryPtr destination);
+        void copyFiles(QList<QUrl> source, DirectoryPtr destination);
+        void deletePermanently(QList<QUrl> filesToDelete);
+        void openItemProperties(QUrl file);
+        void burnDirectory(DirectoryPtr directory);
 
     private slots:
         void on_folderErrorPage_customContextMenuRequested(const QPoint& pos);
 
         void on_folderView_doubleClicked(const QModelIndex& index);
-
-        void on_openFileButton_clicked();
 
         void on_folderScroller_customContextMenuRequested(const QPoint& pos);
 
@@ -87,6 +90,8 @@ class FileColumn : public QWidget {
         void showFloater();
         void hideFloater();
         void updateFloater();
+
+        void updateOpenFileButtons();
 
         void addFolderMenuItems(QMenu* menu);
         void ensureUrlSelected();

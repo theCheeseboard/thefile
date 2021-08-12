@@ -1,4 +1,4 @@
-QT       += core gui thelib concurrent frisbee tdesktopenvironment
+QT       += core gui thelib concurrent frisbee
 SHARE_APP_NAME=thefile
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -10,13 +10,6 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    filecolumn.cpp \
-    filecolumnaction.cpp \
-    filecolumnfloater.cpp \
-    filecolumnmanager.cpp \
-    filemodel.cpp \
-    filetab.cpp \
-    hiddenfilesproxymodel.cpp \
     jobs/burnjob.cpp \
     jobs/filetransferjob.cpp \
     jobs/widgets/burnjobprogress.cpp \
@@ -29,13 +22,6 @@ SOURCES += \
     tabbutton.cpp
 
 HEADERS += \
-    filecolumn.h \
-    filecolumnaction.h \
-    filecolumnfloater.h \
-    filecolumnmanager.h \
-    filemodel.h \
-    filetab.h \
-    hiddenfilesproxymodel.h \
     jobs/burnjob.h \
     jobs/filetransferjob.h \
     jobs/widgets/burnjobprogress.h \
@@ -47,10 +33,6 @@ HEADERS += \
     tabbutton.h
 
 FORMS += \
-    filecolumn.ui \
-    filecolumnaction.ui \
-    filecolumnfloater.ui \
-    filetab.ui \
     jobs/widgets/burnjobprogress.ui \
     jobs/widgets/filetransferjobwidget.ui \
     mainwindow.ui \
@@ -76,7 +58,7 @@ unix:!macx {
     QT += thelib
     TARGET = thefile
 
-    LIBS += -L$$OUT_PWD/../libthefile/ -llibthefile
+    LIBS += -L$$OUT_PWD/../libthefile/ -lthefile
 
     target.path = $$THELIBS_INSTALL_BIN
 

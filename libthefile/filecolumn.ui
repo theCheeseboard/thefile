@@ -279,8 +279,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>98</width>
-              <height>112</height>
+              <width>397</width>
+              <height>613</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -320,16 +320,8 @@
                </property>
               </widget>
              </item>
-             <item alignment="Qt::AlignHCenter">
-              <widget class="QPushButton" name="openFileButton">
-               <property name="text">
-                <string>Open</string>
-               </property>
-               <property name="icon">
-                <iconset theme="document-open">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
+             <item>
+              <layout class="QVBoxLayout" name="openFileButtonsLayout"/>
              </item>
              <item>
               <spacer name="verticalSpacer_3">

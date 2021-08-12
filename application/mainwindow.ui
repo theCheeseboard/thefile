@@ -14,7 +14,7 @@
    <string>theFile</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="thefile" resource="resources.qrc">
+   <iconset theme="thefile">
     <normaloff>:/icons/thefile.svg</normaloff>:/icons/thefile.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -77,7 +77,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset theme="thefile" resource="resources.qrc">
+          <iconset theme="thefile">
            <normaloff>:/icons/thefile.svg</normaloff>:/icons/thefile.svg</iconset>
          </property>
          <property name="popupMode">
@@ -193,7 +193,8 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset theme="edit-copy"/>
+    <iconset theme="edit-copy">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -204,7 +205,8 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset theme="edit-cut"/>
+    <iconset theme="edit-cut">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -215,7 +217,8 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset theme="edit-paste"/>
+    <iconset theme="edit-paste">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
@@ -226,7 +229,8 @@
   </action>
   <action name="actionMove_to_Trash">
    <property name="icon">
-    <iconset theme="edit-delete"/>
+    <iconset theme="edit-delete">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Move to Trash</string>
@@ -237,7 +241,8 @@
   </action>
   <action name="actionSelect_All">
    <property name="icon">
-    <iconset theme="edit-select-all"/>
+    <iconset theme="edit-select-all">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Select All</string>
@@ -248,7 +253,8 @@
   </action>
   <action name="actionNew_Window">
    <property name="icon">
-    <iconset theme="window-new"/>
+    <iconset theme="window-new">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>New Window</string>
@@ -259,7 +265,8 @@
   </action>
   <action name="actionNew_Folder">
    <property name="icon">
-    <iconset theme="folder-new"/>
+    <iconset theme="folder-new">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>New Folder</string>
@@ -280,8 +287,6 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

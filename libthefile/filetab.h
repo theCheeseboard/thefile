@@ -46,6 +46,29 @@ class FileTab : public QWidget {
         void setCurrentDir(DirectoryPtr directory);
         QUrl currentUrl();
 
+        struct OpenFileButton {
+            QString text;
+            QIcon icon;
+            std::function<void(QList<QUrl>)> activated;
+        };
+
+        struct ColumnAction {
+            QString text;
+            QString buttonText;
+            std::function<void(DirectoryPtr)> activated;
+        };
+
+        struct Filter {
+            bool isMimeFilter;
+            QString filter;
+        };
+
+        void setFileTransfersSupported(bool supported);
+        void setCanOpenProperties(bool canOpen);
+        void setOpenFileButtons(QList<OpenFileButton> buttons);
+        void setColumnActions(QList<ColumnAction> actions);
+        void setFilters(QList<Filter> filters);
+
         FileColumn* currentColumn();
         FileColumn* lastColumn();
 
@@ -58,6 +81,11 @@ class FileTab : public QWidget {
         void tabClosed();
         void tabTitleChanged();
         void columnsChanged();
+        void moveFiles(QList<QUrl> source, DirectoryPtr destination);
+        void copyFiles(QList<QUrl> source, DirectoryPtr destination);
+        void deletePermanently(QList<QUrl> filesToDelete);
+        void openItemProperties(QUrl file);
+        void burnDirectory(DirectoryPtr directory);
 
     private:
         Ui::FileTab* ui;

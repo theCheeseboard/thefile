@@ -37,13 +37,9 @@
 #include <QScrollBar>
 #include <MimeAssociations/mimeassociationmanager.h>
 #include "hiddenfilesproxymodel.h"
-#include "jobs/filetransferjob.h"
-#include "popovers/deletepermanentlypopover.h"
 #include "filecolumnaction.h"
 #include "filecolumnfloater.h"
 #include "filecolumnmanager.h"
-#include "popovers/itempropertiespopover.h"
-#include "popovers/burnpopover.h"
 #include <driveobjectmanager.h>
 
 struct FileColumnPrivate {
@@ -58,6 +54,7 @@ struct FileColumnPrivate {
     tVariantAnimation* floaterAnim;
 
     QList<FileColumnAction*> actions;
+    QList<QPushButton*> openFileButtons;
 
     bool listenToSelection = true;
     bool isFloaterVisible = true;
@@ -96,6 +93,11 @@ FileColumn::FileColumn(DirectoryPtr directory, FileColumnManager* manager, QWidg
     ui->folderView->setFixedWidth(this->width());
     ui->folderScroller->viewport()->installEventFilter(this);
     connect(d->manager, &FileColumnManager::currentChanged, this, &FileColumn::updateFloater);
+
+    connect(d->manager, &FileColumnManager::openFileButtonsChanged, this, &FileColumn::updateOpenFileButtons);
+    updateOpenFileButtons();
+
+    connect(d->manager, &FileColumnManager::columnActionsChanged, this, &FileColumn::updateItems);
 
     reload();
 }
@@ -174,20 +176,24 @@ void FileColumn::copy() {
 }
 
 void FileColumn::paste() {
+    //Ensure file transfers are supported before pasting
+    if (!d->manager->fileTransfersSupported()) return;
+
     const QMimeData* data = QApplication::clipboard()->mimeData();
     if (data->hasUrls()) {
-        FileTransferJob::TransferType transferType = FileTransferJob::Copy;
+        bool isCopy = true;
+
         if (data->hasFormat("application/x-thesuite-thefile-clipboardoperation")) {
             QString type = data->data("application/x-thesuite-thefile-clipboardoperation");
-            if (type == "cut") transferType = FileTransferJob::Move;
+            if (type == "cut") isCopy = false;
         }
 
-        //Prepare a copy job
-        FileTransferJob* job = new FileTransferJob(transferType, data->urls(), d->directory, this->window());
-        tJobManager::trackJobDelayed(job);
-
-        //Clear the clipboard after a cut operation
-        if (transferType == FileTransferJob::Move) QApplication::clipboard()->clear();
+        if (isCopy) {
+            emit copyFiles(data->urls(), d->directory);
+        } else {
+            emit moveFiles(data->urls(), d->directory);
+            QApplication::clipboard()->clear();
+        }
     }
 }
 
@@ -215,6 +221,8 @@ void FileColumn::moveToTrash() {
 }
 
 void FileColumn::deleteFile() {
+    if (!d->manager->fileTransfersSupported()) return;
+
     QList<QUrl> urlsToDelete;
 
     QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
@@ -222,15 +230,7 @@ void FileColumn::deleteFile() {
         urlsToDelete.append(index.data(FileModel::UrlRole).toUrl());
     }
 
-    DeletePermanentlyPopover* jp = new DeletePermanentlyPopover(urlsToDelete);
-    tPopover* popover = new tPopover(jp);
-    popover->setPopoverWidth(SC_DPI(-200));
-    popover->setPopoverSide(tPopover::Bottom);
-    connect(jp, &DeletePermanentlyPopover::done, popover, &tPopover::dismiss);
-    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
-    connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
-    popover->show(this->window());
-
+    emit deletePermanently(urlsToDelete);
     emit navigate(d->directory);
 }
 
@@ -267,11 +267,11 @@ bool FileColumn::isFile() {
 }
 
 bool FileColumn::canCopyCutTrash() {
-    return !ui->folderView->selectionModel()->selectedIndexes().isEmpty();
+    return !ui->folderView->selectionModel()->selectedIndexes().isEmpty() && d->manager->fileTransfersSupported();
 }
 
 bool FileColumn::canPaste() {
-    return true;
+    return d->manager->fileTransfersSupported();
 }
 
 void FileColumn::reload() {
@@ -286,6 +286,10 @@ void FileColumn::reload() {
         ui->folderView->selectionModel()->blockSignals(false);
         ui->folderView->setFixedHeight(ui->folderView->sizeHintForRow(0) * d->proxy->rowCount());
     });
+
+    d->model->setFilters(d->manager->filters());
+    connect(d->manager, &FileColumnManager::filtersChanged, d->model, &FileModel::setFilters);
+
     updateItems();
     ui->folderView->setFixedHeight(ui->folderView->sizeHintForRow(0) * d->proxy->rowCount());
 
@@ -362,9 +366,21 @@ void FileColumn::updateItems() {
         ui->actionsLayout->addWidget(trashAction);
         d->actions.append(trashAction);
     }
+
+    for (FileTab::ColumnAction act : d->manager->columnActions()) {
+        FileColumnAction* action = new FileColumnAction(this);
+        action->setText(act.text);
+        action->setButtonText(act.buttonText);
+        connect(action, &FileColumnAction::actionClicked, this, [ = ] {
+            act.activated(d->directory);
+        });
+        ui->actionsLayout->addWidget(action);
+        d->actions.append(action);
+    }
 }
 
 void FileColumn::showFloater() {
+    if (!d->manager->fileTransfersSupported()) return;
     if (d->isFloaterVisible) return;
     d->floaterAnim->setStartValue(d->floater->geometry());
 
@@ -403,6 +419,25 @@ void FileColumn::updateFloater() {
     }
 }
 
+void FileColumn::updateOpenFileButtons() {
+    for (QPushButton* button : d->openFileButtons) {
+        ui->openFileButtonsLayout->removeWidget(button);
+        button->deleteLater();
+    }
+    d->openFileButtons.clear();
+
+    for (FileTab::OpenFileButton btn : d->manager->openFileButtons()) {
+        QPushButton* button = new QPushButton(this);
+        button->setText(btn.text);
+        button->setIcon(btn.icon);
+        connect(button, &QPushButton::clicked, this, [ = ] {
+            btn.activated({d->directory->url()});
+        });
+        ui->openFileButtonsLayout->addWidget(button);
+        d->openFileButtons.append(button);
+    }
+}
+
 void FileColumn::addFolderMenuItems(QMenu* menu) {
     if (d->model) {
         if (d->directory->url().scheme() == "trash") {
@@ -411,7 +446,7 @@ void FileColumn::addFolderMenuItems(QMenu* menu) {
             if (d->model->currentError().isEmpty() || d->model->currentError() == QStringLiteral("error.no-items")) {
                 menu->addSection(tr("For this folder"));
                 menu->addAction(QIcon::fromTheme("folder-new"), tr("New Folder"), this, &FileColumn::newFolder);
-                menu->addAction(QIcon::fromTheme("edit-paste"), tr("Paste"), this, &FileColumn::paste);
+                if (d->manager->fileTransfersSupported()) menu->addAction(QIcon::fromTheme("edit-paste"), tr("Paste"), this, &FileColumn::paste);
             }
         }
     }
@@ -489,11 +524,6 @@ void FileColumn::resizeEvent(QResizeEvent* event) {
     ui->folderView->setFixedWidth(this->width());
 }
 
-void FileColumn::on_openFileButton_clicked() {
-    QDesktopServices::openUrl(d->directory->url());
-}
-
-
 void FileColumn::focusInEvent(QFocusEvent* event) {
     d->manager->setCurrent(this);
 }
@@ -508,6 +538,8 @@ void FileColumn::dragEnterEvent(QDragEnterEvent* event) {
 }
 
 void FileColumn::dropEvent(QDropEvent* event) {
+    if (!d->manager->fileTransfersSupported()) return;
+
     const QMimeData* mimeData = event->mimeData();
     tDebug("FileColumn") << mimeData->formats();
     QModelIndex index = ui->folderView->indexAt(ui->folderView->mapFrom(this, event->pos()));
@@ -521,24 +553,20 @@ void FileColumn::dropEvent(QDropEvent* event) {
             if (dir && dir->exists()->await().result) {
                 menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
                 menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [ = ] {
-                    FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, urls, dir, this->window());
-                    tJobManager::trackJobDelayed(job);
+                    emit copyFiles(urls, dir);
                 });
                 menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [ = ] {
-                    FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, urls, dir, this->window());
-                    tJobManager::trackJobDelayed(job);
+                    emit moveFiles(urls, dir);
                 });
             }
         }
 
         menu->addSection(tr("For this folder"));
         menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy Here"), this, [ = ] {
-            FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, urls, d->directory, this->window());
-            tJobManager::trackJobDelayed(job);
+            emit copyFiles(urls, d->directory);
         });
         menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move Here"), this, [ = ] {
-            FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, urls, d->directory, this->window());
-            tJobManager::trackJobDelayed(job);
+            emit moveFiles(urls, d->directory);
         });
 
         menu->popup(this->mapToGlobal(event->pos()));
@@ -591,66 +619,55 @@ void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos)
             menu->addSection(tr("For %n items", nullptr, sel.count()));
         }
 
-        menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
-        menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
-        if (d->directory->url().scheme() == "trash") {
-            menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [ = ] {
-                for (QModelIndex index : sel) {
-                    QUrl url = index.data(FileModel::UrlRole).toUrl();
-                    QVariant restorePath = d->directory->special("restorePath", {{"url", url}});
-                    if (restorePath.isValid()) {
-                        QUrl dest = restorePath.toUrl();
+        if (d->manager->fileTransfersSupported()) {
+            menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
+            menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
+            if (d->directory->url().scheme() == "trash") {
+                menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [ = ] {
+                    for (QModelIndex index : sel) {
+                        QUrl url = index.data(FileModel::UrlRole).toUrl();
+                        QVariant restorePath = d->directory->special("restorePath", {{"url", url}});
+                        if (restorePath.isValid()) {
+                            QUrl dest = restorePath.toUrl();
 
-                        //Prepare a move job
-                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, {url}, ResourceManager::parentDirectoryForUrl(dest), this->window());
-                        tJobManager::trackJobDelayed(job);
+                            //Prepare a move job
+                            emit moveFiles({url}, ResourceManager::parentDirectoryForUrl(dest));
+                        }
                     }
-                }
-            });
-            menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete Permanently"), this, &FileColumn::deleteFile);
-        } else {
-            menu->addAction(QIcon::fromTheme("edit-delete"), tr("Move to Trash"), this, [ = ] {
-                if (qApp->queryKeyboardModifiers() & Qt::ShiftModifier) {
-                    deleteFile();
-                } else {
-                    moveToTrash();
-                }
-            });
-            menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, &FileColumn::rename);
+                });
+                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete Permanently"), this, &FileColumn::deleteFile);
+            } else {
+                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Move to Trash"), this, [ = ] {
+                    if (qApp->queryKeyboardModifiers() & Qt::ShiftModifier) {
+                        deleteFile();
+                    } else {
+                        moveToTrash();
+                    }
+                });
+                menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, &FileColumn::rename);
+            }
         }
     }
 
     if (sel.count() == 1) {
         QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
 
-        if (url.scheme() == "file") {
+        if (url.scheme() == "file" && d->manager->canOpenProperties()) {
             menu->addAction(QIcon::fromTheme("configure"), tr("Properties"), this, [ = ] {
-                ItemPropertiesPopover* jp = new ItemPropertiesPopover(url);
-                tPopover* popover = new tPopover(jp);
-                popover->setPopoverWidth(SC_DPI(-200));
-                popover->setPopoverSide(tPopover::Bottom);
-                connect(jp, &ItemPropertiesPopover::done, popover, &tPopover::dismiss);
-                connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
-                connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
-                popover->show(this->window());
+                emit openItemProperties(url);
             });
         }
 
         //TODO: Asynchronous
-        DirectoryPtr dir = ResourceManager::directoryForUrl(url);
-        if (dir && dir->exists()->await().result) {
-            if (!DriveObjectManager::opticalDisks().isEmpty()) {
-                menu->addSeparator();
-                menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [ = ] {
-                    BurnPopover* jp = new BurnPopover(dir);
-                    tPopover* popover = new tPopover(jp);
-                    popover->setPopoverWidth(SC_DPI(-200));
-                    popover->setPopoverSide(tPopover::Bottom);
-                    connect(jp, &BurnPopover::done, popover, &tPopover::dismiss);
-                    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
-                    connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
-                    popover->show(this->window());
-                });
+        if (d->manager->fileTransfersSupported()) {
+            DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+            if (dir && dir->exists()->await().result) {
+                if (!DriveObjectManager::opticalDisks().isEmpty()) {
+                    menu->addSeparator();
+                    menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [ = ] {
+                        emit burnDirectory(dir);
+                    });
+                }
             }
         }
     }

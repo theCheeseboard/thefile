@@ -33,6 +33,12 @@
 #include <tsettings.h>
 #include "filetab.h"
 #include "tabbutton.h"
+#include "jobs/filetransferjob.h"
+#include "popovers/deletepermanentlypopover.h"
+#include "popovers/itempropertiespopover.h"
+#include "popovers/burnpopover.h"
+#include <tpopover.h>
+#include <QDesktopServices>
 
 struct MainWindowPrivate {
     tCsdTools csd;
@@ -142,6 +148,55 @@ void MainWindow::newTab(QUrl url) {
         tab->deleteLater();
     });
     connect(tab, &FileTab::columnsChanged, this, &MainWindow::updateMenuActions);
+    connect(tab, &FileTab::moveFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
+        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, source, destination, this->window());
+        tJobManager::trackJobDelayed(job);
+    });
+    connect(tab, &FileTab::copyFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
+        FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, source, destination, this->window());
+        tJobManager::trackJobDelayed(job);
+    });
+    connect(tab, &FileTab::deletePermanently, this, [ = ](QList<QUrl> filesToDelete) {
+        DeletePermanentlyPopover* jp = new DeletePermanentlyPopover(filesToDelete);
+        tPopover* popover = new tPopover(jp);
+        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverSide(tPopover::Bottom);
+        connect(jp, &DeletePermanentlyPopover::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
+        popover->show(this->window());
+    });
+    connect(tab, &FileTab::openItemProperties, this, [ = ](QUrl url) {
+        ItemPropertiesPopover* jp = new ItemPropertiesPopover(url);
+        tPopover* popover = new tPopover(jp);
+        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverSide(tPopover::Bottom);
+        connect(jp, &ItemPropertiesPopover::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
+        popover->show(this->window());
+    });
+    connect(tab, &FileTab::burnDirectory, this, [ = ](DirectoryPtr dir) {
+        BurnPopover* jp = new BurnPopover(dir);
+        tPopover* popover = new tPopover(jp);
+        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverSide(tPopover::Bottom);
+        connect(jp, &BurnPopover::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
+        popover->show(this->window());
+    });
+    tab->setFileTransfersSupported(true);
+    tab->setCanOpenProperties(true);
+    tab->setOpenFileButtons({
+        {
+            tr("Open"),
+            QIcon::fromTheme("document-open"),
+            [ = ](QList<QUrl> selected) {
+                QDesktopServices::openUrl(selected.first());
+            }
+        }
+    });
 
     ui->stackedWidget->setCurrentWidget(tab);
 }
