@@ -30,6 +30,8 @@
 #include <QScrollBar>
 #include <tlogger.h>
 #include <resourcemanager.h>
+#include "jobs/filetransferjob.h"
+#include <tjobmanager.h>
 
 struct FileTabPrivate {
     FileColumnManager* columnManager;
@@ -50,6 +52,14 @@ FileTab::FileTab(QWidget* parent) :
 
     ui->sidebar->setFixedWidth(SC_DPI(200));
     connect(ui->sidebar, &Sidebar::navigate, this, &FileTab::setCurrentUrl);
+    connect(ui->sidebar, &Sidebar::moveFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
+        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, source, destination, this->window());
+        tJobManager::trackJobDelayed(job);
+    });
+    connect(ui->sidebar, &Sidebar::copyFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
+        FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, source, destination, this->window());
+        tJobManager::trackJobDelayed(job);
+    });
 
     connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [ = ](int value) {
         d->keepAtEnd = ui->scrollArea->horizontalScrollBar()->maximum() == value;

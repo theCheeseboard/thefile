@@ -40,7 +40,6 @@
 #include <resourcemanager.h>
 #include <tpopover.h>
 #include "popovers/unlockencryptedpopover.h"
-#include "jobs/filetransferjob.h"
 #include "devicesmodel.h"
 
 struct SidebarPrivate {
@@ -275,12 +274,10 @@ bool Sidebar::eventFilter(QObject* watched, QEvent* event) {
                     QMenu* menu = new QMenu();
                     menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
                     menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [ = ] {
-                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, urls, dir, this->window());
-                        tJobManager::trackJobDelayed(job);
+                        emit copyFiles(urls, dir);
                     });
                     menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [ = ] {
-                        FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, urls, dir, this->window());
-                        tJobManager::trackJobDelayed(job);
+                        emit moveFiles(urls, dir);
                     });
                     menu->popup(this->mapToGlobal(e->pos()));
                     connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);

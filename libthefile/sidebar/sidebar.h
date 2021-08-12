@@ -24,6 +24,7 @@
 #include <QListWidgetItem>
 #include <QUrl>
 #include <QStyledItemDelegate>
+#include "directory.h"
 
 namespace Ui {
     class Sidebar;
@@ -47,6 +48,8 @@ class Sidebar : public QWidget {
 
     signals:
         void navigate(QUrl location);
+        void moveFiles(QList<QUrl> source, DirectoryPtr destination);
+        void copyFiles(QList<QUrl> source, DirectoryPtr destination);
 
     private:
         Ui::Sidebar* ui;

@@ -1,4 +1,4 @@
-QT += gui widgets thelib
+QT += gui widgets thelib frisbee
 
 TEMPLATE = lib
 DEFINES += LIBTHEFILE_LIBRARY
@@ -16,7 +16,10 @@ SOURCES += \
     directoryHandlers/localfiledirectoryhandler.cpp \
     directoryHandlers/trashdirectoryhandler.cpp \
     directoryhandler.cpp \
-    resourcemanager.cpp
+    popovers/unlockencryptedpopover.cpp \
+    resourcemanager.cpp \
+    sidebar/devicesmodel.cpp \
+    sidebar/sidebar.cpp
 
 HEADERS += \
     directories/localfilesystemdirectory.h \
@@ -26,7 +29,10 @@ HEADERS += \
     directoryHandlers/trashdirectoryhandler.h \
     directoryhandler.h \
     libthefile_global.h \
-    resourcemanager.h
+    popovers/unlockencryptedpopover.h \
+    resourcemanager.h \
+    sidebar/devicesmodel.h \
+    sidebar/sidebar.h
 
 # Default rules for deployment.
 unix {
@@ -40,3 +46,7 @@ unix {
 
     INSTALLS += target
 }
+
+FORMS += \
+    popovers/unlockencryptedpopover.ui \
+    sidebar/sidebar.ui
