@@ -194,7 +194,8 @@ void MainWindow::newTab(QUrl url) {
             QIcon::fromTheme("document-open"),
             [ = ](QList<QUrl> selected) {
                 QDesktopServices::openUrl(selected.first());
-            }
+            },
+            true
         }
     });
 

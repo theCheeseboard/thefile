@@ -50,6 +50,7 @@ class FileTab : public QWidget {
             QString text;
             QIcon icon;
             std::function<void(QList<QUrl>)> activated;
+            bool defaultAction = false;
         };
 
         struct ColumnAction {

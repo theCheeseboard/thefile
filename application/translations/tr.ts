@@ -568,7 +568,7 @@ Toplam ilerleme: %4 / %5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Go</source>
         <translation>Git</translation>
     </message>
@@ -653,7 +653,7 @@ Toplam ilerleme: %4 / %5</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Enter a location to go to</source>
         <translation>Gitmek için bir konum girin</translation>
     </message>

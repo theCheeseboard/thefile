@@ -476,16 +476,26 @@ void FileColumn::on_folderErrorPage_customContextMenuRequested(const QPoint& pos
 }
 
 void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
+    if (index.data(FileModel::ExcludedByFilterRole).toBool()) return;
+
+    //Find the default action
+    FileTab::OpenFileButton defaultAction;
+    for (FileTab::OpenFileButton action : d->manager->openFileButtons()) {
+        if (action.defaultAction) defaultAction = action;
+    }
+
+    if (!defaultAction.defaultAction) return;
+
     QUrl url = index.data(FileModel::UrlRole).toUrl();
     DirectoryPtr dir = ResourceManager::directoryForUrl(url);
     if (dir) {
         dir->exists()->then([ = ](bool exists) {
             if (!exists) {
-                QDesktopServices::openUrl(url);
+                defaultAction.activated({url});
             }
         });
     } else {
-        QDesktopServices::openUrl(url);
+        defaultAction.activated({url});
     }
 }
 
