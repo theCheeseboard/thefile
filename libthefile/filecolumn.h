@@ -57,6 +57,8 @@ class FileColumn : public QWidget {
         bool canCopyCutTrash();
         bool canPaste();
 
+        QMenu* menuForSelectedItems();
+
     signals:
         void navigate(DirectoryPtr directory);
         void directoryChanged();

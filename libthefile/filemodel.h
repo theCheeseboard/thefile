@@ -23,6 +23,7 @@
 #include <QAbstractListModel>
 #include <QStyledItemDelegate>
 #include "directory.h"
+#include "filetab.h"
 
 struct FileModelPrivate;
 class FileModel : public QAbstractListModel {
@@ -35,7 +36,8 @@ class FileModel : public QAbstractListModel {
         enum Roles {
             UrlRole = Qt::UserRole,
             HiddenRole,
-            PathSegmentRole
+            PathSegmentRole,
+            ExcludedByFilterRole
         };
 
         // Basic functionality:
@@ -44,6 +46,8 @@ class FileModel : public QAbstractListModel {
 
         QMimeData* mimeData(const QModelIndexList& indexes) const override;
         Qt::ItemFlags flags(const QModelIndex& index) const override;
+
+        void setFilters(QList<FileTab::Filter> filters);
 
         bool isFile();
 

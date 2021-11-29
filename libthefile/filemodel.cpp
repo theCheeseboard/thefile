@@ -28,6 +28,7 @@ struct FileModelPrivate {
     DirectoryPtr currentDir;
     QList<Directory::FileInformation> files;
     bool isFile = false;
+    QList<FileTab::Filter> filters;
 
     QString currentError;
 };
@@ -67,6 +68,21 @@ QVariant FileModel::data(const QModelIndex& index, int role) const {
             return file.isHidden;
         case PathSegmentRole:
             return file.pathSegment;
+        case ExcludedByFilterRole: {
+            if (d->filters.isEmpty()) return false;
+            if (!d->currentDir->isFile(file.name)) return false;
+
+            QMimeDatabase db;
+            for (FileTab::Filter filter : d->filters) {
+                if (filter.isMimeFilter) {
+                    if (db.mimeTypeForUrl(file.resource).name() == filter.filter) return false;
+                } else {
+                    QRegularExpression regex(QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(filter.filter)));
+                    if (regex.match(file.name).hasMatch()) return false;
+                }
+            }
+            return true;
+        }
     }
 
     return QVariant();
@@ -107,7 +123,7 @@ FileDelegate::FileDelegate(QObject* parent) : QStyledItemDelegate(parent) {
 void FileDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     QStyleOptionViewItem newOptions = option;
 
-    if (index.data(FileModel::HiddenRole).toBool()) {
+    if (index.data(FileModel::HiddenRole).toBool() || index.data(FileModel::ExcludedByFilterRole).toBool()) {
         newOptions.palette.setColor(QPalette::WindowText, newOptions.palette.color(QPalette::Disabled, QPalette::WindowText));
     }
 
@@ -130,10 +146,17 @@ Qt::ItemFlags FileModel::flags(const QModelIndex& index) const {
     if (index.isValid()) {
         flags |= Qt::ItemIsDragEnabled;
     }
+    if (index.data(FileModel::ExcludedByFilterRole).toBool()) {
+        flags &= ~Qt::ItemIsSelectable;
+    }
     return flags;
+}
+
+void FileModel::setFilters(QList<FileTab::Filter> filters) {
+    d->filters = filters;
+    emit dataChanged(index(0), index(rowCount()));
 }
 
 bool FileModel::isFile() {
     return d->isFile;
 }
-

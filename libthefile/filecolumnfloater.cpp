@@ -34,6 +34,8 @@ FileColumnFloater::FileColumnFloater(FileColumn* parent) :
     ui->setupUi(this);
     d = new FileColumnFloaterPrivate();
     d->parent = parent;
+
+    ui->actionsButton->installEventFilter(this);
 }
 
 FileColumnFloater::~FileColumnFloater() {
@@ -65,4 +67,14 @@ void FileColumnFloater::mousePressEvent(QMouseEvent* event) {
         drag->setMimeData(model->mimeData(d->indices));
         drag->exec(Qt::CopyAction);
     }
+}
+
+void FileColumnFloater::on_actionsButton_pressed() {
+}
+
+bool FileColumnFloater::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->actionsButton && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::KeyPress)) {
+        ui->actionsButton->setMenu(d->parent->menuForSelectedItems());
+    }
+    return false;
 }

@@ -46,6 +46,10 @@ class Sidebar : public QWidget {
 
         void on_devicesView_customContextMenuRequested(const QPoint& pos);
 
+        void on_bookmarksView_activated(const QModelIndex& index);
+
+        void on_bookmarksView_customContextMenuRequested(const QPoint& pos);
+
     signals:
         void navigate(QUrl location);
         void moveFiles(QList<QUrl> source, DirectoryPtr destination);

@@ -17,41 +17,33 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef FILECOLUMNFLOATER_H
-#define FILECOLUMNFLOATER_H
+#ifndef BOOKMARKMANAGER_H
+#define BOOKMARKMANAGER_H
 
-#include "filecolumn.h"
+#include <QObject>
 
-namespace Ui {
-    class FileColumnFloater;
-}
-
-struct FileColumnFloaterPrivate;
-class FileColumnFloater : public QWidget {
+struct BookmarkManagerPrivate;
+class BookmarkManager : public QObject {
         Q_OBJECT
-
     public:
-        explicit FileColumnFloater(FileColumn* parent = nullptr);
-        ~FileColumnFloater();
+        static BookmarkManager* instance();
 
-        void setIndices(QModelIndexList indices);
+        bool isBookmark(QUrl url);
+        void addBookmark(QUrl url);
+        void removeBookmark(QUrl url);
 
-    private slots:
-        void on_cutButton_clicked();
+        int bookmarkCount();
+        QUrl bookmark(int index);
 
-        void on_copyButton_clicked();
-
-        void on_actionsButton_pressed();
+    signals:
+        void bookmarksChanged();
 
     private:
-        Ui::FileColumnFloater* ui;
-        FileColumnFloaterPrivate* d;
+        explicit BookmarkManager(QObject* parent = nullptr);
 
-        void mousePressEvent(QMouseEvent* event);
+        BookmarkManagerPrivate* d;
 
-        // QObject interface
-    public:
-        bool eventFilter(QObject* watched, QEvent* event);
+        void saveChanges();
 };
 
-#endif // FILECOLUMNFLOATER_H
+#endif // BOOKMARKMANAGER_H

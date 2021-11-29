@@ -41,9 +41,12 @@
 #include <tpopover.h>
 #include "popovers/unlockencryptedpopover.h"
 #include "devicesmodel.h"
+#include "bookmarksmodel.h"
+#include "bookmarkmanager.h"
 
 struct SidebarPrivate {
     DevicesModel* devicesModel;
+    BookmarksModel* bookmarksModel;
 };
 
 Sidebar::Sidebar(QWidget* parent) :
@@ -85,6 +88,10 @@ Sidebar::Sidebar(QWidget* parent) :
         ui->devicesView->setFixedHeight(ui->devicesView->sizeHintForRow(0) * d->devicesModel->rowCount());
     });
     ui->devicesView->setFixedHeight(ui->devicesView->sizeHintForRow(0) * d->devicesModel->rowCount());
+
+    d->bookmarksModel = new BookmarksModel();
+    ui->bookmarksView->setModel(d->bookmarksModel);
+    ui->bookmarksView->setItemDelegate(new SidebarDelegate());
 
     ui->placesWidget->setAcceptDrops(true);
     ui->placesWidget->installEventFilter(this);
@@ -320,3 +327,25 @@ void Sidebar::mount(DiskObject* disk) {
         popover->show(this->window());
     }
 }
+
+void Sidebar::on_bookmarksView_activated(const QModelIndex& index) {
+    //Ignore if we're trying to right click
+    if (qApp->mouseButtons() & Qt::RightButton) return;
+
+    //Navigate to the item
+    emit navigate(index.data(BookmarksModel::UrlRole).toUrl());
+}
+
+
+void Sidebar::on_bookmarksView_customContextMenuRequested(const QPoint& pos) {
+    QModelIndex bookmark = ui->bookmarksView->indexAt(pos);
+
+    QMenu* menu = new QMenu();
+    menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(bookmark.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
+    menu->addAction(QIcon::fromTheme("bookmark-remove"), tr("Remove from bookmarks"), this, [ = ] {
+        BookmarkManager::instance()->removeBookmark(bookmark.data(BookmarksModel::UrlRole).toUrl());
+    });
+    menu->popup(ui->bookmarksView->mapToGlobal(pos));
+
+}
+

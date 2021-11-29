@@ -17,41 +17,27 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef FILECOLUMNFLOATER_H
-#define FILECOLUMNFLOATER_H
+#ifndef BOOKMARKSMODEL_H
+#define BOOKMARKSMODEL_H
 
-#include "filecolumn.h"
+#include <QAbstractListModel>
 
-namespace Ui {
-    class FileColumnFloater;
-}
-
-struct FileColumnFloaterPrivate;
-class FileColumnFloater : public QWidget {
+class BookmarksModel : public QAbstractListModel {
         Q_OBJECT
 
     public:
-        explicit FileColumnFloater(FileColumn* parent = nullptr);
-        ~FileColumnFloater();
+        explicit BookmarksModel(QObject* parent = nullptr);
 
-        void setIndices(QModelIndexList indices);
+        enum Roles {
+            UrlRole = Qt::UserRole
+        };
 
-    private slots:
-        void on_cutButton_clicked();
+        // Basic functionality:
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
-        void on_copyButton_clicked();
-
-        void on_actionsButton_pressed();
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     private:
-        Ui::FileColumnFloater* ui;
-        FileColumnFloaterPrivate* d;
-
-        void mousePressEvent(QMouseEvent* event);
-
-        // QObject interface
-    public:
-        bool eventFilter(QObject* watched, QEvent* event);
 };
 
-#endif // FILECOLUMNFLOATER_H
+#endif // BOOKMARKSMODEL_H

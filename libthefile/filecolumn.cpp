@@ -23,7 +23,6 @@
 #include <QDir>
 #include <QUrl>
 #include <QMenu>
-#include <QInputDialog>
 #include <QClipboard>
 #include <resourcemanager.h>
 #include <tlogger.h>
@@ -40,7 +39,9 @@
 #include "filecolumnaction.h"
 #include "filecolumnfloater.h"
 #include "filecolumnmanager.h"
+#include "bookmarkmanager.h"
 #include <driveobjectmanager.h>
+#include <tinputdialog.h>
 
 struct FileColumnPrivate {
     FileColumnManager* manager;
@@ -199,7 +200,7 @@ void FileColumn::paste() {
 
 void FileColumn::newFolder() {
     bool ok;
-    QString folderName = QInputDialog::getText(this, tr("New Folder"), tr("Folder name"), QLineEdit::Normal, tr("New Folder"), &ok);
+    QString folderName = tInputDialog::getText(this->window(), tr("New Folder"), tr("What are you naming this folder?"), QLineEdit::Normal, tr("New Folder"), &ok);
     if (ok) {
         d->directory->mkpath(folderName);
     }
@@ -249,7 +250,7 @@ void FileColumn::rename() {
         QModelIndex item = sel.first();
 
         bool ok;
-        QString newName = QInputDialog::getText(this, tr("Rename"), tr("Enter a new name"), QLineEdit::Normal, item.data(Qt::DisplayRole).toString(), &ok);
+        QString newName = tInputDialog::getText(this->window(), tr("Rename"), tr("What do you want to name this item?"), QLineEdit::Normal, item.data(Qt::DisplayRole).toString(), &ok);
         if (ok) {
             QUrl oldUrl = item.data(FileModel::UrlRole).toUrl();
             QUrl newUrl = oldUrl.resolved(QUrl("./" + newName));
@@ -272,6 +273,116 @@ bool FileColumn::canCopyCutTrash() {
 
 bool FileColumn::canPaste() {
     return d->manager->fileTransfersSupported();
+}
+
+QMenu* FileColumn::menuForSelectedItems() {
+    QMenu* menu = new QMenu(this);
+
+    QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
+    if (sel.count() > 0) {
+        if (sel.count() == 1) {
+            menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(sel.first().data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
+            QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
+            if (d->directory->isFile(sel.first().data(FileModel::PathSegmentRole).toString())) {
+                menu->addAction(QIcon::fromTheme("document-open"), tr("Open"), this, [ = ] {
+                    QDesktopServices::openUrl(url);
+                });
+
+                QMimeDatabase db;
+                QMimeType mimeType = db.mimeTypeForFile(url.toLocalFile());
+
+                QMenu* otherApps = new QMenu();
+                otherApps->setTitle(tr("Open With..."));
+
+                QList<ApplicationPointer> apps = MimeAssociationManager::applicationsForMimeType(mimeType.name());
+                for (ApplicationPointer app : qAsConst(apps)) {
+                    otherApps->addAction(QIcon::fromTheme(app->getProperty("Icon").toString()), app->getProperty("Name").toString(), this, [ = ] {
+
+                        QMap<QString, QString> launchArgs;
+                        launchArgs.insert("%u", url.toString());
+                        launchArgs.insert("%U", url.toString());
+                        launchArgs.insert("%f", url.toLocalFile());
+                        launchArgs.insert("%F", url.toLocalFile());
+                        app->launch(launchArgs);
+                    });
+                }
+
+                otherApps->addSeparator();
+                otherApps->addAction(tr("Another app..."), this, [ = ] {
+                    QProcess::startDetached("xdg-open", {"--force-prompt", url.toString()});
+                });
+
+                menu->addMenu(otherApps);
+                menu->addSeparator();
+            } else {
+                if (BookmarkManager::instance()->isBookmark(url)) {
+                    menu->addAction(QIcon::fromTheme("bookmark-remove"), tr("Remove from bookmarks"), this, [ = ] {
+                        BookmarkManager::instance()->removeBookmark(url);
+                    });
+                } else {
+                    menu->addAction(QIcon::fromTheme("bookmark-new"), tr("Add to bookmarks"), this, [ = ] {
+                        BookmarkManager::instance()->addBookmark(url);
+                    });
+                }
+            }
+        } else if (sel.count() > 1) {
+            menu->addSection(tr("For %n items", nullptr, sel.count()));
+        }
+
+        if (d->manager->fileTransfersSupported()) {
+            menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
+            menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
+            if (d->directory->url().scheme() == "trash") {
+                menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [ = ] {
+                    for (QModelIndex index : sel) {
+                        QUrl url = index.data(FileModel::UrlRole).toUrl();
+                        QVariant restorePath = d->directory->special("restorePath", {{"url", url}});
+                        if (restorePath.isValid()) {
+                            QUrl dest = restorePath.toUrl();
+
+                            //Prepare a move job
+                            emit moveFiles({url}, ResourceManager::parentDirectoryForUrl(dest));
+                        }
+                    }
+                });
+                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete Permanently"), this, &FileColumn::deleteFile);
+            } else {
+                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Move to Trash"), this, [ = ] {
+                    if (qApp->queryKeyboardModifiers() & Qt::ShiftModifier) {
+                        deleteFile();
+                    } else {
+                        moveToTrash();
+                    }
+                });
+                menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, &FileColumn::rename);
+            }
+        }
+    }
+
+    if (sel.count() == 1) {
+        QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
+
+        if (url.scheme() == "file" && d->manager->canOpenProperties()) {
+            menu->addAction(QIcon::fromTheme("configure"), tr("Properties"), this, [ = ] {
+                emit openItemProperties(url);
+            });
+        }
+
+        //TODO: Asynchronous
+        if (d->manager->fileTransfersSupported()) {
+            DirectoryPtr dir = ResourceManager::directoryForUrl(url);
+            if (dir && dir->exists()->await().result) {
+                if (!DriveObjectManager::opticalDisks().isEmpty()) {
+                    menu->addSeparator();
+                    menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [ = ] {
+                        emit burnDirectory(dir);
+                    });
+                }
+            }
+        }
+    }
+
+    return menu;
 }
 
 void FileColumn::reload() {
@@ -586,102 +697,7 @@ void FileColumn::dropEvent(QDropEvent* event) {
 }
 
 void FileColumn::on_folderScroller_customContextMenuRequested(const QPoint& pos) {
-    QMenu* menu = new QMenu(this);
-
-    QModelIndexList sel = ui->folderView->selectionModel()->selectedIndexes();
-    if (sel.count() > 0) {
-        if (sel.count() == 1) {
-            menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(sel.first().data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
-            QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
-            if (d->directory->isFile(sel.first().data(FileModel::PathSegmentRole).toString())) {
-                menu->addAction(QIcon::fromTheme("document-open"), tr("Open"), this, [ = ] {
-                    QDesktopServices::openUrl(url);
-                });
-
-                QMimeDatabase db;
-                QMimeType mimeType = db.mimeTypeForFile(url.toLocalFile());
-
-                QMenu* otherApps = new QMenu();
-                otherApps->setTitle(tr("Open With..."));
-
-                QList<ApplicationPointer> apps = MimeAssociationManager::applicationsForMimeType(mimeType.name());
-                for (ApplicationPointer app : qAsConst(apps)) {
-                    otherApps->addAction(QIcon::fromTheme(app->getProperty("Icon").toString()), app->getProperty("Name").toString(), this, [ = ] {
-
-                        QMap<QString, QString> launchArgs;
-                        launchArgs.insert("%u", url.toString());
-                        launchArgs.insert("%U", url.toString());
-                        launchArgs.insert("%f", url.toLocalFile());
-                        launchArgs.insert("%F", url.toLocalFile());
-                        app->launch(launchArgs);
-                    });
-                }
-
-                otherApps->addSeparator();
-                otherApps->addAction(tr("Another app..."), this, [ = ] {
-                    QProcess::startDetached("xdg-open", {"--force-prompt", url.toString()});
-                });
-
-                menu->addMenu(otherApps);
-                menu->addSeparator();
-            }
-        } else if (sel.count() > 1) {
-            menu->addSection(tr("For %n items", nullptr, sel.count()));
-        }
-
-        if (d->manager->fileTransfersSupported()) {
-            menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
-            menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
-            if (d->directory->url().scheme() == "trash") {
-                menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [ = ] {
-                    for (QModelIndex index : sel) {
-                        QUrl url = index.data(FileModel::UrlRole).toUrl();
-                        QVariant restorePath = d->directory->special("restorePath", {{"url", url}});
-                        if (restorePath.isValid()) {
-                            QUrl dest = restorePath.toUrl();
-
-                            //Prepare a move job
-                            emit moveFiles({url}, ResourceManager::parentDirectoryForUrl(dest));
-                        }
-                    }
-                });
-                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete Permanently"), this, &FileColumn::deleteFile);
-            } else {
-                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Move to Trash"), this, [ = ] {
-                    if (qApp->queryKeyboardModifiers() & Qt::ShiftModifier) {
-                        deleteFile();
-                    } else {
-                        moveToTrash();
-                    }
-                });
-                menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, &FileColumn::rename);
-            }
-        }
-    }
-
-    if (sel.count() == 1) {
-        QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
-
-        if (url.scheme() == "file" && d->manager->canOpenProperties()) {
-            menu->addAction(QIcon::fromTheme("configure"), tr("Properties"), this, [ = ] {
-                emit openItemProperties(url);
-            });
-        }
-
-        //TODO: Asynchronous
-        if (d->manager->fileTransfersSupported()) {
-            DirectoryPtr dir = ResourceManager::directoryForUrl(url);
-            if (dir && dir->exists()->await().result) {
-                if (!DriveObjectManager::opticalDisks().isEmpty()) {
-                    menu->addSeparator();
-                    menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [ = ] {
-                        emit burnDirectory(dir);
-                    });
-                }
-            }
-        }
-    }
-
+    QMenu* menu = menuForSelectedItems();
     addFolderMenuItems(menu);
 
     menu->popup(ui->folderScroller->mapToGlobal(pos));

@@ -11,6 +11,7 @@ CONFIG += c++20
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bookmarkmanager.cpp \
     directories/localfilesystemdirectory.cpp \
     directories/trashdirectory.cpp \
     directory.cpp \
@@ -26,10 +27,12 @@ SOURCES += \
     hiddenfilesproxymodel.cpp \
     popovers/unlockencryptedpopover.cpp \
     resourcemanager.cpp \
+    sidebar/bookmarksmodel.cpp \
     sidebar/devicesmodel.cpp \
     sidebar/sidebar.cpp
 
 HEADERS += \
+    bookmarkmanager.h \
     directories/localfilesystemdirectory.h \
     directories/trashdirectory.h \
     directory.h \
@@ -46,6 +49,7 @@ HEADERS += \
     libthefile_global.h \
     popovers/unlockencryptedpopover.h \
     resourcemanager.h \
+    sidebar/bookmarksmodel.h \
     sidebar/devicesmodel.h \
     sidebar/sidebar.h
 
