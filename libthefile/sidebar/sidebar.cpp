@@ -43,6 +43,7 @@
 #include "devicesmodel.h"
 #include "bookmarksmodel.h"
 #include "bookmarkmanager.h"
+#include <diskoperationmanager.h>
 
 struct SidebarPrivate {
     DevicesModel* devicesModel;
@@ -251,6 +252,19 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
             }
         });
     }
+
+    menu->addSeparator();
+    menu->addAction(QIcon::fromTheme("document-new"), tr("Create Disk Image"), this, [ = ] {
+        DiskOperationManager::showDiskOperationUi(this, DiskOperationManager::Image, disk);
+    });
+
+    QString eraseText = tr("Erase");
+    if (drive && drive->isOpticalDrive()) eraseText = tr("Erase Optical Disc");
+
+    menu->addAction(QIcon::fromTheme("edit-delete"), eraseText, this, [ = ] {
+        DiskOperationManager::showDiskOperationUi(this, DiskOperationManager::Erase, disk);
+    });
+
     menu->popup(ui->devicesView->mapToGlobal(pos));
 }
 

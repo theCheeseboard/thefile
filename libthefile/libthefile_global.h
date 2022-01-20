@@ -23,9 +23,11 @@
 #include <QtCore/qglobal.h>
 
 #if defined(LIBTHEFILE_LIBRARY)
-#  define LIBTHEFILE_EXPORT Q_DECL_EXPORT
+    #define LIBTHEFILE_EXPORT Q_DECL_EXPORT
 #else
-#  define LIBTHEFILE_EXPORT Q_DECL_IMPORT
+    #define LIBTHEFILE_EXPORT Q_DECL_IMPORT
 #endif
+
+#define LIBTHEFILE_TRANSLATOR "thefile/libthefile"
 
 #endif // LIBTHEFILE_GLOBAL_H

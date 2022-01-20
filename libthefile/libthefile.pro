@@ -1,4 +1,5 @@
 QT += gui widgets thelib frisbee tdesktopenvironment
+SHARE_APP_NAME=thefile/libthefile
 
 TEMPLATE = lib
 DEFINES += LIBTHEFILE_LIBRARY
@@ -59,7 +60,7 @@ unix {
     equals(THELIBS_BUILDTOOLS_PATH, "") {
         THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
     }
-    include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
+    include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
 
     target.path = $$THELIBS_INSTALL_LIB
 

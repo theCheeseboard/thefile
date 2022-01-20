@@ -26,6 +26,8 @@
 #include <QJsonArray>
 #include <tstylemanager.h>
 #include <tsettings.h>
+#include <libthefrisbee_global.h>
+#include <libthefile_global.h>
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
@@ -36,6 +38,9 @@ int main(int argc, char* argv[]) {
         a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thefile/"));
     }
     a.installTranslators();
+
+    a.addLibraryTranslator(LIBTHEFRISBEE_TRANSLATOR);
+    a.addLibraryTranslator(LIBTHEFILE_TRANSLATOR);
 
     a.setApplicationVersion("4.0");
     a.setGenericName(QApplication::translate("main", "File Manager"));

@@ -95,7 +95,7 @@ QString FileModel::currentError() {
 void FileModel::reloadData() {
     beginResetModel();
 
-    d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst)->then([ = ] (FileInformationList fileInfo) {
+    d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst | QDir::IgnoreCase)->then([ = ] (FileInformationList fileInfo) {
         d->files = fileInfo;
         if (d->files.isEmpty()) {
             d->currentError = "error.no-items";
