@@ -62,7 +62,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Floater</string>
+         <string notr="true">Floater</string>
         </property>
         <property name="margin">
          <number>9</number>
@@ -115,7 +115,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="application-menu"/>
+         <iconset theme="application-menu">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>

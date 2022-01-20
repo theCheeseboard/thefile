@@ -201,11 +201,6 @@
 </context>
 <context>
     <name>FileColumnFloater</name>
-    <message>
-        <location filename="../filecolumnfloater.ui" line="65"/>
-        <source>Floater</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <location filename="../filecolumnfloater.cpp" line="51"/>
         <source>%n items</source>
