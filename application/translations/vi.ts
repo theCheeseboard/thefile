@@ -92,32 +92,32 @@
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="90"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="113"/>
         <source>CANCEL BURN OPERATION?</source>
-        <translation type="unfinished"></translation>
+        <translation>HỦY HOẠT ĐỘNG GHI?</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="120"/>
         <source>Cancelling the burn operation at this point may ruin the disc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nếu bạn hủy hoạt động ghi này bây giờ, đĩa này có thể bị hỏng.</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="135"/>
         <source>Continue Burning</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiếp tục ghi</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.ui" line="142"/>
         <source>Cancel Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Hủy ghi</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
         <source>Burn %1</source>
-        <translation type="unfinished">Ghi %1 vào đĩa</translation>
+        <translation>Ghi %1 vào đĩa</translation>
     </message>
 </context>
 <context>
@@ -580,77 +580,77 @@ Tổng cộng: %4 tren %5</translation>
     <message>
         <location filename="../mainwindow.ui" line="200"/>
         <source>Copy</source>
-        <translation type="unfinished">Chép</translation>
+        <translation>Chép</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="203"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="212"/>
         <source>Cut</source>
-        <translation type="unfinished">Cắt</translation>
+        <translation>Cắt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="215"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="224"/>
         <source>Paste</source>
-        <translation type="unfinished">Dán</translation>
+        <translation>Dán</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="227"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="236"/>
         <source>Move to Trash</source>
-        <translation type="unfinished">Chuyển vào thùng rác</translation>
+        <translation>Chuyển vào thùng rác</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="239"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="248"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Chọn tất cả</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="251"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="260"/>
         <source>New Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Cửa sổ mới</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="263"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="272"/>
         <source>New Folder</source>
-        <translation type="unfinished">Thư mục mới</translation>
+        <translation>Thư mục mới</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="275"/>
         <source>Ctrl+Shift+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="193"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="235"/>
@@ -668,12 +668,12 @@ Tổng cộng: %4 tren %5</translation>
     <message>
         <location filename="../main.cpp" line="73"/>
         <source>folder</source>
-        <translation type="unfinished"></translation>
+        <translation>thư mục</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="73"/>
         <source>Folder to show</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục để hiển thị</translation>
     </message>
 </context>
 </TS>
