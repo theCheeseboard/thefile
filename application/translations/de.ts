@@ -7,12 +7,12 @@
         <location filename="../jobs/burnjob.cpp" line="213"/>
         <location filename="../jobs/burnjob.cpp" line="265"/>
         <source>Preparing to burn</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="141"/>
         <source>Waiting for other jobs to finish</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../jobs/burnjob.cpp" line="93"/>
