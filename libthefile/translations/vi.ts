@@ -268,8 +268,8 @@
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="192"/>
-        <location filename="../sidebar/sidebar.cpp" line="296"/>
-        <location filename="../sidebar/sidebar.cpp" line="358"/>
+        <location filename="../sidebar/sidebar.cpp" line="300"/>
+        <location filename="../sidebar/sidebar.cpp" line="362"/>
         <source>For %1</source>
         <translation>Cho %1</translation>
     </message>
@@ -336,22 +336,22 @@
         <translation>Xóa</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="262"/>
+        <location filename="../sidebar/sidebar.cpp" line="264"/>
         <source>Erase Optical Disc</source>
         <translation>Xóa đĩa quang</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="297"/>
+        <location filename="../sidebar/sidebar.cpp" line="301"/>
         <source>Copy In</source>
         <translation>Chép vào</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="300"/>
+        <location filename="../sidebar/sidebar.cpp" line="304"/>
         <source>Move In</source>
         <translation>Chuyển vào</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="359"/>
+        <location filename="../sidebar/sidebar.cpp" line="363"/>
         <source>Remove from bookmarks</source>
         <translation>Xóa khỏi thẻ đánh dấu</translation>
     </message>

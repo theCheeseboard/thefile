@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="de">
+<TS version="2.1" language="de" sourcelanguage="en_US">
 <context>
     <name>FileColumn</name>
     <message>
@@ -271,8 +271,8 @@
     </message>
     <message>
         <location filename="../sidebar/sidebar.cpp" line="192"/>
-        <location filename="../sidebar/sidebar.cpp" line="296"/>
-        <location filename="../sidebar/sidebar.cpp" line="358"/>
+        <location filename="../sidebar/sidebar.cpp" line="300"/>
+        <location filename="../sidebar/sidebar.cpp" line="362"/>
         <source>For %1</source>
         <translation>Für %1</translation>
     </message>
@@ -339,22 +339,22 @@
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="262"/>
+        <location filename="../sidebar/sidebar.cpp" line="264"/>
         <source>Erase Optical Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="297"/>
+        <location filename="../sidebar/sidebar.cpp" line="301"/>
         <source>Copy In</source>
         <translation>Kopieren in</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="300"/>
+        <location filename="../sidebar/sidebar.cpp" line="304"/>
         <source>Move In</source>
         <translation>Bewegen in</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="359"/>
+        <location filename="../sidebar/sidebar.cpp" line="363"/>
         <source>Remove from bookmarks</source>
         <translation>Von Lesezeichen entfernen</translation>
     </message>

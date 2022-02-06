@@ -254,14 +254,18 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
     }
 
     menu->addSeparator();
-    menu->addAction(QIcon::fromTheme("document-new"), tr("Create Disk Image"), this, [ = ] {
+    menu->addAction(QIcon::fromTheme("media-image-create"), tr("Create Disk Image"), this, [ = ] {
         DiskOperationManager::showDiskOperationUi(this, DiskOperationManager::Image, disk);
     });
 
     QString eraseText = tr("Erase");
-    if (drive && drive->isOpticalDrive()) eraseText = tr("Erase Optical Disc");
+    QIcon eraseIcon = QIcon::fromTheme("media-harddisk-erase");
+    if (drive && drive->isOpticalDrive()) {
+        eraseText = tr("Erase Optical Disc");
+        eraseIcon = QIcon::fromTheme("media-optical-erase");
+    }
 
-    menu->addAction(QIcon::fromTheme("edit-delete"), eraseText, this, [ = ] {
+    menu->addAction(eraseIcon, eraseText, this, [ = ] {
         DiskOperationManager::showDiskOperationUi(this, DiskOperationManager::Erase, disk);
     });
 

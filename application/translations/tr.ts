@@ -344,27 +344,27 @@ Toplam ilerleme: %4 / %5</translation>
 <context>
     <name>FileTransferJobWidget</name>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="111"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="109"/>
         <source>FILE CONFLICTS</source>
         <translation>DOSYA ÇATIŞMALARI</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="133"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="131"/>
         <source>Replace All</source>
         <translation>Hepsini değiştir</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="140"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="138"/>
         <source>Skip Conflicting</source>
         <translation>Çakışmayı Atla</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="147"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="148"/>
         <source>Manually Resolve Conflicts</source>
         <translation>Çatışmaları Manuel Olarak Çözme</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="154"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="155"/>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="209"/>
         <source>Cancel Operation</source>
         <translation>İşlemi İptal Et</translation>

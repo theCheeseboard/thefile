@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="de">
+<TS version="2.1" language="de" sourcelanguage="en_US">
 <context>
     <name>BurnJob</name>
     <message>
@@ -207,6 +207,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <source>Delete %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -222,6 +223,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <location filename="../jobs/filetransferjob.cpp" line="217"/>
         <source>Counted %n files to transfer...</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -245,6 +247,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -263,12 +266,14 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <source>Moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="338"/>
         <source>Successfully moved %n files</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -277,12 +282,14 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <source>Copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../jobs/filetransferjob.cpp" line="341"/>
         <source>Successfully copied %n files</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -338,27 +345,27 @@ Total progress: %4 of %5</source>
 <context>
     <name>FileTransferJobWidget</name>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="111"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="109"/>
         <source>FILE CONFLICTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="133"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="131"/>
         <source>Replace All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="140"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="138"/>
         <source>Skip Conflicting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="147"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="148"/>
         <source>Manually Resolve Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="154"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="155"/>
         <location filename="../jobs/widgets/filetransferjobwidget.ui" line="209"/>
         <source>Cancel Operation</source>
         <translation type="unfinished"></translation>
@@ -382,6 +389,7 @@ Total progress: %4 of %5</source>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="43"/>
         <source>%n files in the destination folder have the same file name as files being transferred</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -503,6 +511,7 @@ Total progress: %4 of %5</source>
         <location filename="../popovers/itempropertiespopover.cpp" line="73"/>
         <source>%n items</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
