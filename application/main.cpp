@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     a.addLibraryTranslator(LIBTHEFRISBEE_TRANSLATOR);
     a.addLibraryTranslator(LIBTHEFILE_TRANSLATOR);
 
-    a.setApplicationVersion("4.0");
+    a.setApplicationVersion("4.0.1");
     a.setGenericName(QApplication::translate("main", "File Manager"));
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
