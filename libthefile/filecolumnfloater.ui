@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="QFrame" name="frame">
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

@@ -63,7 +63,7 @@ unix:!macx {
     target.path = $$THELIBS_INSTALL_BIN
 
     defaults.files = defaults.conf
-    defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theBeat/
+    defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theFile/
 
     blueprint {
         metainfo.files = com.vicr123.thefile_blueprint.metainfo.xml
