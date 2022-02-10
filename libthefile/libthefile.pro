@@ -70,7 +70,7 @@ unix {
     module.files = qt_thefile.pri
     module.path = $$THELIBS_INSTALL_MODULES
 
-    INSTALLS += target headers
+    INSTALLS += target headers module
 }
 
 FORMS += \
