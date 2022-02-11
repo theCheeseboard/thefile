@@ -24,19 +24,22 @@
 
 struct BookmarkManagerPrivate {
     QList<QUrl> bookmarks;
-    tSettings settings;
+    tSettings* settings;
 };
 
 BookmarkManager::BookmarkManager(QObject* parent) : QObject(parent) {
     d = new BookmarkManagerPrivate();
 
-    QStringList bookmarks = d->settings.delimitedList("bookmarks/items");
+    tSettings::registerDefaults("theSuite", "theFile", "/etc/theSuite/theFile/defaults.conf");
+    d->settings = new tSettings("theSuite", "theFile", this);
+
+    QStringList bookmarks = d->settings->delimitedList("bookmarks/items");
     bookmarks.removeAll("");
     for (const QString& bookmark : bookmarks) {
         d->bookmarks.append(QUrl(QByteArray::fromBase64(bookmark.toUtf8())));
     }
 
-    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+    connect(d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
         Q_UNUSED(value);
         if (key == "bookmarks/items") emit bookmarksChanged();
     });
@@ -48,7 +51,7 @@ void BookmarkManager::saveChanges() {
         bookmarks.append(bookmark.toString().toUtf8().toBase64());
     }
 
-    d->settings.setDelimitedList("bookmarks/items", bookmarks);
+    d->settings->setDelimitedList("bookmarks/items", bookmarks);
 }
 
 BookmarkManager* BookmarkManager::instance() {
