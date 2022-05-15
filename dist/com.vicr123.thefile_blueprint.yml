@@ -44,10 +44,17 @@ modules:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
         branch: blueprint
+  - name: thefrisbee
+    buildsystem: cmake-ninja
+    builddir: true
+    sources:
+      - type: git
+        url: https://github.com/vicr123/thefrisbee
+        branch: blueprint
   - name: thefile
     buildsystem: cmake-ninja
     builddir: true
     sources:
       - type: git
         url: https://github.com/vicr123/thefile
-        branch: blueprint
+        branch: master
