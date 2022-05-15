@@ -5,7 +5,7 @@ Version=1.0
 Name[]=theFile Blueprint
 GenericName[]=File Manager
 Categories=Utility;FileManager;
-Exec=thefile %U
+Exec=thefile-blueprint %U
 Icon=com.vicr123.thefile_blueprint
 #T:A list of words that can be searched for. Please ensure that the list also ends with a semicolon!
 Keywords[]=folder;copy;cut;computer;devices;cd;dvd;
