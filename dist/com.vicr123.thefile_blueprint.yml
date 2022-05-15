@@ -1,8 +1,8 @@
 app-id: com.vicr123.thefile_blueprint
 runtime: org.kde.Platform
-runtime-version: '5.15'
+runtime-version: '6.2'
 sdk: org.kde.Sdk
-command: thefile
+command: thefile-blueprint
 finish-args:
   - --socket=wayland
   - --socket=fallback-x11
@@ -15,32 +15,26 @@ cleanup:
   - '/qt'
   - '/share/man'
   - '/share/the-libs'
-  - '/bin/tltrdesktop'
+  - '/bin/cd*'
+  - '/bin/iso*'
+  - '/bin/mmc-tool'
+  - '/bin/taglib-config'
+  - '/bin/cntp-trdesktop'
   - '/lib/debug'
   - '/lib/pkgconfig'
-  - '/share/applications/com.vicr123.thefrisbee.desktop'
-  - '/bin/thefrisbee'
 modules:
-  - name: the-libs
-    buildsystem: qmake
+  - name: libcontemporary
+    buildsystem: cmake-ninja
     sources:
       - type: git
-        url: https://github.com/vicr123/the-libs
+        url: https://github.com/vicr123/libcontemporary
         branch: blueprint
   - name: contemporary
-    buildsystem: qmake
-    config-opts:
-      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-      - THELIBS_INSTALL_QT_PLUGINS = /app/lib/qt/plugins
-      - '-after'
-      - QT -= thelib
-      - QT += dbus
-      - LIBS += -L/app/lib -lthe-libs
-      - INCLUDEPATH += /app/include/the-libs
+    buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-theme
-        branch: master
+        branch: blueprint
   - name: contemporary-icons
     buildsystem: simple
     build-commands:
@@ -50,51 +44,9 @@ modules:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
         branch: blueprint
-  - name: libtdesktopenvironment
-    buildsystem: qmake
-    builddir: true
-    config-opts:
-      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-      - THELIBS_INSTALL_SETTINGS = /app/etc
-      - THELIBS_INSTALL_QT_PLUGINS = /app/lib/qt/plugins
-      - '-after'
-      - QT -= thelib
-      - QT += dbus
-      - CONFIG += blueprint
-      - LIBS += -L/app/lib -lthe-libs
-      - INCLUDEPATH += /app/include/the-libs
-    sources:
-      - type: git
-        url: https://github.com/vicr123/libtdesktopenvironment
-#        branch: blueprint
-  - name: thefrisbee
-    buildsystem: qmake
-    builddir: true
-    config-opts:
-      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-      - THELIBS_INSTALL_SETTINGS = /app/etc
-      - '-after'
-      - QT -= thelib
-      - QT += dbus
-      - CONFIG += blueprint
-      - LIBS += -L/app/lib -lthe-libs
-      - INCLUDEPATH += /app/include/the-libs
-    sources:
-      - type: git
-        url: https://github.com/vicr123/thefrisbee
-        branch: blueprint
   - name: thefile
-    buildsystem: qmake
+    buildsystem: cmake-ninja
     builddir: true
-    config-opts:
-      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-      - THELIBS_INSTALL_SETTINGS = /app/etc
-      - '-after'
-      - QT -= thelib frisbee tdesktopenvironment
-      - QT += dbus
-      - LIBS += -L/app/lib -lthe-libs -lthefrisbee -ltdesktopenvironment
-      - INCLUDEPATH += /app/include/the-libs /app/include/libtdesktopenvironment /app/include/libthefrisbee
-      - SUBDIRS -= appproj
     sources:
       - type: git
         url: https://github.com/vicr123/thefile

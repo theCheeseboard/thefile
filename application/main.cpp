@@ -19,15 +19,14 @@
  * *************************************/
 #include "mainwindow.h"
 
-#include <tsettings.h>
-#include <QDir>
-#include <tapplication.h>
 #include <QCommandLineParser>
+#include <QDir>
 #include <QJsonArray>
-#include <tstylemanager.h>
-#include <tsettings.h>
-#include <libthefrisbee_global.h>
 #include <libthefile_global.h>
+#include <libthefrisbee_global.h>
+#include <tapplication.h>
+#include <tsettings.h>
+#include <tstylemanager.h>
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
@@ -52,15 +51,8 @@ int main(int argc, char* argv[]) {
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thefile/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theFile"));
     a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theFile/issues"));
-#ifdef T_BLUEPRINT_BUILD
-    a.setApplicationName("theFile Blueprint");
-    a.setDesktopFileName("com.vicr123.thefile_blueprint");
-    a.setApplicationIcon(QIcon::fromTheme("thefile-blueprint", QIcon(":/icons/thefile-blueprint.svg")));
-#else
-    a.setApplicationName("theFile");
-    a.setDesktopFileName("com.vicr123.thefile");
-    a.setApplicationIcon(QIcon::fromTheme("thefile", QIcon(":/icons/thefile.svg")));
-#endif
+    a.setApplicationName(T_APPMETA_READABLE_NAME);
+    a.setDesktopFileName(T_APPMETA_DESKTOP_ID);
 
     a.registerCrashTrap();
 
@@ -74,17 +66,16 @@ int main(int argc, char* argv[]) {
     parser.process(a);
 
     tSettings settings;
-    QObject::connect(&settings, &tSettings::settingChanged, [ = ](QString key, QVariant value) {
+    QObject::connect(&settings, &tSettings::settingChanged, [=](QString key, QVariant value) {
         if (key == "theme/mode") {
             tStyleManager::setOverrideStyleForApplication(value.toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
         }
     });
     tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
 
-
     MainWindow* w = new MainWindow();
 
-    QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
+    QObject::connect(&a, &tApplication::singleInstanceMessage, [=](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
             MainWindow* w = new MainWindow();
 
