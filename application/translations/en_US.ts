@@ -122,22 +122,22 @@
 <context>
     <name>BurnPopover</name>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="83"/>
+        <location filename="../popovers/burnpopover.ui" line="82"/>
         <source>BURN OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="93"/>
+        <location filename="../popovers/burnpopover.ui" line="92"/>
         <source>Disc Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="100"/>
+        <location filename="../popovers/burnpopover.ui" line="99"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="207"/>
+        <location filename="../popovers/burnpopover.ui" line="204"/>
         <source>The disc in the drive is not blank. To burn these files to the disc, the disc will need to be erased.
 
 Once the disc in the drive is erased, all the data on it will be gone forever.</source>
@@ -149,22 +149,22 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="129"/>
+        <location filename="../popovers/burnpopover.ui" line="127"/>
         <source>HEADS UP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="184"/>
+        <location filename="../popovers/burnpopover.ui" line="182"/>
         <source>Burn Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="200"/>
+        <location filename="../popovers/burnpopover.ui" line="197"/>
         <source>DISC NOT BLANK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/burnpopover.ui" line="219"/>
+        <location filename="../popovers/burnpopover.ui" line="216"/>
         <source>Erase and Burn</source>
         <translation type="unfinished"></translation>
     </message>

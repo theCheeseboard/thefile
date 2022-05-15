@@ -20,34 +20,34 @@
 #include "sidebar.h"
 #include "ui_sidebar.h"
 
-#include <QUrl>
-#include <QDir>
-#include <QStandardPaths>
-#include <driveobjectmanager.h>
-#include <DriveObjects/diskobject.h>
-#include <DriveObjects/filesysteminterface.h>
+#include "bookmarkmanager.h"
+#include "bookmarksmodel.h"
+#include "devicesmodel.h"
+#include "popovers/unlockencryptedpopover.h"
 #include <DriveObjects/blockinterface.h>
+#include <DriveObjects/diskobject.h>
 #include <DriveObjects/driveinterface.h>
 #include <DriveObjects/encryptedinterface.h>
-#include <QPainter>
-#include <QMenu>
+#include <DriveObjects/filesysteminterface.h>
+#include <QDir>
 #include <QDragEnterEvent>
 #include <QDropEvent>
-#include <tmessagebox.h>
-#include <tlogger.h>
+#include <QMenu>
+#include <QPainter>
+#include <QStandardPaths>
+#include <QUrl>
 #include <directory.h>
-#include <tjobmanager.h>
-#include <resourcemanager.h>
-#include <tpopover.h>
-#include "popovers/unlockencryptedpopover.h"
-#include "devicesmodel.h"
-#include "bookmarksmodel.h"
-#include "bookmarkmanager.h"
 #include <diskoperationmanager.h>
+#include <driveobjectmanager.h>
+#include <resourcemanager.h>
+#include <tjobmanager.h>
+#include <tlogger.h>
+#include <tmessagebox.h>
+#include <tpopover.h>
 
 struct SidebarPrivate {
-    DevicesModel* devicesModel;
-    BookmarksModel* bookmarksModel;
+        DevicesModel* devicesModel;
+        BookmarksModel* bookmarksModel;
 };
 
 Sidebar::Sidebar(QWidget* parent) :
@@ -57,20 +57,20 @@ Sidebar::Sidebar(QWidget* parent) :
     d = new SidebarPrivate();
 
     struct Place {
-        QString name;
-        QIcon icon;
-        QUrl location;
+            QString name;
+            QIcon icon;
+            QUrl location;
     };
 
     for (const Place& place : QList<Place>({
-    {tr("Home"), QIcon::fromTheme("go-home"), QUrl::fromLocalFile(QDir::homePath())},
-        {tr("Documents"), QIcon::fromTheme("folder-documents"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))},
-        {tr("Downloads"), QIcon::fromTheme("folder-downloads"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))},
-        {tr("Music"), QIcon::fromTheme("folder-music"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MusicLocation))},
-        {tr("Pictures"), QIcon::fromTheme("folder-pictures"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation))},
-        {tr("Videos"), QIcon::fromTheme("folder-videos"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))},
-        {tr("Root"), QIcon::fromTheme("folder-root"), QUrl::fromLocalFile(QDir::rootPath())},
-        {tr("Trash"), QIcon::fromTheme("user-trash"), QUrl("trash:/")}
+             {tr("Home"),      QIcon::fromTheme("go-home"),          QUrl::fromLocalFile(QDir::homePath())                                                   },
+             {tr("Documents"), QIcon::fromTheme("folder-documents"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))},
+             {tr("Downloads"), QIcon::fromTheme("folder-downloads"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)) },
+             {tr("Music"),     QIcon::fromTheme("folder-music"),     QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MusicLocation))    },
+             {tr("Pictures"),  QIcon::fromTheme("folder-pictures"),  QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)) },
+             {tr("Videos"),    QIcon::fromTheme("folder-videos"),    QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))   },
+             {tr("Root"),      QIcon::fromTheme("folder-root"),      QUrl::fromLocalFile(QDir::rootPath())                                                   },
+             {tr("Trash"),     QIcon::fromTheme("user-trash"),       QUrl("trash:/")                                                                         }
     })) {
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(place.name);
@@ -85,7 +85,7 @@ Sidebar::Sidebar(QWidget* parent) :
     d->devicesModel = new DevicesModel();
     ui->devicesView->setModel(d->devicesModel);
     ui->devicesView->setItemDelegate(new SidebarDelegate());
-    connect(d->devicesModel, &DevicesModel::modelReset, this, [ = ] {
+    connect(d->devicesModel, &DevicesModel::modelReset, this, [=] {
         ui->devicesView->setFixedHeight(ui->devicesView->sizeHintForRow(0) * d->devicesModel->rowCount());
     });
     ui->devicesView->setFixedHeight(ui->devicesView->sizeHintForRow(0) * d->devicesModel->rowCount());
@@ -108,24 +108,23 @@ void Sidebar::on_placesWidget_itemActivated(QListWidgetItem* item) {
 }
 
 void Sidebar::on_devicesView_activated(const QModelIndex& index) {
-    //Ignore if we're trying to right click
+    // Ignore if we're trying to right click
     if (qApp->mouseButtons() & Qt::RightButton) return;
 
-    //Mount and navigate to the item
+    // Mount and navigate to the item
     DiskObject* disk = index.data(DevicesModel::DiskObjectRole).value<DiskObject*>();
     mount(disk);
 }
 
-
-SidebarDelegate::SidebarDelegate(QObject* parent) : QStyledItemDelegate(parent) {
-
+SidebarDelegate::SidebarDelegate(QObject* parent) :
+    QStyledItemDelegate(parent) {
 }
 
 void SidebarDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
-    //Offset everything by 6px
-//    QStyleOptionViewItem newOption = option;
-//    newOption.rect.adjust(SC_DPI(6), 0, 0, 0);
-//    QStyledItemDelegate::paint(painter, newOption, index);
+    // Offset everything by 6px
+    //    QStyleOptionViewItem newOption = option;
+    //    newOption.rect.adjust(SC_DPI(6), 0, 0, 0);
+    //    QStyledItemDelegate::paint(painter, newOption, index);
 
     painter->setPen(Qt::transparent);
 
@@ -171,7 +170,7 @@ void SidebarDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
     painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, index.data(Qt::DisplayRole).toString());
 
     if (index.data(DevicesModel::MountedRole).toBool()) {
-        //Draw the mounted indicator
+        // Draw the mounted indicator
         QRect mountIndicator = option.rect;
         mountIndicator.setWidth(SC_DPI(6));
         painter->setPen(Qt::transparent);
@@ -192,69 +191,66 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
     menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(device.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
     if (fs) {
         if (fs->mountPoints().isEmpty()) {
-            menu->addAction(QIcon::fromTheme("media-mount"), tr("Mount"), this, [ = ] {
+            menu->addAction(QIcon::fromTheme("media-mount"), tr("Mount"), this, [=] {
                 fs->mount();
             });
         } else {
-            menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [ = ] {
-                fs->unmount()->error([ = ](QString error) {
+            menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [=] {
+                fs->unmount()->error([=](QString error) {
                     tMessageBox* box = new tMessageBox(this);
-                    box->setWindowTitle(tr("Couldn't unmount"));
-                    box->setText(tr("Unmounting the drive failed."));
+                    box->setTitleBarText(tr("Couldn't unmount"));
+                    box->setMessageText(tr("Unmounting the drive failed."));
                     box->setInformativeText(error);
-                    connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
-                    box->open();
+                    box->show(true);
                 });
             });
         }
     }
 
     if (drive) {
-        if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [ = ] {
-            drive->eject()->error([ = ](QString error) {
+        if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [=] {
+            drive->eject()->error([=](QString error) {
                 tMessageBox* box = new tMessageBox(this);
-                box->setWindowTitle(tr("Couldn't eject"));
-                box->setText(tr("Ejecting the drive failed."));
+                box->setTitleBarText(tr("Couldn't eject"));
+                box->setMessageText(tr("Ejecting the drive failed."));
                 box->setInformativeText(error);
-                connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
-                box->open();
+                box->show(true);
             });
         });
     }
 
     if (block && block->cryptoBackingDevice()) {
-        menu->addAction(tr("Lock"), this, [ = ] {
-            auto performLock = [ = ] {
+        menu->addAction(tr("Lock"), this, [=] {
+            auto performLock = [=] {
                 block->cryptoBackingDevice()->interface<EncryptedInterface>()->lock()->error([ = ](QString error) {
-                    tMessageBox* box = new tMessageBox(this);
-                    box->setWindowTitle(tr("Couldn't lock"));
-                    box->setText(tr("Locking the device failed."));
-                    box->setInformativeText(error);
-                    connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
-                    box->open();
+                        tMessageBox* box = new tMessageBox(this);
+                        box->setTitleBarText(tr("Couldn't lock"));
+                        box->setMessageText(tr("Locking the device failed."));
+                        box->setInformativeText(error);
+                        box->show(true);
                 });
             };
 
-            //Unmount the drive first, and then lock it
+            // Unmount the drive first, and then lock it
             if (fs->mountPoints().isEmpty()) {
                 performLock();
             } else {
-                fs->unmount()->then([ = ] {
-                    performLock();
-                })->error([ = ](QString error) {
-                    tMessageBox* box = new tMessageBox(this);
-                    box->setWindowTitle(tr("Couldn't unmount"));
-                    box->setText(tr("Unmounting the drive failed."));
-                    box->setInformativeText(error);
-                    connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
-                    box->open();
-                });
+                fs->unmount()->then([=] {
+                                 performLock();
+                             })
+                    ->error([=](QString error) {
+                        tMessageBox* box = new tMessageBox(this);
+                        box->setTitleBarText(tr("Couldn't unmount"));
+                        box->setMessageText(tr("Unmounting the drive failed."));
+                        box->setInformativeText(error);
+                        box->show(true);
+                    });
             }
         });
     }
 
     menu->addSeparator();
-    menu->addAction(QIcon::fromTheme("media-image-create"), tr("Create Disk Image"), this, [ = ] {
+    menu->addAction(QIcon::fromTheme("media-image-create"), tr("Create Disk Image"), this, [=] {
         DiskOperationManager::showDiskOperationUi(this, DiskOperationManager::Image, disk);
     });
 
@@ -265,7 +261,7 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
         eraseIcon = QIcon::fromTheme("media-optical-erase");
     }
 
-    menu->addAction(eraseIcon, eraseText, this, [ = ] {
+    menu->addAction(eraseIcon, eraseText, this, [=] {
         DiskOperationManager::showDiskOperationUi(this, DiskOperationManager::Erase, disk);
     });
 
@@ -291,17 +287,17 @@ bool Sidebar::eventFilter(QObject* watched, QEvent* event) {
                 QUrl url = index.data(Qt::UserRole).toUrl();
                 DirectoryPtr dir = ResourceManager::directoryForUrl(url);
                 if (url.scheme() == "trash") {
-                    //Trash these items
+                    // Trash these items
                     for (const QUrl& url : qAsConst(urls)) {
                         ResourceManager::parentDirectoryForUrl(url)->trash(url.fileName());
                     }
                 } else if (dir && dir->exists()->await().result) {
                     QMenu* menu = new QMenu();
                     menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
-                    menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [ = ] {
+                    menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [=] {
                         emit copyFiles(urls, dir);
                     });
-                    menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [ = ] {
+                    menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [=] {
                         emit moveFiles(urls, dir);
                     });
                     menu->popup(this->mapToGlobal(e->pos()));
@@ -316,17 +312,18 @@ bool Sidebar::eventFilter(QObject* watched, QEvent* event) {
 }
 
 void Sidebar::mount(DiskObject* disk) {
-    //Mount and navigate to the item
+    // Mount and navigate to the item
     FilesystemInterface* fs = disk->interface<FilesystemInterface>();
     EncryptedInterface* encrypted = disk->interface<EncryptedInterface>();
     if (fs) {
         if (fs->mountPoints().isEmpty()) {
-            //We need to mount this disk first
-            fs->mount()->then([ = ] {
-                emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
-            })->error([ = ](QString error) {
-                tDebug("Sidebar") << "Could not mount" << disk->displayName() << "-" << error;
-            });
+            // We need to mount this disk first
+            fs->mount()->then([=] {
+                           emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
+                       })
+                ->error([=](QString error) {
+                    tDebug("Sidebar") << "Could not mount" << disk->displayName() << "-" << error;
+                });
         } else {
             emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
         }
@@ -336,7 +333,7 @@ void Sidebar::mount(DiskObject* disk) {
         popover->setPopoverWidth(SC_DPI(-200));
         popover->setPopoverSide(tPopover::Bottom);
         connect(jp, &UnlockEncryptedPopover::reject, popover, &tPopover::dismiss);
-        connect(jp, &UnlockEncryptedPopover::accept, this, [ = ](DiskObject * cleartext) {
+        connect(jp, &UnlockEncryptedPopover::accept, this, [=](DiskObject* cleartext) {
             popover->dismiss();
             mount(cleartext);
         });
@@ -347,23 +344,20 @@ void Sidebar::mount(DiskObject* disk) {
 }
 
 void Sidebar::on_bookmarksView_activated(const QModelIndex& index) {
-    //Ignore if we're trying to right click
+    // Ignore if we're trying to right click
     if (qApp->mouseButtons() & Qt::RightButton) return;
 
-    //Navigate to the item
+    // Navigate to the item
     emit navigate(index.data(BookmarksModel::UrlRole).toUrl());
 }
-
 
 void Sidebar::on_bookmarksView_customContextMenuRequested(const QPoint& pos) {
     QModelIndex bookmark = ui->bookmarksView->indexAt(pos);
 
     QMenu* menu = new QMenu();
     menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(bookmark.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
-    menu->addAction(QIcon::fromTheme("bookmark-remove"), tr("Remove from bookmarks"), this, [ = ] {
+    menu->addAction(QIcon::fromTheme("bookmark-remove"), tr("Remove from bookmarks"), this, [=] {
         BookmarkManager::instance()->removeBookmark(bookmark.data(BookmarksModel::UrlRole).toUrl());
     });
     menu->popup(ui->bookmarksView->mapToGlobal(pos));
-
 }
-
