@@ -20,34 +20,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <tcsdtools.h>
-#include <thelpmenu.h>
-#include <tjobmanager.h>
-#include <QUrl>
-#include <QFileInfo>
-#include <tinputdialog.h>
-#include <QMessageBox>
-#include <QShortcut>
-#include <filecolumn.h>
-#include <resourcemanager.h>
-#include <tsettings.h>
 #include "filetab.h"
-#include "tabbutton.h"
 #include "jobs/filetransferjob.h"
+#include "popovers/burnpopover.h"
 #include "popovers/deletepermanentlypopover.h"
 #include "popovers/itempropertiespopover.h"
-#include "popovers/burnpopover.h"
-#include <tpopover.h>
+#include "tabbutton.h"
 #include <QDesktopServices>
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QShortcut>
+#include <QUrl>
+#include <filecolumn.h>
+#include <resourcemanager.h>
+#include <tcsdtools.h>
+#include <thelpmenu.h>
+#include <tinputdialog.h>
+#include <tjobmanager.h>
+#include <tpopover.h>
+#include <tsettings.h>
 
 struct MainWindowPrivate {
-    tCsdTools csd;
-    tSettings settings;
+        tCsdTools csd;
+        tSettings settings;
 };
 
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget* parent) :
+    QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     this->resize(SC_DPI_T(this->size(), QSize));
@@ -82,7 +81,7 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionExit);
 
     QShortcut* deleteShortcut = new QShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete), this);
-    connect(deleteShortcut, &QShortcut::activated, this, [ = ] {
+    connect(deleteShortcut, &QShortcut::activated, this, [=] {
         FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
         if (tab->currentColumn()) tab->currentColumn()->deleteFile();
     });
@@ -99,7 +98,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
 
-    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());
     });
     ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
@@ -117,46 +116,33 @@ void MainWindow::newTab() {
 }
 
 void MainWindow::newTab(QUrl url) {
-    TabButton* button = new TabButton();
-    button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    button->setCheckable(true);
-    button->setAutoExclusive(true);
-    ui->tabsLayout->addWidget(button);
+    tWindowTabberButton* button = new tWindowTabberButton();
 
     FileTab* tab = new FileTab();
     if (url.isValid()) tab->setCurrentUrl(url);
     ui->stackedWidget->addWidget(tab);
 
+    button->syncWithStackedWidget(ui->stackedWidget, tab);
+
     button->setText(QFileInfo(QFileInfo(tab->currentUrl().path()).canonicalFilePath()).fileName());
 
-    connect(button, &TabButton::clicked, this, [ = ] {
-        ui->stackedWidget->setCurrentWidget(tab);
-    });
-    connect(ui->stackedWidget, &tStackedWidget::switchingFrame, button, [ = ](int frame) {
-        if (ui->stackedWidget->widget(frame) == tab) button->setChecked(true);
-    });
-    connect(ui->stackedWidget, &tStackedWidget::currentChanged, button, [ = ](int frame) {
-        if (ui->stackedWidget->widget(frame) == tab) button->setChecked(true);
-    });
-    connect(tab, &FileTab::tabTitleChanged, this, [ = ] {
+    connect(tab, &FileTab::tabTitleChanged, this, [=] {
         button->setText(tab->tabTitle());
     });
-    connect(tab, &FileTab::tabClosed, this, [ = ] {
+    connect(tab, &FileTab::tabClosed, this, [=] {
         ui->stackedWidget->removeWidget(tab);
-        ui->tabsLayout->removeWidget(button);
-        button->deleteLater();
         tab->deleteLater();
     });
     connect(tab, &FileTab::columnsChanged, this, &MainWindow::updateMenuActions);
-    connect(tab, &FileTab::moveFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
+    connect(tab, &FileTab::moveFiles, this, [=](QList<QUrl> source, DirectoryPtr destination) {
         FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, source, destination, this->window());
         tJobManager::trackJobDelayed(job);
     });
-    connect(tab, &FileTab::copyFiles, this, [ = ](QList<QUrl> source, DirectoryPtr destination) {
+    connect(tab, &FileTab::copyFiles, this, [=](QList<QUrl> source, DirectoryPtr destination) {
         FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, source, destination, this->window());
         tJobManager::trackJobDelayed(job);
     });
-    connect(tab, &FileTab::deletePermanently, this, [ = ](QList<QUrl> filesToDelete) {
+    connect(tab, &FileTab::deletePermanently, this, [=](QList<QUrl> filesToDelete) {
         DeletePermanentlyPopover* jp = new DeletePermanentlyPopover(filesToDelete);
         tPopover* popover = new tPopover(jp);
         popover->setPopoverWidth(SC_DPI(-200));
@@ -166,7 +152,7 @@ void MainWindow::newTab(QUrl url) {
         connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
         popover->show(this->window());
     });
-    connect(tab, &FileTab::openItemProperties, this, [ = ](QUrl url) {
+    connect(tab, &FileTab::openItemProperties, this, [=](QUrl url) {
         ItemPropertiesPopover* jp = new ItemPropertiesPopover(url);
         tPopover* popover = new tPopover(jp);
         popover->setPopoverWidth(SC_DPI(-200));
@@ -176,7 +162,7 @@ void MainWindow::newTab(QUrl url) {
         connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
         popover->show(this->window());
     });
-    connect(tab, &FileTab::burnDirectory, this, [ = ](DirectoryPtr dir) {
+    connect(tab, &FileTab::burnDirectory, this, [=](DirectoryPtr dir) {
         BurnPopover* jp = new BurnPopover(dir);
         tPopover* popover = new tPopover(jp);
         popover->setPopoverWidth(SC_DPI(-200));
@@ -189,17 +175,21 @@ void MainWindow::newTab(QUrl url) {
     tab->setFileTransfersSupported(true);
     tab->setCanOpenProperties(true);
     tab->setOpenFileButtons({
-        {
-            tr("Open"),
-            QIcon::fromTheme("document-open"),
-            [ = ](QList<QUrl> selected) {
-                QDesktopServices::openUrl(selected.first());
-            },
-            true
-        }
+        {tr("Open"),
+         QIcon::fromTheme("document-open"),
+         [=](QList<QUrl> selected) {
+        QDesktopServices::openUrl(selected.first());
+         },
+         true}
     });
 
-    ui->stackedWidget->setCurrentWidget(tab);
+    QAction* newFolderAction = new QAction(QIcon::fromTheme("folder-new"), tr("New Folder"));
+    connect(newFolderAction, &QAction::triggered, this, [=] {
+
+    });
+    button->addActions({newFolderAction});
+
+    ui->windowTabber->addButton(button);
 }
 
 void MainWindow::on_actionExit_triggered() {
@@ -235,11 +225,11 @@ void MainWindow::on_actionGo_triggered() {
     QString location = tInputDialog::getText(this, tr("Go"), tr("Enter a location to go to"), QLineEdit::Normal, text, &ok);
     if (ok) {
         QUrl url = QUrl::fromUserInput(location);
-//        if (ResourceManager::isDirectoryHandlerRegistered(url.scheme())) {
+        //        if (ResourceManager::isDirectoryHandlerRegistered(url.scheme())) {
         static_cast<FileTab*>(ui->stackedWidget->currentWidget())->setCurrentUrl(url);
-//        } else {
-//            QMessageBox::warning(this, tr("Can't open that URL"), tr("%1 URLs are not supported").arg(url.scheme()));
-//        }
+        //        } else {
+        //            QMessageBox::warning(this, tr("Can't open that URL"), tr("%1 URLs are not supported").arg(url.scheme()));
+        //        }
     }
 }
 
@@ -282,7 +272,7 @@ void MainWindow::updateMenuActions() {
     ui->actionMove_to_Trash->setEnabled(copyCutTrash);
 }
 
-void MainWindow::on_stackedWidget_switchingFrame(int ) {
+void MainWindow::on_stackedWidget_switchingFrame(int) {
     updateMenuActions();
 }
 
