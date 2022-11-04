@@ -60,20 +60,22 @@ set(HEADERS
 )
 
 add_library(libthefile SHARED ${SOURCES} ${HEADERS})
-cntp_init(libthefile 17)
 set_target_properties(libthefile PROPERTIES
         OUTPUT_NAME thefile
         FRAMEWORK TRUE
         MACOSX_FRAMEWORK_IDENTIFIER com.vicr123.libthefile
         VERSION 1.0.0
-        PUBLIC_HEADER "${HEADERS}")
+        PUBLIC_HEADER "${HEADERS}"
+        CNTP_DATA_SUBDIR thefile/libthefile)
+cntp_init(libthefile 20)
+cntp_translate(libthefile)
 
 target_link_libraries(libthefile Qt6::Widgets Qt6::DBus Qt6::Multimedia libcontemporary libthefrisbee)
 target_compile_definitions(libthefile PRIVATE LIBTHEFILE_LIBRARY)
 
 IF(libtdesktopenvironment_FOUND)
 target_link_libraries(libthefile libtdesktopenvironment)
-target_compile_definitions(libthefile HAVE_TDESKTOPENVIRONMENT)
+target_compile_definitions(libthefile PUBLIC HAVE_TDESKTOPENVIRONMENT)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

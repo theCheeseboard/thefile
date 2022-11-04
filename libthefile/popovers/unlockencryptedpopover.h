@@ -20,8 +20,8 @@
 #ifndef UNLOCKENCRYPTEDPOPOVER_H
 #define UNLOCKENCRYPTEDPOPOVER_H
 
-#include <QWidget>
 #include <DriveObjects/diskobject.h>
+#include <QWidget>
 
 namespace Ui {
     class UnlockEncryptedPopover;
@@ -42,7 +42,7 @@ class UnlockEncryptedPopover : public QWidget {
     private slots:
         void on_titleLabel_backButtonClicked();
 
-        void on_okPasswordButton_clicked();
+        QCoro::Task<> on_okPasswordButton_clicked();
 
     private:
         Ui::UnlockEncryptedPopover* ui;

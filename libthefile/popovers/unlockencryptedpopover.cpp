@@ -20,12 +20,13 @@
 #include "unlockencryptedpopover.h"
 #include "ui_unlockencryptedpopover.h"
 
-#include <terrorflash.h>
-#include <driveobjectmanager.h>
 #include <DriveObjects/encryptedinterface.h>
+#include <driveobjectmanager.h>
+#include <frisbeeexception.h>
+#include <terrorflash.h>
 
 struct UnlockEncryptedPopoverPrivate {
-    DiskObject* disk;
+        DiskObject* disk;
 };
 
 UnlockEncryptedPopover::UnlockEncryptedPopover(DiskObject* disk, QWidget* parent) :
@@ -35,10 +36,10 @@ UnlockEncryptedPopover::UnlockEncryptedPopover(DiskObject* disk, QWidget* parent
 
     d = new UnlockEncryptedPopoverPrivate();
     d->disk = disk;
-    connect(DriveObjectManager::instance(), &DriveObjectManager::diskRemoved, this, [ = ](DiskObject * disk) {
+    connect(DriveObjectManager::instance(), &DriveObjectManager::diskRemoved, this, [=](DiskObject* disk) {
         if (disk == d->disk) emit reject();
     });
-    connect(d->disk, &DiskObject::interfaceRemoved, this, [ = ](DiskInterface::Interfaces interface) {
+    connect(d->disk, &DiskObject::interfaceRemoved, this, [=](DiskInterface::Interfaces interface) {
         if (interface == DiskInterface::Encrypted) emit reject();
     });
 
@@ -56,12 +57,14 @@ void UnlockEncryptedPopover::on_titleLabel_backButtonClicked() {
     emit reject();
 }
 
-void UnlockEncryptedPopover::on_okPasswordButton_clicked() {
+QCoro::Task<> UnlockEncryptedPopover::on_okPasswordButton_clicked() {
     ui->stackedWidget->setCurrentWidget(ui->loadingPage);
-    d->disk->interface<EncryptedInterface>()->unlock(ui->passwordBox->text())->then([ = ](DiskObject * object) {
+
+    try {
+        auto object = co_await d->disk->interface<EncryptedInterface>()->unlock(ui->passwordBox->text());
         emit accept(object);
-    })->error([ = ](QString error) {
+    } catch (FrisbeeException& ex) {
         ui->stackedWidget->setCurrentWidget(ui->passwordPage);
         tErrorFlash::flashError(ui->passwordBoxContainer);
-    });
+    }
 }

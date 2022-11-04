@@ -30,12 +30,7 @@
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
-
-    if (QDir("/usr/share/thefile/").exists()) {
-        a.setShareDir("/usr/share/thefile/");
-    } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thefile/")).exists()) {
-        a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thefile/"));
-    }
+    a.setApplicationShareDir("thefile");
     a.installTranslators();
 
     a.addLibraryTranslator(LIBTHEFRISBEE_TRANSLATOR);

@@ -56,7 +56,7 @@ set_target_properties(thefile PROPERTIES
         WIN32_EXECUTABLE TRUE
         CNTP_DATA_SUBDIR thefile)
 
-cntp_init(thefile 17)
+cntp_init(thefile 20)
 cntp_translate(thefile)
 cntp_target_name(thefile "theFile")
 cntp_app_icon(thefile

@@ -20,8 +20,9 @@
 #ifndef BURNJOB_H
 #define BURNJOB_H
 
-#include <tjob.h>
+#include <QCoroTask>
 #include <directory.h>
+#include <tjob.h>
 
 struct BurnJobPrivate;
 class DiskObject;
@@ -32,7 +33,7 @@ class BurnJob : public tJob {
         ~BurnJob();
 
         void prepareIso(QString directory);
-        void startRestore(QIODevice* source, quint64 dataSize);
+        QCoro::Task<> startRestore(QIODevice* source, quint64 dataSize);
 
         bool canCancel();
         bool hasBurnStarted();
@@ -50,7 +51,7 @@ class BurnJob : public tJob {
     private:
         BurnJobPrivate* d;
 
-        void runNextStage();
+        QCoro::Task<> runNextStage();
         void writeBlock();
 
         // tJob interface

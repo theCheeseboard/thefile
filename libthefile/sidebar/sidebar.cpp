@@ -39,6 +39,7 @@
 #include <directory.h>
 #include <diskoperationmanager.h>
 #include <driveobjectmanager.h>
+#include <frisbeeexception.h>
 #include <resourcemanager.h>
 #include <tjobmanager.h>
 #include <tlogger.h>
@@ -195,56 +196,62 @@ void Sidebar::on_devicesView_customContextMenuRequested(const QPoint& pos) {
                 fs->mount();
             });
         } else {
-            menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [=] {
-                fs->unmount()->error([=](QString error) {
+            menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [=]() -> QCoro::Task<> {
+                try {
+                    co_await fs->unmount();
+                } catch (FrisbeeException& ex) {
                     tMessageBox* box = new tMessageBox(this);
                     box->setTitleBarText(tr("Couldn't unmount"));
                     box->setMessageText(tr("Unmounting the drive failed."));
-                    box->setInformativeText(error);
+                    box->setInformativeText(ex.response());
                     box->show(true);
-                });
+                }
             });
         }
     }
 
     if (drive) {
-        if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [=] {
-            drive->eject()->error([=](QString error) {
+        if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [=]() -> QCoro::Task<> {
+            try {
+                co_await drive->eject();
+            } catch (FrisbeeException& ex) {
                 tMessageBox* box = new tMessageBox(this);
                 box->setTitleBarText(tr("Couldn't eject"));
                 box->setMessageText(tr("Ejecting the drive failed."));
-                box->setInformativeText(error);
+                box->setInformativeText(ex.response());
                 box->show(true);
-            });
+            }
         });
     }
 
     if (block && block->cryptoBackingDevice()) {
-        menu->addAction(tr("Lock"), this, [=] {
-            auto performLock = [=] {
-                block->cryptoBackingDevice()->interface<EncryptedInterface>()->lock()->error([ = ](QString error) {
-                        tMessageBox* box = new tMessageBox(this);
-                        box->setTitleBarText(tr("Couldn't lock"));
-                        box->setMessageText(tr("Locking the device failed."));
-                        box->setInformativeText(error);
-                        box->show(true);
-                });
+        menu->addAction(tr("Lock"), this, [=]() -> QCoro::Task<> {
+            auto performLock = [=]() -> QCoro::Task<> {
+                try {
+                    co_await block->cryptoBackingDevice()->interface<EncryptedInterface>()->lock();
+                } catch (FrisbeeException& ex) {
+                    tMessageBox* box = new tMessageBox(this);
+                    box->setTitleBarText(tr("Couldn't lock"));
+                    box->setMessageText(tr("Locking the device failed."));
+                    box->setInformativeText(ex.response());
+                    box->show(true);
+                }
             };
 
             // Unmount the drive first, and then lock it
             if (fs->mountPoints().isEmpty()) {
-                performLock();
+                co_await performLock();
             } else {
-                fs->unmount()->then([=] {
-                                 performLock();
-                             })
-                    ->error([=](QString error) {
-                        tMessageBox* box = new tMessageBox(this);
-                        box->setTitleBarText(tr("Couldn't unmount"));
-                        box->setMessageText(tr("Unmounting the drive failed."));
-                        box->setInformativeText(error);
-                        box->show(true);
-                    });
+                try {
+                    co_await fs->unmount();
+                    co_await performLock();
+                } catch (FrisbeeException& ex) {
+                    tMessageBox* box = new tMessageBox(this);
+                    box->setTitleBarText(tr("Couldn't unmount"));
+                    box->setMessageText(tr("Unmounting the drive failed."));
+                    box->setInformativeText(ex.response());
+                    box->show(true);
+                }
             }
         });
     }
@@ -311,19 +318,19 @@ bool Sidebar::eventFilter(QObject* watched, QEvent* event) {
     return false;
 }
 
-void Sidebar::mount(DiskObject* disk) {
+QCoro::Task<> Sidebar::mount(DiskObject* disk) {
     // Mount and navigate to the item
     FilesystemInterface* fs = disk->interface<FilesystemInterface>();
     EncryptedInterface* encrypted = disk->interface<EncryptedInterface>();
     if (fs) {
         if (fs->mountPoints().isEmpty()) {
             // We need to mount this disk first
-            fs->mount()->then([=] {
-                           emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
-                       })
-                ->error([=](QString error) {
-                    tDebug("Sidebar") << "Could not mount" << disk->displayName() << "-" << error;
-                });
+            try {
+                co_await fs->mount();
+                emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
+            } catch (FrisbeeException& ex) {
+                tDebug("Sidebar") << "Could not mount" << disk->displayName() << "-" << ex.response();
+            }
         } else {
             emit navigate(QUrl::fromLocalFile(fs->mountPoints().first()));
         }

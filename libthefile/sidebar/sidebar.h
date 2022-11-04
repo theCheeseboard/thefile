@@ -20,11 +20,12 @@
 #ifndef SIDEBAR_H
 #define SIDEBAR_H
 
-#include <QWidget>
-#include <QListWidgetItem>
-#include <QUrl>
-#include <QStyledItemDelegate>
 #include "directory.h"
+#include <QCoroTask>
+#include <QListWidgetItem>
+#include <QStyledItemDelegate>
+#include <QUrl>
+#include <QWidget>
 
 namespace Ui {
     class Sidebar;
@@ -60,7 +61,7 @@ class Sidebar : public QWidget {
         SidebarPrivate* d;
 
         bool eventFilter(QObject* watched, QEvent* event);
-        void mount(DiskObject* disk);
+        QCoro::Task<> mount(DiskObject* disk);
 };
 
 class SidebarDelegate : public QStyledItemDelegate {
