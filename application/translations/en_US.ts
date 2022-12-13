@@ -517,163 +517,138 @@ Total progress: %4 of %5</source>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="264"/>
         <source>theFile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="138"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="265"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="141"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="267"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="150"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="269"/>
         <source>New Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="271"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="273"/>
         <source>Close Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="165"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="275"/>
         <source>Ctrl+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="173"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="277"/>
         <source>Show Hidden Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="176"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="279"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="185"/>
-        <location filename="../mainwindow.cpp" line="225"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="281"/>
+        <location filename="../mainwindow.cpp" line="231"/>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="283"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="197"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="285"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="200"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="287"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="209"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="289"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="212"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="291"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="221"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="293"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="224"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="295"/>
         <source>Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="233"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="297"/>
         <source>Move to Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="236"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="299"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="245"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="301"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="248"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="303"/>
         <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="257"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="305"/>
         <source>New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="260"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="307"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="269"/>
-        <location filename="../mainwindow.cpp" line="186"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="309"/>
+        <location filename="../mainwindow.cpp" line="189"/>
         <source>New Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="272"/>
-        <location filename="../../../build-theFile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="311"/>
         <source>Ctrl+Shift+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="178"/>
+        <location filename="../mainwindow.cpp" line="181"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
+        <location filename="../mainwindow.cpp" line="231"/>
         <source>Enter a location to go to</source>
         <translation type="unfinished"></translation>
     </message>

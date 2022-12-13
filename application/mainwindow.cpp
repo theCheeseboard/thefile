@@ -104,6 +104,9 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
 
     updateMenuActions();
+
+    ui->windowTabber->setShowNewTabButton(true);
+    connect(ui->windowTabber, &tWindowTabber::newTabRequested, ui->actionNewTab, &QAction::trigger);
 }
 
 MainWindow::~MainWindow() {
@@ -111,11 +114,11 @@ MainWindow::~MainWindow() {
     delete d;
 }
 
-void MainWindow::newTab() {
-    newTab(QUrl());
+FileTab* MainWindow::newTab() {
+    return newTab(QUrl());
 }
 
-void MainWindow::newTab(QUrl url) {
+FileTab* MainWindow::newTab(QUrl url) {
     tWindowTabberButton* button = new tWindowTabberButton();
 
     FileTab* tab = new FileTab();
@@ -185,11 +188,13 @@ void MainWindow::newTab(QUrl url) {
 
     QAction* newFolderAction = new QAction(QIcon::fromTheme("folder-new"), tr("New Folder"));
     connect(newFolderAction, &QAction::triggered, this, [=] {
-
+        if (tab->lastColumn()) tab->lastColumn()->newFolder();
     });
     button->addActions({newFolderAction});
 
     ui->windowTabber->addButton(button);
+
+    return tab;
 }
 
 void MainWindow::on_actionExit_triggered() {
@@ -197,7 +202,8 @@ void MainWindow::on_actionExit_triggered() {
 }
 
 void MainWindow::on_actionNewTab_triggered() {
-    newTab();
+    auto tab = newTab();
+    ui->stackedWidget->setCurrentWidget(tab);
 }
 
 void MainWindow::on_actionCloseTab_triggered() {
@@ -225,11 +231,7 @@ void MainWindow::on_actionGo_triggered() {
     QString location = tInputDialog::getText(this, tr("Go"), tr("Enter a location to go to"), QLineEdit::Normal, text, &ok);
     if (ok) {
         QUrl url = QUrl::fromUserInput(location);
-        //        if (ResourceManager::isDirectoryHandlerRegistered(url.scheme())) {
         static_cast<FileTab*>(ui->stackedWidget->currentWidget())->setCurrentUrl(url);
-        //        } else {
-        //            QMessageBox::warning(this, tr("Can't open that URL"), tr("%1 URLs are not supported").arg(url.scheme()));
-        //        }
     }
 }
 

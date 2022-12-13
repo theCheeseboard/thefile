@@ -28,6 +28,7 @@ namespace Ui {
 }
 QT_END_NAMESPACE
 
+class FileTab;
 struct MainWindowPrivate;
 class MainWindow : public QMainWindow {
         Q_OBJECT
@@ -36,8 +37,8 @@ class MainWindow : public QMainWindow {
         MainWindow(QWidget* parent = nullptr);
         ~MainWindow();
 
-        void newTab();
-        void newTab(QUrl url);
+        FileTab *newTab();
+        FileTab* newTab(QUrl url);
 
     private slots:
         void on_actionExit_triggered();
@@ -58,7 +59,7 @@ class MainWindow : public QMainWindow {
 
         void on_actionMove_to_Trash_triggered();
 
-        void on_stackedWidget_switchingFrame(int );
+        void on_stackedWidget_switchingFrame(int);
 
         void on_actionSelect_All_triggered();
 
