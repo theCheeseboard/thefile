@@ -4,17 +4,17 @@
 <context>
     <name>BookmarksSidebarSection</name>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="39"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="41"/>
         <source>For %1</source>
         <translation type="unfinished">Für %1</translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="40"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="42"/>
         <source>Remove from bookmarks</source>
         <translation type="unfinished">Von Lesezeichen entfernen</translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="52"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="54"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../filecolumn.cpp" line="130"/>
         <location filename="../filecolumn.cpp" line="219"/>
-        <location filename="../filecolumn.cpp" line="477"/>
+        <location filename="../filecolumn.cpp" line="480"/>
         <source>Trash</source>
         <translation>Mülleimer</translation>
     </message>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="206"/>
-        <location filename="../filecolumn.cpp" line="564"/>
+        <location filename="../filecolumn.cpp" line="567"/>
         <source>New Folder</source>
         <translation>Neuer Ordner</translation>
     </message>
@@ -150,7 +150,7 @@
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="287"/>
-        <location filename="../filecolumn.cpp" line="680"/>
+        <location filename="../filecolumn.cpp" line="681"/>
         <source>For %1</source>
         <translation type="unfinished">Für %1</translation>
     </message>
@@ -223,78 +223,78 @@
         <translation>Inhalte brennen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="446"/>
+        <location filename="../filecolumn.cpp" line="447"/>
         <source>No items here!</source>
         <translation type="unfinished">Hier sind keine Elemente!</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="447"/>
+        <location filename="../filecolumn.cpp" line="448"/>
         <source>This folder is empty.</source>
         <translation>Dieser Ordner ist leer.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="450"/>
+        <location filename="../filecolumn.cpp" line="451"/>
         <source>Not Found</source>
         <translation>Nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="451"/>
+        <location filename="../filecolumn.cpp" line="452"/>
         <source>This folder doesn&apos;t exist.</source>
         <translation>Dieser Ordner existiert nicht.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="454"/>
+        <location filename="../filecolumn.cpp" line="455"/>
         <source>Permission Denied</source>
         <translation>Zugriff verweigert</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="455"/>
+        <location filename="../filecolumn.cpp" line="456"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
         <translation>Sieht so aus, als hättest keine Rechte auf diesen Ordner zuzugreifen.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="458"/>
+        <location filename="../filecolumn.cpp" line="459"/>
         <source>Can&apos;t view this folder</source>
         <translation>Kann diesen Ordner nicht anzeigen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="459"/>
+        <location filename="../filecolumn.cpp" line="460"/>
         <source>We can&apos;t show you the contents of this folder.</source>
         <translation>Wir können dir den Inhalt dieses Ordner nicht anzeigen.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="478"/>
+        <location filename="../filecolumn.cpp" line="481"/>
         <source>Empty Trash</source>
         <translation>Mülleimer leeren</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="563"/>
-        <location filename="../filecolumn.cpp" line="690"/>
+        <location filename="../filecolumn.cpp" line="566"/>
+        <location filename="../filecolumn.cpp" line="691"/>
         <source>For this folder</source>
         <translation>Für diesen Ordner</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="565"/>
+        <location filename="../filecolumn.cpp" line="568"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="681"/>
+        <location filename="../filecolumn.cpp" line="682"/>
         <source>Copy In</source>
         <translation>Kopieren in</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="684"/>
+        <location filename="../filecolumn.cpp" line="685"/>
         <source>Move In</source>
         <translation>Bewegen in</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="691"/>
+        <location filename="../filecolumn.cpp" line="692"/>
         <source>Copy Here</source>
         <translation>Hierher kopieren</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="694"/>
+        <location filename="../filecolumn.cpp" line="695"/>
         <source>Move Here</source>
         <translation>Hierher verschieben</translation>
     </message>

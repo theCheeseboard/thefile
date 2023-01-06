@@ -19,22 +19,25 @@
  * *************************************/
 #include "filemodel.h"
 
-#include <QUrl>
 #include <QDir>
-#include <tlogger.h>
+#include <QMimeData>
+#include <QMimeDatabase>
+#include <QTimer>
+#include <QUrl>
 #include <resourcemanager.h>
+#include <tlogger.h>
 
 struct FileModelPrivate {
-    DirectoryPtr currentDir;
-    QList<Directory::FileInformation> files;
-    bool isFile = false;
-    QList<FileTab::Filter> filters;
+        DirectoryPtr currentDir;
+        QList<Directory::FileInformation> files;
+        bool isFile = false;
+        QList<FileTab::Filter> filters;
 
-    QString currentError;
+        QString currentError;
 };
 
-FileModel::FileModel(DirectoryPtr directory, QObject* parent)
-    : QAbstractListModel(parent) {
+FileModel::FileModel(DirectoryPtr directory, QObject* parent) :
+    QAbstractListModel(parent) {
     d = new FileModelPrivate();
     d->currentDir = directory;
 
@@ -68,21 +71,22 @@ QVariant FileModel::data(const QModelIndex& index, int role) const {
             return file.isHidden;
         case PathSegmentRole:
             return file.pathSegment;
-        case ExcludedByFilterRole: {
-            if (d->filters.isEmpty()) return false;
-            if (!d->currentDir->isFile(file.name)) return false;
+        case ExcludedByFilterRole:
+            {
+                if (d->filters.isEmpty()) return false;
+                if (!d->currentDir->isFile(file.name)) return false;
 
-            QMimeDatabase db;
-            for (FileTab::Filter filter : d->filters) {
-                if (filter.isMimeFilter) {
-                    if (db.mimeTypeForUrl(file.resource).name() == filter.filter) return false;
-                } else {
-                    QRegularExpression regex(QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(filter.filter)));
-                    if (regex.match(file.name).hasMatch()) return false;
+                QMimeDatabase db;
+                for (FileTab::Filter filter : d->filters) {
+                    if (filter.isMimeFilter) {
+                        if (db.mimeTypeForUrl(file.resource).name() == filter.filter) return false;
+                    } else {
+                        QRegularExpression regex(QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(filter.filter)));
+                        if (regex.match(file.name).hasMatch()) return false;
+                    }
                 }
+                return true;
             }
-            return true;
-        }
     }
 
     return QVariant();
@@ -92,32 +96,30 @@ QString FileModel::currentError() {
     return d->currentError;
 }
 
-void FileModel::reloadData() {
+QCoro::Task<> FileModel::reloadData() {
     beginResetModel();
 
-    d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst | QDir::IgnoreCase)->then([ = ] (FileInformationList fileInfo) {
-        d->files = fileInfo;
+    try {
+        d->files = co_await d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst | QDir::IgnoreCase);
         if (d->files.isEmpty()) {
             d->currentError = "error.no-items";
         } else {
             d->currentError = "";
         }
-        endResetModel();
-    })->error([ = ](QString error) {
-        tWarn("FileModel") << "Could not list files:" << error;
+    } catch (DirectoryOperationException ex) {
+        tWarn("FileModel") << "Could not list files:" << ex.error();
         d->files.clear();
-        d->currentError = error;
-        endResetModel();
-    });
-    d->currentDir->exists()->then([ = ](bool exists) {
-        d->isFile = !exists;
-        emit isFileChanged();
-    });
+        d->currentError = ex.error();
+    }
+
+    endResetModel();
+
+    d->isFile = !co_await d->currentDir->exists();
+    emit isFileChanged();
 }
 
-
-FileDelegate::FileDelegate(QObject* parent) : QStyledItemDelegate(parent) {
-
+FileDelegate::FileDelegate(QObject* parent) :
+    QStyledItemDelegate(parent) {
 }
 
 void FileDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {

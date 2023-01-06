@@ -20,10 +20,10 @@
 #ifndef FILEMODEL_H
 #define FILEMODEL_H
 
-#include <QAbstractListModel>
-#include <QStyledItemDelegate>
 #include "directory.h"
 #include "filetab.h"
+#include <QAbstractListModel>
+#include <QStyledItemDelegate>
 
 struct FileModelPrivate;
 class FileModel : public QAbstractListModel {
@@ -58,7 +58,7 @@ class FileModel : public QAbstractListModel {
 
     private:
         FileModelPrivate* d;
-        void reloadData();
+        QCoro::Task<> reloadData();
 };
 
 class FileDelegate : public QStyledItemDelegate {

@@ -43,20 +43,19 @@ class TrashDirectory : public Directory {
 
         // SchemeHandler interface
     public:
-        tPromise<bool>* exists();
+        QCoro::Task<bool> exists();
         bool isFile(QString filename);
         QUrl url();
-        tPromise<QList<FileInformation>>* list(QDir::Filters filters, QDir::SortFlags sortFlags);
-        tPromise<FileInformation>* fileInformation(QString filename);
-        tPromise<QIODevice*>* open(QString filename, QIODevice::OpenMode mode);
-        tPromise<void>* mkpath(QString filename);
+        QCoro::Task<QList<FileInformation>> list(QDir::Filters filters, QDir::SortFlags sortFlags);
+        QCoro::Task<FileInformation> fileInformation(QString filename);
+        QCoro::Task<QIODevice*> open(QString filename, QIODevice::OpenMode mode);
+        QCoro::Task<> mkpath(QString filename);
         bool canTrash(QString filename);
-        tPromise<QUrl>* trash(QString filename);
-        tPromise<void>* deleteFile(QString filename);
+        QCoro::Task<QUrl> trash(QString filename);
+        QCoro::Task<> deleteFile(QString filename);
         bool canMove(QString filename, QUrl to);
-        tPromise<void>* move(QString filename, QUrl to);
+        QCoro::Task<> move(QString filename, QUrl to);
         QVariant special(QString operation, QVariantMap args);
 };
-Q_DECLARE_METATYPE(tPromise<void>*)
 
 #endif // TRASHDIRECTORY_H

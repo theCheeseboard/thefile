@@ -20,8 +20,8 @@
 #ifndef FILETRANSFERJOB_H
 #define FILETRANSFERJOB_H
 
-#include <tjob.h>
 #include <directory.h>
+#include <tjob.h>
 
 struct FileTransferJobPrivate;
 class FileTransferJob : public tJob {
@@ -65,10 +65,10 @@ class FileTransferJob : public tJob {
     private:
         FileTransferJobPrivate* d;
 
-        void fileDiscovery();
+        QCoro::Task<> fileDiscovery();
         void conflictCheck();
         void transferFiles();
-        void transferNextFile();
+        QCoro::Task<> transferNextFile();
 
         void setJobCancelled();
 

@@ -20,24 +20,25 @@
 #include "filetab.h"
 #include "ui_filetab.h"
 
-#include <QUrl>
-#include <QStandardPaths>
-#include <QDir>
 #include "filecolumn.h"
 #include "filecolumnmanager.h"
+#include <QDir>
 #include <QListView>
-#include <tvariantanimation.h>
 #include <QScrollBar>
-#include <tlogger.h>
+#include <QStandardPaths>
+#include <QTimer>
+#include <QUrl>
 #include <resourcemanager.h>
+#include <tlogger.h>
+#include <tvariantanimation.h>
 
 struct FileTabPrivate {
-    FileColumnManager* columnManager;
-    DirectoryPtr currentDirectory;
-    QList<DirectoryPtr> currentColumns;
-    QList<FileColumn*> currentColumnWidgets;
+        FileColumnManager* columnManager;
+        DirectoryPtr currentDirectory;
+        QList<DirectoryPtr> currentColumns;
+        QList<FileColumn*> currentColumnWidgets;
 
-    bool keepAtEnd = true;
+        bool keepAtEnd = true;
 };
 
 FileTab::FileTab(QWidget* parent) :
@@ -53,7 +54,7 @@ FileTab::FileTab(QWidget* parent) :
     connect(ui->sidebar, &Sidebar::moveFiles, this, &FileTab::moveFiles);
     connect(ui->sidebar, &Sidebar::copyFiles, this, &FileTab::copyFiles);
 
-    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [ = ](int value) {
+    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [=](int value) {
         d->keepAtEnd = ui->scrollArea->horizontalScrollBar()->maximum() == value;
         int max = 0;
         for (FileColumn* c : d->currentColumnWidgets) max += c->width();
@@ -61,7 +62,7 @@ FileTab::FileTab(QWidget* parent) :
         int margin = value + ui->scrollArea->width() - max;
         ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
     });
-    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [ = ](int min, int max) {
+    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [=](int min, int max) {
         if (d->keepAtEnd) {
             ui->scrollArea->horizontalScrollBar()->setValue(max);
         }
@@ -109,7 +110,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
     bool columnsAdded = directories.count() > d->currentColumns.count();
     bool columnsRemoved = directories.count() < d->currentColumns.count();
 
-    //Modify the current columns
+    // Modify the current columns
     for (int i = 0; i < directories.count(); i++) {
         DirectoryPtr directory = directories.at(i);
 
@@ -124,7 +125,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
             col->setDirectory(directory);
             col->setSelected(nextPath);
         } else if (d->currentColumns.count() <= i) {
-            //We need to add a new column
+            // We need to add a new column
             col = new FileColumn(directory, d->columnManager);
             col->setSelected(nextPath);
             connect(col, &FileColumn::navigate, this, &FileTab::setCurrentDir);
@@ -163,8 +164,8 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
             }
 
             if (columnsRemoved) {
-                //Keep the scrollbar where it is
-                //TODO: Adjust the scrollbar so that at least one panel is visible
+                // Keep the scrollbar where it is
+                // TODO: Adjust the scrollbar so that at least one panel is visible
                 int max = -ui->scrollArea->width();
                 for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
                 if (max < currentWidth) {
@@ -172,7 +173,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                     ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
                 }
             } else {
-                //Reduce the extra margin at the end
+                // Reduce the extra margin at the end
                 int max = 0;
                 for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
 
@@ -180,10 +181,10 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
             }
             if (columnsAdded) {
-                QTimer::singleShot(0, this, [ = ] {
-                    //Scroll to the end
+                QTimer::singleShot(0, this, [=] {
+                    // Scroll to the end
                     tVariantAnimation* anim = new tVariantAnimation(this);
-                    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [ = ](int min, int max) {
+                    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [=](int min, int max) {
                         Q_UNUSED(min)
                         anim->setEndValue(max);
                     });
@@ -191,7 +192,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                     anim->setStartValue(ui->scrollArea->horizontalScrollBar()->maximum());
                     anim->setDuration(100);
                     anim->setEasingCurve(QEasingCurve::OutCubic);
-                    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+                    connect(anim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
                         ui->scrollArea->horizontalScrollBar()->setValue(value.toInt());
                     });
                     connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);

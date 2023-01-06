@@ -377,7 +377,7 @@ QMenu* FileColumn::menuForSelectedItems() {
         // TODO: Asynchronous
         if (d->manager->fileTransfersSupported()) {
             DirectoryPtr dir = ResourceManager::directoryForUrl(url);
-            if (dir && dir->exists()->await().result) {
+            if (dir && QCoro::waitFor(dir->exists())) {
                 if (!DriveObjectManager::opticalDisks().isEmpty()) {
                     menu->addSeparator();
                     menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [=] {
@@ -428,7 +428,8 @@ void FileColumn::reload() {
 void FileColumn::updateItems() {
     QString error = d->model->currentError();
     if (d->model->isFile()) {
-        ResourceManager::parentDirectoryForUrl(d->directory->url())->fileInformation(d->directory->url().fileName())->then([=](Directory::FileInformation fileInfo) {
+        ([this]() -> QCoro::Task<> {
+            auto fileInfo = co_await ResourceManager::parentDirectoryForUrl(d->directory->url())->fileInformation(d->directory->url().fileName());
             ui->fileIconLabel->setPixmap(fileInfo.icon.pixmap(SC_DPI_T(QSize(128, 128), QSize)));
             ui->filenameLabel->setText(fileInfo.name);
 
@@ -437,7 +438,7 @@ void FileColumn::updateItems() {
             ui->fileInfoLabel->setText(fileInfoText.join(" · "));
 
             ui->stackedWidget->setCurrentWidget(ui->filePage);
-        });
+        })();
     } else if (error.isEmpty()) {
         ui->stackedWidget->setCurrentWidget(ui->folderPage);
     } else {
@@ -471,6 +472,8 @@ void FileColumn::updateItems() {
         action->deleteLater();
     }
     d->actions.clear();
+
+    if (!d->directory) return;
 
     if (d->directory->url().scheme() == "trash") {
         FileColumnAction* trashAction = new FileColumnAction(this);
@@ -591,8 +594,8 @@ void FileColumn::on_folderErrorPage_customContextMenuRequested(const QPoint& pos
     connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
 }
 
-void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
-    if (index.data(FileModel::ExcludedByFilterRole).toBool()) return;
+QCoro::Task<> FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
+    if (index.data(FileModel::ExcludedByFilterRole).toBool()) co_return;
 
     // Find the default action
     FileTab::OpenFileButton defaultAction;
@@ -600,16 +603,14 @@ void FileColumn::on_folderView_doubleClicked(const QModelIndex& index) {
         if (action.defaultAction) defaultAction = action;
     }
 
-    if (!defaultAction.defaultAction) return;
+    if (!defaultAction.defaultAction) co_return;
 
     QUrl url = index.data(FileModel::UrlRole).toUrl();
     DirectoryPtr dir = ResourceManager::directoryForUrl(url);
     if (dir) {
-        dir->exists()->then([=](bool exists) {
-            if (!exists) {
-                defaultAction.activated({url});
-            }
-        });
+        if (!co_await dir->exists()) {
+            defaultAction.activated({url});
+        }
     } else {
         defaultAction.activated({url});
     }
@@ -676,7 +677,7 @@ void FileColumn::dropEvent(QDropEvent* event) {
         if (index.isValid()) {
             QUrl url = index.data(FileModel::UrlRole).toUrl();
             DirectoryPtr dir = ResourceManager::directoryForUrl(url);
-            if (dir && dir->exists()->await().result) {
+            if (dir && QCoro::waitFor(dir->exists())) {
                 menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
                 menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [=] {
                     emit copyFiles(urls, dir);

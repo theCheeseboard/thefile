@@ -214,13 +214,13 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
 <context>
     <name>FileTransferJob</name>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="148"/>
+        <location filename="../jobs/filetransferjob.cpp" line="150"/>
         <source>Counting files to transfer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="180"/>
-        <location filename="../jobs/filetransferjob.cpp" line="217"/>
+        <location filename="../jobs/filetransferjob.cpp" line="177"/>
+        <location filename="../jobs/filetransferjob.cpp" line="214"/>
         <source>Counted %n files to transfer...</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -228,22 +228,22 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="248"/>
+        <location filename="../jobs/filetransferjob.cpp" line="243"/>
         <source>Checking for file conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="277"/>
+        <location filename="../jobs/filetransferjob.cpp" line="272"/>
         <source>Waiting for conflict resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="285"/>
+        <location filename="../jobs/filetransferjob.cpp" line="280"/>
         <source>File Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="286"/>
+        <location filename="../jobs/filetransferjob.cpp" line="281"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -251,18 +251,18 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="288"/>
+        <location filename="../jobs/filetransferjob.cpp" line="283"/>
         <source>Resolve File Conflicts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="125"/>
-        <location filename="../jobs/filetransferjob.cpp" line="310"/>
+        <location filename="../jobs/filetransferjob.cpp" line="127"/>
+        <location filename="../jobs/filetransferjob.cpp" line="305"/>
         <source>Copying Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="337"/>
+        <location filename="../jobs/filetransferjob.cpp" line="332"/>
         <source>Moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -270,7 +270,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="338"/>
+        <location filename="../jobs/filetransferjob.cpp" line="333"/>
         <source>Successfully moved %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -278,7 +278,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="340"/>
+        <location filename="../jobs/filetransferjob.cpp" line="335"/>
         <source>Copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -286,7 +286,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="341"/>
+        <location filename="../jobs/filetransferjob.cpp" line="336"/>
         <source>Successfully copied %n files</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -294,17 +294,17 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="348"/>
+        <location filename="../jobs/filetransferjob.cpp" line="343"/>
         <source>Files Transferred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="368"/>
+        <location filename="../jobs/filetransferjob.cpp" line="362"/>
         <source>Moving %n</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="422"/>
+        <location filename="../jobs/filetransferjob.cpp" line="392"/>
         <source>Copying %1
 %2 of %3
 
@@ -312,32 +312,32 @@ Total progress: %4 of %5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="439"/>
+        <location filename="../jobs/filetransferjob.cpp" line="409"/>
         <source>Cancelling operation...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="465"/>
+        <location filename="../jobs/filetransferjob.cpp" line="435"/>
         <source>Waiting for error resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="473"/>
+        <location filename="../jobs/filetransferjob.cpp" line="443"/>
         <source>File Transfer Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="474"/>
+        <location filename="../jobs/filetransferjob.cpp" line="444"/>
         <source>An error occurred trying to transfer files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="475"/>
+        <location filename="../jobs/filetransferjob.cpp" line="445"/>
         <source>Resolve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="499"/>
+        <location filename="../jobs/filetransferjob.cpp" line="469"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>

@@ -3,7 +3,9 @@
 #include "../bookmarksmodel.h"
 #include <QListView>
 #include <QMenu>
+#include <QTimer>
 #include <bookmarkmanager.h>
+#include <tapplication.h>
 
 struct BookmarksSidebarSectionPrivate {
         QListView* list;
@@ -27,7 +29,7 @@ BookmarksSidebarSection::BookmarksSidebarSection(QObject* parent) :
 
     connect(d->list, &QListView::activated, this, [this](QModelIndex index) {
         // Ignore if we're trying to right click
-        if (qApp->mouseButtons() & Qt::RightButton) return;
+        if (tApplication::mouseButtons() & Qt::RightButton) return;
 
         // Navigate to the item
         emit navigate(index.data(BookmarksModel::UrlRole).toUrl());

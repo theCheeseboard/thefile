@@ -20,9 +20,9 @@
 #ifndef FILECOLUMN_H
 #define FILECOLUMN_H
 
-#include <QWidget>
-#include <QUrl>
 #include "directory.h"
+#include <QUrl>
+#include <QWidget>
 
 namespace Ui {
     class FileColumn;
@@ -72,7 +72,7 @@ class FileColumn : public QWidget {
     private slots:
         void on_folderErrorPage_customContextMenuRequested(const QPoint& pos);
 
-        void on_folderView_doubleClicked(const QModelIndex& index);
+        QCoro::Task<> on_folderView_doubleClicked(const QModelIndex& index);
 
         void on_folderScroller_customContextMenuRequested(const QPoint& pos);
 

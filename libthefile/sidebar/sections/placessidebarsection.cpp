@@ -1,12 +1,12 @@
 #include "placessidebarsection.h"
 
 #include "../sidebarsection.h"
-#include "sidebar/sidebar.h"
 #include <QDir>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QListWidget>
 #include <QMenu>
+#include <QMimeData>
 #include <QStandardPaths>
 #include <QUrl>
 #include <resourcemanager.h>
@@ -91,7 +91,7 @@ bool PlacesSidebarSection::eventFilter(QObject* watched, QEvent* event) {
                     for (const QUrl& url : qAsConst(urls)) {
                         ResourceManager::parentDirectoryForUrl(url)->trash(url.fileName());
                     }
-                } else if (dir && dir->exists()->await().result) {
+                } else if (dir && QCoro::waitFor(dir->exists())) {
                     QMenu* menu = new QMenu();
                     menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI_W(300, view)))));
                     menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [this, urls, dir] {

@@ -4,17 +4,17 @@
 <context>
     <name>BookmarksSidebarSection</name>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="39"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="41"/>
         <source>For %1</source>
         <translation type="unfinished">Cho %1</translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="40"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="42"/>
         <source>Remove from bookmarks</source>
         <translation type="unfinished">Xóa khỏi thẻ đánh dấu</translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="52"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="54"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../filecolumn.cpp" line="130"/>
         <location filename="../filecolumn.cpp" line="219"/>
-        <location filename="../filecolumn.cpp" line="477"/>
+        <location filename="../filecolumn.cpp" line="480"/>
         <source>Trash</source>
         <translation>Thùng rác</translation>
     </message>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="206"/>
-        <location filename="../filecolumn.cpp" line="564"/>
+        <location filename="../filecolumn.cpp" line="567"/>
         <source>New Folder</source>
         <translation>Thư mục mới</translation>
     </message>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="287"/>
-        <location filename="../filecolumn.cpp" line="680"/>
+        <location filename="../filecolumn.cpp" line="681"/>
         <source>For %1</source>
         <translation>Cho %1</translation>
     </message>
@@ -221,78 +221,78 @@
         <translation>Ghi nội dung vào đĩa</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="446"/>
+        <location filename="../filecolumn.cpp" line="447"/>
         <source>No items here!</source>
         <translation>Không có mục nào đây!</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="447"/>
+        <location filename="../filecolumn.cpp" line="448"/>
         <source>This folder is empty.</source>
         <translation>Thư mục này trống.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="450"/>
+        <location filename="../filecolumn.cpp" line="451"/>
         <source>Not Found</source>
         <translation>Không thể tìm</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="451"/>
+        <location filename="../filecolumn.cpp" line="452"/>
         <source>This folder doesn&apos;t exist.</source>
         <translation>Thư mục này không tồn tại</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="454"/>
+        <location filename="../filecolumn.cpp" line="455"/>
         <source>Permission Denied</source>
         <translation>Quyền bị từ chối</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="455"/>
+        <location filename="../filecolumn.cpp" line="456"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
         <translation>Có vẻ như bạn không có quyền truy cập thư mục này.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="458"/>
+        <location filename="../filecolumn.cpp" line="459"/>
         <source>Can&apos;t view this folder</source>
         <translation>Không thể xem thư mục</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="459"/>
+        <location filename="../filecolumn.cpp" line="460"/>
         <source>We can&apos;t show you the contents of this folder.</source>
         <translation>Chúng tôi không thể hiển thị nội dung của thư mục này.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="478"/>
+        <location filename="../filecolumn.cpp" line="481"/>
         <source>Empty Trash</source>
         <translation>Đổ thùng rác</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="563"/>
-        <location filename="../filecolumn.cpp" line="690"/>
+        <location filename="../filecolumn.cpp" line="566"/>
+        <location filename="../filecolumn.cpp" line="691"/>
         <source>For this folder</source>
         <translation>Cho thư mục này</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="565"/>
+        <location filename="../filecolumn.cpp" line="568"/>
         <source>Paste</source>
         <translation>Dán</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="681"/>
+        <location filename="../filecolumn.cpp" line="682"/>
         <source>Copy In</source>
         <translation>Chép vào</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="684"/>
+        <location filename="../filecolumn.cpp" line="685"/>
         <source>Move In</source>
         <translation>Chuyển vào</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="691"/>
+        <location filename="../filecolumn.cpp" line="692"/>
         <source>Copy Here</source>
         <translation>Chép đây</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="694"/>
+        <location filename="../filecolumn.cpp" line="695"/>
         <source>Move Here</source>
         <translation>Chuyển đây</translation>
     </message>

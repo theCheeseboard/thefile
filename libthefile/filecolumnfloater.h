@@ -21,6 +21,7 @@
 #define FILECOLUMNFLOATER_H
 
 #include "filecolumn.h"
+#include <QModelIndexList>
 
 namespace Ui {
     class FileColumnFloater;
