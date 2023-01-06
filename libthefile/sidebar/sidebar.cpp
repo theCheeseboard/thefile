@@ -68,9 +68,16 @@ Sidebar::Sidebar(QWidget* parent) :
             connect(sidebar, &SidebarSection::labelChanged, this, [label, sidebar] {
                 label->setText(sidebar->label());
             });
+            connect(sidebar, &SidebarSection::visibilityChanged, this, [label, sidebar] {
+                label->setVisible(sidebar->visible());
+                sidebar->widget()->setVisible(sidebar->visible());
+            });
             connect(sidebar, &SidebarSection::navigate, this, &Sidebar::navigate);
             connect(sidebar, &SidebarSection::copyFiles, this, &Sidebar::copyFiles);
             connect(sidebar, &SidebarSection::moveFiles, this, &Sidebar::moveFiles);
+
+            label->setVisible(sidebar->visible());
+            sidebar->widget()->setVisible(sidebar->visible());
 
             ui->sidebarContainer->addWidget(label);
             ui->sidebarContainer->addWidget(sidebar->widget());

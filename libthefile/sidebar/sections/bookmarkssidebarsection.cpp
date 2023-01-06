@@ -20,12 +20,14 @@ BookmarksSidebarSection::BookmarksSidebarSection(QObject* parent) :
     d->list = new QListView();
     connect(d->bookmarksModel, &BookmarksModel::modelReset, this, [this] {
         d->list->setFixedHeight(d->list->sizeHintForRow(0) * d->bookmarksModel->rowCount());
+        this->setVisibility(d->bookmarksModel->rowCount() != 0);
     });
     QTimer::singleShot(0, [this] {
         d->list->setFixedHeight(d->list->sizeHintForRow(0) * d->bookmarksModel->rowCount());
     });
     d->list->setModel(d->bookmarksModel);
     d->list->setContextMenuPolicy(Qt::CustomContextMenu);
+    this->setVisibility(d->bookmarksModel->rowCount() != 0);
 
     connect(d->list, &QListView::activated, this, [this](QModelIndex index) {
         // Ignore if we're trying to right click

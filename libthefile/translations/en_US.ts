@@ -4,17 +4,17 @@
 <context>
     <name>BookmarksSidebarSection</name>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="41"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="43"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="42"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="44"/>
         <source>Remove from bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="54"/>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="56"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
