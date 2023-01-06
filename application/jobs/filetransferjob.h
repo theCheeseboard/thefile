@@ -67,7 +67,7 @@ class FileTransferJob : public tJob {
 
         QCoro::Task<> fileDiscovery();
         void conflictCheck();
-        void transferFiles();
+        QCoro::Task<> transferFiles();
         QCoro::Task<> transferNextFile();
 
         void setJobCancelled();

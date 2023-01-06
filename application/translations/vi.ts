@@ -216,91 +216,91 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
 <context>
     <name>FileTransferJob</name>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="150"/>
+        <location filename="../jobs/filetransferjob.cpp" line="151"/>
         <source>Counting files to transfer...</source>
         <translation>Đang đếm tệp để chuyển...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="177"/>
-        <location filename="../jobs/filetransferjob.cpp" line="214"/>
+        <location filename="../jobs/filetransferjob.cpp" line="178"/>
+        <location filename="../jobs/filetransferjob.cpp" line="221"/>
         <source>Counted %n files to transfer...</source>
         <translation>
             <numerusform>Đã đếm %n tệp để chuyển...</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="243"/>
+        <location filename="../jobs/filetransferjob.cpp" line="250"/>
         <source>Checking for file conflicts</source>
         <translation>Đang kiểm tra xung đột tệp</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="272"/>
+        <location filename="../jobs/filetransferjob.cpp" line="279"/>
         <source>Waiting for conflict resolution</source>
         <translation>Đang chờ quyết định xung đột</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="280"/>
+        <location filename="../jobs/filetransferjob.cpp" line="287"/>
         <source>File Conflicts</source>
         <translation>Xung đột tệp</translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="281"/>
+        <location filename="../jobs/filetransferjob.cpp" line="288"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
         <translation>
             <numerusform>Đã tìm thấy %n tệp trong thư mục đích có tên cùng với tệp đang bị chuyển. Giải quyết các xung đột để tiếp tục chuyển tệp.</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="283"/>
+        <location filename="../jobs/filetransferjob.cpp" line="290"/>
         <source>Resolve File Conflicts</source>
         <translation>Giải quyết xung đột</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="127"/>
-        <location filename="../jobs/filetransferjob.cpp" line="305"/>
+        <location filename="../jobs/filetransferjob.cpp" line="128"/>
+        <location filename="../jobs/filetransferjob.cpp" line="312"/>
         <source>Copying Files</source>
         <translation>Đang chép tệp</translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="332"/>
+        <location filename="../jobs/filetransferjob.cpp" line="333"/>
         <source>Moved %n files</source>
         <translation>
             <numerusform>Đã chuyển %n tệp</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="333"/>
+        <location filename="../jobs/filetransferjob.cpp" line="334"/>
         <source>Successfully moved %n files</source>
         <translation>
             <numerusform>Đã chuyển %n tệp thành công</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="335"/>
+        <location filename="../jobs/filetransferjob.cpp" line="336"/>
         <source>Copied %n files</source>
         <translation>
             <numerusform>Đã chép %n tệp</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="336"/>
+        <location filename="../jobs/filetransferjob.cpp" line="337"/>
         <source>Successfully copied %n files</source>
         <translation>
             <numerusform>Đã chép %n tệp thành công</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="343"/>
+        <location filename="../jobs/filetransferjob.cpp" line="344"/>
         <source>Files Transferred</source>
         <translation>Tệp đã bị chuyển</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="362"/>
+        <location filename="../jobs/filetransferjob.cpp" line="400"/>
         <source>Moving %n</source>
         <translation>Đang chuyển %n</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="392"/>
+        <location filename="../jobs/filetransferjob.cpp" line="430"/>
         <source>Copying %1
 %2 of %3
 
@@ -311,32 +311,32 @@ Total progress: %4 of %5</source>
 Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="409"/>
+        <location filename="../jobs/filetransferjob.cpp" line="447"/>
         <source>Cancelling operation...</source>
         <translation>Đang hủy hoạt động...</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="435"/>
+        <location filename="../jobs/filetransferjob.cpp" line="357"/>
         <source>Waiting for error resolution</source>
         <translation>Đang chờ quyết định lỗi</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="443"/>
+        <location filename="../jobs/filetransferjob.cpp" line="365"/>
         <source>File Transfer Error</source>
         <translation>Lỗi chuyển tệp</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="444"/>
+        <location filename="../jobs/filetransferjob.cpp" line="366"/>
         <source>An error occurred trying to transfer files.</source>
         <translation>Một lỗi xảy ra khi cố chuyển tệp.</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="445"/>
+        <location filename="../jobs/filetransferjob.cpp" line="367"/>
         <source>Resolve</source>
         <translation>Giải quyết</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="469"/>
+        <location filename="../jobs/filetransferjob.cpp" line="481"/>
         <source>Cancelled</source>
         <translation>Đã hủy</translation>
     </message>

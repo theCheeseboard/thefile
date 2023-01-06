@@ -21,6 +21,7 @@
 
 #include "widgets/filetransferjobwidget.h"
 #include <QCoroFuture>
+#include <QCoroIODevice>
 #include <QElapsedTimer>
 #include <QUrl>
 #include <resourcemanager.h>
@@ -199,10 +200,16 @@ QCoro::Task<> FileTransferJob::fileDiscovery() {
                     results.totalFileSize += info.size;
                     results.sourceInformation.insert(sourceUrl, info);
                 } else {
-                    auto results = co_await ResourceManager::directoryForUrl(sourceUrl)->list(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDir::NoSort);
-                    for (Directory::FileInformation info : results) {
-                        sourceUrls.append(info.resource);
-                    }
+                    auto urls = co_await QtConcurrent::run([sourceUrl] {
+                        QList<QUrl> sourceUrls;
+                        auto directory = ResourceManager::directoryForUrl(sourceUrl);
+                        auto generator = directory->list(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDir::NoSort);
+                        for (const Directory::FileInformation& info : generator) {
+                            sourceUrls.append(info.resource);
+                        }
+                        return sourceUrls;
+                    });
+                    sourceUrls.append(urls);
                 }
 
                 // Cancel the job if a cancellation has been requested
@@ -295,7 +302,7 @@ void FileTransferJob::conflictCheck() {
     watcher->setFuture(future);
 }
 
-void FileTransferJob::transferFiles() {
+QCoro::Task<> FileTransferJob::transferFiles() {
     d->stage = FileTransfer;
     emit transferStageChanged(FileTransfer);
 
@@ -308,18 +315,12 @@ void FileTransferJob::transferFiles() {
     d->totalProgress = d->totalDataToTransfer;
     emit totalProgressChanged(d->totalProgress);
 
-    // Start copying
-    transferNextFile();
-}
+    try {
+        // Start copying
+        while (!d->sourceMappings.isEmpty()) {
+            co_await transferNextFile();
+        }
 
-QCoro::Task<> FileTransferJob::transferNextFile() {
-    // Cancel the job if a cancellation has been requested
-    if (d->cancelled) {
-        setJobCancelled();
-        co_return;
-    }
-
-    if (d->sourceMappings.isEmpty()) {
         // We're done!
         d->stage = Done;
         emit transferStageChanged(Done);
@@ -345,40 +346,77 @@ QCoro::Task<> FileTransferJob::transferNextFile() {
                 n->post();
             }
         }
-    } else {
-        QUrl sourceUrl = d->sourceMappings.keys().first();
-        QUrl destinationUrl = d->sourceMappings.take(sourceUrl);
+    } catch (DirectoryOperationException ex) {
+        // Enter error resolution mode
+        d->stage = ErrorResolution;
+        emit transferStageChanged(ErrorResolution);
 
-        Directory::FileInformation sourceInformation = d->sourceInformation.value(sourceUrl);
-        QString fileName = QFileInfo(sourceUrl.path()).fileName();
+        d->state = RequiresAttention;
+        emit stateChanged(RequiresAttention);
 
-        DirectoryPtr sourceDirectory = ResourceManager::parentDirectoryForUrl(sourceUrl);
-        DirectoryPtr destinationDirectory = ResourceManager::parentDirectoryForUrl(destinationUrl);
+        d->description = tr("Waiting for error resolution");
+        emit descriptionChanged(d->description);
 
-        // Determine what to do with these files
-        if (d->type == Move) {
-            // See if we can just move the file
-            if (sourceDirectory->canMove(sourceUrl.fileName(), destinationUrl)) {
-                d->description = tr("Moving %n").arg(fileName);
-
-                // Delete the destination if it exists
-                if (destinationDirectory->isFile(destinationUrl.fileName())) destinationDirectory->deleteFile(destinationUrl.fileName());
-                co_await destinationDirectory->mkpath(".");
-                co_await sourceDirectory->move(sourceUrl.fileName(), destinationUrl);
-
-                d->progress += sourceInformation.size;
-                d->totalFilesTransferred++;
-                transferNextFile();
-                co_return;
+        if (d->timer.elapsed() < 2000 && d->jobsPopover) {
+            tJobManager::showJobsPopover(d->jobsPopover);
+        } else {
+            if (!d->silent) {
+                tNotification* n = new tNotification();
+                n->setSummary(tr("File Transfer Error"));
+                n->setText(tr("An error occurred trying to transfer files."));
+                n->insertAction("resolve", tr("Resolve"));
+                connect(n, &tNotification::actionClicked, this, [=](QString key) {
+                    if (key == "resolve") {
+                        tJobManager::showJobsPopover(d->jobsPopover);
+                        d->jobsPopover->window()->activateWindow();
+                    }
+                });
+                n->post();
             }
         }
+    }
+}
 
-        try {
-            auto source = co_await sourceDirectory->open(sourceUrl.fileName(), QIODevice::ReadOnly);
+QCoro::Task<> FileTransferJob::transferNextFile() {
+    // Cancel the job if a cancellation has been requested
+    if (d->cancelled) {
+        setJobCancelled();
+        co_return;
+    }
+
+    QUrl sourceUrl = d->sourceMappings.keys().first();
+    QUrl destinationUrl = d->sourceMappings.take(sourceUrl);
+
+    Directory::FileInformation sourceInformation = d->sourceInformation.value(sourceUrl);
+    QString fileName = QFileInfo(sourceUrl.path()).fileName();
+
+    DirectoryPtr sourceDirectory = ResourceManager::parentDirectoryForUrl(sourceUrl);
+    DirectoryPtr destinationDirectory = ResourceManager::parentDirectoryForUrl(destinationUrl);
+
+    // Determine what to do with these files
+    if (d->type == Move) {
+        // See if we can just move the file
+        if (sourceDirectory->canMove(sourceUrl.fileName(), destinationUrl)) {
+            d->description = tr("Moving %n").arg(fileName);
+
+            // Delete the destination if it exists
+            if (destinationDirectory->isFile(destinationUrl.fileName())) destinationDirectory->deleteFile(destinationUrl.fileName());
             co_await destinationDirectory->mkpath(".");
+            co_await sourceDirectory->move(sourceUrl.fileName(), destinationUrl);
+
+            d->progress += sourceInformation.size;
+            d->totalFilesTransferred++;
+            co_return;
+        }
+    }
+
+    try {
+        co_await QtConcurrent::run([this](DirectoryPtr sourceDirectory, DirectoryPtr destinationDirectory, QUrl sourceUrl, QUrl destinationUrl, Directory::FileInformation sourceInformation, QString fileName) {
+            auto source = QCoro::waitFor(sourceDirectory->open(sourceUrl.fileName(), QIODevice::ReadOnly));
+            QCoro::waitFor(destinationDirectory->mkpath("."));
 
             try {
-                auto dest = co_await destinationDirectory->open(destinationUrl.fileName(), QIODevice::WriteOnly | QIODevice::Unbuffered);
+                auto dest = QCoro::waitFor(destinationDirectory->open(destinationUrl.fileName(), QIODevice::WriteOnly | QIODevice::Unbuffered));
 
                 // Dump the source file to the destination file
                 quint64 readBytes = 0;
@@ -417,45 +455,19 @@ QCoro::Task<> FileTransferJob::transferNextFile() {
 
                 if (d->type == Move && !d->cancelled) {
                     // Delete the source file
-                    co_await sourceDirectory->deleteFile(sourceUrl.fileName());
+                    QCoro::waitFor(sourceDirectory->deleteFile(sourceUrl.fileName()));
                 }
             } catch (DirectoryOperationException ex) {
                 source->close();
                 source->deleteLater();
                 throw;
             }
-        } catch (DirectoryOperationException ex) {
-            // Enter error resolution mode
-            d->stage = ErrorResolution;
-            emit transferStageChanged(ErrorResolution);
-
-            d->state = RequiresAttention;
-            emit stateChanged(RequiresAttention);
-
-            d->description = tr("Waiting for error resolution");
-            emit descriptionChanged(d->description);
-
-            if (d->timer.elapsed() < 2000 && d->jobsPopover) {
-                tJobManager::showJobsPopover(d->jobsPopover);
-            } else {
-                if (!d->silent) {
-                    tNotification* n = new tNotification();
-                    n->setSummary(tr("File Transfer Error"));
-                    n->setText(tr("An error occurred trying to transfer files."));
-                    n->insertAction("resolve", tr("Resolve"));
-                    connect(n, &tNotification::actionClicked, this, [=](QString key) {
-                        if (key == "resolve") {
-                            tJobManager::showJobsPopover(d->jobsPopover);
-                            d->jobsPopover->window()->activateWindow();
-                        }
-                    });
-                    n->post();
-                }
-            }
-
-            d->errorSourceUrl = sourceUrl;
-            d->errorDestUrl = destinationUrl;
-        }
+        },
+            sourceDirectory, destinationDirectory, sourceUrl, destinationUrl, sourceInformation, fileName);
+    } catch (DirectoryOperationException ex) {
+        d->errorSourceUrl = sourceUrl;
+        d->errorDestUrl = destinationUrl;
+        throw;
     }
 }
 

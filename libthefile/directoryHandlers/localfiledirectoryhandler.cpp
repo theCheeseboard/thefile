@@ -21,14 +21,13 @@
 
 #include "directories/localfilesystemdirectory.h"
 
-LocalFileDirectoryHandler::LocalFileDirectoryHandler(QObject* parent) : DirectoryHandler(parent) {
-
+LocalFileDirectoryHandler::LocalFileDirectoryHandler(QObject* parent) :
+    DirectoryHandler(parent) {
 }
-
 
 DirectoryPtr LocalFileDirectoryHandler::directoryForUrl(QUrl url) {
     if (url.isLocalFile()) {
-        return DirectoryPtr(new LocalFilesystemDirectory(url));
+        return (new LocalFilesystemDirectory(url))->sharedFromThis();
     }
     return nullptr;
 }
@@ -37,7 +36,7 @@ DirectoryPtr LocalFileDirectoryHandler::parentDirectoryForUrl(QUrl url) {
     if (url.isLocalFile()) {
         if (url.toLocalFile() == "/") return nullptr;
         QString parentDirectory = QFileInfo(url.toLocalFile()).dir().path();
-        return DirectoryPtr(new LocalFilesystemDirectory(QUrl::fromLocalFile(parentDirectory)));
+        return (new LocalFilesystemDirectory(QUrl::fromLocalFile(parentDirectory)))->sharedFromThis();
     }
     return nullptr;
 }

@@ -112,37 +112,41 @@ QUrl TrashDirectory::url() {
     return d->url;
 }
 
-QCoro::Task<QList<Directory::FileInformation>> TrashDirectory::list(QDir::Filters filters, QDir::SortFlags sortFlags) {
-    co_return co_await QtConcurrent::run([this, filters, sortFlags] {
-        if (d->url.path() == "/" || d->url.path().isEmpty()) {
-            FileInformationList information;
-            for (QDir trashDir : trashDirs()) {
-                QDir infoDir = trashDir.absoluteFilePath("info");
-                QDir fileDir = trashDir.absoluteFilePath("files");
+quint64 TrashDirectory::listCount(QDir::Filters filters, QDir::SortFlags sortFlags) {
+    quint64 sum = 0;
+    for (auto item : this->list(filters, sortFlags)) {
+        sum++;
+    }
+    return sum;
+}
 
-                QFileInfoList fileList = infoDir.entryInfoList(filters, sortFlags);
-                for (QFileInfo file : fileList) {
-                    QFileInfo trashedFile(fileDir.absoluteFilePath(file.fileName().remove(".trashinfo")));
+QCoro::Generator<Directory::FileInformation> TrashDirectory::list(QDir::Filters filters, QDir::SortFlags sortFlags, quint64 offset) {
+    if (d->url.path() == "/" || d->url.path().isEmpty()) {
+        quint64 count = 0;
+        for (QDir trashDir : trashDirs()) {
+            QDir infoDir = trashDir.absoluteFilePath("info");
+            QDir fileDir = trashDir.absoluteFilePath("files");
 
-                    QUrl resource;
-                    resource.setScheme("trash");
-                    resource.setPath(trashedFile.fileName());
+            QFileInfoList fileList = infoDir.entryInfoList(filters, sortFlags);
+            for (QFileInfo file : fileList) {
+                QFileInfo trashedFile(fileDir.absoluteFilePath(file.fileName().remove(".trashinfo")));
 
-                    QUrlQuery queryString;
-                    queryString.setQueryItems({
-                        {"trashInfo",   file.filePath()       },
-                        {"trashedFile", trashedFile.filePath()}
-                    });
-                    resource.setQuery(queryString);
+                QUrl resource;
+                resource.setScheme("trash");
+                resource.setPath(trashedFile.fileName());
 
-                    information.append(internalFileInformation(queryString.toString().toUtf8().toBase64(QByteArray::Base64UrlEncoding)));
-                }
+                QUrlQuery queryString;
+                queryString.setQueryItems({
+                    {"trashInfo",   file.filePath()       },
+                    {"trashedFile", trashedFile.filePath()}
+                });
+                resource.setQuery(queryString);
+
+                if (count >= offset) co_yield internalFileInformation(queryString.toString().toUtf8().toBase64(QByteArray::Base64UrlEncoding));
+                count++;
             }
-            return information;
-        } else {
-            return FileInformationList();
         }
-    });
+    }
 }
 
 QCoro::Task<Directory::FileInformation> TrashDirectory::fileInformation(QString filename) {

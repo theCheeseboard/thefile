@@ -20,6 +20,8 @@
 #ifndef DIRECTORY_H
 #define DIRECTORY_H
 
+#include "libthefile_global.h"
+#include <QCoroGenerator>
 #include <QCoroTask>
 #include <QDir>
 #include <QException>
@@ -27,7 +29,8 @@
 #include <QObject>
 #include <QUrl>
 
-class Directory : public QObject {
+class Directory : public QObject,
+                  public tfSharedFromThis<Directory> {
         Q_OBJECT
     public:
         explicit Directory(QObject* parent = nullptr);
@@ -46,7 +49,8 @@ class Directory : public QObject {
         virtual QCoro::Task<bool> exists() = 0;
         virtual bool isFile(QString path) = 0;
         virtual QUrl url() = 0;
-        virtual QCoro::Task<QList<FileInformation>> list(QDir::Filters filters, QDir::SortFlags sortFlags) = 0;
+        virtual quint64 listCount(QDir::Filters filters, QDir::SortFlags sortFlags) = 0;
+        virtual QCoro::Generator<FileInformation> list(QDir::Filters filters, QDir::SortFlags sortFlags, quint64 offset = 0) = 0;
         virtual QCoro::Task<FileInformation> fileInformation(QString filename) = 0;
         virtual QCoro::Task<QIODevice*> open(QString filename, QIODevice::OpenMode mode) = 0;
 

@@ -59,6 +59,9 @@ class FileModel : public QAbstractListModel {
     private:
         FileModelPrivate* d;
         QCoro::Task<> reloadData();
+
+        void incReset();
+        void decReset();
 };
 
 class FileDelegate : public QStyledItemDelegate {

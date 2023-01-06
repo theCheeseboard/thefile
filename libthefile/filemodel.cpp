@@ -30,10 +30,12 @@
 struct FileModelPrivate {
         DirectoryPtr currentDir;
         QList<Directory::FileInformation> files;
+        quint64 count = 0;
         bool isFile = false;
         QList<FileTab::Filter> filters;
 
         QString currentError;
+        int resetCount = 0;
 };
 
 FileModel::FileModel(DirectoryPtr directory, QObject* parent) :
@@ -53,11 +55,21 @@ FileModel::~FileModel() {
 int FileModel::rowCount(const QModelIndex& parent) const {
     if (parent.isValid()) return 0;
 
-    return d->files.count();
+    return d->count;
 }
 
 QVariant FileModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid()) return QVariant();
+
+    if (d->files.length() <= index.row()) {
+        auto generator = d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst | QDir::IgnoreCase, d->files.length());
+        auto iterator = generator.begin();
+        while (d->files.length() <= index.row()) {
+            if (iterator == generator.end()) return QVariant();
+            d->files.append(*iterator);
+            ++iterator;
+        }
+    }
 
     Directory::FileInformation file = d->files.at(index.row());
     switch (role) {
@@ -97,11 +109,13 @@ QString FileModel::currentError() {
 }
 
 QCoro::Task<> FileModel::reloadData() {
-    beginResetModel();
+    incReset();
 
     try {
-        d->files = co_await d->currentDir->list(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst | QDir::IgnoreCase);
-        if (d->files.isEmpty()) {
+        d->count = d->currentDir->listCount(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::DirsFirst | QDir::IgnoreCase);
+        d->files.clear();
+
+        if (d->count == 0) {
             d->currentError = "error.no-items";
         } else {
             d->currentError = "";
@@ -112,10 +126,20 @@ QCoro::Task<> FileModel::reloadData() {
         d->currentError = ex.error();
     }
 
-    endResetModel();
+    decReset();
 
     d->isFile = !co_await d->currentDir->exists();
     emit isFileChanged();
+}
+
+void FileModel::incReset() {
+    if (d->resetCount == 0) beginResetModel();
+    d->resetCount++;
+}
+
+void FileModel::decReset() {
+    d->resetCount--;
+    if (d->resetCount == 0) endResetModel();
 }
 
 FileDelegate::FileDelegate(QObject* parent) :

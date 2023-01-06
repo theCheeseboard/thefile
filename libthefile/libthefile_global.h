@@ -20,6 +20,7 @@
 #ifndef LIBTHEFILE_GLOBAL_H
 #define LIBTHEFILE_GLOBAL_H
 
+#include <QEnableSharedFromThis>
 #include <QtCore/qglobal.h>
 
 #if defined(LIBTHEFILE_LIBRARY)
@@ -29,5 +30,14 @@
 #endif
 
 #define LIBTHEFILE_TRANSLATOR "thefile/libthefile"
+
+template<typename T> class tfSharedFromThis : public QEnableSharedFromThis<T> {
+    public:
+        QSharedPointer<T> sharedFromThis() {
+            auto ptr = QEnableSharedFromThis<T>::sharedFromThis();
+            if (ptr) return ptr;
+            return QSharedPointer<T>(static_cast<T*>(this));
+        }
+};
 
 #endif // LIBTHEFILE_GLOBAL_H

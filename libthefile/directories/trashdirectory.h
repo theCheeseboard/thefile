@@ -46,7 +46,8 @@ class TrashDirectory : public Directory {
         QCoro::Task<bool> exists();
         bool isFile(QString filename);
         QUrl url();
-        QCoro::Task<QList<FileInformation>> list(QDir::Filters filters, QDir::SortFlags sortFlags);
+        quint64 listCount(QDir::Filters filters, QDir::SortFlags sortFlags);
+        QCoro::Generator<FileInformation> list(QDir::Filters filters, QDir::SortFlags sortFlags, quint64 offset = 0);
         QCoro::Task<FileInformation> fileInformation(QString filename);
         QCoro::Task<QIODevice*> open(QString filename, QIODevice::OpenMode mode);
         QCoro::Task<> mkpath(QString filename);

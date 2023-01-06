@@ -28,8 +28,7 @@
 #include <unistd.h>
 
 struct LocalFilesystemDirectoryPrivate {
-        QString firstThing;
-        QUrl url;
+        QString url;
         QFileIconProvider iconProvider;
 
         QFileSystemWatcher* watcher;
@@ -38,7 +37,7 @@ struct LocalFilesystemDirectoryPrivate {
 LocalFilesystemDirectory::LocalFilesystemDirectory(QUrl url, QObject* parent) :
     Directory(parent) {
     d = new LocalFilesystemDirectoryPrivate();
-    d->url = url;
+    d->url = url.toString();
 
     d->watcher = new QFileSystemWatcher();
     d->watcher->addPath(url.toLocalFile());
@@ -52,70 +51,69 @@ LocalFilesystemDirectory::~LocalFilesystemDirectory() {
 }
 
 bool LocalFilesystemDirectory::isFile(QString filename) {
-    return QFileInfo(QDir(d->url.toLocalFile()).absoluteFilePath(filename)).isFile();
+    return QFileInfo(QDir(QUrl(d->url).toLocalFile()).absoluteFilePath(filename)).isFile();
 }
 
 QUrl LocalFilesystemDirectory::url() {
-    return d->url;
+    return QUrl(d->url);
 }
 
-QCoro::Task<FileInformationList> LocalFilesystemDirectory::list(QDir::Filters filters, QDir::SortFlags sortFlags) {
+quint64 LocalFilesystemDirectory::listCount(QDir::Filters filters, QDir::SortFlags sortFlags) {
     QUrl url = d->url;
+    QDir dir(url.toLocalFile());
+    auto files = dir.entryList(filters, sortFlags);
+    return files.length();
+}
 
-    co_return co_await QtConcurrent::run([this, url, filters, sortFlags] {
-        QDir dir(url.toLocalFile());
+QCoro::Generator<Directory::FileInformation> LocalFilesystemDirectory::list(QDir::Filters filters, QDir::SortFlags sortFlags, quint64 offset) {
+    auto shared = this->sharedFromThis();
+    QUrl url = d->url;
+    QDir dir(url.toLocalFile());
 
-        QFileInfoList files = dir.entryInfoList(filters, sortFlags);
+    auto files = dir.entryList(filters, sortFlags);
 
-        if (files.isEmpty()) {
-            QFileInfo dirInfo(d->url.toLocalFile());
+    if (files.isEmpty()) {
+        QFileInfo dirInfo(QUrl(d->url).toLocalFile());
 
-            if (!dirInfo.exists()) {
-                throw DirectoryOperationException("error.not-found");
-            }
-            if (!dirInfo.isDir()) {
-                throw DirectoryOperationException("error.not-directory");
-            }
-
-            __gid_t groupsArray[300];
-            int numGroups = getgroups(300, groupsArray);
-            QList<__gid_t> groups;
-            for (int i = 0; i < numGroups; i++) {
-                groups.append(groupsArray[i]);
-            }
-
-            if (dirInfo.ownerId() == geteuid()) {
-                if (!dirInfo.permission(QFile::ExeOwner)) {
-                    throw DirectoryOperationException("error.permission-denied");
-                }
-            } else if (groups.contains(dirInfo.groupId())) {
-                if (!dirInfo.permission(QFile::ExeGroup)) {
-                    throw DirectoryOperationException("error.permission-denied");
-                }
-            } else {
-                if (!dirInfo.permission(QFile::ExeOther)) {
-                    throw DirectoryOperationException("error.permission-denied");
-                }
-            }
+        if (!dirInfo.exists()) {
+            throw DirectoryOperationException("error.not-found");
+        }
+        if (!dirInfo.isDir()) {
+            throw DirectoryOperationException("error.not-directory");
         }
 
-        FileInformationList fileInfoList;
-
-        for (QFileInfo file : files) {
-            fileInfoList.append(fileInfo(file));
+        __gid_t groupsArray[300];
+        int numGroups = getgroups(300, groupsArray);
+        QList<__gid_t> groups;
+        for (int i = 0; i < numGroups; i++) {
+            groups.append(groupsArray[i]);
         }
 
-        return fileInfoList;
-    });
+        if (dirInfo.ownerId() == geteuid()) {
+            if (!dirInfo.permission(QFile::ExeOwner)) {
+                throw DirectoryOperationException("error.permission-denied");
+            }
+        } else if (groups.contains(dirInfo.groupId())) {
+            if (!dirInfo.permission(QFile::ExeGroup)) {
+                throw DirectoryOperationException("error.permission-denied");
+            }
+        } else {
+            if (!dirInfo.permission(QFile::ExeOther)) {
+                throw DirectoryOperationException("error.permission-denied");
+            }
+        }
+    }
+
+    for (auto i = offset; i < files.length(); i++) {
+        co_yield fileInfo(QFileInfo(dir.absoluteFilePath(files.at(i))));
+    }
 }
 
 QCoro::Task<Directory::FileInformation> LocalFilesystemDirectory::fileInformation(QString filename) {
     QUrl url = d->url;
 
-    co_return co_await QtConcurrent::run([this, url, filename] {
-        QFileInfo file(QDir(url.toLocalFile()).absoluteFilePath(filename));
-        return fileInfo(file);
-    });
+    QFileInfo file(QDir(url.toLocalFile()).absoluteFilePath(filename));
+    co_return fileInfo(file);
 }
 
 QCoro::Task<QIODevice*> LocalFilesystemDirectory::open(QString filename, QIODevice::OpenMode mode) {
@@ -133,11 +131,10 @@ QCoro::Task<QIODevice*> LocalFilesystemDirectory::open(QString filename, QIODevi
 QCoro::Task<> LocalFilesystemDirectory::mkpath(QString filename) {
     QUrl url = d->url;
 
-    co_return co_await QtConcurrent::run([this, url, filename] {
-        if (!QDir::root().mkpath(QDir(url.toLocalFile()).absoluteFilePath(filename))) {
-            throw DirectoryOperationException("Could not make path");
-        }
-    });
+    if (!QDir::root().mkpath(QDir(url.toLocalFile()).absoluteFilePath(filename))) {
+        throw DirectoryOperationException("Could not make path");
+    }
+    co_return;
 }
 
 bool LocalFilesystemDirectory::canTrash(QString filename) {
@@ -147,20 +144,21 @@ bool LocalFilesystemDirectory::canTrash(QString filename) {
 QCoro::Task<QUrl> LocalFilesystemDirectory::trash(QString filename) {
     QUrl url = d->url;
 
-    co_return co_await QtConcurrent::run([this, url, filename] {
+    co_return co_await QtConcurrent::run([this](QUrl url, QString filename) {
         QString pathInTrash;
         if (QFile::moveToTrash(QDir(url.toLocalFile()).absoluteFilePath(filename), &pathInTrash)) {
             return QUrl::fromLocalFile(pathInTrash);
         } else {
             throw DirectoryOperationException("Could not trash file");
         }
-    });
+    },
+        url, filename);
 }
 
 QCoro::Task<> LocalFilesystemDirectory::deleteFile(QString filename) {
     QUrl url = d->url;
 
-    co_return co_await QtConcurrent::run([this, url, filename] {
+    co_return co_await QtConcurrent::run([this](QUrl url, QString filename) {
         if (isFile(filename)) {
             if (!QFile::remove(QDir(url.toLocalFile()).absoluteFilePath(filename))) {
                 throw DirectoryOperationException("Could not delete file");
@@ -171,7 +169,8 @@ QCoro::Task<> LocalFilesystemDirectory::deleteFile(QString filename) {
                 throw DirectoryOperationException("Could not delete folder");
             }
         }
-    });
+    },
+        url, filename);
 }
 
 bool LocalFilesystemDirectory::canMove(QString filename, QUrl to) {
@@ -220,20 +219,21 @@ Directory::FileInformation LocalFilesystemDirectory::fileInfo(QFileInfo file) {
 }
 
 QCoro::Task<bool> LocalFilesystemDirectory::exists() {
-    co_return QFileInfo(d->url.toLocalFile()).isDir();
+    co_return QFileInfo(QUrl(d->url).toLocalFile()).isDir();
 }
 
 QCoro::Task<> LocalFilesystemDirectory::move(QString filename, QUrl to) {
     QUrl url = d->url;
 
-    co_return co_await QtConcurrent::run([this, url, filename, to] {
+    co_return co_await QtConcurrent::run([this](QUrl url, QString filename, QUrl to) {
         if (!canMove(url, filename, to)) {
             throw DirectoryOperationException("Cannot move");
             return;
         }
 
         QFile::rename(QDir(url.toLocalFile()).absoluteFilePath(filename), to.toLocalFile());
-    });
+    },
+        url, filename, to);
 }
 
 QVariant LocalFilesystemDirectory::special(QString operation, QVariantMap args) {

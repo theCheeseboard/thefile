@@ -21,20 +21,20 @@
 
 #include "directories/trashdirectory.h"
 
-TrashDirectoryHandler::TrashDirectoryHandler(QObject* parent) : DirectoryHandler(parent) {
-
+TrashDirectoryHandler::TrashDirectoryHandler(QObject* parent) :
+    DirectoryHandler(parent) {
 }
 
 DirectoryPtr TrashDirectoryHandler::directoryForUrl(QUrl url) {
     if (url.scheme() == "trash" && url.path() == "/") {
-        return DirectoryPtr(new TrashDirectory(url));
+        return (new TrashDirectory(url))->sharedFromThis();
     }
     return nullptr;
 }
 
 DirectoryPtr TrashDirectoryHandler::parentDirectoryForUrl(QUrl url) {
     if (url.scheme() == "trash" && url.path() != "/") {
-        return DirectoryPtr(new TrashDirectory(QUrl("trash:///")));
+        return (new TrashDirectory(QUrl("trash:///")))->sharedFromThis();
     }
     return nullptr;
 }
