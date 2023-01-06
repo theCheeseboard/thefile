@@ -2,6 +2,104 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="vi" sourcelanguage="en_US">
 <context>
+    <name>BookmarksSidebarSection</name>
+    <message>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="39"/>
+        <source>For %1</source>
+        <translation type="unfinished">Cho %1</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="40"/>
+        <source>Remove from bookmarks</source>
+        <translation type="unfinished">Xóa khỏi thẻ đánh dấu</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="52"/>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrivesSidebarSection</name>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="53"/>
+        <source>For %1</source>
+        <translation type="unfinished">Cho %1</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="56"/>
+        <source>Mount</source>
+        <translation type="unfinished">Gắn</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="60"/>
+        <source>Unmount</source>
+        <translation type="unfinished">Tháo</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="65"/>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="111"/>
+        <source>Couldn&apos;t unmount</source>
+        <translation type="unfinished">Không thể tháo</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="66"/>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="112"/>
+        <source>Unmounting the drive failed.</source>
+        <translation type="unfinished">Hoạt động tháo đĩa không thành công.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="75"/>
+        <source>Eject</source>
+        <translation type="unfinished">Nhổ ra</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="80"/>
+        <source>Couldn&apos;t eject</source>
+        <translation type="unfinished">Không thể nhổ ra</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="81"/>
+        <source>Ejecting the drive failed.</source>
+        <translation type="unfinished">Hoạt động nhổ ổ ra bị thất bại.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="89"/>
+        <source>Lock</source>
+        <translation type="unfinished">Khóa</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="95"/>
+        <source>Couldn&apos;t lock</source>
+        <translation type="unfinished">Không thể khóa</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="96"/>
+        <source>Locking the device failed.</source>
+        <translation type="unfinished">Hoạt động khóa đĩa thất bại.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="121"/>
+        <source>Create Disk Image</source>
+        <translation type="unfinished">Tạo ảnh đĩa</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="125"/>
+        <source>Erase</source>
+        <translation type="unfinished">Xóa</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="128"/>
+        <source>Erase Optical Disc</source>
+        <translation type="unfinished">Xóa đĩa quang</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="177"/>
+        <source>Drives</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileColumn</name>
     <message>
         <location filename="../filecolumn.cpp" line="129"/>
@@ -210,150 +308,181 @@
     </message>
 </context>
 <context>
+    <name>PlacesSidebarSection</name>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="33"/>
+        <source>Home</source>
+        <translation type="unfinished">Thư mục chính</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="34"/>
+        <source>Documents</source>
+        <translation type="unfinished">Tài liệu</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="35"/>
+        <source>Downloads</source>
+        <translation type="unfinished">Tải xuống</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="36"/>
+        <source>Music</source>
+        <translation type="unfinished">Nhạc</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="37"/>
+        <source>Pictures</source>
+        <translation type="unfinished">Hình ảnh</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="38"/>
+        <source>Videos</source>
+        <translation type="unfinished">Ảnh động</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="39"/>
+        <source>Root</source>
+        <translation type="unfinished">Gốc hệ thống</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="40"/>
+        <source>Trash</source>
+        <translation type="unfinished">Thùng rác</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="64"/>
+        <source>Places</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="96"/>
+        <source>For %1</source>
+        <translation type="unfinished">Cho %1</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="97"/>
+        <source>Copy In</source>
+        <translation type="unfinished">Chép vào</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="100"/>
+        <source>Move In</source>
+        <translation type="unfinished">Chuyển vào</translation>
+    </message>
+</context>
+<context>
     <name>Sidebar</name>
     <message>
-        <location filename="../sidebar/sidebar.ui" line="74"/>
         <source>PLACES</source>
-        <translation>ĐỊA ĐIỂM</translation>
+        <translation type="vanished">ĐỊA ĐIỂM</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.ui" line="103"/>
         <source>DRIVES</source>
-        <translation>Ổ ĐĨA</translation>
+        <translation type="vanished">Ổ ĐĨA</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.ui" line="135"/>
         <source>BOOKMARKS</source>
-        <translation>THẺ ĐÁNH DẤU</translation>
+        <translation type="vanished">THẺ ĐÁNH DẤU</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="67"/>
         <source>Home</source>
-        <translation>Thư mục chính</translation>
+        <translation type="vanished">Thư mục chính</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="68"/>
         <source>Documents</source>
-        <translation>Tài liệu</translation>
+        <translation type="vanished">Tài liệu</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="69"/>
         <source>Downloads</source>
-        <translation>Tải xuống</translation>
+        <translation type="vanished">Tải xuống</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="70"/>
         <source>Music</source>
-        <translation>Nhạc</translation>
+        <translation type="vanished">Nhạc</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="71"/>
         <source>Pictures</source>
-        <translation>Hình ảnh</translation>
+        <translation type="vanished">Hình ảnh</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="72"/>
         <source>Videos</source>
-        <translation>Ảnh động</translation>
+        <translation type="vanished">Ảnh động</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="73"/>
         <source>Root</source>
-        <translation>Gốc hệ thống</translation>
+        <translation type="vanished">Gốc hệ thống</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="74"/>
         <source>Trash</source>
-        <translation>Thùng rác</translation>
+        <translation type="vanished">Thùng rác</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="192"/>
-        <location filename="../sidebar/sidebar.cpp" line="303"/>
-        <location filename="../sidebar/sidebar.cpp" line="365"/>
         <source>For %1</source>
-        <translation>Cho %1</translation>
+        <translation type="vanished">Cho %1</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="195"/>
         <source>Mount</source>
-        <translation>Gắn</translation>
+        <translation type="vanished">Gắn</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="199"/>
         <source>Unmount</source>
-        <translation>Tháo</translation>
+        <translation type="vanished">Tháo</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="204"/>
-        <location filename="../sidebar/sidebar.cpp" line="250"/>
         <source>Couldn&apos;t unmount</source>
-        <translation>Không thể tháo</translation>
+        <translation type="vanished">Không thể tháo</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="205"/>
-        <location filename="../sidebar/sidebar.cpp" line="251"/>
         <source>Unmounting the drive failed.</source>
-        <translation>Hoạt động tháo đĩa không thành công.</translation>
+        <translation type="vanished">Hoạt động tháo đĩa không thành công.</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="214"/>
         <source>Eject</source>
-        <translation>Nhổ ra</translation>
+        <translation type="vanished">Nhổ ra</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="219"/>
         <source>Couldn&apos;t eject</source>
-        <translation>Không thể nhổ ra</translation>
+        <translation type="vanished">Không thể nhổ ra</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="220"/>
         <source>Ejecting the drive failed.</source>
-        <translation>Hoạt động nhổ ổ ra bị thất bại.</translation>
+        <translation type="vanished">Hoạt động nhổ ổ ra bị thất bại.</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="228"/>
         <source>Lock</source>
-        <translation>Khóa</translation>
+        <translation type="vanished">Khóa</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="234"/>
         <source>Couldn&apos;t lock</source>
-        <translation>Không thể khóa</translation>
+        <translation type="vanished">Không thể khóa</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="235"/>
         <source>Locking the device failed.</source>
-        <translation>Hoạt động khóa đĩa thất bại.</translation>
+        <translation type="vanished">Hoạt động khóa đĩa thất bại.</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="260"/>
         <source>Create Disk Image</source>
-        <translation>Tạo ảnh đĩa</translation>
+        <translation type="vanished">Tạo ảnh đĩa</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="264"/>
         <source>Erase</source>
-        <translation>Xóa</translation>
+        <translation type="vanished">Xóa</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="267"/>
         <source>Erase Optical Disc</source>
-        <translation>Xóa đĩa quang</translation>
+        <translation type="vanished">Xóa đĩa quang</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="304"/>
         <source>Copy In</source>
-        <translation>Chép vào</translation>
+        <translation type="vanished">Chép vào</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="307"/>
         <source>Move In</source>
-        <translation>Chuyển vào</translation>
+        <translation type="vanished">Chuyển vào</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="366"/>
         <source>Remove from bookmarks</source>
-        <translation>Xóa khỏi thẻ đánh dấu</translation>
+        <translation type="vanished">Xóa khỏi thẻ đánh dấu</translation>
     </message>
 </context>
 <context>

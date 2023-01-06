@@ -2,6 +2,104 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de" sourcelanguage="en_US">
 <context>
+    <name>BookmarksSidebarSection</name>
+    <message>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="39"/>
+        <source>For %1</source>
+        <translation type="unfinished">Für %1</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="40"/>
+        <source>Remove from bookmarks</source>
+        <translation type="unfinished">Von Lesezeichen entfernen</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="52"/>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrivesSidebarSection</name>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="53"/>
+        <source>For %1</source>
+        <translation type="unfinished">Für %1</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="56"/>
+        <source>Mount</source>
+        <translation type="unfinished">Mount</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="60"/>
+        <source>Unmount</source>
+        <translation type="unfinished">Unmount</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="65"/>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="111"/>
+        <source>Couldn&apos;t unmount</source>
+        <translation type="unfinished">Konnte nicht unmounten</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="66"/>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="112"/>
+        <source>Unmounting the drive failed.</source>
+        <translation type="unfinished">Unmounten des Geräts scheiterte.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="75"/>
+        <source>Eject</source>
+        <translation type="unfinished">Auswerfen</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="80"/>
+        <source>Couldn&apos;t eject</source>
+        <translation type="unfinished">Konnte nicht aufwerfen</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="81"/>
+        <source>Ejecting the drive failed.</source>
+        <translation type="unfinished">Auswerfen des Geräts scheiterte.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="89"/>
+        <source>Lock</source>
+        <translation type="unfinished">Sperren</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="95"/>
+        <source>Couldn&apos;t lock</source>
+        <translation type="unfinished">Konnte nicht sperren</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="96"/>
+        <source>Locking the device failed.</source>
+        <translation type="unfinished">Sperren des Geräts scheiterte.</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="121"/>
+        <source>Create Disk Image</source>
+        <translation type="unfinished">Disk-Image erstellen</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="125"/>
+        <source>Erase</source>
+        <translation type="unfinished">Löschen</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="128"/>
+        <source>Erase Optical Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="177"/>
+        <source>Drives</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileColumn</name>
     <message>
         <location filename="../filecolumn.cpp" line="129"/>
@@ -213,150 +311,177 @@
     </message>
 </context>
 <context>
-    <name>Sidebar</name>
+    <name>PlacesSidebarSection</name>
     <message>
-        <location filename="../sidebar/sidebar.ui" line="74"/>
-        <source>PLACES</source>
-        <translation>ORTE</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.ui" line="103"/>
-        <source>DRIVES</source>
-        <translation type="unfinished">GERÄTE</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.ui" line="135"/>
-        <source>BOOKMARKS</source>
-        <translation>LESEZEICHEN</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="67"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="33"/>
         <source>Home</source>
-        <translation>Home</translation>
+        <translation type="unfinished">Home</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="68"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="34"/>
         <source>Documents</source>
-        <translation>Dokumente</translation>
+        <translation type="unfinished">Dokumente</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="69"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="35"/>
         <source>Downloads</source>
-        <translation>Downloads</translation>
+        <translation type="unfinished">Downloads</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="70"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="36"/>
         <source>Music</source>
-        <translation>Musik</translation>
+        <translation type="unfinished">Musik</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="71"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="37"/>
         <source>Pictures</source>
-        <translation>Bilder</translation>
+        <translation type="unfinished">Bilder</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="72"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="38"/>
         <source>Videos</source>
-        <translation>Videos</translation>
+        <translation type="unfinished">Videos</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="73"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="39"/>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation type="unfinished">Root</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="74"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="40"/>
         <source>Trash</source>
-        <translation>Mülleimer</translation>
+        <translation type="unfinished">Mülleimer</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="192"/>
-        <location filename="../sidebar/sidebar.cpp" line="303"/>
-        <location filename="../sidebar/sidebar.cpp" line="365"/>
-        <source>For %1</source>
-        <translation>Für %1</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="195"/>
-        <source>Mount</source>
-        <translation>Mount</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="199"/>
-        <source>Unmount</source>
-        <translation>Unmount</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="204"/>
-        <location filename="../sidebar/sidebar.cpp" line="250"/>
-        <source>Couldn&apos;t unmount</source>
-        <translation>Konnte nicht unmounten</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="205"/>
-        <location filename="../sidebar/sidebar.cpp" line="251"/>
-        <source>Unmounting the drive failed.</source>
-        <translation>Unmounten des Geräts scheiterte.</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="214"/>
-        <source>Eject</source>
-        <translation>Auswerfen</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="219"/>
-        <source>Couldn&apos;t eject</source>
-        <translation>Konnte nicht aufwerfen</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="220"/>
-        <source>Ejecting the drive failed.</source>
-        <translation>Auswerfen des Geräts scheiterte.</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="228"/>
-        <source>Lock</source>
-        <translation>Sperren</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="234"/>
-        <source>Couldn&apos;t lock</source>
-        <translation>Konnte nicht sperren</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="235"/>
-        <source>Locking the device failed.</source>
-        <translation>Sperren des Geräts scheiterte.</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="260"/>
-        <source>Create Disk Image</source>
-        <translation>Disk-Image erstellen</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="264"/>
-        <source>Erase</source>
-        <translation>Löschen</translation>
-    </message>
-    <message>
-        <location filename="../sidebar/sidebar.cpp" line="267"/>
-        <source>Erase Optical Disc</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="64"/>
+        <source>Places</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="304"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="96"/>
+        <source>For %1</source>
+        <translation type="unfinished">Für %1</translation>
+    </message>
+    <message>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="97"/>
         <source>Copy In</source>
-        <translation>Kopieren in</translation>
+        <translation type="unfinished">Kopieren in</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="307"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="100"/>
         <source>Move In</source>
-        <translation>Bewegen in</translation>
+        <translation type="unfinished">Bewegen in</translation>
+    </message>
+</context>
+<context>
+    <name>Sidebar</name>
+    <message>
+        <source>PLACES</source>
+        <translation type="vanished">ORTE</translation>
     </message>
     <message>
-        <location filename="../sidebar/sidebar.cpp" line="366"/>
+        <source>DRIVES</source>
+        <translation type="obsolete">GERÄTE</translation>
+    </message>
+    <message>
+        <source>BOOKMARKS</source>
+        <translation type="vanished">LESEZEICHEN</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation type="vanished">Home</translation>
+    </message>
+    <message>
+        <source>Documents</source>
+        <translation type="vanished">Dokumente</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation type="vanished">Downloads</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation type="vanished">Musik</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation type="vanished">Bilder</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation type="vanished">Videos</translation>
+    </message>
+    <message>
+        <source>Root</source>
+        <translation type="vanished">Root</translation>
+    </message>
+    <message>
+        <source>Trash</source>
+        <translation type="vanished">Mülleimer</translation>
+    </message>
+    <message>
+        <source>For %1</source>
+        <translation type="vanished">Für %1</translation>
+    </message>
+    <message>
+        <source>Mount</source>
+        <translation type="vanished">Mount</translation>
+    </message>
+    <message>
+        <source>Unmount</source>
+        <translation type="vanished">Unmount</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t unmount</source>
+        <translation type="vanished">Konnte nicht unmounten</translation>
+    </message>
+    <message>
+        <source>Unmounting the drive failed.</source>
+        <translation type="vanished">Unmounten des Geräts scheiterte.</translation>
+    </message>
+    <message>
+        <source>Eject</source>
+        <translation type="vanished">Auswerfen</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t eject</source>
+        <translation type="vanished">Konnte nicht aufwerfen</translation>
+    </message>
+    <message>
+        <source>Ejecting the drive failed.</source>
+        <translation type="vanished">Auswerfen des Geräts scheiterte.</translation>
+    </message>
+    <message>
+        <source>Lock</source>
+        <translation type="vanished">Sperren</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t lock</source>
+        <translation type="vanished">Konnte nicht sperren</translation>
+    </message>
+    <message>
+        <source>Locking the device failed.</source>
+        <translation type="vanished">Sperren des Geräts scheiterte.</translation>
+    </message>
+    <message>
+        <source>Create Disk Image</source>
+        <translation type="vanished">Disk-Image erstellen</translation>
+    </message>
+    <message>
+        <source>Erase</source>
+        <translation type="vanished">Löschen</translation>
+    </message>
+    <message>
+        <source>Copy In</source>
+        <translation type="vanished">Kopieren in</translation>
+    </message>
+    <message>
+        <source>Move In</source>
+        <translation type="vanished">Bewegen in</translation>
+    </message>
+    <message>
         <source>Remove from bookmarks</source>
-        <translation>Von Lesezeichen entfernen</translation>
+        <translation type="vanished">Von Lesezeichen entfernen</translation>
     </message>
 </context>
 <context>

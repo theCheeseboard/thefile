@@ -523,128 +523,153 @@ Toplam ilerleme: %4 / %5</translation>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="264"/>
         <source>theFile</source>
         <translation>theFile</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="138"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="265"/>
         <source>Exit</source>
         <translation>Vazgeç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="141"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="267"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="150"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="269"/>
         <source>New Tab</source>
         <translation>Yeni Sekme</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="271"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="273"/>
         <source>Close Tab</source>
         <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="165"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="275"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="173"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="277"/>
         <source>Show Hidden Files</source>
         <translation>Gizli dosyaları göster</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="176"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="279"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="185"/>
         <location filename="../mainwindow.cpp" line="231"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="281"/>
         <source>Go</source>
         <translation>Git</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="188"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="283"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="197"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="285"/>
         <source>Copy</source>
         <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="200"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="287"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="209"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="289"/>
         <source>Cut</source>
         <translation>Kes</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="212"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="291"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="221"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="293"/>
         <source>Paste</source>
         <translation>Yapıştırmak</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="224"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="295"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="233"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="297"/>
         <source>Move to Trash</source>
         <translation>Çöp kutusuna taşıyın</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="236"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="299"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="245"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="301"/>
         <source>Select All</source>
         <translation>Hepsini seç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="248"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="303"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="257"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="305"/>
         <source>New Window</source>
         <translation>Yeni Pencere</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="260"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="307"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="269"/>
         <location filename="../mainwindow.cpp" line="189"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="309"/>
         <source>New Folder</source>
         <translation>Yeni Klasör</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="272"/>
+        <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="311"/>
         <source>Ctrl+Shift+N</source>
         <translation>Ctrl+ÜstKarakter+N</translation>
     </message>
@@ -662,17 +687,17 @@ Toplam ilerleme: %4 / %5</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="40"/>
+        <location filename="../main.cpp" line="42"/>
         <source>File Manager</source>
         <translation>Dosya Yöneticisi</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="60"/>
+        <location filename="../main.cpp" line="65"/>
         <source>folder</source>
         <translation>klasör</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="60"/>
+        <location filename="../main.cpp" line="65"/>
         <source>Folder to show</source>
         <translation>Gösterilecek klasör</translation>
     </message>

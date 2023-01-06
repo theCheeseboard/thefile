@@ -63,91 +63,20 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>PLACES</string>
-         </property>
-         <property name="margin">
-          <number>9</number>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="sidebarContainer"/>
        </item>
        <item>
-        <widget class="QListWidget" name="placesWidget">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>DRIVES</string>
-         </property>
-         <property name="margin">
-          <number>9</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListView" name="devicesView">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="contextMenuPolicy">
-          <enum>Qt::CustomContextMenu</enum>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>BOOKMARKS</string>
-         </property>
-         <property name="margin">
-          <number>9</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListView" name="bookmarksView">
-         <property name="contextMenuPolicy">
-          <enum>Qt::CustomContextMenu</enum>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-        </widget>
+        </spacer>
        </item>
       </layout>
      </widget>

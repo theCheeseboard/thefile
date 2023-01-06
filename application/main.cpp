@@ -24,7 +24,9 @@
 #include <QJsonArray>
 #include <libthefile_global.h>
 #include <libthefrisbee_global.h>
+#include <plugins/tpluginmanager.h>
 #include <tapplication.h>
+#include <thefileplugininterface.h>
 #include <tsettings.h>
 #include <tstylemanager.h>
 
@@ -53,6 +55,9 @@ int main(int argc, char* argv[]) {
 
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theFile/defaults.conf");
+
+    auto pluginManager = new tPluginManager<PluginInterface>("thefile");
+    pluginManager->load();
 
     QCommandLineParser parser;
     parser.addHelpOption();

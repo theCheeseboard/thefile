@@ -40,17 +40,6 @@ class Sidebar : public QWidget {
         explicit Sidebar(QWidget* parent = nullptr);
         ~Sidebar();
 
-    private slots:
-        void on_placesWidget_itemActivated(QListWidgetItem* item);
-
-        void on_devicesView_activated(const QModelIndex& index);
-
-        void on_devicesView_customContextMenuRequested(const QPoint& pos);
-
-        void on_bookmarksView_activated(const QModelIndex& index);
-
-        void on_bookmarksView_customContextMenuRequested(const QPoint& pos);
-
     signals:
         void navigate(QUrl location);
         void moveFiles(QList<QUrl> source, DirectoryPtr destination);
@@ -59,9 +48,6 @@ class Sidebar : public QWidget {
     private:
         Ui::Sidebar* ui;
         SidebarPrivate* d;
-
-        bool eventFilter(QObject* watched, QEvent* event);
-        QCoro::Task<> mount(DiskObject* disk);
 };
 
 class SidebarDelegate : public QStyledItemDelegate {

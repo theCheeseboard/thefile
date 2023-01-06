@@ -27,6 +27,13 @@ set(SOURCES
     sidebar/bookmarksmodel.cpp
     sidebar/devicesmodel.cpp
     sidebar/sidebar.cpp
+    sidebar/sidebarsection.cpp
+    sidebar/sections/placessidebarsection.cpp
+    sidebarmanager.cpp
+    sidebar/sidebarsectionfactory.cpp
+    sidebar/sections/standardsidebarsectionfactory.cpp
+    sidebar/sections/drivessidebarsection.cpp
+    sidebar/sections/bookmarkssidebarsection.cpp
 
     filecolumn.ui
     filecolumnaction.ui
@@ -57,6 +64,14 @@ set(HEADERS
     sidebar/bookmarksmodel.h
     sidebar/devicesmodel.h
     sidebar/sidebar.h
+    thefileplugininterface.h
+    sidebar/sidebarsection.h
+    sidebar/sections/placessidebarsection.h
+    sidebarmanager.h
+    sidebar/sidebarsectionfactory.h
+    sidebar/sections/standardsidebarsectionfactory.h
+    sidebar/sections/drivessidebarsection.h
+    sidebar/sections/bookmarkssidebarsection.h
 )
 
 add_library(libthefile SHARED ${SOURCES} ${HEADERS})

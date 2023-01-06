@@ -19,14 +19,15 @@
  * *************************************/
 #include "bookmarksmodel.h"
 
+#include "bookmarkmanager.h"
 #include <QIcon>
 #include <QUrl>
-#include "bookmarkmanager.h"
 
-BookmarksModel::BookmarksModel(QObject* parent)
-    : QAbstractListModel(parent) {
-    connect(BookmarkManager::instance(), &BookmarkManager::bookmarksChanged, this, [ = ] {
-        emit dataChanged(index(0), index(rowCount()));
+BookmarksModel::BookmarksModel(QObject* parent) :
+    QAbstractListModel(parent) {
+    connect(BookmarkManager::instance(), &BookmarkManager::bookmarksChanged, this, [this] {
+        beginResetModel();
+        endResetModel();
     });
 }
 

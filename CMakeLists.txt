@@ -9,4 +9,4 @@ ENDIF()
 
 add_subdirectory(libthefile)
 add_subdirectory(application)
-#add_subdirectory(plugins)
+add_subdirectory(plugins)
