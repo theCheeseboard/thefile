@@ -13,6 +13,7 @@ struct IDevicePrivate {
         QString deviceName;
         QString deviceClass;
         QString productType;
+        quint64 ecid;
 };
 
 IDevice::IDevice(QString udid, QObject* parent) :
@@ -24,6 +25,10 @@ IDevice::IDevice(QString udid, QObject* parent) :
 
     plist_t lockdowndResponse;
     auto resp = lockdownd_get_value(d->lockdown, nullptr, nullptr, &lockdowndResponse);
+    if (resp != LOCKDOWN_E_SUCCESS) {
+        d->deviceName = tr("Unknown Device");
+        return;
+    }
 
     auto plist = PList::Node::FromPlist(lockdowndResponse);
     auto node = PList::Dictionary(lockdowndResponse);
@@ -68,6 +73,8 @@ IDevice::IDevice(QString udid, QObject* parent) :
             d->deviceName = value.toString();
         } else if (key == "ProductType") {
             d->productType = value.toString();
+        } else if (key == "UniqueChipID") {
+            d->ecid = value.toULongLong();
         }
     }
 }
@@ -76,4 +83,16 @@ IDevice::~IDevice() {
     lockdownd_client_free(d->lockdown);
     idevice_free(d->device);
     delete d;
+}
+
+QString IDevice::deviceName() {
+    return d->deviceName;
+}
+
+QString IDevice::deviceClass() {
+    return d->deviceClass;
+}
+
+QString IDevice::productType() {
+    return d->productType;
 }

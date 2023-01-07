@@ -20,8 +20,10 @@
 #include "plugin.h"
 
 #include "idevicewatcher.h"
+#include "sidebar/idevicesidebarsectionfactory.h"
 #include <QDebug>
 #include <QIcon>
+#include <sidebarmanager.h>
 #include <tapplication.h>
 #include <tlogger.h>
 
@@ -40,6 +42,7 @@ Plugin::~Plugin() {
 void Plugin::activate() {
     tDebug("IDevicePlugin") << "IDevicePlugin loaded";
     d->watcher = new IDeviceWatcher();
+    SidebarManager::registerSidebarFactory(new IDeviceSidebarSectionFactory(d->watcher));
 }
 
 void Plugin::deactivate() {

@@ -35,7 +35,12 @@ IDeviceWatcher::~IDeviceWatcher() {
     delete d;
 }
 
+QList<IDevice*> IDeviceWatcher::devices() {
+    return d->devices.values();
+}
+
 void IDeviceWatcher::addDevice(QString udid) {
+    emit addingDevice();
     tDebug("IDeviceWatcher") << "New device with UDID " << udid;
 
     auto device = new IDevice(udid);
@@ -44,10 +49,11 @@ void IDeviceWatcher::addDevice(QString udid) {
 }
 
 void IDeviceWatcher::removeDevice(QString udid) {
-    emit removedDevice();
-
+    emit removingDevice();
     tDebug("IDeviceWatcher") << "Removed device with UDID " << udid;
 
     auto device = d->devices.take(udid);
     device->deleteLater();
+
+    emit removedDevice();
 }

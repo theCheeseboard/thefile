@@ -2,6 +2,7 @@ project(lib VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
+find_package(QuaZip-Qt6 REQUIRED)
 cntp_find_pkgconfig(imobiledevice libimobiledevice-1.0)
 cntp_find_pkgconfig(plist libplist++-2.0)
 
@@ -9,12 +10,26 @@ set(SOURCES
     plugin.cpp
     idevicewatcher.cpp
     idevice.cpp
+    idevicemodel.cpp
+    isoftwareupdatefile.cpp
+
+    sidebar/idevicesidebarsection.cpp
+    sidebar/idevicesidebarsectionfactory.cpp
+
+    popovers/idevicerestorepopover.cpp popovers/idevicerestorepopover.ui
 )
 
 set(HEADERS
     plugin.h
     idevicewatcher.h
     idevice.h
+    idevicemodel.h
+    isoftwareupdatefile.h
+
+    sidebar/idevicesidebarsection.h
+    sidebar/idevicesidebarsectionfactory.h
+
+    popovers/idevicerestorepopover.h
 )
 
 add_library(plugin-idevice SHARED ${SOURCES} ${HEADERS})
@@ -27,4 +42,4 @@ set_target_properties(plugin-idevice PROPERTIES
         OUTPUT_NAME idevicePlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-idevice Qt6::Widgets Qt6::DBus libcontemporary libthefile PkgConfig::imobiledevice PkgConfig::plist)
+target_link_libraries(plugin-idevice Qt6::Widgets Qt6::DBus libcontemporary libthefile PkgConfig::imobiledevice PkgConfig::plist QuaZip::QuaZip)

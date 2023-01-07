@@ -10,6 +10,10 @@ class IDevice : public QObject {
         explicit IDevice(QString udid, QObject* parent = nullptr);
         ~IDevice();
 
+        QString deviceName();
+        QString deviceClass();
+        QString productType();
+
     signals:
 
     private:

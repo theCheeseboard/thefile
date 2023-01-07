@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class IDevice;
 struct IDeviceWatcherPrivate;
 class IDeviceWatcher : public QObject {
         Q_OBJECT
@@ -10,8 +11,12 @@ class IDeviceWatcher : public QObject {
         explicit IDeviceWatcher(QObject* parent = nullptr);
         ~IDeviceWatcher();
 
+        QList<IDevice*> devices();
+
     signals:
+        void addingDevice();
         void newDevice();
+        void removingDevice();
         void removedDevice();
 
     private:
