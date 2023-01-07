@@ -96,3 +96,7 @@ QString IDevice::deviceClass() {
 QString IDevice::productType() {
     return d->productType;
 }
+
+quint64 IDevice::ecid() {
+    return d->ecid;
+}

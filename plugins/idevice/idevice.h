@@ -13,6 +13,7 @@ class IDevice : public QObject {
         QString deviceName();
         QString deviceClass();
         QString productType();
+        quint64 ecid();
 
     signals:
 

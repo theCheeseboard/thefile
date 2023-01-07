@@ -17,6 +17,9 @@ set(SOURCES
     sidebar/idevicesidebarsectionfactory.cpp
 
     popovers/idevicerestorepopover.cpp popovers/idevicerestorepopover.ui
+
+    jobs/idevicerestorejob.cpp
+    jobs/progress/idevicerestorejobprogress.cpp jobs/progress/idevicerestorejobprogress.ui
 )
 
 set(HEADERS
@@ -30,6 +33,9 @@ set(HEADERS
     sidebar/idevicesidebarsectionfactory.h
 
     popovers/idevicerestorepopover.h
+
+    jobs/idevicerestorejob.h
+    jobs/progress/idevicerestorejobprogress.h
 )
 
 add_library(plugin-idevice SHARED ${SOURCES} ${HEADERS})

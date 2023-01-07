@@ -2,13 +2,17 @@
 #include "ui_idevicerestorepopover.h"
 
 #include "isoftwareupdatefile.h"
+#include "jobs/idevicerestorejob.h"
 #include <QFileDialog>
 #include <idevice.h>
 #include <libcontemporary_global.h>
+#include <tjobmanager.h>
 
 struct IDeviceRestorePopoverPrivate {
         IDevice* device;
         bool erase;
+
+        QString softwareVersion;
 };
 
 IDeviceRestorePopover::IDeviceRestorePopover(IDevice* device, bool erase, QWidget* parent) :
@@ -89,6 +93,7 @@ void IDeviceRestorePopover::updateRestoreState() {
         }
 
         restoreVersion = QStringLiteral("%1 %2").arg(restoreOs, restoreVersion);
+        d->softwareVersion = restoreVersion;
 
         ui->restoreButton->setEnabled(true);
         if (d->erase) {
@@ -153,4 +158,10 @@ void IDeviceRestorePopover::on_restoreButton_clicked() {
 }
 
 void IDeviceRestorePopover::on_doRestoreButton_clicked() {
+    auto restoreJob = new IDeviceRestoreJob(d->erase, d->device);
+    if (ui->restoreFileButton->isChecked()) {
+        restoreJob->startRestore(ui->restoreFileBox->text(), d->softwareVersion);
+    }
+    tJobManager::trackJob(restoreJob);
+    emit done();
 }
