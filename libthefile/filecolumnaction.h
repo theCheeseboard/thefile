@@ -20,13 +20,13 @@
 #ifndef FILECOLUMNACTION_H
 #define FILECOLUMNACTION_H
 
-#include <QWidget>
+#include "filecolumnwidget.h"
 
 namespace Ui {
     class FileColumnAction;
 }
 
-class FileColumnAction : public QWidget {
+class FileColumnAction : public FileColumnWidget {
         Q_OBJECT
 
     public:

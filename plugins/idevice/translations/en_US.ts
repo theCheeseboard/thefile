@@ -4,8 +4,40 @@
 <context>
     <name>IDevice</name>
     <message>
-        <location filename="../idevice.cpp" line="29"/>
+        <location filename="../idevice.cpp" line="32"/>
         <source>Unknown Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IDeviceFileColumnWidget</name>
+    <message>
+        <location filename="../idevicefilecolumnwidget.ui" line="14"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_idevicefilecolumnwidget.h" line="134"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../idevicefilecolumnwidget.ui" line="99"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_idevicefilecolumnwidget.h" line="135"/>
+        <source>System Software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../idevicefilecolumnwidget.ui" line="128"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_idevicefilecolumnwidget.h" line="137"/>
+        <source>Restore System Software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../idevicefilecolumnwidget.ui" line="121"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_idevicefilecolumnwidget.h" line="136"/>
+        <source>Update System Software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../idevicefilecolumnwidget.cpp" line="34"/>
+        <source>This %1 is currently running %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -203,65 +235,68 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="77"/>
-        <source>Software Version %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../popovers/idevicerestorepopover.cpp" line="78"/>
         <source>Build %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="100"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="104"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="92"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="96"/>
         <source>Restore %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="103"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="95"/>
         <source>Apple will be contacted to verify the restore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="107"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="99"/>
         <source>Once the %1 is updated, you may not be able to return to the previous version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="108"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="100"/>
         <source>Once the update is complete, %1 will be installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="109"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="101"/>
         <source>Apple will be contacted to verify the update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="106"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="110"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="98"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="102"/>
         <source>Update %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="101"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="93"/>
         <source>Once the %1 is restored, all the data on it will be erased. You may not be able to return to the previous version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="102"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="94"/>
         <source>Once the restore is complete, %1 will be installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="115"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="107"/>
         <source>Restore %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="117"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="109"/>
         <source>Update %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IDeviceRootDirectory</name>
+    <message>
+        <location filename="../directories/idevicerootdirectory.cpp" line="50"/>
+        <source>Pictures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

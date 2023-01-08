@@ -19,6 +19,10 @@
  * *************************************/
 #include "directory.h"
 
-Directory::Directory(QObject* parent) : QObject(parent) {
+Directory::Directory(QObject* parent) :
+    QObject(parent) {
+}
 
+QList<FileColumnWidget*> Directory::actions() {
+    return {};
 }

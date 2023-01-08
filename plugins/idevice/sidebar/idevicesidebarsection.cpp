@@ -38,7 +38,7 @@ IDeviceSidebarSection::IDeviceSidebarSection(IDeviceWatcher* watcher, QObject* p
         if (tApplication::mouseButtons() & Qt::RightButton) return;
 
         // Navigate to the item
-        //        emit navigate(index.data(BookmarksModel::UrlRole).toUrl());
+        emit navigate(index.data(IDeviceModel::UrlRole).toUrl());
     });
     connect(d->list, &QListView::customContextMenuRequested, this, [this](QPoint pos) {
         QModelIndex index = d->list->indexAt(pos);

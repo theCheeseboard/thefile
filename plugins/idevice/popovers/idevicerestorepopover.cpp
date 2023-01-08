@@ -71,10 +71,10 @@ void IDeviceRestorePopover::updateRestoreState() {
                     ui->updateFileInformation->setText(tr("The selected update file does not support this device."));
                 } else {
                     canRestore = true;
-                    restoreVersion = file.productVersion();
+                    restoreVersion = d->device->humanReadableProductVersion(file.productVersion());
 
                     QStringList attributes;
-                    attributes.append(tr("Software Version %1").arg(file.productVersion()));
+                    attributes.append(d->device->humanReadableProductVersion(file.productVersion()));
                     attributes.append(tr("Build %1").arg(file.productBuildVersion()));
                     ui->updateFileInformation->setText(attributes.join(libContemporaryCommon::humanReadablePartJoinString()));
                 }
@@ -85,14 +85,6 @@ void IDeviceRestorePopover::updateRestoreState() {
     }
 
     if (canRestore) {
-        QString restoreOs;
-        if (d->device->deviceClass() == "iPad") {
-            restoreOs = "iPadOS";
-        } else {
-            restoreOs = "iOS";
-        }
-
-        restoreVersion = QStringLiteral("%1 %2").arg(restoreOs, restoreVersion);
         d->softwareVersion = restoreVersion;
 
         ui->restoreButton->setEnabled(true);

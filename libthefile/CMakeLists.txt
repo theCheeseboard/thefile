@@ -34,6 +34,7 @@ set(SOURCES
     sidebar/sections/standardsidebarsectionfactory.cpp
     sidebar/sections/drivessidebarsection.cpp
     sidebar/sections/bookmarkssidebarsection.cpp
+    filecolumnwidget.cpp
 
     filecolumn.ui
     filecolumnaction.ui
@@ -72,6 +73,7 @@ set(HEADERS
     sidebar/sections/standardsidebarsectionfactory.h
     sidebar/sections/drivessidebarsection.h
     sidebar/sections/bookmarkssidebarsection.h
+    filecolumnwidget.h
 )
 
 add_library(libthefile SHARED ${SOURCES} ${HEADERS})

@@ -12,6 +12,7 @@ set(SOURCES
     idevice.cpp
     idevicemodel.cpp
     isoftwareupdatefile.cpp
+    idevicefilecolumnwidget.cpp idevicefilecolumnwidget.ui
 
     sidebar/idevicesidebarsection.cpp
     sidebar/idevicesidebarsectionfactory.cpp
@@ -20,6 +21,9 @@ set(SOURCES
 
     jobs/idevicerestorejob.cpp
     jobs/progress/idevicerestorejobprogress.cpp jobs/progress/idevicerestorejobprogress.ui
+
+    directories/idevicerootdirectory.cpp
+    directories/idevicedirectoryhandler.cpp
 )
 
 set(HEADERS
@@ -28,6 +32,7 @@ set(HEADERS
     idevice.h
     idevicemodel.h
     isoftwareupdatefile.h
+    idevicefilecolumnwidget.h
 
     sidebar/idevicesidebarsection.h
     sidebar/idevicesidebarsectionfactory.h
@@ -36,6 +41,9 @@ set(HEADERS
 
     jobs/idevicerestorejob.h
     jobs/progress/idevicerestorejobprogress.h
+
+    directories/idevicerootdirectory.h
+    directories/idevicedirectoryhandler.h
 )
 
 add_library(plugin-idevice SHARED ${SOURCES} ${HEADERS})

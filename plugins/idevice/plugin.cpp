@@ -19,10 +19,12 @@
  * *************************************/
 #include "plugin.h"
 
+#include "directories/idevicedirectoryhandler.h"
 #include "idevicewatcher.h"
 #include "sidebar/idevicesidebarsectionfactory.h"
 #include <QDebug>
 #include <QIcon>
+#include <resourcemanager.h>
 #include <sidebarmanager.h>
 #include <tapplication.h>
 #include <tlogger.h>
@@ -42,6 +44,7 @@ Plugin::~Plugin() {
 void Plugin::activate() {
     tDebug("IDevicePlugin") << "IDevicePlugin loaded";
     d->watcher = new IDeviceWatcher();
+    ResourceManager::instance()->registerDirectoryHandler(new IDeviceDirectoryHandler(d->watcher));
     SidebarManager::registerSidebarFactory(new IDeviceSidebarSectionFactory(d->watcher));
 }
 

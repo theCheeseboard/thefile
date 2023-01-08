@@ -2,6 +2,7 @@
 
 #include "idevice.h"
 #include "idevicewatcher.h"
+#include "qurl.h"
 #include <QIcon>
 
 struct IDeviceModelPrivate {
@@ -49,19 +50,17 @@ QVariant IDeviceModel::data(const QModelIndex& index, int role) const {
         case Qt::DisplayRole:
             return device->deviceName();
         case Qt::DecorationRole:
-            if (device->deviceClass() == "iPhone") {
-                return QIcon::fromTheme("phone");
-            } else if (device->deviceClass() == "iPod") {
-                return QIcon::fromTheme("phone");
-            } else if (device->deviceClass() == "iPad") {
-                return QIcon::fromTheme("tablet");
-            } else if (device->deviceClass() == "Apple TV") {
-                return QIcon::fromTheme("video-display");
-            } else {
-                return QIcon::fromTheme("phone");
-            }
+            return device->icon();
         case DeviceRole:
             return QVariant::fromValue(device);
+        case UrlRole:
+            {
+                QUrl url;
+                url.setScheme("ios");
+                url.setHost(QStringLiteral("u%1").arg(device->udid()));
+                url.setPath("/");
+                return url;
+            }
     }
 
     return QVariant();

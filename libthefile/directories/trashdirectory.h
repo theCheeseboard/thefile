@@ -57,6 +57,7 @@ class TrashDirectory : public Directory {
         bool canMove(QString filename, QUrl to);
         QCoro::Task<> move(QString filename, QUrl to);
         QVariant special(QString operation, QVariantMap args);
+        QList<FileColumnWidget*> actions();
 };
 
 #endif // TRASHDIRECTORY_H

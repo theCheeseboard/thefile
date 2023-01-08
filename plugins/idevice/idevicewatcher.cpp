@@ -39,6 +39,13 @@ QList<IDevice*> IDeviceWatcher::devices() {
     return d->devices.values();
 }
 
+IDevice* IDeviceWatcher::deviceByUdid(QString udid) {
+    for (auto device : d->devices.values()) {
+        if (device->udid().toLower() == udid.toLower()) return device;
+    }
+    return nullptr;
+}
+
 void IDeviceWatcher::addDevice(QString udid) {
     emit addingDevice();
     tDebug("IDeviceWatcher") << "New device with UDID " << udid;

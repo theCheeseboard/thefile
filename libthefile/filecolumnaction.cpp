@@ -21,7 +21,7 @@
 #include "ui_filecolumnaction.h"
 
 FileColumnAction::FileColumnAction(QWidget* parent) :
-    QWidget(parent),
+    FileColumnWidget(parent),
     ui(new Ui::FileColumnAction) {
     ui->setupUi(this);
 }

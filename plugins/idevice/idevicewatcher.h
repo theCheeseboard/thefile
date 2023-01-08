@@ -12,6 +12,7 @@ class IDeviceWatcher : public QObject {
         ~IDeviceWatcher();
 
         QList<IDevice*> devices();
+        IDevice* deviceByUdid(QString udid);
 
     signals:
         void addingDevice();

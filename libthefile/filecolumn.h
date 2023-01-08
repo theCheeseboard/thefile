@@ -28,6 +28,7 @@ namespace Ui {
     class FileColumn;
 }
 
+class QListView;
 class FileColumnManager;
 class QMenu;
 struct FileColumnPrivate;
@@ -42,6 +43,7 @@ class FileColumn : public QWidget {
         void setSelected(QUrl url);
 
         QString columnTitle();
+        QListView* folderView();
 
         void cut();
         void copy();

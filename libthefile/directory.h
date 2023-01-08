@@ -29,6 +29,7 @@
 #include <QObject>
 #include <QUrl>
 
+class FileColumnWidget;
 class Directory : public QObject,
                   public tfSharedFromThis<Directory> {
         Q_OBJECT
@@ -62,6 +63,8 @@ class Directory : public QObject,
 
         virtual bool canMove(QString filename, QUrl to) = 0;
         virtual QCoro::Task<> move(QString filename, QUrl to) = 0;
+
+        virtual QList<FileColumnWidget*> actions();
 
         virtual QVariant special(QString operation, QVariantMap args) = 0;
 

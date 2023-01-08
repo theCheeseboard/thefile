@@ -19,12 +19,15 @@
  * *************************************/
 #include "trashdirectory.h"
 
+#include "filecolumn.h"
+#include "filecolumnaction.h"
 #include "localfilesystemdirectory.h"
 #include "resourcemanager.h"
 #include <QCoroFuture>
 #include <QFileIconProvider>
 #include <QFileInfo>
 #include <QFileSystemWatcher>
+#include <QListView>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QUrlQuery>
@@ -228,4 +231,16 @@ QVariant TrashDirectory::special(QString operation, QVariantMap args) {
         }
     }
     return QVariant();
+}
+
+QList<FileColumnWidget*> TrashDirectory::actions() {
+    FileColumnAction* trashAction = new FileColumnAction();
+    trashAction->setText(tr("Trash"));
+    trashAction->setButtonText(tr("Empty Trash"));
+    connect(trashAction, &FileColumnAction::actionClicked, this, [=] {
+        trashAction->fileColumn()->folderView()->selectAll();
+        trashAction->fileColumn()->deleteFile();
+    });
+
+    return {trashAction};
 }

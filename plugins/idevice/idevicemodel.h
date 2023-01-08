@@ -13,7 +13,8 @@ class IDeviceModel : public QAbstractListModel {
         ~IDeviceModel();
 
         enum Roles {
-            DeviceRole = Qt::UserRole
+            DeviceRole = Qt::UserRole,
+            UrlRole
         };
 
         // Basic functionality:

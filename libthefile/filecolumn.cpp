@@ -57,7 +57,7 @@ struct FileColumnPrivate {
         FileColumnFloater* floater;
         tVariantAnimation* floaterAnim;
 
-        QList<FileColumnAction*> actions;
+        QList<FileColumnWidget*> actions;
         QList<QPushButton*> openFileButtons;
 
         bool listenToSelection = true;
@@ -135,6 +135,10 @@ QString FileColumn::columnTitle() {
         }
         return QFileInfo(QFileInfo(d->directory->url().path()).canonicalFilePath()).fileName();
     }
+}
+
+QListView* FileColumn::folderView() {
+    return ui->folderView;
 }
 
 void FileColumn::cut() {
@@ -467,7 +471,7 @@ void FileColumn::updateItems() {
     }
 
     // Add actions
-    for (FileColumnAction* action : d->actions) {
+    for (QWidget* action : d->actions) {
         ui->actionsLayout->removeWidget(action);
         action->deleteLater();
     }
@@ -475,27 +479,22 @@ void FileColumn::updateItems() {
 
     if (!d->directory) return;
 
-    if (d->directory->url().scheme() == "trash") {
-        FileColumnAction* trashAction = new FileColumnAction(this);
-        trashAction->setText(tr("Trash"));
-        trashAction->setButtonText(tr("Empty Trash"));
-        connect(trashAction, &FileColumnAction::actionClicked, this, [=] {
-            ui->folderView->selectAll();
-            deleteFile();
-        });
-        ui->actionsLayout->addWidget(trashAction);
-        d->actions.append(trashAction);
-    }
-
     for (FileTab::ColumnAction act : d->manager->columnActions()) {
         FileColumnAction* action = new FileColumnAction(this);
         action->setText(act.text);
         action->setButtonText(act.buttonText);
+        action->setFileColumn(this);
         connect(action, &FileColumnAction::actionClicked, this, [=] {
             act.activated(d->directory);
         });
         ui->actionsLayout->addWidget(action);
         d->actions.append(action);
+    }
+
+    for (auto act : d->directory->actions()) {
+        act->setFileColumn(this);
+        ui->actionsLayout->addWidget(act);
+        d->actions.append(act);
     }
 }
 
