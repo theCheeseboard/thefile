@@ -18,6 +18,6 @@
             "type": "qt",
             "path": "/plugins/idevice/translations/{lang}.ts",
             "baseLang": "en_US"
-        },
+        }
     ]
 }
