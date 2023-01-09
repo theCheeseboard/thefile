@@ -35,10 +35,14 @@ IDeviceRestorePopover::IDeviceRestorePopover(IDevice* device, bool erase, QWidge
         ui->optionsLabel->setText(tr("Restore Options"));
         ui->titleLabel->setText(tr("Restore System Software on %1").arg(QLocale().quoteString(device->deviceName())));
         ui->titleLabel_3->setText(tr("Restore System Software on %1").arg(QLocale().quoteString(device->deviceName())));
+        ui->restoreButton->setIcon(QIcon::fromTheme("phone-erase"));
+        ui->doRestoreButton->setIcon(QIcon::fromTheme("phone-erase"));
     } else {
         ui->optionsLabel->setText(tr("Update Options"));
         ui->titleLabel->setText(tr("Update System Software on %1").arg(QLocale().quoteString(device->deviceName())));
         ui->titleLabel_3->setText(tr("Update System Software on %1").arg(QLocale().quoteString(device->deviceName())));
+        ui->restoreButton->setIcon(QIcon::fromTheme("phone-upgrade"));
+        ui->doRestoreButton->setIcon(QIcon::fromTheme("phone-upgrade"));
     }
 
     updateRestoreState();

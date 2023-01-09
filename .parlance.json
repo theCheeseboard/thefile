@@ -1,0 +1,23 @@
+{
+    "name": "theFile",
+    "subprojects": [
+        {
+            "name": "theFile Desktop",
+            "type": "qt",
+            "path": "/application/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theFile Desktop File",
+            "type": "webext-json",
+            "path": "/application/translations/desktop/com.vicr123.thefile/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theFile libimobiledevice integration",
+            "type": "qt",
+            "path": "/plugins/idevice/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+    ]
+}

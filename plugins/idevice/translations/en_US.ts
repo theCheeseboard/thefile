@@ -214,80 +214,80 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="39"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="41"/>
         <source>Update Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="40"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="41"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="42"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="43"/>
         <source>Update System Software on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="67"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="71"/>
         <source>The selected update file is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="71"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="75"/>
         <source>The selected update file does not support this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="78"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="82"/>
         <source>Build %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="92"/>
         <location filename="../popovers/idevicerestorepopover.cpp" line="96"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="100"/>
         <source>Restore %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="95"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="99"/>
         <source>Apple will be contacted to verify the restore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="99"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="103"/>
         <source>Once the %1 is updated, you may not be able to return to the previous version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="100"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="104"/>
         <source>Once the update is complete, %1 will be installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="101"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="105"/>
         <source>Apple will be contacted to verify the update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="98"/>
         <location filename="../popovers/idevicerestorepopover.cpp" line="102"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="106"/>
         <source>Update %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="93"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="97"/>
         <source>Once the %1 is restored, all the data on it will be erased. You may not be able to return to the previous version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="94"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="98"/>
         <source>Once the restore is complete, %1 will be installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="107"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="111"/>
         <source>Restore %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="109"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="113"/>
         <source>Update %1</source>
         <translation type="unfinished"></translation>
     </message>
