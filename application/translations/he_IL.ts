@@ -526,7 +526,7 @@ Total progress: %4 of %5</source>
       <source>%n items</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>%1 בייטים</translation>
       <location filename="../popovers/itempropertiespopover.cpp" line="76" />
       <location filename="../popovers/itempropertiespopover.cpp" line="82" />
       <source>%1 bytes</source>
