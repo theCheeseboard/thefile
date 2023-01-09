@@ -37,7 +37,7 @@
      <item>
       <widget class="QWidget" name="widget_2" native="true">
        <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
+        <item alignment="Qt::AlignLeft">
          <widget class="QLabel" name="folderNameLabel">
           <property name="text">
            <string notr="true"/>
@@ -109,7 +109,7 @@
               <x>0</x>
               <y>0</y>
               <width>397</width>
-              <height>613</height>
+              <height>611</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -279,8 +279,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>397</width>
-              <height>613</height>
+              <width>98</width>
+              <height>95</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">

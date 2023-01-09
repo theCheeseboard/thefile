@@ -44,6 +44,7 @@
 #include <tjobmanager.h>
 #include <tlogger.h>
 #include <tmessagebox.h>
+#include <tpaintcalculator.h>
 #include <tpopover.h>
 
 struct SidebarPrivate {
@@ -82,6 +83,8 @@ Sidebar::Sidebar(QWidget* parent) :
             ui->sidebarContainer->addWidget(label);
             ui->sidebarContainer->addWidget(sidebar->widget());
 
+            ui->sidebarContainer->setAlignment(label, Qt::AlignLeft | Qt::AlignVCenter);
+
             if (auto list = qobject_cast<QListView*>(sidebar->widget())) {
                 list->setItemDelegate(new SidebarDelegate());
                 list->setFrameShape(QFrame::NoFrame);
@@ -100,27 +103,25 @@ SidebarDelegate::SidebarDelegate(QObject* parent) :
 }
 
 void SidebarDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
-    // Offset everything by 6px
-    //    QStyleOptionViewItem newOption = option;
-    //    newOption.rect.adjust(SC_DPI(6), 0, 0, 0);
-    //    QStyledItemDelegate::paint(painter, newOption, index);
+    painter->save();
+    option.widget->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, option.widget);
+    painter->restore();
+
+    tPaintCalculator calculator;
+    calculator.setLayoutDirection(option.direction);
+    calculator.setPainter(painter);
+    calculator.setDrawBounds(option.rect);
 
     painter->setPen(Qt::transparent);
 
     QPen textPen;
     if (option.state & QStyle::State_Selected) {
-        painter->setBrush(option.palette.brush(QPalette::Highlight));
         textPen = option.palette.color(QPalette::HighlightedText);
     } else if (option.state & QStyle::State_MouseOver) {
-        QColor col = option.palette.color(QPalette::Highlight);
-        col.setAlpha(127);
-        painter->setBrush(col);
         textPen = option.palette.color(QPalette::HighlightedText);
     } else {
-        painter->setBrush(option.palette.brush(QPalette::Base));
         textPen = option.palette.color(QPalette::WindowText);
     }
-    painter->drawRect(option.rect);
 
     QRect contentRect = option.rect.adjusted(SC_DPI(9), 0, 0, 0);
     QRect iconRect = contentRect, textRect = contentRect;
@@ -138,22 +139,34 @@ void SidebarDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
         QImage iconImage = icon.pixmap(iconSize).toImage();
         iconRect.moveLeft(contentRect.left() + SC_DPI(2));
         iconRect.moveTop(contentRect.top() + (contentRect.height() / 2) - (iconRect.height() / 2));
-        painter->drawImage(iconRect, iconImage);
+
         textRect.setLeft(iconRect.right() + SC_DPI(6));
+
+        calculator.addRect(iconRect, [painter, iconImage](QRectF drawBounds) {
+            painter->drawImage(drawBounds, iconImage);
+        });
     } else {
         textRect.setLeft(contentRect.left() + SC_DPI(6));
     }
 
-    painter->setPen(textPen);
-    painter->setFont(option.font);
-    painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, index.data(Qt::DisplayRole).toString());
+    QString text = index.data(Qt::DisplayRole).toString();
+    calculator.addRect(textRect, [painter, textPen, option, text](QRectF drawBounds) {
+        painter->setPen(textPen);
+        painter->setFont(option.font);
+        painter->drawText(drawBounds, Qt::AlignLeft | Qt::AlignVCenter, text);
+    });
 
     if (index.data(DevicesModel::MountedRole).toBool()) {
         // Draw the mounted indicator
         QRect mountIndicator = option.rect;
         mountIndicator.setWidth(SC_DPI(6));
-        painter->setPen(Qt::transparent);
-        painter->setBrush(QColor(0, 200, 0));
-        painter->drawRect(mountIndicator);
+
+        calculator.addRect(mountIndicator, [painter](QRectF drawBounds) {
+            painter->setPen(Qt::transparent);
+            painter->setBrush(QColor(0, 200, 0));
+            painter->drawRect(drawBounds);
+        });
     }
+
+    calculator.performPaint();
 }

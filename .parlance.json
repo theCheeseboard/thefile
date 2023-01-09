@@ -14,6 +14,12 @@
             "baseLang": "en"
         },
         {
+            "name": "libthefile",
+            "type": "qt",
+            "path": "/libthefile/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
             "name": "theFile libimobiledevice integration",
             "type": "qt",
             "path": "/plugins/idevice/translations/{lang}.ts",

@@ -60,7 +60,8 @@ FileTab::FileTab(QWidget* parent) :
         for (FileColumn* c : d->currentColumnWidgets) max += c->width();
 
         int margin = value + ui->scrollArea->width() - max;
-        ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
+        if (margin < 0) margin = 0;
+        ui->scrollAreaWidgetContents->layout()->setContentsMargins(this->layoutDirection() == Qt::RightToLeft ? margin : 0, 0, this->layoutDirection() == Qt::LeftToRight ? margin : 0, 0);
     });
     connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [=](int min, int max) {
         if (d->keepAtEnd) {
@@ -170,7 +171,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
                 if (max < currentWidth) {
                     int margin = currentWidth - max;
-                    ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin, 0);
+                    ui->scrollAreaWidgetContents->layout()->setContentsMargins(this->layoutDirection() == Qt::RightToLeft ? margin : 0, 0, this->layoutDirection() == Qt::LeftToRight ? margin : 0, 0);
                 }
             } else {
                 // Reduce the extra margin at the end
@@ -178,7 +179,8 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 for (FileColumn* c : qAsConst(d->currentColumnWidgets)) max += c->width();
 
                 int margin = ui->scrollArea->horizontalScrollBar()->value() + ui->scrollArea->width() - max;
-                ui->scrollAreaWidgetContents->layout()->setContentsMargins(0, 0, margin >= 0 ? margin : 0, 0);
+                if (margin < 0) margin = 0;
+                ui->scrollAreaWidgetContents->layout()->setContentsMargins(this->layoutDirection() == Qt::RightToLeft ? margin : 0, 0, this->layoutDirection() == Qt::LeftToRight ? margin : 0, 0);
             }
             if (columnsAdded) {
                 QTimer::singleShot(0, this, [=] {
