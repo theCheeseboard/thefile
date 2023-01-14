@@ -34,6 +34,7 @@
 #include <filecolumn.h>
 #include <plugins/tpluginmanagerpane.h>
 #include <resourcemanager.h>
+#include <tapplication.h>
 #include <tcsdtools.h>
 #include <thelpmenu.h>
 #include <tinputdialog.h>
@@ -41,7 +42,6 @@
 #include <tpopover.h>
 #include <tsettings.h>
 #include <tsettingswindow/tsettingswindow.h>
-#include <tapplication.h>
 
 struct MainWindowPrivate {
         tCsdTools csd;
