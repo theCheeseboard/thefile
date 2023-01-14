@@ -56,8 +56,8 @@ int main(int argc, char* argv[]) {
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theFile/defaults.conf");
 
-    auto pluginManager = new tPluginManager<PluginInterface>("thefile");
-    pluginManager->load();
+    auto pluginManager = tPluginManager<PluginInterface>::instance();
+    pluginManager->setLibraryDirectory("thefile");
 
     QCommandLineParser parser;
     parser.addHelpOption();

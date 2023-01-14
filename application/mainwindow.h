@@ -67,6 +67,8 @@ class MainWindow : public QMainWindow {
 
         void on_actionNew_Folder_triggered();
 
+        void on_actionSettings_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

@@ -32,6 +32,7 @@
 #include <QShortcut>
 #include <QUrl>
 #include <filecolumn.h>
+#include <plugins/tpluginmanagerpane.h>
 #include <resourcemanager.h>
 #include <tcsdtools.h>
 #include <thelpmenu.h>
@@ -39,6 +40,8 @@
 #include <tjobmanager.h>
 #include <tpopover.h>
 #include <tsettings.h>
+#include <tsettingswindow/tsettingswindow.h>
+#include <tapplication.h>
 
 struct MainWindowPrivate {
         tCsdTools csd;
@@ -76,6 +79,7 @@ MainWindow::MainWindow(QWidget* parent) :
     menu->addAction(ui->actionGo);
     menu->addAction(ui->actionShowHiddenFiles);
     menu->addSeparator();
+    menu->addAction(ui->actionSettings);
     menu->addMenu(new tHelpMenu(this));
     menu->addAction(ui->actionCloseTab);
     menu->addAction(ui->actionExit);
@@ -85,12 +89,7 @@ MainWindow::MainWindow(QWidget* parent) :
         FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
         if (tab->currentColumn()) tab->currentColumn()->deleteFile();
     });
-
-#ifdef T_BLUEPRINT_BUILD
-    ui->menuButton->setIcon(QIcon(":/icons/thefile-blueprint.svg"));
-#else
-    ui->menuButton->setIcon(QIcon::fromTheme("com.vicr123.thefile", QIcon(":/icons/thefile.svg")));
-#endif
+    ui->menuButton->setIcon(tApplication::applicationIcon());
 
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
@@ -293,4 +292,11 @@ void MainWindow::on_actionNew_Window_triggered() {
 void MainWindow::on_actionNew_Folder_triggered() {
     FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
     if (tab->lastColumn()) tab->lastColumn()->newFolder();
+}
+
+void MainWindow::on_actionSettings_triggered() {
+    tSettingsWindow window(this);
+    window.appendSection(tr("General"));
+    window.appendPane(new tPluginManagerPane());
+    window.exec();
 }
