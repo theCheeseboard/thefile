@@ -369,44 +369,44 @@ Total progress: %4 of %5</source>
       <source>Cancel Operation</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>LỖI CHUYỂN TỆP</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.ui" line="173" />
       <source>TRANSFER ERROR</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Bỏ qua tệp này</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.ui" line="195" />
       <source>Skip this file</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Thử lại</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.ui" line="202" />
       <source>Try Again</source>
     </message>
     <message numerus="yes">
       <translation>
-        <numerusform></numerusform>
+        <numerusform>%n tệp trong thư mục đích có cùng tên tệp với các tệp đang bị chuyển.</numerusform>
       </translation>
       <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="43" />
       <source>%n files in the destination folder have the same file name as files being transferred</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Một lỗi đã xảy ra khi cố chép tệp.</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="48" />
       <source>An error occurred while trying to copy a file.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Một lỗi đã xảy ra khi cố di chuyển tệp.</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="50" />
       <source>An error occurred while trying to move a file.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ĐANG CHÉP TỆP</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57" />
       <source>COPYING FILES</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ĐANG DI CHUYỂN TỆP</translation>
       <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57" />
       <source>MOVING FILES</source>
     </message>
@@ -414,105 +414,105 @@ Total progress: %4 of %5</source>
   <context>
     <name>ItemPropertiesPopover</name>
     <message>
-      <translation></translation>
+      <translation>Thuộc tính</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="35" />
       <source>Properties</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chi tiết</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="60" />
       <source>Details</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Quyền</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="76" />
       <source>Permissions</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Truy cập lần cuối</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="186" />
       <source>Last Accessed</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>CHI TIẾT</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="138" />
       <source>DETAILS</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Kích thước</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="125" />
       <source>Size</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Tên</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="234" />
       <source>Name</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Loại</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="165" />
       <source>Type</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Dung lượng trống</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="248" />
       <source>Free Space</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Người dùng khác</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="266" />
       <source>Others</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đọc</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="308" />
       <source>Read</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Sở hữu</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="318" />
       <source>Owner</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Nhóm</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="325" />
       <source>Group</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Kiểm soát truy cập</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="338" />
       <source>ACCESS CONTROLS</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ghi</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="352" />
       <source>Write</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chạy</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="345" />
       <source>Executable</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Sửa đổi lần cuối</translation>
       <location filename="../popovers/itempropertiespopover.ui" line="193" />
       <source>Last Modified</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đang đếm...</translation>
       <location filename="../popovers/itempropertiespopover.cpp" line="66" />
       <location filename="../popovers/itempropertiespopover.cpp" line="67" />
       <source>Counting...</source>
     </message>
     <message numerus="yes">
       <translation>
-        <numerusform></numerusform>
+        <numerusform>%n mục</numerusform>
       </translation>
       <location filename="../popovers/itempropertiespopover.cpp" line="73" />
       <source>%n items</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>%1 byte</translation>
       <location filename="../popovers/itempropertiespopover.cpp" line="76" />
       <location filename="../popovers/itempropertiespopover.cpp" line="82" />
       <source>%1 bytes</source>
@@ -521,181 +521,181 @@ Total progress: %4 of %5</source>
   <context>
     <name>MainWindow</name>
     <message>
-      <translation></translation>
+      <translation>theFile</translation>
       <location filename="../mainwindow.ui" line="14" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="275" />
       <source>theFile</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Thoát</translation>
       <location filename="../mainwindow.ui" line="138" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="276" />
       <source>Exit</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+Q</translation>
       <location filename="../mainwindow.ui" line="141" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="278" />
       <source>Ctrl+Q</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Tab mới</translation>
       <location filename="../mainwindow.ui" line="150" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="280" />
       <source>New Tab</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+T</translation>
       <location filename="../mainwindow.ui" line="153" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="282" />
       <source>Ctrl+T</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đóng tab</translation>
       <location filename="../mainwindow.ui" line="162" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="284" />
       <source>Close Tab</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+W</translation>
       <location filename="../mainwindow.ui" line="165" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="286" />
       <source>Ctrl+W</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Hiện tệp bị ẩn</translation>
       <location filename="../mainwindow.ui" line="173" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="288" />
       <source>Show Hidden Files</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+H</translation>
       <location filename="../mainwindow.ui" line="176" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="290" />
       <source>Ctrl+H</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đi</translation>
       <location filename="../mainwindow.ui" line="185" />
       <location filename="../mainwindow.cpp" line="230" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="292" />
       <source>Go</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+L</translation>
       <location filename="../mainwindow.ui" line="188" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="294" />
       <source>Ctrl+L</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chép</translation>
       <location filename="../mainwindow.ui" line="197" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="296" />
       <source>Copy</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+C</translation>
       <location filename="../mainwindow.ui" line="200" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="298" />
       <source>Ctrl+C</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Cắt</translation>
       <location filename="../mainwindow.ui" line="209" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="300" />
       <source>Cut</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+X</translation>
       <location filename="../mainwindow.ui" line="212" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="302" />
       <source>Ctrl+X</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Dán</translation>
       <location filename="../mainwindow.ui" line="221" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="304" />
       <source>Paste</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+V</translation>
       <location filename="../mainwindow.ui" line="224" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="306" />
       <source>Ctrl+V</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chuyển sang thùng rác</translation>
       <location filename="../mainwindow.ui" line="233" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="308" />
       <source>Move to Trash</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Del</translation>
       <location filename="../mainwindow.ui" line="236" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="310" />
       <source>Del</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chọn tất cả</translation>
       <location filename="../mainwindow.ui" line="245" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="312" />
       <source>Select All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+A</translation>
       <location filename="../mainwindow.ui" line="248" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="314" />
       <source>Ctrl+A</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Cửa sổ mới</translation>
       <location filename="../mainwindow.ui" line="257" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="316" />
       <source>New Window</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+N</translation>
       <location filename="../mainwindow.ui" line="260" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="318" />
       <source>Ctrl+N</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Thư mục mới</translation>
       <location filename="../mainwindow.ui" line="269" />
       <location filename="../mainwindow.cpp" line="188" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="320" />
       <source>New Folder</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+Shift+N</translation>
       <location filename="../mainwindow.ui" line="272" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="322" />
       <source>Ctrl+Shift+N</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Cài đặt</translation>
       <location filename="../mainwindow.ui" line="277" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="324" />
       <source>Settings</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ctrl+,</translation>
       <location filename="../mainwindow.ui" line="280" />
       <location filename="../../../build-thefile-Chroot_6-Debug/application/thefile_autogen/include/ui_mainwindow.h" line="326" />
       <source>Ctrl+,</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Mở</translation>
       <location filename="../mainwindow.cpp" line="180" />
       <source>Open</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Điền vào vị trí để đi đến</translation>
       <location filename="../mainwindow.cpp" line="230" />
       <source>Enter a location to go to</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Chung</translation>
       <location filename="../mainwindow.cpp" line="299" />
       <source>General</source>
     </message>
@@ -703,17 +703,17 @@ Total progress: %4 of %5</source>
   <context>
     <name>main</name>
     <message>
-      <translation></translation>
+      <translation>Bộ quản lý tệp</translation>
       <location filename="../main.cpp" line="42" />
       <source>File Manager</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>thư mục</translation>
       <location filename="../main.cpp" line="65" />
       <source>folder</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Thư mục để hiển</translation>
       <location filename="../main.cpp" line="65" />
       <source>Folder to show</source>
     </message>
