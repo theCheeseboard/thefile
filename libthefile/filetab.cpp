@@ -54,7 +54,7 @@ FileTab::FileTab(QWidget* parent) :
     connect(ui->sidebar, &Sidebar::moveFiles, this, &FileTab::moveFiles);
     connect(ui->sidebar, &Sidebar::copyFiles, this, &FileTab::copyFiles);
 
-    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [=](int value) {
+    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::valueChanged, this, [this](int value) {
         d->keepAtEnd = ui->scrollArea->horizontalScrollBar()->maximum() == value;
         int max = 0;
         for (FileColumn* c : d->currentColumnWidgets) max += c->width();
@@ -63,7 +63,7 @@ FileTab::FileTab(QWidget* parent) :
         if (margin < 0) margin = 0;
         ui->scrollAreaWidgetContents->layout()->setContentsMargins(this->layoutDirection() == Qt::RightToLeft ? margin : 0, 0, this->layoutDirection() == Qt::LeftToRight ? margin : 0, 0);
     });
-    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [=](int min, int max) {
+    connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, this, [this](int min, int max) {
         if (d->keepAtEnd) {
             ui->scrollArea->horizontalScrollBar()->setValue(max);
         }
@@ -183,7 +183,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 ui->scrollAreaWidgetContents->layout()->setContentsMargins(this->layoutDirection() == Qt::RightToLeft ? margin : 0, 0, this->layoutDirection() == Qt::LeftToRight ? margin : 0, 0);
             }
             if (columnsAdded) {
-                QTimer::singleShot(0, this, [=] {
+                QTimer::singleShot(0, this, [this] {
                     // Scroll to the end
                     tVariantAnimation* anim = new tVariantAnimation(this);
                     connect(ui->scrollArea->horizontalScrollBar(), &QScrollBar::rangeChanged, anim, [=](int min, int max) {
@@ -194,7 +194,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                     anim->setStartValue(ui->scrollArea->horizontalScrollBar()->maximum());
                     anim->setDuration(100);
                     anim->setEasingCurve(QEasingCurve::OutCubic);
-                    connect(anim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+                    connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
                         ui->scrollArea->horizontalScrollBar()->setValue(value.toInt());
                     });
                     connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);

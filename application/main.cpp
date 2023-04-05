@@ -40,7 +40,6 @@ int main(int argc, char* argv[]) {
 
     a.setApplicationVersion("4.0.1");
     a.setGenericName(QApplication::translate("main", "File Manager"));
-    a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
     a.setCopyrightYear("2022");

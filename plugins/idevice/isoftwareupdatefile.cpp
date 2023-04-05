@@ -37,7 +37,7 @@ ISoftwareUpdateFile::ISoftwareUpdateFile(QString path, QObject* parent) :
     d->productBuildVersion = QString::fromStdString(productBuildVersionString->GetValue());
 
     auto supportedProductTypesArray = static_cast<PList::Array*>(supportedProductTypesIterator->second);
-    for (auto i = 0; i < supportedProductTypesArray->GetSize(); i++) {
+    for (uint32_t i = 0; i < supportedProductTypesArray->GetSize(); i++) {
         auto node = supportedProductTypesArray->operator[](i);
         if (node->GetType() != PLIST_STRING) {
             return;

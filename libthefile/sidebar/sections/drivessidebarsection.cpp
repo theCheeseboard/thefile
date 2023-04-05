@@ -53,11 +53,11 @@ DrivesSidebarSection::DrivesSidebarSection(QObject* parent) :
         menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(device.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
         if (fs) {
             if (fs->mountPoints().isEmpty()) {
-                menu->addAction(QIcon::fromTheme("media-mount"), tr("Mount"), this, [=] {
+                menu->addAction(QIcon::fromTheme("media-mount"), tr("Mount"), this, [this, fs] {
                     fs->mount();
                 });
             } else {
-                menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [=]() -> QCoro::Task<> {
+                menu->addAction(QIcon::fromTheme("media-unmount"), tr("Unmount"), this, [this, fs]() -> QCoro::Task<> {
                     try {
                         co_await fs->unmount();
                     } catch (FrisbeeException& ex) {
@@ -72,7 +72,7 @@ DrivesSidebarSection::DrivesSidebarSection(QObject* parent) :
         }
 
         if (drive) {
-            if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [=]() -> QCoro::Task<> {
+            if (drive->ejectable()) menu->addAction(QIcon::fromTheme("media-eject"), tr("Eject"), this, [this, drive]() -> QCoro::Task<> {
                 try {
                     co_await drive->eject();
                 } catch (FrisbeeException& ex) {
@@ -86,8 +86,8 @@ DrivesSidebarSection::DrivesSidebarSection(QObject* parent) :
         }
 
         if (block && block->cryptoBackingDevice()) {
-            menu->addAction(tr("Lock"), this, [=]() -> QCoro::Task<> {
-                auto performLock = [=]() -> QCoro::Task<> {
+            menu->addAction(tr("Lock"), this, [this, block, fs]() -> QCoro::Task<> {
+                auto performLock = [this, block]() -> QCoro::Task<> {
                     try {
                         co_await block->cryptoBackingDevice()->interface<EncryptedInterface>()->lock();
                     } catch (FrisbeeException& ex) {
@@ -118,7 +118,7 @@ DrivesSidebarSection::DrivesSidebarSection(QObject* parent) :
         }
 
         menu->addSeparator();
-        menu->addAction(QIcon::fromTheme("media-image-create"), tr("Create Disk Image"), this, [=] {
+        menu->addAction(QIcon::fromTheme("media-image-create"), tr("Create Disk Image"), this, [this, disk] {
             DiskOperationManager::showDiskOperationUi(d->list, DiskOperationManager::Image, disk);
         });
 
@@ -129,7 +129,7 @@ DrivesSidebarSection::DrivesSidebarSection(QObject* parent) :
             eraseIcon = QIcon::fromTheme("media-optical-erase");
         }
 
-        menu->addAction(eraseIcon, eraseText, this, [=] {
+        menu->addAction(eraseIcon, eraseText, this, [this, disk] {
             DiskOperationManager::showDiskOperationUi(d->list, DiskOperationManager::Erase, disk);
         });
 
@@ -160,10 +160,10 @@ QCoro::Task<> DrivesSidebarSection::mount(DiskObject* disk) {
     } else if (encrypted) {
         UnlockEncryptedPopover* jp = new UnlockEncryptedPopover(disk);
         tPopover* popover = new tPopover(jp);
-        popover->setPopoverWidth(SC_DPI_W(-200, d->list));
+        popover->setPopoverWidth(-200);
         popover->setPopoverSide(tPopover::Bottom);
         connect(jp, &UnlockEncryptedPopover::reject, popover, &tPopover::dismiss);
-        connect(jp, &UnlockEncryptedPopover::accept, this, [=](DiskObject* cleartext) {
+        connect(jp, &UnlockEncryptedPopover::accept, this, [this, popover](DiskObject* cleartext) {
             popover->dismiss();
             mount(cleartext);
         });

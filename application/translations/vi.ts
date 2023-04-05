@@ -709,12 +709,12 @@ Tổng cộng: %4 tren %5</translation>
         <translation>Trình quản lý tệp</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="65"/>
+        <location filename="../main.cpp" line="64"/>
         <source>folder</source>
         <translation>thư mục</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="65"/>
+        <location filename="../main.cpp" line="64"/>
         <source>Folder to show</source>
         <translation>Thư mục để hiển thị</translation>
     </message>

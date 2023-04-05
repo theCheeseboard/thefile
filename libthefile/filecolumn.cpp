@@ -88,9 +88,9 @@ FileColumn::FileColumn(DirectoryPtr directory, FileColumnManager* manager, QWidg
     d->floaterAnim = new tVariantAnimation(this);
     d->floaterAnim->setDuration(500);
     d->floaterAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->floaterAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(d->floaterAnim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         d->floater->setGeometry(value.toRect());
-        ui->folderScrollerWidget->layout()->setContentsMargins(0, 0, 0, this->height() - value.toRect().top() + SC_DPI(9));
+        ui->folderScrollerWidget->layout()->setContentsMargins(0, 0, 0, this->height() - value.toRect().top() + 9);
     });
     hideFloater();
 
@@ -341,7 +341,7 @@ QMenu* FileColumn::menuForSelectedItems() {
             menu->addAction(QIcon::fromTheme("edit-cut"), tr("Cut"), this, &FileColumn::cut);
             menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, &FileColumn::copy);
             if (d->directory->url().scheme() == "trash") {
-                menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [=] {
+                menu->addAction(QIcon::fromTheme("trash-restore"), tr("Restore"), this, [this, sel] {
                     for (QModelIndex index : sel) {
                         QUrl url = index.data(FileModel::UrlRole).toUrl();
                         QVariant restorePath = d->directory->special("restorePath", {
@@ -357,7 +357,7 @@ QMenu* FileColumn::menuForSelectedItems() {
                 });
                 menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete Permanently"), this, &FileColumn::deleteFile);
             } else {
-                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Move to Trash"), this, [=] {
+                menu->addAction(QIcon::fromTheme("edit-delete"), tr("Move to Trash"), this, [this] {
                     if (qApp->queryKeyboardModifiers() & Qt::ShiftModifier) {
                         deleteFile();
                     } else {
@@ -373,7 +373,7 @@ QMenu* FileColumn::menuForSelectedItems() {
         QUrl url = sel.first().data(FileModel::UrlRole).toUrl();
 
         if (url.scheme() == "file" && d->manager->canOpenProperties()) {
-            menu->addAction(QIcon::fromTheme("configure"), tr("Properties"), this, [=] {
+            menu->addAction(QIcon::fromTheme("configure"), tr("Properties"), this, [this, url] {
                 emit openItemProperties(url);
             });
         }
@@ -384,7 +384,7 @@ QMenu* FileColumn::menuForSelectedItems() {
             if (dir && QCoro::waitFor(dir->exists())) {
                 if (!DriveObjectManager::opticalDisks().isEmpty()) {
                     menu->addSeparator();
-                    menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [=] {
+                    menu->addAction(QIcon::fromTheme("tools-media-optical-burn"), tr("Burn Contents"), this, [this, dir] {
                         emit burnDirectory(dir);
                     });
                 }
@@ -398,12 +398,12 @@ QMenu* FileColumn::menuForSelectedItems() {
 void FileColumn::reload() {
     d->model = new FileModel(d->directory);
     d->proxy->setSourceModel(d->model);
-    connect(d->model, &FileModel::modelAboutToBeReset, this, [=] {
+    connect(d->model, &FileModel::modelAboutToBeReset, this, [this] {
         ui->folderView->selectionModel()->blockSignals(true);
     });
     connect(d->model, &FileModel::modelReset, this, &FileColumn::updateItems);
     connect(d->model, &FileModel::modelReset, this, &FileColumn::ensureUrlSelected);
-    connect(d->model, &FileModel::modelReset, this, [=] {
+    connect(d->model, &FileModel::modelReset, this, [this] {
         ui->folderView->selectionModel()->blockSignals(false);
         ui->folderView->setFixedHeight(ui->folderView->sizeHintForRow(0) * d->proxy->rowCount());
     });
@@ -415,7 +415,7 @@ void FileColumn::reload() {
     ui->folderView->setFixedHeight(ui->folderView->sizeHintForRow(0) * d->proxy->rowCount());
 
     ui->folderNameLabel->setText(columnTitle());
-    connect(ui->folderView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [=] {
+    connect(ui->folderView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this] {
         updateFloater();
         emit canCopyCutTrashChanged(canCopyCutTrash());
 
@@ -434,7 +434,7 @@ void FileColumn::updateItems() {
     if (d->model->isFile()) {
         ([this]() -> QCoro::Task<> {
             auto fileInfo = co_await ResourceManager::parentDirectoryForUrl(d->directory->url())->fileInformation(d->directory->url().fileName());
-            ui->fileIconLabel->setPixmap(fileInfo.icon.pixmap(SC_DPI_T(QSize(128, 128), QSize)));
+            ui->fileIconLabel->setPixmap(fileInfo.icon.pixmap(QSize(128, 128)));
             ui->filenameLabel->setText(fileInfo.name);
 
             QStringList fileInfoText;
@@ -464,7 +464,7 @@ void FileColumn::updateItems() {
             ui->folderErrorText->setText(tr("We can't show you the contents of this folder."));
             icon = QIcon(":/icons/folder-unavailable.svg");
         }
-        QImage iconImage = icon.pixmap(SC_DPI_T(QSize(128, 128), QSize)).toImage();
+        QImage iconImage = icon.pixmap(QSize(128, 128)).toImage();
         libContemporaryCommon::tintImage(iconImage, this->palette().color(QPalette::WindowText));
         ui->folderErrorIcon->setPixmap(QPixmap::fromImage(iconImage));
         ui->stackedWidget->setCurrentWidget(ui->folderErrorPage);
@@ -484,7 +484,7 @@ void FileColumn::updateItems() {
         action->setText(act.text);
         action->setButtonText(act.buttonText);
         action->setFileColumn(this);
-        connect(action, &FileColumnAction::actionClicked, this, [=] {
+        connect(action, &FileColumnAction::actionClicked, this, [this, act] {
             act.activated(d->directory);
         });
         ui->actionsLayout->addWidget(action);
@@ -505,9 +505,9 @@ void FileColumn::showFloater() {
 
     QRect endGeometry;
     endGeometry.setHeight(d->floater->sizeHint().height());
-    endGeometry.moveBottom(this->height() - SC_DPI(9));
-    endGeometry.setLeft(SC_DPI(9));
-    endGeometry.setRight(this->width() - SC_DPI(9));
+    endGeometry.moveBottom(this->height() - 9);
+    endGeometry.setLeft(9);
+    endGeometry.setRight(this->width() - 9);
     d->floaterAnim->setEndValue(endGeometry);
     d->floaterAnim->start();
 
@@ -521,9 +521,9 @@ void FileColumn::hideFloater() {
 
     QRect endGeometry;
     endGeometry.setHeight(d->floater->sizeHint().height());
-    endGeometry.moveTop(this->height() + SC_DPI(9));
-    endGeometry.setLeft(SC_DPI(9));
-    endGeometry.setRight(this->width() - SC_DPI(9));
+    endGeometry.moveTop(this->height() + 9);
+    endGeometry.setLeft(9);
+    endGeometry.setRight(this->width() - 9);
     d->floaterAnim->setEndValue(endGeometry);
     d->floaterAnim->start();
 
@@ -549,7 +549,7 @@ void FileColumn::updateOpenFileButtons() {
         QPushButton* button = new QPushButton(this);
         button->setText(btn.text);
         button->setIcon(btn.icon);
-        connect(button, &QPushButton::clicked, this, [=] {
+        connect(button, &QPushButton::clicked, this, [this, btn] {
             btn.activated({d->directory->url()});
         });
         ui->openFileButtonsLayout->addWidget(button);
@@ -638,12 +638,12 @@ void FileColumn::resizeEvent(QResizeEvent* event) {
     QRect endGeometry;
     endGeometry.setHeight(d->floater->sizeHint().height());
     if (d->isFloaterVisible) {
-        endGeometry.moveBottom(this->height() - SC_DPI(9));
+        endGeometry.moveBottom(this->height() - 9);
     } else {
-        endGeometry.moveTop(this->height() + SC_DPI(9));
+        endGeometry.moveTop(this->height() + 9);
     }
-    endGeometry.setLeft(SC_DPI(9));
-    endGeometry.setRight(this->width() - SC_DPI(9));
+    endGeometry.setLeft(9);
+    endGeometry.setRight(this->width() - 9);
     d->floater->setGeometry(endGeometry);
     d->floaterAnim->setEndValue(endGeometry);
 
@@ -668,7 +668,7 @@ void FileColumn::dropEvent(QDropEvent* event) {
 
     const QMimeData* mimeData = event->mimeData();
     tDebug("FileColumn") << mimeData->formats();
-    QModelIndex index = ui->folderView->indexAt(ui->folderView->mapFrom(this, event->pos()));
+    QModelIndex index = ui->folderView->indexAt(ui->folderView->mapFrom(this, event->position().toPoint()));
 
     if (mimeData->hasUrls()) {
         QList<QUrl> urls = mimeData->urls();
@@ -677,25 +677,25 @@ void FileColumn::dropEvent(QDropEvent* event) {
             QUrl url = index.data(FileModel::UrlRole).toUrl();
             DirectoryPtr dir = ResourceManager::directoryForUrl(url);
             if (dir && QCoro::waitFor(dir->exists())) {
-                menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI(300)))));
-                menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [=] {
+                menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, 300))));
+                menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy In"), this, [this, urls, dir] {
                     emit copyFiles(urls, dir);
                 });
-                menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [=] {
+                menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move In"), this, [this, urls, dir] {
                     emit moveFiles(urls, dir);
                 });
             }
         }
 
         menu->addSection(tr("For this folder"));
-        menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy Here"), this, [=] {
+        menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy Here"), this, [this, urls] {
             emit copyFiles(urls, d->directory);
         });
-        menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move Here"), this, [=] {
+        menu->addAction(QIcon::fromTheme("edit-cut"), tr("Move Here"), this, [this, urls] {
             emit moveFiles(urls, d->directory);
         });
 
-        menu->popup(this->mapToGlobal(event->pos()));
+        menu->popup(this->mapToGlobal(event->position().toPoint()));
         connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
     }
     event->setDropAction(Qt::CopyAction);

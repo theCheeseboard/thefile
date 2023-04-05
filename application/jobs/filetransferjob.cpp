@@ -250,13 +250,13 @@ void FileTransferJob::conflictCheck() {
     d->description = tr("Checking for file conflicts");
     emit descriptionChanged(d->description);
 
-    QFuture<QUrl> future = QtConcurrent::filtered(d->sourceMappings.keys(), [=](const QUrl& sourceUrl) {
+    QFuture<QUrl> future = QtConcurrent::filtered(d->sourceMappings.keys(), [this](const QUrl& sourceUrl) {
         QUrl dest = d->sourceMappings.value(sourceUrl);
         return ResourceManager::parentDirectoryForUrl(dest)->isFile(dest.fileName());
     });
 
     QFutureWatcher<QUrl>* watcher = new QFutureWatcher<QUrl>();
-    connect(watcher, &QFutureWatcher<QUrl>::finished, this, [=] {
+    connect(watcher, &QFutureWatcher<QUrl>::finished, this, [this, watcher] {
         // Cancel the job if a cancellation has been requested
         if (d->cancelled) {
             setJobCancelled();
@@ -288,7 +288,7 @@ void FileTransferJob::conflictCheck() {
                     n->setText(tr("%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
                     //                n->setText(tr("Transferring files will result in %n files coexisting with the same name in the destination. Resolve the file conflicts to continue transferring files.", nullptr, d->conflicts.count()));
                     n->insertAction("resolve", tr("Resolve File Conflicts"));
-                    connect(n, &tNotification::actionClicked, this, [=](QString key) {
+                    connect(n, &tNotification::actionClicked, this, [this](QString key) {
                         if (key == "resolve") {
                             tJobManager::showJobsPopover(d->jobsPopover);
                             d->jobsPopover->window()->activateWindow();
@@ -365,7 +365,7 @@ QCoro::Task<> FileTransferJob::transferFiles() {
                 n->setSummary(tr("File Transfer Error"));
                 n->setText(tr("An error occurred trying to transfer files."));
                 n->insertAction("resolve", tr("Resolve"));
-                connect(n, &tNotification::actionClicked, this, [=](QString key) {
+                connect(n, &tNotification::actionClicked, this, [this](QString key) {
                     if (key == "resolve") {
                         tJobManager::showJobsPopover(d->jobsPopover);
                         d->jobsPopover->window()->activateWindow();

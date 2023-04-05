@@ -64,15 +64,15 @@ BurnJob::BurnJob(QString title, DirectoryPtr directory, DiskObject* disk, QObjec
     // Start a file transfer job
     FileTransferJob* transferJob = new FileTransferJob(FileTransferJob::Copy, {directory->url()}, ResourceManager::directoryForUrl(QUrl::fromLocalFile(d->tempDir.path())), nullptr);
     transferJob->setSilent(true);
-    connect(transferJob, &FileTransferJob::progressChanged, this, [=](quint64 progress) {
+    connect(transferJob, &FileTransferJob::progressChanged, this, [this](quint64 progress) {
         d->progress = progress;
         emit progressChanged(d->progress);
     });
-    connect(transferJob, &FileTransferJob::totalProgressChanged, this, [=](quint64 totalProgress) {
+    connect(transferJob, &FileTransferJob::totalProgressChanged, this, [this](quint64 totalProgress) {
         d->totalProgress = totalProgress * 2;
         emit progressChanged(d->totalProgress);
     });
-    connect(transferJob, &FileTransferJob::stateChanged, this, [=](tJob::State state) {
+    connect(transferJob, &FileTransferJob::stateChanged, this, [this](tJob::State state) {
         if (state == tJob::Finished) {
             // Create an ISO and burn it
 
@@ -114,7 +114,7 @@ void BurnJob::prepareIso(QString directory) {
     QProcess* process = new QProcess();
     process->setProcessChannelMode(QProcess::MergedChannels);
     process->setWorkingDirectory(d->tempDir.path());
-    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this, process](int exitCode, QProcess::ExitStatus status) {
         if (exitCode != 0) {
             // TODO: Error error!
             return;
@@ -143,7 +143,7 @@ QCoro::Task<> BurnJob::startRestore(QIODevice* source, quint64 dataSize) {
     emit descriptionChanged(d->description);
 
     co_await d->disk->lock();
-    connect(this, &BurnJob::stateChanged, this, [=] {
+    connect(this, &BurnJob::stateChanged, this, [this] {
         // Release the lock
         if (d->state == Finished || d->state == Failed) {
             d->disk->releaseLock();
@@ -216,7 +216,7 @@ QCoro::Task<> BurnJob::runNextStage() {
                 //            OpticalErrorTracker* errorTracker = new OpticalErrorTracker();
 
                 d->burnProcess = new QProcess();
-                connect(d->burnProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                connect(d->burnProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this](int exitCode, QProcess::ExitStatus exitStatus) {
                     Q_UNUSED(exitStatus);
                     if (exitCode == 0) {
                         d->source->close();
@@ -247,7 +247,7 @@ QCoro::Task<> BurnJob::runNextStage() {
                     d->tempDir.remove();
                     //                errorTracker->deleteLater();
                 });
-                connect(d->burnProcess, &QProcess::readyRead, this, [=] {
+                connect(d->burnProcess, &QProcess::readyRead, this, [this] {
                     QByteArray peek = d->burnProcess->peek(1024);
                     while (d->burnProcess->canReadLine() || peek.contains('\r')) {
                         QString line;

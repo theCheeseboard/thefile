@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget* parent) :
     menu->addAction(ui->actionExit);
 
     QShortcut* deleteShortcut = new QShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete), this);
-    connect(deleteShortcut, &QShortcut::activated, this, [=] {
+    connect(deleteShortcut, &QShortcut::activated, this, [this] {
         FileTab* tab = static_cast<FileTab*>(ui->stackedWidget->currentWidget());
         if (tab->currentColumn()) tab->currentColumn()->deleteFile();
     });
@@ -97,7 +97,7 @@ MainWindow::MainWindow(QWidget* parent) :
 
     ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
 
-    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [this](QString key, QVariant value) {
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());
     });
     ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
@@ -131,43 +131,43 @@ FileTab* MainWindow::newTab(QUrl url) {
     connect(tab, &FileTab::tabTitleChanged, this, [=] {
         button->setText(tab->tabTitle());
     });
-    connect(tab, &FileTab::tabClosed, this, [=] {
+    connect(tab, &FileTab::tabClosed, this, [this, tab] {
         ui->stackedWidget->removeWidget(tab);
         tab->deleteLater();
     });
     connect(tab, &FileTab::columnsChanged, this, &MainWindow::updateMenuActions);
-    connect(tab, &FileTab::moveFiles, this, [=](QList<QUrl> source, DirectoryPtr destination) {
+    connect(tab, &FileTab::moveFiles, this, [this](QList<QUrl> source, DirectoryPtr destination) {
         FileTransferJob* job = new FileTransferJob(FileTransferJob::Move, source, destination, this->window());
         tJobManager::trackJobDelayed(job);
     });
-    connect(tab, &FileTab::copyFiles, this, [=](QList<QUrl> source, DirectoryPtr destination) {
+    connect(tab, &FileTab::copyFiles, this, [this](QList<QUrl> source, DirectoryPtr destination) {
         FileTransferJob* job = new FileTransferJob(FileTransferJob::Copy, source, destination, this->window());
         tJobManager::trackJobDelayed(job);
     });
-    connect(tab, &FileTab::deletePermanently, this, [=](QList<QUrl> filesToDelete) {
+    connect(tab, &FileTab::deletePermanently, this, [this](QList<QUrl> filesToDelete) {
         DeletePermanentlyPopover* jp = new DeletePermanentlyPopover(filesToDelete);
         tPopover* popover = new tPopover(jp);
-        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverWidth(-200);
         popover->setPopoverSide(tPopover::Bottom);
         connect(jp, &DeletePermanentlyPopover::done, popover, &tPopover::dismiss);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
         popover->show(this->window());
     });
-    connect(tab, &FileTab::openItemProperties, this, [=](QUrl url) {
+    connect(tab, &FileTab::openItemProperties, this, [this](QUrl url) {
         ItemPropertiesPopover* jp = new ItemPropertiesPopover(url);
         tPopover* popover = new tPopover(jp);
-        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverWidth(-200);
         popover->setPopoverSide(tPopover::Bottom);
         connect(jp, &ItemPropertiesPopover::done, popover, &tPopover::dismiss);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         connect(popover, &tPopover::dismissed, jp, &DeletePermanentlyPopover::deleteLater);
         popover->show(this->window());
     });
-    connect(tab, &FileTab::burnDirectory, this, [=](DirectoryPtr dir) {
+    connect(tab, &FileTab::burnDirectory, this, [this](DirectoryPtr dir) {
         BurnPopover* jp = new BurnPopover(dir);
         tPopover* popover = new tPopover(jp);
-        popover->setPopoverWidth(SC_DPI(-200));
+        popover->setPopoverWidth(-200);
         popover->setPopoverSide(tPopover::Bottom);
         connect(jp, &BurnPopover::done, popover, &tPopover::dismiss);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
@@ -186,7 +186,7 @@ FileTab* MainWindow::newTab(QUrl url) {
     });
 
     QAction* newFolderAction = new QAction(QIcon::fromTheme("folder-new"), tr("New Folder"));
-    connect(newFolderAction, &QAction::triggered, this, [=] {
+    connect(newFolderAction, &QAction::triggered, this, [this, tab] {
         if (tab->lastColumn()) tab->lastColumn()->newFolder();
     });
     button->addActions({newFolderAction});
