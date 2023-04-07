@@ -4,85 +4,90 @@
 <context>
     <name>BurnJob</name>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="213"/>
-        <location filename="../jobs/burnjob.cpp" line="265"/>
+        <location filename="../jobs/burnjob.cpp" line="215"/>
+        <location filename="../jobs/burnjob.cpp" line="267"/>
         <source>Preparing to burn</source>
         <translation>Đang chuẩn bị ghi đĩa</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="142"/>
+        <location filename="../jobs/burnjob.cpp" line="144"/>
         <source>Waiting for other jobs to finish</source>
         <translation>Đang chờ hoạt động khác kết thúc</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="94"/>
+        <location filename="../jobs/burnjob.cpp" line="96"/>
         <source>Failed to stage files</source>
         <translation>Không thể sao lưu tệp để ghi</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="101"/>
+        <location filename="../jobs/burnjob.cpp" line="103"/>
         <source>Staging files for burn</source>
         <translation>Đang sao lưu các tệp để ghi</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="110"/>
+        <location filename="../jobs/burnjob.cpp" line="112"/>
         <source>Generating Disc Image</source>
         <translation>Đang tạo ảnh đĩa</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="233"/>
+        <location filename="../jobs/burnjob.cpp" line="235"/>
         <source>Failed to burn disc</source>
         <translation>Không thể ghi đĩa</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="238"/>
+        <location filename="../jobs/burnjob.cpp" line="240"/>
         <source>Couldn&apos;t Burn %1</source>
         <translation>Không thể ghi %1</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="239"/>
+        <location filename="../jobs/burnjob.cpp" line="241"/>
         <source>Could not burn %1 to disc.</source>
         <translation>Không thể ghi %1 vào đĩa.</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="280"/>
+        <location filename="../jobs/burnjob.cpp" line="282"/>
         <source>Burning Files (%1)
 %2 of %3</source>
         <translation>Đang ghi tệp vào đĩa (%1)
 %2 tren %3</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="283"/>
+        <location filename="../jobs/burnjob.cpp" line="285"/>
         <source>Burning Files</source>
         <translation>Đang ghi tệp vào đĩa</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="342"/>
+        <location filename="../jobs/burnjob.cpp" line="344"/>
         <source>Burn Complete</source>
         <translation>Ghi đĩa hoàn thành</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="348"/>
+        <location filename="../jobs/burnjob.cpp" line="350"/>
         <source>Burned %1</source>
         <translation>Đã ghi %1</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="349"/>
+        <location filename="../jobs/burnjob.cpp" line="351"/>
         <source>The folder %1 has been burned to disc.</source>
         <translation>Thư mục %1 đã bị ghi vào đĩa thành công.</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="274"/>
+        <location filename="../jobs/burnjob.cpp" line="393"/>
+        <source>Burn %1</source>
+        <translation type="unfinished">Ghi %1 vào đĩa</translation>
+    </message>
+    <message>
+        <location filename="../jobs/burnjob.cpp" line="276"/>
         <source>Erasing Disc</source>
         <translation>Đang xóa đĩa</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="175"/>
+        <location filename="../jobs/burnjob.cpp" line="177"/>
         <source>Failed to burn files</source>
         <translation>Không thể ghi tệp vào đĩa</translation>
     </message>
     <message>
-        <location filename="../jobs/burnjob.cpp" line="294"/>
+        <location filename="../jobs/burnjob.cpp" line="296"/>
         <source>Finalizing Disc</source>
         <translation>Đang hoàn thiện đĩa</translation>
     </message>
@@ -115,9 +120,8 @@
         <translation>Hủy ghi</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/burnjobprogress.cpp" line="38"/>
         <source>Burn %1</source>
-        <translation>Ghi %1 vào đĩa</translation>
+        <translation type="vanished">Ghi %1 vào đĩa</translation>
     </message>
 </context>
 <context>
@@ -216,91 +220,92 @@ Sau khi đĩa trong ổ bị xóa, các tệp trên nó sẽ bị mất mãi mã
 <context>
     <name>FileTransferJob</name>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="151"/>
+        <location filename="../jobs/filetransferjob.cpp" line="153"/>
         <source>Counting files to transfer...</source>
         <translation>Đang đếm tệp để chuyển...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="178"/>
-        <location filename="../jobs/filetransferjob.cpp" line="221"/>
+        <location filename="../jobs/filetransferjob.cpp" line="180"/>
+        <location filename="../jobs/filetransferjob.cpp" line="224"/>
         <source>Counted %n files to transfer...</source>
         <translation>
             <numerusform>Đã đếm %n tệp để chuyển...</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="250"/>
+        <location filename="../jobs/filetransferjob.cpp" line="253"/>
         <source>Checking for file conflicts</source>
         <translation>Đang kiểm tra xung đột tệp</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="279"/>
+        <location filename="../jobs/filetransferjob.cpp" line="282"/>
         <source>Waiting for conflict resolution</source>
         <translation>Đang chờ quyết định xung đột</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="287"/>
+        <location filename="../jobs/filetransferjob.cpp" line="290"/>
         <source>File Conflicts</source>
         <translation>Xung đột tệp</translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="288"/>
+        <location filename="../jobs/filetransferjob.cpp" line="291"/>
         <source>%n files in the destination folder have the same file name as files being transferred. Resolve the file conflicts to continue transferring files.</source>
         <translation>
             <numerusform>Đã tìm thấy %n tệp trong thư mục đích có tên cùng với tệp đang bị chuyển. Giải quyết các xung đột để tiếp tục chuyển tệp.</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="290"/>
+        <location filename="../jobs/filetransferjob.cpp" line="293"/>
         <source>Resolve File Conflicts</source>
         <translation>Giải quyết xung đột</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="128"/>
-        <location filename="../jobs/filetransferjob.cpp" line="312"/>
+        <location filename="../jobs/filetransferjob.cpp" line="130"/>
+        <location filename="../jobs/filetransferjob.cpp" line="315"/>
+        <location filename="../jobs/filetransferjob.cpp" line="511"/>
         <source>Copying Files</source>
         <translation>Đang chép tệp</translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="333"/>
+        <location filename="../jobs/filetransferjob.cpp" line="336"/>
         <source>Moved %n files</source>
         <translation>
             <numerusform>Đã chuyển %n tệp</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="334"/>
+        <location filename="../jobs/filetransferjob.cpp" line="337"/>
         <source>Successfully moved %n files</source>
         <translation>
             <numerusform>Đã chuyển %n tệp thành công</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="336"/>
+        <location filename="../jobs/filetransferjob.cpp" line="339"/>
         <source>Copied %n files</source>
         <translation>
             <numerusform>Đã chép %n tệp</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../jobs/filetransferjob.cpp" line="337"/>
+        <location filename="../jobs/filetransferjob.cpp" line="340"/>
         <source>Successfully copied %n files</source>
         <translation>
             <numerusform>Đã chép %n tệp thành công</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="344"/>
+        <location filename="../jobs/filetransferjob.cpp" line="347"/>
         <source>Files Transferred</source>
         <translation>Tệp đã bị chuyển</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="400"/>
+        <location filename="../jobs/filetransferjob.cpp" line="403"/>
         <source>Moving %n</source>
         <translation>Đang chuyển %n</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="430"/>
+        <location filename="../jobs/filetransferjob.cpp" line="433"/>
         <source>Copying %1
 %2 of %3
 
@@ -311,32 +316,37 @@ Total progress: %4 of %5</source>
 Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="447"/>
+        <location filename="../jobs/filetransferjob.cpp" line="450"/>
         <source>Cancelling operation...</source>
         <translation>Đang hủy hoạt động...</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="357"/>
+        <location filename="../jobs/filetransferjob.cpp" line="511"/>
+        <source>Moving Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/filetransferjob.cpp" line="360"/>
         <source>Waiting for error resolution</source>
         <translation>Đang chờ quyết định lỗi</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="365"/>
+        <location filename="../jobs/filetransferjob.cpp" line="368"/>
         <source>File Transfer Error</source>
         <translation>Lỗi chuyển tệp</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="366"/>
+        <location filename="../jobs/filetransferjob.cpp" line="369"/>
         <source>An error occurred trying to transfer files.</source>
         <translation>Một lỗi xảy ra khi cố chuyển tệp.</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="367"/>
+        <location filename="../jobs/filetransferjob.cpp" line="370"/>
         <source>Resolve</source>
         <translation>Giải quyết</translation>
     </message>
     <message>
-        <location filename="../jobs/filetransferjob.cpp" line="481"/>
+        <location filename="../jobs/filetransferjob.cpp" line="484"/>
         <source>Cancelled</source>
         <translation>Đã hủy</translation>
     </message>
@@ -344,43 +354,43 @@ Tổng cộng: %4 tren %5</translation>
 <context>
     <name>FileTransferJobWidget</name>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="109"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="104"/>
         <source>FILE CONFLICTS</source>
         <translation>XUNG ĐỘT TỆP</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="131"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="126"/>
         <source>Replace All</source>
         <translation>Thay thế tất cả</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="138"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="133"/>
         <source>Skip Conflicting</source>
         <translation>Bỏ qua các xung đột</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="148"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="143"/>
         <source>Manually Resolve Conflicts</source>
         <translation>Giải quyết thủ công</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="155"/>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="209"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="150"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="204"/>
         <source>Cancel Operation</source>
         <translation>Hủy</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="173"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="168"/>
         <source>TRANSFER ERROR</source>
         <translation>LỖI CHUYỂN TỆP</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="195"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="190"/>
         <source>Skip this file</source>
         <translation>Bỏ qua tệp này</translation>
     </message>
     <message>
-        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="202"/>
+        <location filename="../jobs/widgets/filetransferjobwidget.ui" line="197"/>
         <source>Try Again</source>
         <translation>Thử lại</translation>
     </message>
@@ -403,13 +413,21 @@ Tổng cộng: %4 tren %5</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
-        <source>COPYING FILES</source>
-        <translation>ĐANG CHÉP TỆP</translation>
+        <source>Copying Files</source>
+        <translation type="unfinished">Đang chép tệp</translation>
     </message>
     <message>
         <location filename="../jobs/widgets/filetransferjobwidget.cpp" line="57"/>
+        <source>Moving Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>COPYING FILES</source>
+        <translation type="vanished">ĐANG CHÉP TỆP</translation>
+    </message>
+    <message>
         <source>MOVING FILES</source>
-        <translation>ĐANG CHUYỂN TỆP</translation>
+        <translation type="vanished">ĐANG CHUYỂN TỆP</translation>
     </message>
 </context>
 <context>

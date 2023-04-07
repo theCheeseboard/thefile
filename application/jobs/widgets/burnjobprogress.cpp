@@ -20,11 +20,11 @@
 #include "burnjobprogress.h"
 #include "ui_burnjobprogress.h"
 
-#include <DriveObjects/diskobject.h>
 #include "../burnjob.h"
+#include <DriveObjects/diskobject.h>
 
 struct BurnJobProgressPrivate {
-    BurnJob* job;
+        BurnJob* job;
 };
 
 BurnJobProgress::BurnJobProgress(BurnJob* job, QWidget* parent) :
@@ -35,17 +35,17 @@ BurnJobProgress::BurnJobProgress(BurnJob* job, QWidget* parent) :
     d = new BurnJobProgressPrivate();
     d->job = job;
 
-    ui->titleLabel->setText(tr("Burn %1").arg(QLocale().quoteString(job->title())).toUpper());
+    ui->titleLabel->setText(job->titleString().toUpper());
 
     connect(job, &BurnJob::stateChanged, this, &BurnJobProgress::updateState);
-    connect(job, &BurnJob::totalProgressChanged, this, [ = ](quint64 totalProgress) {
+    connect(job, &BurnJob::totalProgressChanged, this, [=](quint64 totalProgress) {
         ui->progressBar->setMaximum(totalProgress);
     });
-    connect(job, &BurnJob::progressChanged, this, [ = ](quint64 progress) {
+    connect(job, &BurnJob::progressChanged, this, [=](quint64 progress) {
         ui->progressBar->setValue(progress);
     });
     connect(job, &BurnJob::descriptionChanged, ui->statusLabel, &QLabel::setText);
-    connect(job, &BurnJob::canCancelChanged, this, [ = ](bool canCancel) {
+    connect(job, &BurnJob::canCancelChanged, this, [=](bool canCancel) {
         ui->cancelButton->setEnabled(canCancel);
     });
     updateState();

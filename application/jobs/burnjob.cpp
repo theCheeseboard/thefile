@@ -59,6 +59,8 @@ BurnJob::BurnJob(QString title, DirectoryPtr directory, DiskObject* disk, QObjec
     d->title = title;
     d->directory = directory;
 
+    connect(this, &BurnJob::descriptionChanged, this, &BurnJob::statusStringChanged);
+
     tDebug("BurnJob") << d->tempDir.path();
 
     // Start a file transfer job
@@ -385,4 +387,12 @@ tJob::State BurnJob::state() {
 
 QWidget* BurnJob::makeProgressWidget() {
     return new BurnJobProgress(this);
+}
+
+QString BurnJob::titleString() {
+    return tr("Burn %1").arg(QLocale().quoteString(this->title()));
+}
+
+QString BurnJob::statusString() {
+    return this->description();
 }

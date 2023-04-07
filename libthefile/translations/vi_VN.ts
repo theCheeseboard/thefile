@@ -1,392 +1,393 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
 <TS version="2.1" language="vi_VN">
-  <context>
+<context>
     <name>BookmarksSidebarSection</name>
     <message>
-      <translation>Cho %1</translation>
-      <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="43" />
-      <source>For %1</source>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="43"/>
+        <source>For %1</source>
+        <translation>Cho %1</translation>
     </message>
     <message>
-      <translation>Xóa khỏi dấu trang</translation>
-      <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="44" />
-      <source>Remove from bookmarks</source>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="44"/>
+        <source>Remove from bookmarks</source>
+        <translation>Xóa khỏi dấu trang</translation>
     </message>
     <message>
-      <translation>Dấu trang</translation>
-      <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="56" />
-      <source>Bookmarks</source>
+        <location filename="../sidebar/sections/bookmarkssidebarsection.cpp" line="56"/>
+        <source>Bookmarks</source>
+        <translation>Dấu trang</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>DrivesSidebarSection</name>
     <message>
-      <translation>Cho %1</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="53" />
-      <source>For %1</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="53"/>
+        <source>For %1</source>
+        <translation>Cho %1</translation>
     </message>
     <message>
-      <translation>Gắn</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="56" />
-      <source>Mount</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="56"/>
+        <source>Mount</source>
+        <translation>Gắn</translation>
     </message>
     <message>
-      <translation>Tháo</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="60" />
-      <source>Unmount</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="60"/>
+        <source>Unmount</source>
+        <translation>Tháo</translation>
     </message>
     <message>
-      <translation>Không thể tháo</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="65" />
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="111" />
-      <source>Couldn't unmount</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="65"/>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="111"/>
+        <source>Couldn&apos;t unmount</source>
+        <translation>Không thể tháo</translation>
     </message>
     <message>
-      <translation>Hoạt động tháo ổ đĩa không thành công</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="66" />
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="112" />
-      <source>Unmounting the drive failed.</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="66"/>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="112"/>
+        <source>Unmounting the drive failed.</source>
+        <translation>Hoạt động tháo ổ đĩa không thành công</translation>
     </message>
     <message>
-      <translation>Nhổ ra</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="75" />
-      <source>Eject</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="75"/>
+        <source>Eject</source>
+        <translation>Nhổ ra</translation>
     </message>
     <message>
-      <translation>Không thể nhổ ra</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="80" />
-      <source>Couldn't eject</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="80"/>
+        <source>Couldn&apos;t eject</source>
+        <translation>Không thể nhổ ra</translation>
     </message>
     <message>
-      <translation>Hoạt động nhổ ra ổ đĩa không thành công</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="81" />
-      <source>Ejecting the drive failed.</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="81"/>
+        <source>Ejecting the drive failed.</source>
+        <translation>Hoạt động nhổ ra ổ đĩa không thành công</translation>
     </message>
     <message>
-      <translation>Khóa</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="89" />
-      <source>Lock</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="89"/>
+        <source>Lock</source>
+        <translation>Khóa</translation>
     </message>
     <message>
-      <translation>Không thể khóa</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="95" />
-      <source>Couldn't lock</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="95"/>
+        <source>Couldn&apos;t lock</source>
+        <translation>Không thể khóa</translation>
     </message>
     <message>
-      <translation>Hoạt động khóa ổ đĩa không thành công.</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="96" />
-      <source>Locking the device failed.</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="96"/>
+        <source>Locking the device failed.</source>
+        <translation>Hoạt động khóa ổ đĩa không thành công.</translation>
     </message>
     <message>
-      <translation>Tạo ảnh đĩa</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="121" />
-      <source>Create Disk Image</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="121"/>
+        <source>Create Disk Image</source>
+        <translation>Tạo ảnh đĩa</translation>
     </message>
     <message>
-      <translation>Xóa</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="125" />
-      <source>Erase</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="125"/>
+        <source>Erase</source>
+        <translation>Xóa</translation>
     </message>
     <message>
-      <translation>Xóa đĩa quang</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="128" />
-      <source>Erase Optical Disc</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="128"/>
+        <source>Erase Optical Disc</source>
+        <translation>Xóa đĩa quang</translation>
     </message>
     <message>
-      <translation>Ổ</translation>
-      <location filename="../sidebar/sections/drivessidebarsection.cpp" line="177" />
-      <source>Drives</source>
+        <location filename="../sidebar/sections/drivessidebarsection.cpp" line="177"/>
+        <source>Drives</source>
+        <translation>Ổ</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>FileColumn</name>
     <message>
-      <translation>Góc</translation>
-      <location filename="../filecolumn.cpp" line="129" />
-      <source>Root</source>
+        <location filename="../filecolumn.cpp" line="129"/>
+        <source>Root</source>
+        <translation>Góc</translation>
     </message>
     <message>
-      <translation>Thùng rác</translation>
-      <location filename="../filecolumn.cpp" line="130" />
-      <location filename="../filecolumn.cpp" line="223" />
-      <source>Trash</source>
+        <location filename="../filecolumn.cpp" line="130"/>
+        <location filename="../filecolumn.cpp" line="223"/>
+        <source>Trash</source>
+        <translation>Thùng rác</translation>
     </message>
     <message>
-      <translation>Thư mục chính</translation>
-      <location filename="../filecolumn.cpp" line="134" />
-      <source>Home</source>
+        <location filename="../filecolumn.cpp" line="134"/>
+        <source>Home</source>
+        <translation>Thư mục chính</translation>
     </message>
     <message>
-      <translation>Thư mục mới</translation>
-      <location filename="../filecolumn.cpp" line="210" />
-      <location filename="../filecolumn.cpp" line="566" />
-      <source>New Folder</source>
+        <location filename="../filecolumn.cpp" line="210"/>
+        <location filename="../filecolumn.cpp" line="566"/>
+        <source>New Folder</source>
+        <translation>Thư mục mới</translation>
     </message>
     <message>
-      <translation>Bạn muốn gọi tên thư mục này là gì?</translation>
-      <location filename="../filecolumn.cpp" line="210" />
-      <source>What are you naming this folder?</source>
+        <location filename="../filecolumn.cpp" line="210"/>
+        <source>What are you naming this folder?</source>
+        <translation>Bạn muốn gọi tên thư mục này là gì?</translation>
     </message>
     <message numerus="yes">
-      <translation>
-        <numerusform>Đã chuyển %n mục sang thùng rác</numerusform>
-      </translation>
-      <location filename="../filecolumn.cpp" line="224" />
-      <source>Moved %n items to the trash</source>
+        <location filename="../filecolumn.cpp" line="224"/>
+        <source>Moved %n items to the trash</source>
+        <translation>
+            <numerusform>Đã chuyển %n mục sang thùng rác</numerusform>
+        </translation>
     </message>
     <message>
-      <translation>Đổi tên</translation>
-      <location filename="../filecolumn.cpp" line="260" />
-      <location filename="../filecolumn.cpp" line="367" />
-      <source>Rename</source>
+        <location filename="../filecolumn.cpp" line="260"/>
+        <location filename="../filecolumn.cpp" line="367"/>
+        <source>Rename</source>
+        <translation>Đổi tên</translation>
     </message>
     <message>
-      <translation>Bạn muốn gọi tên mục này là gì?</translation>
-      <location filename="../filecolumn.cpp" line="260" />
-      <source>What do you want to name this item?</source>
+        <location filename="../filecolumn.cpp" line="260"/>
+        <source>What do you want to name this item?</source>
+        <translation>Bạn muốn gọi tên mục này là gì?</translation>
     </message>
     <message>
-      <translation>Cho %1</translation>
-      <location filename="../filecolumn.cpp" line="291" />
-      <location filename="../filecolumn.cpp" line="680" />
-      <source>For %1</source>
+        <location filename="../filecolumn.cpp" line="291"/>
+        <location filename="../filecolumn.cpp" line="680"/>
+        <source>For %1</source>
+        <translation>Cho %1</translation>
     </message>
     <message>
-      <translation>Mở</translation>
-      <location filename="../filecolumn.cpp" line="294" />
-      <source>Open</source>
+        <location filename="../filecolumn.cpp" line="294"/>
+        <source>Open</source>
+        <translation>Mở</translation>
     </message>
     <message>
-      <translation>Mở bằng...</translation>
-      <location filename="../filecolumn.cpp" line="303" />
-      <source>Open With...</source>
+        <location filename="../filecolumn.cpp" line="303"/>
+        <source>Open With...</source>
+        <translation>Mở bằng...</translation>
     </message>
     <message>
-      <translation>Ứng dụng khác...</translation>
-      <location filename="../filecolumn.cpp" line="318" />
-      <source>Another app...</source>
+        <location filename="../filecolumn.cpp" line="318"/>
+        <source>Another app...</source>
+        <translation>Ứng dụng khác...</translation>
     </message>
     <message>
-      <translation>Xóa khỏi dấu trang</translation>
-      <location filename="../filecolumn.cpp" line="327" />
-      <source>Remove from bookmarks</source>
+        <location filename="../filecolumn.cpp" line="327"/>
+        <source>Remove from bookmarks</source>
+        <translation>Xóa khỏi dấu trang</translation>
     </message>
     <message>
-      <translation>Thêm vào dấu trang</translation>
-      <location filename="../filecolumn.cpp" line="331" />
-      <source>Add to bookmarks</source>
+        <location filename="../filecolumn.cpp" line="331"/>
+        <source>Add to bookmarks</source>
+        <translation>Thêm vào dấu trang</translation>
     </message>
     <message numerus="yes">
-      <translation>
-        <numerusform>Cho %n mục</numerusform>
-      </translation>
-      <location filename="../filecolumn.cpp" line="337" />
-      <source>For %n items</source>
+        <location filename="../filecolumn.cpp" line="337"/>
+        <source>For %n items</source>
+        <translation>
+            <numerusform>Cho %n mục</numerusform>
+        </translation>
     </message>
     <message>
-      <translation>Cắt</translation>
-      <location filename="../filecolumn.cpp" line="341" />
-      <source>Cut</source>
+        <location filename="../filecolumn.cpp" line="341"/>
+        <source>Cut</source>
+        <translation>Cắt</translation>
     </message>
     <message>
-      <translation>Chép</translation>
-      <location filename="../filecolumn.cpp" line="342" />
-      <source>Copy</source>
+        <location filename="../filecolumn.cpp" line="342"/>
+        <source>Copy</source>
+        <translation>Chép</translation>
     </message>
     <message>
-      <translation>Khôi phục</translation>
-      <location filename="../filecolumn.cpp" line="344" />
-      <source>Restore</source>
+        <location filename="../filecolumn.cpp" line="344"/>
+        <source>Restore</source>
+        <translation>Khôi phục</translation>
     </message>
     <message>
-      <translation>Xóa vĩnh viễn</translation>
-      <location filename="../filecolumn.cpp" line="358" />
-      <source>Delete Permanently</source>
+        <location filename="../filecolumn.cpp" line="358"/>
+        <source>Delete Permanently</source>
+        <translation>Xóa vĩnh viễn</translation>
     </message>
     <message>
-      <translation>Chuyển sang thùng rác</translation>
-      <location filename="../filecolumn.cpp" line="360" />
-      <source>Move to Trash</source>
+        <location filename="../filecolumn.cpp" line="360"/>
+        <source>Move to Trash</source>
+        <translation>Chuyển sang thùng rác</translation>
     </message>
     <message>
-      <translation>Thuộc tính</translation>
-      <location filename="../filecolumn.cpp" line="376" />
-      <source>Properties</source>
+        <location filename="../filecolumn.cpp" line="376"/>
+        <source>Properties</source>
+        <translation>Thuộc tính</translation>
     </message>
     <message>
-      <translation>Ghi nội dung vào đĩa</translation>
-      <location filename="../filecolumn.cpp" line="387" />
-      <source>Burn Contents</source>
+        <location filename="../filecolumn.cpp" line="387"/>
+        <source>Burn Contents</source>
+        <translation>Ghi nội dung vào đĩa</translation>
     </message>
     <message>
-      <translation>Không có mục nào đấy!</translation>
-      <location filename="../filecolumn.cpp" line="451" />
-      <source>No items here!</source>
+        <location filename="../filecolumn.cpp" line="451"/>
+        <source>No items here!</source>
+        <translation>Không có mục nào đấy!</translation>
     </message>
     <message>
-      <translation>Thư mục này trống.</translation>
-      <location filename="../filecolumn.cpp" line="452" />
-      <source>This folder is empty.</source>
+        <location filename="../filecolumn.cpp" line="452"/>
+        <source>This folder is empty.</source>
+        <translation>Thư mục này trống.</translation>
     </message>
     <message>
-      <translation>Không tìm thấy</translation>
-      <location filename="../filecolumn.cpp" line="455" />
-      <source>Not Found</source>
+        <location filename="../filecolumn.cpp" line="455"/>
+        <source>Not Found</source>
+        <translation>Không tìm thấy</translation>
     </message>
     <message>
-      <translation>Thư mục này không có tồn tại.</translation>
-      <location filename="../filecolumn.cpp" line="456" />
-      <source>This folder doesn't exist.</source>
+        <location filename="../filecolumn.cpp" line="456"/>
+        <source>This folder doesn&apos;t exist.</source>
+        <translation>Thư mục này không có tồn tại.</translation>
     </message>
     <message>
-      <translation>Quyền đã bị từ chối</translation>
-      <location filename="../filecolumn.cpp" line="459" />
-      <source>Permission Denied</source>
+        <location filename="../filecolumn.cpp" line="459"/>
+        <source>Permission Denied</source>
+        <translation>Quyền đã bị từ chối</translation>
     </message>
     <message>
-      <translation>Có vẻ như bạn không có quyền xem thư mục này.</translation>
-      <location filename="../filecolumn.cpp" line="460" />
-      <source>Looks like you don't have permission to view this folder.</source>
+        <location filename="../filecolumn.cpp" line="460"/>
+        <source>Looks like you don&apos;t have permission to view this folder.</source>
+        <translation>Có vẻ như bạn không có quyền xem thư mục này.</translation>
     </message>
     <message>
-      <translation>Không thể xem thư mục</translation>
-      <location filename="../filecolumn.cpp" line="463" />
-      <source>Can't view this folder</source>
+        <location filename="../filecolumn.cpp" line="463"/>
+        <source>Can&apos;t view this folder</source>
+        <translation>Không thể xem thư mục</translation>
     </message>
     <message>
-      <translation>Chúng tôi không thể hiển thị cho bạn nội dung của thư mục này.</translation>
-      <location filename="../filecolumn.cpp" line="464" />
-      <source>We can't show you the contents of this folder.</source>
+        <location filename="../filecolumn.cpp" line="464"/>
+        <source>We can&apos;t show you the contents of this folder.</source>
+        <translation>Chúng tôi không thể hiển thị cho bạn nội dung của thư mục này.</translation>
     </message>
     <message>
-      <translation>Cho thư mục này</translation>
-      <location filename="../filecolumn.cpp" line="565" />
-      <location filename="../filecolumn.cpp" line="690" />
-      <source>For this folder</source>
+        <location filename="../filecolumn.cpp" line="565"/>
+        <location filename="../filecolumn.cpp" line="690"/>
+        <source>For this folder</source>
+        <translation>Cho thư mục này</translation>
     </message>
     <message>
-      <translation>Dán</translation>
-      <location filename="../filecolumn.cpp" line="567" />
-      <source>Paste</source>
+        <location filename="../filecolumn.cpp" line="567"/>
+        <source>Paste</source>
+        <translation>Dán</translation>
     </message>
     <message>
-      <translation>Chép vào</translation>
-      <location filename="../filecolumn.cpp" line="681" />
-      <source>Copy In</source>
+        <location filename="../filecolumn.cpp" line="681"/>
+        <source>Copy In</source>
+        <translation>Chép vào</translation>
     </message>
     <message>
-      <translation>Di chuyển vào</translation>
-      <location filename="../filecolumn.cpp" line="684" />
-      <source>Move In</source>
+        <location filename="../filecolumn.cpp" line="684"/>
+        <source>Move In</source>
+        <translation>Di chuyển vào</translation>
     </message>
     <message>
-      <translation>Chép tại đây</translation>
-      <location filename="../filecolumn.cpp" line="691" />
-      <source>Copy Here</source>
+        <location filename="../filecolumn.cpp" line="691"/>
+        <source>Copy Here</source>
+        <translation>Chép tại đây</translation>
     </message>
     <message>
-      <translation>Di chuyển tại đây</translation>
-      <location filename="../filecolumn.cpp" line="694" />
-      <source>Move Here</source>
+        <location filename="../filecolumn.cpp" line="694"/>
+        <source>Move Here</source>
+        <translation>Di chuyển tại đây</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>FileColumnFloater</name>
     <message numerus="yes">
-      <translation>
-        <numerusform>%n mục</numerusform>
-      </translation>
-      <location filename="../filecolumnfloater.cpp" line="51" />
-      <source>%n items</source>
+        <location filename="../filecolumnfloater.cpp" line="51"/>
+        <source>%n items</source>
+        <translation>
+            <numerusform>%n mục</numerusform>
+        </translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>PlacesSidebarSection</name>
     <message>
-      <translation>Thư mục chính</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="33" />
-      <source>Home</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="33"/>
+        <source>Home</source>
+        <translation>Thư mục chính</translation>
     </message>
     <message>
-      <translation>Tài liệu</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="34" />
-      <source>Documents</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="34"/>
+        <source>Documents</source>
+        <translation>Tài liệu</translation>
     </message>
     <message>
-      <translation>Tải xuống</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="35" />
-      <source>Downloads</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="35"/>
+        <source>Downloads</source>
+        <translation>Tải xuống</translation>
     </message>
     <message>
-      <translation>Nhạc</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="36" />
-      <source>Music</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="36"/>
+        <source>Music</source>
+        <translation>Nhạc</translation>
     </message>
     <message>
-      <translation>Ảnh</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="37" />
-      <source>Pictures</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="37"/>
+        <source>Pictures</source>
+        <translation>Ảnh</translation>
     </message>
     <message>
-      <translation>Phim</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="38" />
-      <source>Videos</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="38"/>
+        <source>Videos</source>
+        <translation>Phim</translation>
     </message>
     <message>
-      <translation>Góc</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="39" />
-      <source>Root</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="39"/>
+        <source>Root</source>
+        <translation>Góc</translation>
     </message>
     <message>
-      <translation>Thùng rác</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="40" />
-      <source>Trash</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="40"/>
+        <source>Trash</source>
+        <translation>Thùng rác</translation>
     </message>
     <message>
-      <translation>Vị trí</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="64" />
-      <source>Places</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="64"/>
+        <source>Places</source>
+        <translation>Vị trí</translation>
     </message>
     <message>
-      <translation>Cho %1</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="96" />
-      <source>For %1</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="96"/>
+        <source>For %1</source>
+        <translation>Cho %1</translation>
     </message>
     <message>
-      <translation>Chép vào</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="97" />
-      <source>Copy In</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="97"/>
+        <source>Copy In</source>
+        <translation>Chép vào</translation>
     </message>
     <message>
-      <translation>Di chuyển vào</translation>
-      <location filename="../sidebar/sections/placessidebarsection.cpp" line="100" />
-      <source>Move In</source>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="100"/>
+        <source>Move In</source>
+        <translation>Di chuyển vào</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>TrashDirectory</name>
     <message>
-      <translation>Thùng rác</translation>
-      <location filename="../directories/trashdirectory.cpp" line="238" />
-      <source>Trash</source>
+        <location filename="../directories/trashdirectory.cpp" line="238"/>
+        <source>Trash</source>
+        <translation>Thùng rác</translation>
     </message>
     <message>
-      <translation>Đổ thùng rác</translation>
-      <location filename="../directories/trashdirectory.cpp" line="239" />
-      <source>Empty Trash</source>
+        <location filename="../directories/trashdirectory.cpp" line="239"/>
+        <source>Empty Trash</source>
+        <translation>Đổ thùng rác</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>UnlockEncryptedPopover</name>
     <message>
-      <translation>Mở khóa thiết bị</translation>
-      <location filename="../popovers/unlockencryptedpopover.ui" line="35" />
-      <source>Unlock Device</source>
+        <location filename="../popovers/unlockencryptedpopover.ui" line="35"/>
+        <source>Unlock Device</source>
+        <translation>Mở khóa thiết bị</translation>
     </message>
     <message>
-      <translation>Điền vào mật khẩu cho thiết bị này</translation>
-      <location filename="../popovers/unlockencryptedpopover.ui" line="185" />
-      <source>Enter the password for this device</source>
+        <location filename="../popovers/unlockencryptedpopover.ui" line="185"/>
+        <source>Enter the password for this device</source>
+        <translation>Điền vào mật khẩu cho thiết bị này</translation>
     </message>
-  </context>
+</context>
 </TS>

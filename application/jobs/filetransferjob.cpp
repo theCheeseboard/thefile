@@ -72,6 +72,8 @@ FileTransferJob::FileTransferJob(TransferType type, QList<QUrl> source, Director
 
     qRegisterMetaType<TransferStage>();
 
+    connect(this, &FileTransferJob::descriptionChanged, this, &FileTransferJob::statusStringChanged);
+
     fileDiscovery();
 }
 
@@ -181,13 +183,14 @@ QCoro::Task<> FileTransferJob::fileDiscovery() {
                 d->progressUpdateTimer.restart();
             }
         } else {
+            auto resolvedBaseUrl = baseUrl.resolved(QUrl(".")).path();
             QList<QUrl> sourceUrls = {baseUrl};
             while (!sourceUrls.isEmpty()) {
                 QUrl sourceUrl = sourceUrls.takeFirst();
                 DirectoryPtr sourceDirectory = ResourceManager::parentDirectoryForUrl(sourceUrl);
                 Directory::FileInformation sourceFileInfo = co_await baseDirectory->fileInformation(sourceUrl.fileName());
                 if (sourceDirectory->isFile(sourceUrl.fileName())) {
-                    QString relativePathString = sourceUrl.path().remove(baseUrl.resolved(QUrl(".")).path()).chopped(sourceFileInfo.pathSegment.length()).append(sourceFileInfo.filenameForFileOperations);
+                    QString relativePathString = sourceUrl.path().remove(resolvedBaseUrl).chopped(sourceFileInfo.pathSegment.length()).append(sourceFileInfo.filenameForFileOperations);
                     //                        QString relativePathString = sourceFileInfo.filenameForFileOperations;
                     if (relativePathString.startsWith("/")) relativePathString.remove(0, 1);
 
@@ -502,4 +505,12 @@ tJob::State FileTransferJob::state() {
 
 QWidget* FileTransferJob::makeProgressWidget() {
     return new FileTransferJobWidget(this);
+}
+
+QString FileTransferJob::titleString() {
+    return d->type == FileTransferJob::Copy ? tr("Copying Files") : tr("Moving Files");
+}
+
+QString FileTransferJob::statusString() {
+    return d->description;
 }

@@ -20,13 +20,13 @@
 #include "filetransferjobwidget.h"
 #include "ui_filetransferjobwidget.h"
 
+#include "../filetransferjob.h"
 #include <QTimer>
 #include <QUrl>
-#include "../filetransferjob.h"
 
 struct FileTransferJobWidgetPrivate {
-    FileTransferJob* job;
-    tVariantAnimation* heightAnim = nullptr;
+        FileTransferJob* job;
+        tVariantAnimation* heightAnim = nullptr;
 };
 
 FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* parent) :
@@ -37,7 +37,7 @@ FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* pare
     d = new FileTransferJobWidgetPrivate();
     d->job = job;
 
-    auto TransferStageChangedHandler = [ = ](FileTransferJob::TransferStage stage) {
+    auto TransferStageChangedHandler = [=](FileTransferJob::TransferStage stage) {
         if (stage == FileTransferJob::ConflictResolution) {
             ui->stackedWidget->setCurrentWidget(ui->conflictResolutionPage);
             ui->conflictDescriptionLabel->setText(tr("%n files in the destination folder have the same file name as files being transferred", nullptr, job->conflictingFiles().count()));
@@ -54,7 +54,7 @@ FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* pare
         }
     };
 
-    ui->operationLabel->setText(job->type() == FileTransferJob::Copy ? tr("COPYING FILES") : tr("MOVING FILES"));
+    ui->operationLabel->setText(job->type() == FileTransferJob::Copy ? tr("Copying Files") : tr("Moving Files"));
     ui->progressBar->setValue(job->progress() / 1000);
     ui->progressBar->setMaximum(job->totalProgress() / 1000);
     ui->statusLabel->setText(job->description());
@@ -62,18 +62,24 @@ FileTransferJobWidget::FileTransferJobWidget(FileTransferJob* job, QWidget* pare
 
     if (job->cancelled() || job->state() != tJob::Processing) ui->cancelButton->setEnabled(false);
 
-    connect(job, &FileTransferJob::totalProgressChanged, this, [ = ](quint64 totalProgress) {
-        ui->progressBar->setMaximum(totalProgress / 1000);
-    }, Qt::QueuedConnection);
-    connect(job, &FileTransferJob::progressChanged, this, [ = ](quint64 progress) {
-        ui->progressBar->setValue(progress / 1000);
-    }, Qt::QueuedConnection);
-    connect(job, &FileTransferJob::descriptionChanged, this, [ = ](QString description) {
-        ui->statusLabel->setText(description);
-        QTimer::singleShot(0, this, [ = ] {
-            performResize();
-        });
-    }, Qt::QueuedConnection);
+    connect(
+        job, &FileTransferJob::totalProgressChanged, this, [=](quint64 totalProgress) {
+            ui->progressBar->setMaximum(totalProgress / 1000);
+        },
+        Qt::QueuedConnection);
+    connect(
+        job, &FileTransferJob::progressChanged, this, [=](quint64 progress) {
+            ui->progressBar->setValue(progress / 1000);
+        },
+        Qt::QueuedConnection);
+    connect(
+        job, &FileTransferJob::descriptionChanged, this, [=](QString description) {
+            ui->statusLabel->setText(description);
+            QTimer::singleShot(0, this, [=] {
+                performResize();
+            });
+        },
+        Qt::QueuedConnection);
     connect(job, &FileTransferJob::transferStageChanged, this, TransferStageChangedHandler, Qt::QueuedConnection);
     connect(job, &FileTransferJob::stateChanged, this, &FileTransferJobWidget::updateState, Qt::QueuedConnection);
     updateState();
@@ -93,15 +99,15 @@ void FileTransferJobWidget::on_stackedWidget_switchingFrame(int frame) {
 }
 
 void FileTransferJobWidget::on_replaceAllConflictsButton_clicked() {
-    //Resolve each conflict with the current file name
+    // Resolve each conflict with the current file name
     QMap<QUrl, QUrl> conflicting = d->job->conflictingFiles();
-    for (const QUrl &source : conflicting.keys()) {
+    for (const QUrl& source : conflicting.keys()) {
         d->job->resolveConflict(source, conflicting.value(source));
     }
 }
 
 void FileTransferJobWidget::on_skipAllConflictsButton_clicked() {
-    //Resolve each conflict with an invalid URL
+    // Resolve each conflict with an invalid URL
     QMap<QUrl, QUrl> conflicting = d->job->conflictingFiles();
     for (const QUrl& source : conflicting.keys()) {
         d->job->resolveConflict(source, QUrl());
@@ -121,10 +127,10 @@ void FileTransferJobWidget::performResize() {
     d->heightAnim->setEndValue(w->sizeHint().height());
     d->heightAnim->setDuration(500);
     d->heightAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->heightAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+    connect(d->heightAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
         this->setFixedHeight(value.toInt());
     });
-    connect(d->heightAnim, &tVariantAnimation::finished, this, [ = ] {
+    connect(d->heightAnim, &tVariantAnimation::finished, this, [=] {
         d->heightAnim->deleteLater();
         d->heightAnim = nullptr;
     });

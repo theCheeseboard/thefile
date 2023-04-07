@@ -78,6 +78,8 @@ class FileTransferJob : public tJob {
         quint64 totalProgress();
         State state();
         QWidget* makeProgressWidget();
+        QString titleString();
+        QString statusString();
 };
 
 Q_DECLARE_METATYPE(FileTransferJob::TransferStage)

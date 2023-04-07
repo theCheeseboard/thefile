@@ -37,12 +37,7 @@
      <widget class="QWidget" name="progressPage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="operationLabel">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
+        <widget class="tSubtitleLabel" name="operationLabel">
          <property name="text">
           <string notr="true">COPYING</string>
          </property>
@@ -227,6 +222,11 @@
    <slots>
     <signal>switchingFrame(int)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>tSubtitleLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">tsubtitlelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
