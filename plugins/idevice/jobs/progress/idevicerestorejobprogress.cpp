@@ -14,11 +14,7 @@ IDeviceRestoreJobProgress::IDeviceRestoreJobProgress(IDeviceRestoreJob* job, QWi
     d = new IDeviceRestoreJobProgressPrivate();
     d->job = job;
 
-    if (d->job->isErase()) {
-        ui->titleLabel->setText(tr("Restore %1").arg(QLocale().quoteString(job->deviceName())));
-    } else {
-        ui->titleLabel->setText(tr("Update %1").arg(QLocale().quoteString(job->deviceName())));
-    }
+    ui->titleLabel->setText(job->titleString());
 
     connect(job, &IDeviceRestoreJob::stateChanged, this, &IDeviceRestoreJobProgress::updateState);
     connect(job, &IDeviceRestoreJob::totalProgressChanged, this, [this](quint64 totalProgress) {

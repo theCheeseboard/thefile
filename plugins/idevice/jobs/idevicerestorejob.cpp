@@ -30,6 +30,8 @@ IDeviceRestoreJob::IDeviceRestoreJob(bool erase, IDevice* device, QObject* paren
     d->deviceName = device->deviceName();
     d->deviceClass = device->deviceClass();
 
+    connect(this, &IDeviceRestoreJob::descriptionChanged, this, &IDeviceRestoreJob::statusStringChanged);
+
     d->description = tr("Waiting for download to complete");
 }
 
@@ -179,4 +181,16 @@ IDeviceRestoreJob::State IDeviceRestoreJob::state() {
 
 QWidget* IDeviceRestoreJob::makeProgressWidget() {
     return new IDeviceRestoreJobProgress(this);
+}
+
+QString IDeviceRestoreJob::titleString() {
+    if (this->isErase()) {
+        return tr("Restore %1").arg(QLocale().quoteString(this->deviceName()));
+    } else {
+        return tr("Update %1").arg(QLocale().quoteString(this->deviceName()));
+    }
+}
+
+QString IDeviceRestoreJob::statusString() {
+    return this->description();
 }

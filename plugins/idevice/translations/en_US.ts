@@ -44,100 +44,110 @@
 <context>
     <name>IDeviceRestoreJob</name>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="33"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="35"/>
         <source>Waiting for download to complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="58"/>
-        <location filename="../jobs/idevicerestorejob.cpp" line="86"/>
-        <source>Preparing for restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../jobs/idevicerestorejob.cpp" line="60"/>
         <location filename="../jobs/idevicerestorejob.cpp" line="88"/>
+        <source>Preparing for restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="62"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="90"/>
         <source>Preparing for update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="92"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="94"/>
         <source>Restoring %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="94"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="96"/>
         <source>Updating %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="100"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="102"/>
         <source>Verifying restored software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="102"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="104"/>
         <source>Verifying updated software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="107"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="109"/>
         <source>Finishing up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="124"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="126"/>
         <source>Restore complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="126"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="128"/>
         <source>Update complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="132"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="134"/>
         <source>Restored system software to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="134"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="136"/>
         <source>Updated system software on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="136"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="138"/>
         <source>%1 was installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="143"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="145"/>
         <source>The restore operation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="145"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="147"/>
         <source>The update operation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="151"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="153"/>
         <source>Couldn&apos;t restore to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="152"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="154"/>
         <source>Could not install %1 on %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="154"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="156"/>
         <source>Couldn&apos;t update %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="155"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="157"/>
         <source>Could not update %1 to %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="188"/>
+        <source>Restore %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="190"/>
+        <source>Update %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -151,16 +161,6 @@
     <message>
         <location filename="../jobs/progress/idevicerestorejobprogress.ui" line="47"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../jobs/progress/idevicerestorejobprogress.cpp" line="18"/>
-        <source>Restore %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../jobs/progress/idevicerestorejobprogress.cpp" line="20"/>
-        <source>Update %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
