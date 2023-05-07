@@ -1,10 +1,16 @@
 #include "nearbysharetarget.h"
 #include "ui_nearbysharetarget.h"
 
+#include "dbus/nearbysharemanager.h"
 #include "nearbysharetargetsession.h"
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 #include <ticon.h>
 
 struct NearbyShareTargetPrivate {
+        NearbyShareManager manager;
+        QString peerName;
         QString connectionString;
         bool sendable = false;
         bool haveTrackedSessions = false;
@@ -15,6 +21,8 @@ NearbyShareTarget::NearbyShareTarget(QWidget* parent) :
     ui(new Ui::NearbyShareTarget) {
     ui->setupUi(this);
     d = new NearbyShareTargetPrivate();
+    ui->topWidget->installEventFilter(this);
+    ui->topWidget->setAcceptDrops(true);
 }
 
 NearbyShareTarget::~NearbyShareTarget() {
@@ -23,6 +31,7 @@ NearbyShareTarget::~NearbyShareTarget() {
 }
 
 void NearbyShareTarget::setName(QString peerName) {
+    d->peerName = peerName;
     ui->nameLabel->setText(peerName);
 }
 
@@ -51,7 +60,7 @@ void NearbyShareTarget::setSendable(bool sendable) {
 }
 
 QString NearbyShareTarget::name() {
-    return ui->nameLabel->text();
+    return d->peerName;
 }
 
 QString NearbyShareTarget::connectionString() {
@@ -66,4 +75,26 @@ void NearbyShareTarget::trackSession(NearbyShareSessionPtr session) {
 
 bool NearbyShareTarget::haveTrackedSessions() {
     return d->haveTrackedSessions;
+}
+
+bool NearbyShareTarget::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->topWidget) {
+        if (event->type() == QEvent::DragEnter) {
+            auto e = static_cast<QDragEnterEvent*>(event);
+            e->acceptProposedAction();
+            return true;
+        } else if (event->type() == QEvent::Drop) {
+            auto e = static_cast<QDropEvent*>(event);
+            const QMimeData* mimeData = e->mimeData();
+
+            if (!mimeData->hasUrls()) return false;
+
+            QList<QUrl> urls = mimeData->urls();
+            d->manager.send(d->connectionString, d->peerName, urls);
+            e->setDropAction(Qt::CopyAction);
+
+            return true;
+        }
+    }
+    return false;
 }

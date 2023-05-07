@@ -13,7 +13,7 @@
     <name>NearbyShareTarget</name>
     <message>
         <location filename="../nearbysharetarget.ui" line="14"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetarget.h" line="96"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetarget.h" line="99"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>

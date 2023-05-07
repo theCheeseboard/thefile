@@ -36,6 +36,10 @@ class NearbyShareTarget : public QWidget {
     private:
         Ui::NearbyShareTarget* ui;
         NearbyShareTargetPrivate* d;
+
+        // QObject interface
+    public:
+        bool eventFilter(QObject *watched, QEvent *event);
 };
 
 #endif // NEARBYSHARETARGET_H

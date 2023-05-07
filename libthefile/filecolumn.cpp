@@ -201,7 +201,10 @@ void FileColumn::newFolder() {
     bool ok;
     QString folderName = tInputDialog::getText(this->window(), tr("New Folder"), tr("What are you naming this folder?"), QLineEdit::Normal, tr("New Folder"), &ok);
     if (ok) {
-        d->directory->mkpath(folderName);
+        try {
+            d->directory->mkpath(folderName);
+        } catch (DirectoryOperationException ex) {
+        }
     }
 }
 
@@ -660,7 +663,7 @@ void FileColumn::focusInEvent(QFocusEvent* event) {
 }
 
 void FileColumn::dragEnterEvent(QDragEnterEvent* event) {
-    if (ui->stackedWidget->currentWidget() == ui->filePage) {
+    if (ui->stackedWidget->currentWidget() == ui->filePage || ui->stackedWidget->currentWidget() == d->renderWidget) {
         event->setDropAction(Qt::IgnoreAction);
         return;
     }

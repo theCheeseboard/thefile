@@ -106,7 +106,7 @@
         <translation type="vanished">Root</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="215"/>
+        <location filename="../filecolumn.cpp" line="218"/>
         <source>Trash</source>
         <translation>Mülleimer</translation>
     </message>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <location filename="../filecolumn.cpp" line="202"/>
-        <location filename="../filecolumn.cpp" line="571"/>
+        <location filename="../filecolumn.cpp" line="574"/>
         <source>New Folder</source>
         <translation>Neuer Ordner</translation>
     </message>
@@ -126,7 +126,7 @@
         <translation>Wie willst du diesen Ordner nennen?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="216"/>
+        <location filename="../filecolumn.cpp" line="219"/>
         <source>Moved %n items to the trash</source>
         <translation>
             <numerusform>%n Element in den Mülleimer verschoben</numerusform>
@@ -134,49 +134,49 @@
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="252"/>
-        <location filename="../filecolumn.cpp" line="359"/>
+        <location filename="../filecolumn.cpp" line="255"/>
+        <location filename="../filecolumn.cpp" line="362"/>
         <source>Rename</source>
         <translation>Umbennen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="252"/>
+        <location filename="../filecolumn.cpp" line="255"/>
         <source>What do you want to name this item?</source>
         <translation>Wie willst du dieses Element nennen?</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="283"/>
-        <location filename="../filecolumn.cpp" line="685"/>
+        <location filename="../filecolumn.cpp" line="286"/>
+        <location filename="../filecolumn.cpp" line="688"/>
         <source>For %1</source>
         <translation type="unfinished">Für %1</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="286"/>
+        <location filename="../filecolumn.cpp" line="289"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="295"/>
+        <location filename="../filecolumn.cpp" line="298"/>
         <source>Open With...</source>
         <translation>Öffnen mit...</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="310"/>
+        <location filename="../filecolumn.cpp" line="313"/>
         <source>Another app...</source>
         <translation>Andere App...</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="319"/>
+        <location filename="../filecolumn.cpp" line="322"/>
         <source>Remove from bookmarks</source>
         <translation>Von Lesezeichen entfernen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="323"/>
+        <location filename="../filecolumn.cpp" line="326"/>
         <source>Add to bookmarks</source>
         <translation>Zu Lesezeichen hinzufügen</translation>
     </message>
     <message numerus="yes">
-        <location filename="../filecolumn.cpp" line="329"/>
+        <location filename="../filecolumn.cpp" line="332"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Für %n Element</numerusform>
@@ -184,77 +184,77 @@
         </translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="333"/>
+        <location filename="../filecolumn.cpp" line="336"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="334"/>
+        <location filename="../filecolumn.cpp" line="337"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="336"/>
+        <location filename="../filecolumn.cpp" line="339"/>
         <source>Restore</source>
         <translation>Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="350"/>
+        <location filename="../filecolumn.cpp" line="353"/>
         <source>Delete Permanently</source>
         <translation>Permanent löschen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="352"/>
+        <location filename="../filecolumn.cpp" line="355"/>
         <source>Move to Trash</source>
         <translation>In den Mülleimer verschieben</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="368"/>
+        <location filename="../filecolumn.cpp" line="371"/>
         <source>Properties</source>
         <translation>Eigenschaften</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="379"/>
+        <location filename="../filecolumn.cpp" line="382"/>
         <source>Burn Contents</source>
         <translation>Inhalte brennen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="449"/>
+        <location filename="../filecolumn.cpp" line="452"/>
         <source>No items here!</source>
         <translation type="unfinished">Hier sind keine Elemente!</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="450"/>
+        <location filename="../filecolumn.cpp" line="453"/>
         <source>This folder is empty.</source>
         <translation>Dieser Ordner ist leer.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="453"/>
+        <location filename="../filecolumn.cpp" line="456"/>
         <source>Not Found</source>
         <translation>Nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="454"/>
+        <location filename="../filecolumn.cpp" line="457"/>
         <source>This folder doesn&apos;t exist.</source>
         <translation>Dieser Ordner existiert nicht.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="457"/>
+        <location filename="../filecolumn.cpp" line="460"/>
         <source>Permission Denied</source>
         <translation>Zugriff verweigert</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="458"/>
+        <location filename="../filecolumn.cpp" line="461"/>
         <source>Looks like you don&apos;t have permission to view this folder.</source>
         <translation>Sieht so aus, als hättest keine Rechte auf diesen Ordner zuzugreifen.</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="461"/>
+        <location filename="../filecolumn.cpp" line="464"/>
         <source>Can&apos;t view this folder</source>
         <translation>Kann diesen Ordner nicht anzeigen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="462"/>
+        <location filename="../filecolumn.cpp" line="465"/>
         <source>We can&apos;t show you the contents of this folder.</source>
         <translation>Wir können dir den Inhalt dieses Ordner nicht anzeigen.</translation>
     </message>
@@ -263,33 +263,33 @@
         <translation type="vanished">Mülleimer leeren</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="570"/>
-        <location filename="../filecolumn.cpp" line="695"/>
+        <location filename="../filecolumn.cpp" line="573"/>
+        <location filename="../filecolumn.cpp" line="698"/>
         <source>For this folder</source>
         <translation>Für diesen Ordner</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="572"/>
+        <location filename="../filecolumn.cpp" line="575"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="686"/>
+        <location filename="../filecolumn.cpp" line="689"/>
         <source>Copy In</source>
         <translation>Kopieren in</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="689"/>
+        <location filename="../filecolumn.cpp" line="692"/>
         <source>Move In</source>
         <translation>Bewegen in</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="696"/>
+        <location filename="../filecolumn.cpp" line="699"/>
         <source>Copy Here</source>
         <translation>Hierher kopieren</translation>
     </message>
     <message>
-        <location filename="../filecolumn.cpp" line="699"/>
+        <location filename="../filecolumn.cpp" line="702"/>
         <source>Move Here</source>
         <translation>Hierher verschieben</translation>
     </message>
