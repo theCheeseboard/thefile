@@ -20,8 +20,8 @@
 #ifndef FILETAB_H
 #define FILETAB_H
 
-#include <QWidget>
 #include <QUrl>
+#include <QWidget>
 #include <directory.h>
 
 namespace Ui {
@@ -37,31 +37,26 @@ class FileTab : public QWidget {
         explicit FileTab(QWidget* parent = nullptr);
         ~FileTab();
 
-        enum ViewType {
-            Columns,
-            Trash
-        };
-
         void setCurrentUrl(QUrl url);
         void setCurrentDir(DirectoryPtr directory);
         QUrl currentUrl();
 
         struct OpenFileButton {
-            QString text;
-            QIcon icon;
-            std::function<void(QList<QUrl>)> activated;
-            bool defaultAction = false;
+                QString text;
+                QIcon icon;
+                std::function<void(QList<QUrl>)> activated;
+                bool defaultAction = false;
         };
 
         struct ColumnAction {
-            QString text;
-            QString buttonText;
-            std::function<void(DirectoryPtr)> activated;
+                QString text;
+                QString buttonText;
+                std::function<void(DirectoryPtr)> activated;
         };
 
         struct Filter {
-            bool isMimeFilter;
-            QString filter;
+                bool isMimeFilter;
+                QString filter;
         };
 
         void setFileTransfersSupported(bool supported);
@@ -92,7 +87,7 @@ class FileTab : public QWidget {
         Ui::FileTab* ui;
         FileTabPrivate* d;
 
-        ViewType effectiveViewType();
+        Directory::ViewType effectiveViewType();
 };
 
 #endif // FILETAB_H

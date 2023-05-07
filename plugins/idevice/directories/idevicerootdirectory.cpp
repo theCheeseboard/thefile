@@ -91,3 +91,7 @@ QVariant IDeviceRootDirectory::special(QString operation, QVariantMap args) {
 QList<FileColumnWidget*> IDeviceRootDirectory::actions() {
     return {new IDeviceFileColumnWidget(d->device)};
 }
+
+QString IDeviceRootDirectory::columnTitle() {
+    return d->device->deviceName();
+}

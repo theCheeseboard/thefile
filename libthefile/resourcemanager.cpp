@@ -19,15 +19,16 @@
  * *************************************/
 #include "resourcemanager.h"
 
-#include <QMap>
 #include "directoryHandlers/localfiledirectoryhandler.h"
 #include "directoryHandlers/trashdirectoryhandler.h"
+#include <QMap>
 
 struct ResourceManagerPrivate {
-    QList<DirectoryHandler*> schemeHandlers;
+        QList<DirectoryHandler*> schemeHandlers;
 };
 
-ResourceManager::ResourceManager(QObject* parent) : QObject(parent) {
+ResourceManager::ResourceManager(QObject* parent) :
+    QObject(parent) {
     d = new ResourceManagerPrivate();
     registerDirectoryHandler(new LocalFileDirectoryHandler());
     registerDirectoryHandler(new TrashDirectoryHandler());

@@ -98,10 +98,10 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
     }
 
     switch (effectiveViewType()) {
-        case FileTab::Columns:
+        case Directory::ViewType::Column:
             ui->horizontalSpacer->changeSize(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
             break;
-        case FileTab::Trash:
+        case Directory::ViewType::Wide:
             ui->horizontalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
             break;
     }
@@ -145,10 +145,10 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
         }
 
         switch (effectiveViewType()) {
-            case FileTab::Columns:
+            case Directory::ViewType::Column:
                 col->setFixedWidth(SC_DPI(300));
                 break;
-            case FileTab::Trash:
+            case Directory::ViewType::Wide:
                 col->setFixedWidth(QWIDGETSIZE_MAX);
                 col->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
                 break;
@@ -156,7 +156,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
     }
 
     switch (effectiveViewType()) {
-        case FileTab::Columns:
+        case Directory::ViewType::Column:
             while (d->currentColumns.count() > directories.count()) {
                 FileColumn* col = d->currentColumnWidgets.takeLast();
                 ui->dirsLayout->removeWidget(col);
@@ -202,7 +202,7 @@ void FileTab::setCurrentDir(DirectoryPtr directory) {
                 });
             }
             break;
-        case FileTab::Trash:
+        case Directory::ViewType::Wide:
             while (d->currentColumnWidgets.count() > 1) {
                 FileColumn* col = d->currentColumnWidgets.takeLast();
                 ui->dirsLayout->removeWidget(col);
@@ -269,10 +269,6 @@ void FileTab::closeTab() {
     emit tabClosed();
 }
 
-FileTab::ViewType FileTab::effectiveViewType() {
-    if (d->currentDirectory->url().scheme() == "trash") {
-        return Trash;
-    } else {
-        return Columns;
-    }
+Directory::ViewType FileTab::effectiveViewType() {
+    return d->currentDirectory->viewType();
 }

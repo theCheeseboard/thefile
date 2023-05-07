@@ -1,20 +1,14 @@
-#ifndef IDEVICEROOTDIRECTORY_H
-#define IDEVICEROOTDIRECTORY_H
+#ifndef NEARBYSHAREROOTDIRECTORY_H
+#define NEARBYSHAREROOTDIRECTORY_H
 
 #include <directory.h>
 
-class IDevice;
-struct IDeviceRootDirectoryPrivate;
-class IDeviceRootDirectory : public Directory {
+class NearbyShareRootDirectory : public Directory {
         Q_OBJECT
     public:
-        explicit IDeviceRootDirectory(IDevice* device, QObject* parent = nullptr);
-        ~IDeviceRootDirectory();
+        explicit NearbyShareRootDirectory(QObject* parent = nullptr);
 
     signals:
-
-    private:
-        IDeviceRootDirectoryPrivate* d;
 
         // Directory interface
     public:
@@ -32,8 +26,9 @@ class IDeviceRootDirectory : public Directory {
         bool canMove(QString filename, QUrl to);
         QCoro::Task<> move(QString filename, QUrl to);
         QVariant special(QString operation, QVariantMap args);
-        QList<FileColumnWidget*> actions();
+        FileColumnWidget* renderedWidget();
+        ViewType viewType();
         QString columnTitle();
 };
 
-#endif // IDEVICEROOTDIRECTORY_H
+#endif // NEARBYSHAREROOTDIRECTORY_H

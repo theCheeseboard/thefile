@@ -17,32 +17,33 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
+#include "plugin.h"
 
-#include "directory.h"
-#include "directoryhandler.h"
-#include <QDir>
-#include <QObject>
+#include <QDebug>
+#include <QIcon>
+#include <resourcemanager.h>
+#include <sidebarmanager.h>
+#include <tapplication.h>
+#include <tlogger.h>
 
-struct ResourceManagerPrivate;
-class ResourceManager : public QObject {
-        Q_OBJECT
-    public:
-        explicit ResourceManager(QObject* parent = nullptr);
+#include "directories/nearbysharedirectoryhandler.h"
 
-        static ResourceManager* instance();
-
-        bool registerDirectoryHandler(DirectoryHandler* handler);
-
-        static DirectoryPtr directoryForUrl(QUrl url);
-        static DirectoryPtr parentDirectoryForUrl(QUrl url);
-        static QString relativePath(QUrl from, QUrl to);
-
-    signals:
-
-    private:
-        ResourceManagerPrivate* d;
+struct PluginPrivate {
 };
 
-#endif // RESOURCEMANAGER_H
+Plugin::Plugin() {
+    d = new PluginPrivate();
+}
+
+Plugin::~Plugin() {
+    delete d;
+}
+
+void Plugin::activate() {
+    tDebug("NearbySharePlugin") << "NearbySharePlugin loaded";
+    ResourceManager::instance()->registerDirectoryHandler(new NearbyShareDirectoryHandler());
+    //    SidebarManager::registerSidebarFactory(new IDeviceSidebarSectionFactory(d->watcher));
+}
+
+void Plugin::deactivate() {
+}

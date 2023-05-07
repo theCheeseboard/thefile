@@ -19,7 +19,6 @@
  * *************************************/
 #include "directoryhandler.h"
 
-DirectoryHandler::DirectoryHandler(QObject *parent) : QObject(parent)
-{
-
+DirectoryHandler::DirectoryHandler(QObject* parent) :
+    QObject(parent) {
 }

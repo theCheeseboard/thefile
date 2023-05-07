@@ -54,6 +54,7 @@ class LocalFilesystemDirectory : public Directory {
         bool canMove(QString filename, QUrl to);
         QCoro::Task<> move(QString filename, QUrl to);
         QVariant special(QString operation, QVariantMap args);
+        QString columnTitle();
 };
 
 #endif // LOCALFILESYSTEMDIRECTORY_H

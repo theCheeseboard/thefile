@@ -30,14 +30,15 @@ PlacesSidebarSection::PlacesSidebarSection(QObject* parent) :
     };
 
     for (const Place& place : QList<Place>({
-             {tr("Home"),      QIcon::fromTheme("go-home"),          QUrl::fromLocalFile(QDir::homePath())                                                   },
-             {tr("Documents"), QIcon::fromTheme("folder-documents"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))},
-             {tr("Downloads"), QIcon::fromTheme("folder-downloads"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)) },
-             {tr("Music"),     QIcon::fromTheme("folder-music"),     QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MusicLocation))    },
-             {tr("Pictures"),  QIcon::fromTheme("folder-pictures"),  QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)) },
-             {tr("Videos"),    QIcon::fromTheme("folder-videos"),    QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))   },
-             {tr("Root"),      QIcon::fromTheme("folder-root"),      QUrl::fromLocalFile(QDir::rootPath())                                                   },
-             {tr("Trash"),     QIcon::fromTheme("user-trash"),       QUrl("trash:/")                                                                         }
+             {tr("Home"),         QIcon::fromTheme("go-home"),          QUrl::fromLocalFile(QDir::homePath())                                                   },
+             {tr("Documents"),    QIcon::fromTheme("folder-documents"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))},
+             {tr("Downloads"),    QIcon::fromTheme("folder-downloads"), QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)) },
+             {tr("Music"),        QIcon::fromTheme("folder-music"),     QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MusicLocation))    },
+             {tr("Pictures"),     QIcon::fromTheme("folder-pictures"),  QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)) },
+             {tr("Videos"),       QIcon::fromTheme("folder-videos"),    QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))   },
+             {tr("Nearby Share"), QIcon::fromTheme("nearby-share"),     QUrl("nearbyshare:")                                                                    },
+             {tr("Root"),         QIcon::fromTheme("folder-root"),      QUrl::fromLocalFile(QDir::rootPath())                                                   },
+             {tr("Trash"),        QIcon::fromTheme("user-trash"),       QUrl("trash:/")                                                                         }
     })) {
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(place.name);

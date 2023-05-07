@@ -241,3 +241,12 @@ QVariant LocalFilesystemDirectory::special(QString operation, QVariantMap args) 
     Q_UNUSED(operation);
     return QVariant();
 }
+
+QString LocalFilesystemDirectory::columnTitle() {
+    if (url().path() == "/") {
+        return tr("Root");
+    } else {
+        if (QDir(url().path()) == QDir::home()) return tr("Home");
+        return QFileInfo(QFileInfo(url().path()).canonicalFilePath()).fileName();
+    }
+}
