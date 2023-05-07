@@ -18,6 +18,9 @@ class NearbyShareWidget : public FileColumnWidget {
         explicit NearbyShareWidget(QWidget* parent = nullptr);
         ~NearbyShareWidget();
 
+    private slots:
+        void on_helpButton_clicked();
+
     private:
         Ui::NearbyShareWidget* ui;
         NearbyShareWidgetPrivate* d;

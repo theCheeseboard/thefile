@@ -1,10 +1,13 @@
 #include "nearbysharewidget.h"
 #include "ui_nearbysharewidget.h"
 
+#include <tpopover.h>
+
 #include "dbus/nearbysharelistening.h"
 #include "dbus/nearbysharemanager.h"
 #include "dbus/nearbysharetargetdiscovery.h"
 
+#include "nearbysharehelppopover.h"
 #include "nearbysharetarget.h"
 
 struct NearbyShareWidgetPrivate {
@@ -26,6 +29,8 @@ NearbyShareWidget::NearbyShareWidget(QWidget* parent) :
     ui->discoverableLabel->setText(tr("Temporarily discoverable as %1.").arg(QLocale().quoteString(d->manager.serverName())));
 
     connect(&d->manager, &NearbyShareManager::newSessionAvailable, this, &NearbyShareWidget::addNewSession);
+
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
 
     this->start();
 }
@@ -71,6 +76,7 @@ QCoro::Task<> NearbyShareWidget::start() {
             targetWidget->setSendable(true);
             d->targets.append(targetWidget);
             ui->targetsLayout->addWidget(targetWidget);
+            ui->stackedWidget->setCurrentWidget(ui->targetsPage);
         });
         connect(d->targetDiscovery, &NearbyShareTargetDiscovery::discoveredTargetGone, this, [this](QString targetString) {
             for (auto target : d->targets) {
@@ -83,6 +89,8 @@ QCoro::Task<> NearbyShareWidget::start() {
                     d->targets.removeAll(target);
                     ui->targetsLayout->removeWidget(target);
                     target->deleteLater();
+
+                    if (d->targets.isEmpty()) ui->stackedWidget->setCurrentWidget(ui->noTargetsPage);
                     return;
                 }
             }
@@ -113,6 +121,18 @@ void NearbyShareWidget::addNewSession(NearbyShareSessionPtr session) {
     //        targetWidget->setConnectionString(target.connectionString);
     d->targets.append(targetWidget);
     ui->targetsLayout->addWidget(targetWidget);
+    ui->stackedWidget->setCurrentWidget(ui->targetsPage);
 
     targetWidget->trackSession(session);
+}
+
+void NearbyShareWidget::on_helpButton_clicked() {
+    auto jp = new NearbyShareHelpPopover();
+    auto popover = new tPopover(jp);
+    popover->setPopoverWidth(-200);
+    popover->setPopoverSide(tPopover::Bottom);
+    connect(jp, &NearbyShareHelpPopover::done, popover, &tPopover::dismiss);
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, jp, &NearbyShareHelpPopover::deleteLater);
+    popover->show(this->window());
 }

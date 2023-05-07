@@ -336,37 +336,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="39"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="41"/>
         <source>Nearby Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="40"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="39"/>
         <source>Root</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="41"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="40"/>
         <source>Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="65"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="67"/>
         <source>Places</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="97"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="99"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="98"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="100"/>
         <source>Copy In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sidebar/sections/placessidebarsection.cpp" line="101"/>
+        <location filename="../sidebar/sections/placessidebarsection.cpp" line="103"/>
         <source>Move In</source>
         <translation type="unfinished"></translation>
     </message>

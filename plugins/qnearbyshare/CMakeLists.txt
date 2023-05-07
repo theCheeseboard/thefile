@@ -8,6 +8,7 @@ set(SOURCES
     nearbysharewidget.cpp nearbysharewidget.ui
     nearbysharetarget.cpp nearbysharetarget.ui
     nearbysharetargetsession.cpp nearbysharetargetsession.ui
+    nearbysharehelppopover.cpp nearbysharehelppopover.ui
 
     directories/nearbysharedirectoryhandler.cpp
     directories/nearbysharerootdirectory.cpp
@@ -22,8 +23,8 @@ set(HEADERS
     plugin.h
     nearbysharewidget.h
     nearbysharetarget.h
-
     nearbysharetargetsession.h
+    nearbysharehelppopover.h
 
     directories/nearbysharedirectoryhandler.h
     directories/nearbysharerootdirectory.h
