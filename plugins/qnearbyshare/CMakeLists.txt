@@ -6,6 +6,8 @@ find_package(libcontemporary)
 set(SOURCES
     plugin.cpp
     nearbysharewidget.cpp nearbysharewidget.ui
+    nearbysharetarget.cpp nearbysharetarget.ui
+    nearbysharetargetsession.cpp nearbysharetargetsession.ui
 
     directories/nearbysharedirectoryhandler.cpp
     directories/nearbysharerootdirectory.cpp
@@ -13,11 +15,15 @@ set(SOURCES
     dbus/nearbysharemanager.cpp
     dbus/nearbysharetargetdiscovery.cpp
     dbus/nearbysharelistening.cpp
+    dbus/nearbysharesession.cpp
 )
 
 set(HEADERS
     plugin.h
     nearbysharewidget.h
+    nearbysharetarget.h
+
+    nearbysharetargetsession.h
 
     directories/nearbysharedirectoryhandler.h
     directories/nearbysharerootdirectory.h
@@ -25,6 +31,7 @@ set(HEADERS
     dbus/nearbysharemanager.h
     dbus/nearbysharetargetdiscovery.h
     dbus/nearbysharelistening.h
+    dbus/nearbysharesession.h
 )
 
 add_library(plugin-qnearbyshare SHARED ${SOURCES} ${HEADERS})

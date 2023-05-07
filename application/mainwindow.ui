@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>theFile</string>
   </property>
-  <property name="windowIcon">
-   <iconset theme="thefile" resource="resources.qrc">
-    <normaloff>:/icons/thefile.svg</normaloff>:/icons/thefile.svg</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="autoFillBackground">
     <bool>true</bool>
@@ -273,15 +269,15 @@
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset theme="configure">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+,</string>
-   </property>
-   <property name="icon">
-    <iconset theme="configure">
-     <normaloff>.</normaloff>.</iconset>
    </property>
   </action>
  </widget>

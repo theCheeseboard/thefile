@@ -1,6 +1,7 @@
 #ifndef NEARBYSHAREWIDGET_H
 #define NEARBYSHAREWIDGET_H
 
+#include <QCoroTask>
 #include <filecolumnwidget.h>
 
 namespace Ui {
@@ -18,6 +19,8 @@ class NearbyShareWidget : public FileColumnWidget {
     private:
         Ui::NearbyShareWidget* ui;
         NearbyShareWidgetPrivate* d;
+
+        QCoro::Task<> start();
 };
 
 #endif // NEARBYSHAREWIDGET_H

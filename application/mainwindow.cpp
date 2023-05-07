@@ -90,6 +90,7 @@ MainWindow::MainWindow(QWidget* parent) :
         if (tab->currentColumn()) tab->currentColumn()->deleteFile();
     });
     ui->menuButton->setIcon(tApplication::applicationIcon());
+    this->setWindowIcon(tApplication::applicationIcon());
 
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
