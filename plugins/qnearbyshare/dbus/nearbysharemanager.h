@@ -20,6 +20,7 @@ class NearbyShareManager : public QObject {
 
         QCoro::Task<NearbyShareListening*> startListening();
         QCoro::Task<NearbyShareTargetDiscovery*> discoverTargets();
+        QCoro::Task<QList<NearbyShareSessionPtr>> sessions();
 
     private slots:
         void newSession(QDBusObjectPath sessionPath);

@@ -27,6 +27,7 @@ class NearbyShareTargetSession : public QWidget {
 
         void updateState();
         void updateDetails();
+        void updateTransfers(QList<NearbyShareSession::TransferProgress> transfers);
 };
 
 #endif // NEARBYSHARETARGETSESSION_H

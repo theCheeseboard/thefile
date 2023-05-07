@@ -1,6 +1,8 @@
 #include "nearbysharesession.h"
 
+#include <QCoroDBusPendingCall>
 #include <QDBusInterface>
+#include <QDBusMetaType>
 
 struct NearbyShareSessionPrivate {
         QDBusInterface* session;
@@ -11,6 +13,20 @@ struct NearbyShareSessionPrivate {
         QString state;
         QString failedReason;
 };
+
+QDBusArgument& operator<<(QDBusArgument& argument, const NearbyShareSession::TransferProgress& transferProgress) {
+    argument.beginStructure();
+    argument << transferProgress.fileName << transferProgress.destination << transferProgress.transferred << transferProgress.size << transferProgress.complete;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument& operator>>(const QDBusArgument& argument, NearbyShareSession::TransferProgress& transferProgress) {
+    argument.beginStructure();
+    argument >> transferProgress.fileName >> transferProgress.destination >> transferProgress.transferred >> transferProgress.size >> transferProgress.complete;
+    argument.endStructure();
+    return argument;
+}
 
 NearbyShareSession::~NearbyShareSession() {
     delete d;
@@ -36,6 +52,14 @@ QString NearbyShareSession::failedReason() {
     return d->failedReason;
 }
 
+QCoro::Task<QList<NearbyShareSession::TransferProgress>> NearbyShareSession::transfers() {
+    auto transfersMessage = co_await d->session->asyncCall("Transfers");
+    QList<NearbyShareSession::TransferProgress> transfers;
+    auto transfersArg = transfersMessage.arguments().first().value<QDBusArgument>();
+    transfersArg >> transfers;
+    co_return transfers;
+}
+
 void NearbyShareSession::accept() {
     d->session->asyncCall("AcceptTransfer");
 }
@@ -55,10 +79,14 @@ void NearbyShareSession::sessionPropertiesChanged(QString interface, QVariantMap
 
 NearbyShareSession::NearbyShareSession(QString path, QObject* parent) :
     QObject{parent} {
+    qDBusRegisterMetaType<TransferProgress>();
+    qDBusRegisterMetaType<QList<TransferProgress>>();
+
     d = new NearbyShareSessionPrivate();
     d->session = new QDBusInterface("com.vicr123.qnearbyshare", path, "com.vicr123.qnearbyshare.Session", QDBusConnection::sessionBus(), this);
 
     QDBusConnection::sessionBus().connect("com.vicr123.qnearbyshare", path, "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(sessionPropertiesChanged(QString, QVariantMap, QStringList)));
+    QDBusConnection::sessionBus().connect("com.vicr123.qnearbyshare", path, "com.vicr123.qnearbyshare.Session", "TransfersChanged", this, SIGNAL(transfersChanged(QList<NearbyShareSession::TransferProgress>)));
 
     d->peerName = d->session->property("PeerName").toString();
     d->isSending = d->session->property("IsSending").toBool();

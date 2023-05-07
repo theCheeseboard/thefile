@@ -67,6 +67,9 @@
       </widget>
      </item>
      <item>
+      <layout class="QGridLayout" name="transfersLayout"/>
+     </item>
+     <item>
       <widget class="QWidget" name="statusWidget" native="true">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">

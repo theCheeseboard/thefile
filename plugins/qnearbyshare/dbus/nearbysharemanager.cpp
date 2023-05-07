@@ -4,6 +4,7 @@
 #include "nearbysharesession.h"
 #include "nearbysharetargetdiscovery.h"
 #include <QCoroDBusPendingCall>
+#include <QDBusArgument>
 #include <QDBusInterface>
 
 struct NearbyShareManagerPrivate {
@@ -48,6 +49,22 @@ QCoro::Task<NearbyShareTargetDiscovery*> NearbyShareManager::discoverTargets() {
 
     auto path = reply.arguments().constFirst().value<QDBusObjectPath>();
     co_return new NearbyShareTargetDiscovery(path);
+}
+
+QCoro::Task<QList<NearbyShareSessionPtr>> NearbyShareManager::sessions() {
+    auto reply = co_await d->managerInterface->asyncCall("Sessions");
+    if (reply.type() != QDBusMessage::ReplyMessage) {
+        co_return {};
+    }
+
+    QList<NearbyShareSessionPtr> sessions;
+    auto pathsArg = reply.arguments().constFirst().value<QDBusArgument>();
+    QList<QDBusObjectPath> paths;
+    pathsArg >> paths;
+    for (auto path : paths) {
+        sessions.append(this->session(path.path()));
+    }
+    co_return sessions;
 }
 
 void NearbyShareManager::newSession(QDBusObjectPath sessionPath) {

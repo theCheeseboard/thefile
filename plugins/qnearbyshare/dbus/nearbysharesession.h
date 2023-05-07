@@ -1,6 +1,7 @@
 #ifndef NEARBYSHARESESSION_H
 #define NEARBYSHARESESSION_H
 
+#include <QCoroTask>
 #include <QObject>
 
 class NearbyShareManager;
@@ -10,11 +11,22 @@ class NearbyShareSession : public QObject {
     public:
         ~NearbyShareSession();
 
+        struct TransferProgress {
+                QString fileName;
+                QString destination;
+                quint64 size;
+
+                quint64 transferred = 0;
+                bool complete = false;
+        };
+
         QString peerName();
         bool isSending();
         QString pin();
         QString state();
         QString failedReason();
+
+        QCoro::Task<QList<NearbyShareSession::TransferProgress>> transfers();
 
         void accept();
         void reject();
@@ -24,6 +36,7 @@ class NearbyShareSession : public QObject {
 
     signals:
         void stateChanged();
+        void transfersChanged(QList<NearbyShareSession::TransferProgress> transfers);
 
     protected:
         friend NearbyShareManager;
@@ -32,6 +45,7 @@ class NearbyShareSession : public QObject {
     private:
         NearbyShareSessionPrivate* d;
 };
+Q_DECLARE_METATYPE(NearbyShareSession::TransferProgress)
 
 typedef QSharedPointer<NearbyShareSession> NearbyShareSessionPtr;
 

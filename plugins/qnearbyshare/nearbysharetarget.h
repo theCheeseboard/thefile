@@ -26,10 +26,12 @@ class NearbyShareTarget : public QWidget {
         void setName(QString peerName);
         void setConnectionString(QString connectionString);
         void setDevice(Device device);
+        void setSendable(bool sendable);
 
         QString name();
         QString connectionString();
         void trackSession(NearbyShareSessionPtr session);
+        bool haveTrackedSessions();
 
     private:
         Ui::NearbyShareTarget* ui;

@@ -1,8 +1,11 @@
 #include "nearbysharetargetsession.h"
 #include "ui_nearbysharetargetsession.h"
 
+#include <QProgressBar>
+
 struct NearbyShareTargetSessionPrivate {
         NearbyShareSessionPtr session;
+        QList<QProgressBar*> progressBars;
 };
 
 NearbyShareTargetSession::NearbyShareTargetSession(NearbyShareSessionPtr session, QWidget* parent) :
@@ -14,7 +17,12 @@ NearbyShareTargetSession::NearbyShareTargetSession(NearbyShareSessionPtr session
     d->session = session;
 
     connect(d->session.data(), &NearbyShareSession::stateChanged, this, &NearbyShareTargetSession::updateState);
+    connect(d->session.data(), &NearbyShareSession::transfersChanged, this, &NearbyShareTargetSession::updateTransfers);
     updateState();
+
+    d->session->transfers().then([this](QList<NearbyShareSession::TransferProgress> transfers) {
+        this->updateTransfers(transfers);
+    });
 
     updateDetails();
 }
@@ -66,6 +74,26 @@ void NearbyShareTargetSession::updateState() {
 
 void NearbyShareTargetSession::updateDetails() {
     ui->pinLabel->setText(tr("PIN: %1").arg(d->session->pin()));
+}
+
+void NearbyShareTargetSession::updateTransfers(QList<NearbyShareSession::TransferProgress> transfers) {
+    for (auto i = 0; i < transfers.length(); i++) {
+        auto transfer = transfers.at(i);
+
+        if (d->progressBars.count() <= i) {
+            auto label = new QLabel(this);
+            label->setText(transfer.fileName);
+            ui->transfersLayout->addWidget(label, i, 0);
+
+            auto progress = new QProgressBar(this);
+            ui->transfersLayout->addWidget(progress, i, 1);
+            d->progressBars.append(progress);
+        }
+
+        auto progress = d->progressBars.at(i);
+        progress->setMaximum(transfer.size);
+        progress->setValue(transfer.transferred);
+    }
 }
 
 void NearbyShareTargetSession::on_acceptButton_clicked() {

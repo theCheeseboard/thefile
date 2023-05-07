@@ -22,80 +22,80 @@
     <name>NearbyShareTargetSession</name>
     <message>
         <location filename="../nearbysharetargetsession.ui" line="14"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="120"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="127"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../nearbysharetargetsession.ui" line="65"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="121"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="128"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="68"/>
+        <location filename="../nearbysharetargetsession.cpp" line="76"/>
         <source>PIN: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="30"/>
+        <location filename="../nearbysharetargetsession.cpp" line="38"/>
         <source>Preparing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="36"/>
+        <location filename="../nearbysharetargetsession.cpp" line="44"/>
         <source>Waiting for the peer to accept the connection...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="39"/>
+        <location filename="../nearbysharetargetsession.cpp" line="47"/>
         <source>Accept this transfer?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="44"/>
+        <location filename="../nearbysharetargetsession.cpp" line="52"/>
         <source>Sending files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="46"/>
+        <location filename="../nearbysharetargetsession.cpp" line="54"/>
         <source>Receiving files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="50"/>
+        <location filename="../nearbysharetargetsession.cpp" line="58"/>
         <source>Transfer complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="55"/>
+        <location filename="../nearbysharetargetsession.cpp" line="63"/>
         <source>The peer declined the transfer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="57"/>
+        <location filename="../nearbysharetargetsession.cpp" line="65"/>
         <source>The peer does not have sufficient disk space to complete the transfer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="59"/>
+        <location filename="../nearbysharetargetsession.cpp" line="67"/>
         <source>The transfer timed out.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.cpp" line="61"/>
+        <location filename="../nearbysharetargetsession.cpp" line="69"/>
         <source>The transfer failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.ui" line="128"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="122"/>
+        <location filename="../nearbysharetargetsession.ui" line="131"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="129"/>
         <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharetargetsession.ui" line="138"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="123"/>
+        <location filename="../nearbysharetargetsession.ui" line="141"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharetargetsession.h" line="130"/>
         <source>Decline</source>
         <translation type="unfinished"></translation>
     </message>

@@ -4,6 +4,8 @@
 #include <QCoroTask>
 #include <filecolumnwidget.h>
 
+#include "dbus/nearbysharesession.h"
+
 namespace Ui {
     class NearbyShareWidget;
 }
@@ -21,6 +23,7 @@ class NearbyShareWidget : public FileColumnWidget {
         NearbyShareWidgetPrivate* d;
 
         QCoro::Task<> start();
+        void addNewSession(NearbyShareSessionPtr session);
 };
 
 #endif // NEARBYSHAREWIDGET_H

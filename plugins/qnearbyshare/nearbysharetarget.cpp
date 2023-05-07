@@ -6,6 +6,8 @@
 
 struct NearbyShareTargetPrivate {
         QString connectionString;
+        bool sendable = false;
+        bool haveTrackedSessions = false;
 };
 
 NearbyShareTarget::NearbyShareTarget(QWidget* parent) :
@@ -44,6 +46,10 @@ void NearbyShareTarget::setDevice(Device device) {
     }
 }
 
+void NearbyShareTarget::setSendable(bool sendable) {
+    d->sendable = sendable;
+}
+
 QString NearbyShareTarget::name() {
     return ui->nameLabel->text();
 }
@@ -55,4 +61,9 @@ QString NearbyShareTarget::connectionString() {
 void NearbyShareTarget::trackSession(NearbyShareSessionPtr session) {
     auto ts = new NearbyShareTargetSession(session, this);
     ui->sessionsLayout->addWidget(ts);
+    d->haveTrackedSessions = true;
+}
+
+bool NearbyShareTarget::haveTrackedSessions() {
+    return d->haveTrackedSessions;
 }
