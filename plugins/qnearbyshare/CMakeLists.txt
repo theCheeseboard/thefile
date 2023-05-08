@@ -42,7 +42,7 @@ cntp_init_plugin(thefile plugin-qnearbyshare 20 ideviceplugin)
 cntp_translate(plugin-qnearbyshare)
 
 set_target_properties(plugin-qnearbyshare PROPERTIES
-        OUTPUT_NAME idevicePlugin
+        OUTPUT_NAME nearbysharePlugin
         FRAMEWORK FALSE)
 
 target_link_libraries(plugin-qnearbyshare Qt6::Widgets Qt6::DBus libcontemporary libthefile)
