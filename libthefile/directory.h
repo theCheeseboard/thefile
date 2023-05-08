@@ -47,6 +47,11 @@ class Directory : public QObject,
                 bool isHidden;
         };
 
+        enum class ViewType {
+            Column,
+            Wide
+        };
+
         virtual QCoro::Task<bool> exists() = 0;
         virtual bool isFile(QString path) = 0;
         virtual QUrl url() = 0;
@@ -54,6 +59,8 @@ class Directory : public QObject,
         virtual QCoro::Generator<FileInformation> list(QDir::Filters filters, QDir::SortFlags sortFlags, quint64 offset = 0) = 0;
         virtual QCoro::Task<FileInformation> fileInformation(QString filename) = 0;
         virtual QCoro::Task<QIODevice*> open(QString filename, QIODevice::OpenMode mode) = 0;
+
+        virtual QString columnTitle() = 0;
 
         virtual QCoro::Task<> mkpath(QString filename) = 0;
 
@@ -65,6 +72,8 @@ class Directory : public QObject,
         virtual QCoro::Task<> move(QString filename, QUrl to) = 0;
 
         virtual QList<FileColumnWidget*> actions();
+        virtual FileColumnWidget* renderedWidget();
+        virtual ViewType viewType();
 
         virtual QVariant special(QString operation, QVariantMap args) = 0;
 

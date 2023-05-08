@@ -58,6 +58,8 @@ class TrashDirectory : public Directory {
         QCoro::Task<> move(QString filename, QUrl to);
         QVariant special(QString operation, QVariantMap args);
         QList<FileColumnWidget*> actions();
+        ViewType viewType();
+        QString columnTitle();
 };
 
 #endif // TRASHDIRECTORY_H

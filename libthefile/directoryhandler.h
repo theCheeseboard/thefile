@@ -20,8 +20,8 @@
 #ifndef DIRECTORYHANDLER_H
 #define DIRECTORYHANDLER_H
 
-#include <QObject>
 #include "directory.h"
+#include <QObject>
 
 class DirectoryHandler : public QObject {
         Q_OBJECT
@@ -33,7 +33,6 @@ class DirectoryHandler : public QObject {
         virtual QString relativePath(QUrl from, QUrl to) = 0;
 
     signals:
-
 };
 
 #endif // DIRECTORYHANDLER_H

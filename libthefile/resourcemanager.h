@@ -20,10 +20,10 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-#include <QObject>
-#include <QDir>
 #include "directory.h"
 #include "directoryhandler.h"
+#include <QDir>
+#include <QObject>
 
 struct ResourceManagerPrivate;
 class ResourceManager : public QObject {

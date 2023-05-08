@@ -59,6 +59,7 @@ struct FileColumnPrivate {
 
         QList<FileColumnWidget*> actions;
         QList<QPushButton*> openFileButtons;
+        QWidget* renderWidget = nullptr;
 
         bool listenToSelection = true;
         bool isFloaterVisible = true;
@@ -125,16 +126,7 @@ void FileColumn::setSelected(QUrl url) {
 }
 
 QString FileColumn::columnTitle() {
-    if (d->directory->url().path() == "/") {
-        if (d->directory->url().scheme() == "file") return tr("Root");
-        if (d->directory->url().scheme() == "trash") return tr("Trash");
-        return d->directory->url().scheme();
-    } else {
-        if (d->directory->url().scheme() == "file") {
-            if (QDir(d->directory->url().path()) == QDir::home()) return tr("Home");
-        }
-        return QFileInfo(QFileInfo(d->directory->url().path()).canonicalFilePath()).fileName();
-    }
+    return d->directory->columnTitle();
 }
 
 QListView* FileColumn::folderView() {
@@ -209,7 +201,10 @@ void FileColumn::newFolder() {
     bool ok;
     QString folderName = tInputDialog::getText(this->window(), tr("New Folder"), tr("What are you naming this folder?"), QLineEdit::Normal, tr("New Folder"), &ok);
     if (ok) {
-        d->directory->mkpath(folderName);
+        try {
+            d->directory->mkpath(folderName);
+        } catch (DirectoryOperationException ex) {
+        }
     }
 }
 
@@ -430,6 +425,12 @@ void FileColumn::reload() {
 }
 
 void FileColumn::updateItems() {
+    if (d->renderWidget) {
+        ui->stackedWidget->removeWidget(d->renderWidget);
+        d->renderWidget->deleteLater();
+        d->renderWidget = nullptr;
+    }
+
     QString error = d->model->currentError();
     if (d->model->isFile()) {
         ([this]() -> QCoro::Task<> {
@@ -478,6 +479,13 @@ void FileColumn::updateItems() {
     d->actions.clear();
 
     if (!d->directory) return;
+
+    auto renderWidget = d->directory->renderedWidget();
+    if (renderWidget) {
+        d->renderWidget = renderWidget;
+        ui->stackedWidget->addWidget(renderWidget);
+        ui->stackedWidget->setCurrentWidget(renderWidget);
+    }
 
     for (FileTab::ColumnAction act : d->manager->columnActions()) {
         FileColumnAction* action = new FileColumnAction(this);
@@ -655,7 +663,7 @@ void FileColumn::focusInEvent(QFocusEvent* event) {
 }
 
 void FileColumn::dragEnterEvent(QDragEnterEvent* event) {
-    if (ui->stackedWidget->currentWidget() == ui->filePage) {
+    if (ui->stackedWidget->currentWidget() == ui->filePage || ui->stackedWidget->currentWidget() == d->renderWidget) {
         event->setDropAction(Qt::IgnoreAction);
         return;
     }

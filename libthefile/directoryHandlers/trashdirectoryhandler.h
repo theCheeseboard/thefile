@@ -29,7 +29,6 @@ class TrashDirectoryHandler : public DirectoryHandler {
 
     signals:
 
-
         // DirectoryHandler interface
     public:
         DirectoryPtr directoryForUrl(QUrl url);

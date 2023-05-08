@@ -244,3 +244,15 @@ QList<FileColumnWidget*> TrashDirectory::actions() {
 
     return {trashAction};
 }
+
+Directory::ViewType TrashDirectory::viewType() {
+    return Directory::ViewType::Wide;
+}
+
+QString TrashDirectory::columnTitle() {
+    if (url().path() == "/") {
+        return tr("Trash");
+    } else {
+        return QFileInfo(QFileInfo(url().path()).canonicalFilePath()).fileName();
+    }
+}

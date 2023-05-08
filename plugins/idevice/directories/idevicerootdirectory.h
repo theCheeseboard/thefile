@@ -33,6 +33,7 @@ class IDeviceRootDirectory : public Directory {
         QCoro::Task<> move(QString filename, QUrl to);
         QVariant special(QString operation, QVariantMap args);
         QList<FileColumnWidget*> actions();
+        QString columnTitle();
 };
 
 #endif // IDEVICEROOTDIRECTORY_H

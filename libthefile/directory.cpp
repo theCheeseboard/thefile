@@ -26,3 +26,11 @@ Directory::Directory(QObject* parent) :
 QList<FileColumnWidget*> Directory::actions() {
     return {};
 }
+
+FileColumnWidget* Directory::renderedWidget() {
+    return nullptr;
+}
+
+Directory::ViewType Directory::viewType() {
+    return Directory::ViewType::Column;
+}
