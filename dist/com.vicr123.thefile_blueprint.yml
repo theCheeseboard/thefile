@@ -1,6 +1,6 @@
 app-id: com.vicr123.thefile_blueprint
 runtime: org.kde.Platform
-runtime-version: '6.2'
+runtime-version: '6.4'
 sdk: org.kde.Sdk
 command: thefile-blueprint
 finish-args:
@@ -24,6 +24,14 @@ cleanup:
   - '/lib/debug'
   - '/lib/pkgconfig'
 modules:
+  - name: qcoro
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/danvratil/qcoro
+        branch: main
+    config-opts:
+      - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   - name: libcontemporary
     buildsystem: cmake-ninja
     sources:
@@ -45,17 +53,24 @@ modules:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
         branch: blueprint
+  - name: libtdesktopenvironment
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/theCheeseboard/libtdesktopenvironment
   - name: thefrisbee
     buildsystem: cmake-ninja
     builddir: true
     sources:
       - type: git
-        url: https://github.com/vicr123/thefrisbee
+        url: https://github.com/theCheeseboard/thefrisbee
         branch: blueprint
   - name: thefile
     buildsystem: cmake-ninja
     builddir: true
+    config-opts:
+      - -DBUILD_PLUGIN_IDEVICE=OFF
     sources:
       - type: git
-        url: https://github.com/vicr123/thefile
+        url: https://github.com/theCheeseboard/thefile
         branch: master
