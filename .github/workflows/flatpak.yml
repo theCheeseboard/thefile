@@ -1,6 +1,5 @@
 on:
   push:
-    branches: [blueprint]
   pull_request:
   workflow_dispatch:
 name: Build Flatpak

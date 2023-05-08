@@ -10,6 +10,7 @@ finish-args:
   - --filesystem=host
   - --device=all
   - --system-talk-name=org.freedesktop.UDisks2
+  - --session-talk-name=com.vicr123.qnearbyshare
 cleanup:
   - '/include'
   - '/qt'
