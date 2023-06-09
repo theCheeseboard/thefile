@@ -38,11 +38,11 @@ int main(int argc, char* argv[]) {
     a.addLibraryTranslator(LIBTHEFRISBEE_TRANSLATOR);
     a.addLibraryTranslator(LIBTHEFILE_TRANSLATOR);
 
-    a.setApplicationVersion("4.0.1");
+    a.setApplicationVersion("5.0");
     a.setGenericName(QApplication::translate("main", "File Manager"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2022");
+    a.setCopyrightYear("2023");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thefile/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theFile"));

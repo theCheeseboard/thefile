@@ -4,7 +4,7 @@
 <context>
     <name>IDevice</name>
     <message>
-        <location filename="../idevice.cpp" line="32"/>
+        <location filename="../idevice.cpp" line="31"/>
         <source>Unknown Device</source>
         <translation type="unfinished"></translation>
     </message>

@@ -20,8 +20,9 @@ ISoftwareUpdateFile::ISoftwareUpdateFile(QString path, QObject* parent) :
     auto plistData = file.readAll();
     file.close();
 
+    plist_format_t plistFormat;
     plist_t plistHandle;
-    if (plist_from_memory(plistData.data(), plistData.length(), &plistHandle) != PLIST_ERR_SUCCESS) return;
+    if (plist_from_memory(plistData.data(), plistData.length(), &plistHandle, &plistFormat) != PLIST_ERR_SUCCESS) return;
 
     auto node = PList::Dictionary(plistHandle);
     auto productVersionIterator = node.Find("ProductVersion");

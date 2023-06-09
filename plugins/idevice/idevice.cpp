@@ -1,6 +1,5 @@
 #include "idevice.h"
 
-#include <libimobiledevice-glue/utils.h>
 #include <libimobiledevice/libimobiledevice.h>
 #include <libimobiledevice/lockdown.h>
 #include <plist/plist++.h>

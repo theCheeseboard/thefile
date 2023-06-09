@@ -46,6 +46,7 @@
 struct MainWindowPrivate {
         tCsdTools csd;
         tSettings settings;
+        tSettings theFileSettings{"theCheeseboard", "theFile"};
 };
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -98,10 +99,10 @@ MainWindow::MainWindow(QWidget* parent) :
 
     ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
 
-    connect(&d->settings, &tSettings::settingChanged, this, [this](QString key, QVariant value) {
+    connect(&d->theFileSettings, &tSettings::settingChanged, this, [this](QString key, QVariant value) {
         if (key == "View/HiddenFiles") ui->actionShowHiddenFiles->setChecked(value.toBool());
     });
-    ui->actionShowHiddenFiles->setChecked(d->settings.value("View/HiddenFiles").toBool());
+    ui->actionShowHiddenFiles->setChecked(d->theFileSettings.value("View/HiddenFiles").toBool());
 
     updateMenuActions();
 
@@ -215,7 +216,7 @@ void MainWindow::on_actionCloseTab_triggered() {
 }
 
 void MainWindow::on_actionShowHiddenFiles_triggered(bool checked) {
-    d->settings.setValue("View/HiddenFiles", checked);
+    d->theFileSettings.setValue("View/HiddenFiles", checked);
 }
 
 void MainWindow::on_actionGo_triggered() {

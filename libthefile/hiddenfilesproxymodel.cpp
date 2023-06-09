@@ -23,12 +23,13 @@
 #include <tsettings.h>
 
 struct HiddenFilesProxyModelPrivate {
-    tSettings settings;
+        tSettings settings{"theCheeseboard", "theFile"};
 };
 
-HiddenFilesProxyModel::HiddenFilesProxyModel(QObject* parent) : QSortFilterProxyModel(parent) {
+HiddenFilesProxyModel::HiddenFilesProxyModel(QObject* parent) :
+    QSortFilterProxyModel(parent) {
     d = new HiddenFilesProxyModelPrivate();
-    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
         if (key == "View/HiddenFiles") invalidateFilter();
     });
 }
