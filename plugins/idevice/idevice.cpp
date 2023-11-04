@@ -18,7 +18,7 @@ struct IDevicePrivate {
 };
 
 IDevice::IDevice(QString udid, QObject* parent) :
-    QObject{parent} {
+    AbstractIDevice{parent} {
     d = new IDevicePrivate();
     d->udid = udid;
 

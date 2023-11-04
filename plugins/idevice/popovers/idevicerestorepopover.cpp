@@ -10,7 +10,7 @@
 #include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QUrlQuery>
-#include <idevice.h>
+#include <abstractidevice.h>
 #include <libcontemporary_global.h>
 #include <ranges/trange.h>
 #include <tjobmanager.h>
@@ -18,7 +18,7 @@
 struct IDeviceRestorePopoverPrivate {
         QNetworkAccessManager mgr;
 
-        IDevice* device;
+        AbstractIDevice* device;
         bool erase;
 
         QString softwareVersion;
@@ -28,7 +28,7 @@ struct IDeviceRestorePopoverPrivate {
         QString latestFirmwareSha256;
 };
 
-IDeviceRestorePopover::IDeviceRestorePopover(IDevice* device, bool erase, QWidget* parent) :
+IDeviceRestorePopover::IDeviceRestorePopover(AbstractIDevice* device, bool erase, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::IDeviceRestorePopover) {
     ui->setupUi(this);

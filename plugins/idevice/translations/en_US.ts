@@ -355,4 +355,22 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>RecoveryIDevice</name>
+    <message>
+        <location filename="../recoveryidevice.cpp" line="37"/>
+        <source>Device in Recovery Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../recoveryidevice.cpp" line="49"/>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../recoveryidevice.cpp" line="53"/>
+        <source>Software version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

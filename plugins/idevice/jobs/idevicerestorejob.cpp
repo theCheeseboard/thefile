@@ -22,7 +22,7 @@ struct IDeviceRestoreJobPrivate {
         tJob::State state = tJob::Processing;
 
         bool erase;
-        QPointer<IDevice> device;
+        QPointer<AbstractIDevice> device;
         QString deviceName;
         QString deviceClass;
 
@@ -31,7 +31,7 @@ struct IDeviceRestoreJobPrivate {
         std::stop_token stopToken;
 };
 
-IDeviceRestoreJob::IDeviceRestoreJob(bool erase, IDevice* device, QObject* parent) :
+IDeviceRestoreJob::IDeviceRestoreJob(bool erase, AbstractIDevice* device, QObject* parent) :
     tJob{parent} {
     d = new IDeviceRestoreJobPrivate();
     d->erase = erase;
@@ -129,7 +129,7 @@ void IDeviceRestoreJob::startRestore(QString softwareFile, QString softwareVersi
                 auto stage = parts.at(1).toInt();
                 auto progress = parts.at(2).toDouble();
 
-                if (stage == 1 || stage == 6) { // Warmup
+                if (stage == 0 || stage == 1 || stage == 6) { // Warmup
                     d->totalProgress = 0;
                     d->progress = 0;
                     if (d->erase) {

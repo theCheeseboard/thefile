@@ -5,7 +5,7 @@
 #include <QListView>
 #include <QMenu>
 #include <QTimer>
-#include <idevice.h>
+#include <abstractidevice.h>
 #include <tapplication.h>
 #include <tpopover.h>
 
@@ -42,7 +42,7 @@ IDeviceSidebarSection::IDeviceSidebarSection(IDeviceWatcher* watcher, QObject* p
     });
     connect(d->list, &QListView::customContextMenuRequested, this, [this](QPoint pos) {
         QModelIndex index = d->list->indexAt(pos);
-        auto device = index.data(IDeviceModel::DeviceRole).value<IDevice*>();
+        auto device = index.data(IDeviceModel::DeviceRole).value<AbstractIDevice*>();
 
         QMenu* menu = new QMenu();
         menu->addSection(tr("For %1").arg(QLocale().quoteString(menu->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideRight, SC_DPI_W(300, d->list)))));

@@ -4,12 +4,12 @@
 #include <QCoroTask>
 #include <tjob.h>
 
-class IDevice;
+class AbstractIDevice;
 struct IDeviceRestoreJobPrivate;
 class IDeviceRestoreJob : public tJob {
         Q_OBJECT
     public:
-        explicit IDeviceRestoreJob(bool erase, IDevice* device, QObject* parent = nullptr);
+        explicit IDeviceRestoreJob(bool erase, AbstractIDevice* device, QObject* parent = nullptr);
         ~IDeviceRestoreJob();
 
         QString description();

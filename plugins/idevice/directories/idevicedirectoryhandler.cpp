@@ -20,11 +20,16 @@ IDeviceDirectoryHandler::~IDeviceDirectoryHandler() {
 DirectoryPtr IDeviceDirectoryHandler::directoryForUrl(QUrl url) {
     if (url.scheme() != "ios") return nullptr;
 
-    auto device = d->watcher->deviceByUdid(url.host().mid(1));
-    if (!device) return nullptr;
+    auto host = url.host();
+    if (host.startsWith("u")) {
+        auto device = d->watcher->deviceByUdid(url.host().mid(1));
+        if (!device) return nullptr;
 
-    if (url.path() == "/") return (new IDeviceRootDirectory(device))->sharedFromThis();
-    return nullptr;
+        if (url.path() == "/") return (new IDeviceRootDirectory(device))->sharedFromThis();
+        return nullptr;
+    } else {
+        return nullptr;
+    }
 }
 
 DirectoryPtr IDeviceDirectoryHandler::parentDirectoryForUrl(QUrl url) {

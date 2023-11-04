@@ -4,6 +4,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
 find_package(QuaZip-Qt6 REQUIRED)
 cntp_find_pkgconfig(imobiledevice libimobiledevice-1.0)
+cntp_find_pkgconfig(irecovery libirecovery-1.0)
 cntp_find_pkgconfig(plist libplist++-2.0)
 
 set(SOURCES
@@ -46,7 +47,9 @@ set(HEADERS
     directories/idevicedirectoryhandler.h
 )
 
-add_library(plugin-idevice SHARED ${SOURCES} ${HEADERS})
+add_library(plugin-idevice SHARED ${SOURCES} ${HEADERS}
+    abstractidevice.h abstractidevice.cpp
+    recoveryidevice.h recoveryidevice.cpp)
 target_include_directories(plugin-idevice PUBLIC ../../libthefile/)
 
 cntp_init_plugin(thefile plugin-idevice 20 ideviceplugin)
@@ -56,4 +59,4 @@ set_target_properties(plugin-idevice PROPERTIES
         OUTPUT_NAME idevicePlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-idevice Qt6::Widgets Qt6::DBus libcontemporary libthefile PkgConfig::imobiledevice PkgConfig::plist QuaZip::QuaZip)
+target_link_libraries(plugin-idevice Qt6::Widgets Qt6::DBus libcontemporary libthefile PkgConfig::imobiledevice PkgConfig::irecovery PkgConfig::plist QuaZip::QuaZip)

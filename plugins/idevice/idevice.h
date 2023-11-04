@@ -1,10 +1,11 @@
 #ifndef IDEVICE_H
 #define IDEVICE_H
 
+#include "abstractidevice.h"
 #include <QObject>
 
 struct IDevicePrivate;
-class IDevice : public QObject {
+class IDevice : public AbstractIDevice {
         Q_OBJECT
     public:
         explicit IDevice(QString udid, QObject* parent = nullptr);

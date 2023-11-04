@@ -8,13 +8,13 @@ namespace Ui {
     class IDeviceRestorePopover;
 }
 
-class IDevice;
+class AbstractIDevice;
 struct IDeviceRestorePopoverPrivate;
 class IDeviceRestorePopover : public QWidget {
         Q_OBJECT
 
     public:
-        explicit IDeviceRestorePopover(IDevice* device, bool erase, QWidget* parent = nullptr);
+        explicit IDeviceRestorePopover(AbstractIDevice* device, bool erase, QWidget* parent = nullptr);
         ~IDeviceRestorePopover();
 
     signals:
