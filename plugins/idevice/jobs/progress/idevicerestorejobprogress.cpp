@@ -59,3 +59,7 @@ void IDeviceRestoreJobProgress::updateState() {
             break;
     }
 }
+
+void IDeviceRestoreJobProgress::on_cancelButton_clicked() {
+    d->job->cancel();
+}

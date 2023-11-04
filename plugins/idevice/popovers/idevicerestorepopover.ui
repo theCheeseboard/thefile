@@ -125,7 +125,45 @@
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="latestVersionPage"/>
+            <widget class="QWidget" name="latestVersionPage">
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="latestUpdateInformation">
+                <property name="text">
+                 <string notr="true">TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>314</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="updateFilePage">
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <property name="spacing">

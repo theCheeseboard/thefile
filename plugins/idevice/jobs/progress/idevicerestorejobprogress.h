@@ -18,6 +18,9 @@ class IDeviceRestoreJobProgress : public QWidget {
 
         void updateState();
 
+    private slots:
+        void on_cancelButton_clicked();
+
     private:
         Ui::IDeviceRestoreJobProgress* ui;
         IDeviceRestoreJobProgressPrivate* d;

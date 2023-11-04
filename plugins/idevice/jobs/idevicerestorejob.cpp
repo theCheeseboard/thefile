@@ -3,8 +3,16 @@
 #include "idevice.h"
 #include "progress/idevicerestorejobprogress.h"
 #include "tnotification.h"
+#include <QCoroFuture>
+#include <QCoroNetwork>
+#include <QCryptographicHash>
+#include <QDir>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QPointer>
 #include <QProcess>
+#include <QStandardPaths>
+#include <QtConcurrent>
 #include <tlogger.h>
 
 struct IDeviceRestoreJobPrivate {
@@ -19,7 +27,8 @@ struct IDeviceRestoreJobPrivate {
         QString deviceClass;
 
         bool canCancel = true;
-        bool cancelled = false;
+        std::stop_source stopSource;
+        std::stop_token stopToken;
 };
 
 IDeviceRestoreJob::IDeviceRestoreJob(bool erase, IDevice* device, QObject* parent) :
@@ -29,6 +38,7 @@ IDeviceRestoreJob::IDeviceRestoreJob(bool erase, IDevice* device, QObject* paren
     d->device = device;
     d->deviceName = device->deviceName();
     d->deviceClass = device->deviceClass();
+    d->stopToken = d->stopSource.get_token();
 
     connect(this, &IDeviceRestoreJob::descriptionChanged, this, &IDeviceRestoreJob::statusStringChanged);
 
@@ -55,6 +65,39 @@ QString IDeviceRestoreJob::deviceName() {
     return d->deviceName;
 }
 
+QCoro::Task<> IDeviceRestoreJob::downloadAndStartRestore(QString buildId, QString softwareVersion, QString sha256) {
+    d->description = tr("Preparing to download %1").arg(softwareVersion);
+    emit descriptionChanged(d->description);
+
+    auto softwareFile = co_await downloadSoftware(buildId, softwareVersion);
+    while (!co_await checkSoftwareFile(softwareFile, sha256)) {
+        QFile::remove(softwareFile);
+        if (d->stopSource.stop_requested()) break;
+        softwareFile = co_await downloadSoftware(buildId, softwareVersion);
+    }
+
+    if (d->stopSource.stop_requested()) {
+        if (d->erase) {
+            d->description = tr("Cancelled restore operation");
+        } else {
+            d->description = tr("Cancelled update operation");
+        }
+        emit descriptionChanged(d->description);
+
+        d->state = tJob::Failed;
+        emit stateChanged(d->state);
+
+        d->totalProgress = 100;
+        d->progress = 100;
+        emit totalProgressChanged(d->totalProgress);
+        emit progressChanged(d->progress);
+
+        co_return;
+    }
+
+    startRestore(softwareFile, softwareVersion);
+}
+
 void IDeviceRestoreJob::startRestore(QString softwareFile, QString softwareVersion) {
     if (d->erase) {
         d->description = tr("Preparing for restore");
@@ -62,6 +105,11 @@ void IDeviceRestoreJob::startRestore(QString softwareFile, QString softwareVersi
         d->description = tr("Preparing for update");
     }
     emit descriptionChanged(d->description);
+
+    d->totalProgress = 0;
+    d->progress = 0;
+    emit totalProgressChanged(d->totalProgress);
+    emit progressChanged(d->progress);
 
     d->canCancel = false;
     emit canCancelChanged(d->canCancel);
@@ -81,7 +129,7 @@ void IDeviceRestoreJob::startRestore(QString softwareFile, QString softwareVersi
                 auto stage = parts.at(1).toInt();
                 auto progress = parts.at(2).toDouble();
 
-                if (stage == 1) { // Warmup
+                if (stage == 1 || stage == 6) { // Warmup
                     d->totalProgress = 0;
                     d->progress = 0;
                     if (d->erase) {
@@ -165,6 +213,95 @@ void IDeviceRestoreJob::startRestore(QString softwareFile, QString softwareVersi
 
 void IDeviceRestoreJob::cancel() {
     if (!d->canCancel) return;
+
+    d->canCancel = false;
+    emit canCancelChanged(d->canCancel);
+
+    d->stopSource.request_stop();
+}
+
+QCoro::Task<QString> IDeviceRestoreJob::downloadSoftware(QString buildId, QString softwareVersion) {
+    QDir cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    QDir appleDir(cacheDir.absoluteFilePath("apple-restore"));
+    QDir::root().mkpath(appleDir.absolutePath());
+
+    auto softwareFile = appleDir.absoluteFilePath(buildId);
+    if (QFile::exists(softwareFile)) co_return softwareFile;
+
+    QUrl url(QStringLiteral("https://api.ipsw.me/v4/ipsw/download/%1/%2").arg(d->device->productType(), buildId));
+
+    QFile file(softwareFile);
+    file.open(QFile::WriteOnly);
+
+    QNetworkAccessManager mgr;
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, "theFile/" + QApplication::applicationVersion());
+    req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::UserVerifiedRedirectPolicy);
+
+    auto reply = mgr.get(req);
+    connect(reply, &QNetworkReply::redirected, this, [reply](const QUrl& url) {
+        if (url.host() == "appldnld.apple.com" || url.scheme() == "https") {
+            reply->redirectAllowed();
+        }
+    });
+    connect(reply, &QNetworkReply::downloadProgress, this, [softwareVersion, this](qint64 bytesReceived, qint64 bytesTotal) {
+        d->description = tr("Downloading %1\n%2 of %3").arg(softwareVersion, QLocale().formattedDataSize(bytesReceived), QLocale().formattedDataSize(bytesTotal));
+        emit descriptionChanged(d->description);
+
+        d->totalProgress = bytesTotal / 1024 / 1024;
+        d->progress = bytesReceived / 1024 / 1024;
+        emit totalProgressChanged(d->totalProgress);
+        emit progressChanged(d->progress);
+    });
+
+    while (co_await qCoro(reply).waitForReadyRead(30000)) {
+        if (d->stopSource.stop_requested()) break;
+        file.write(reply->readAll());
+
+        if (reply->isFinished()) break;
+    }
+
+    file.write(reply->readAll());
+
+    file.close();
+
+    if (!reply->isFinished() || reply->error() != QNetworkReply::NoError) {
+        // TODO
+        tWarn("IDeviceRestoreJob") << "Did not finish downloading " << softwareVersion << ": " << reply->errorString();
+        co_return softwareFile;
+    }
+
+    co_return softwareFile;
+}
+
+QCoro::Task<bool> IDeviceRestoreJob::checkSoftwareFile(QString softwareFile, QString sha256) {
+    d->description = tr("Checking the downloaded system software");
+    emit descriptionChanged(d->description);
+
+    d->totalProgress = 0;
+    d->progress = 0;
+    emit totalProgressChanged(d->totalProgress);
+    emit progressChanged(d->progress);
+
+    co_return co_await QtConcurrent::run([](QString softwareFile, QString sha256) {
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        QFile file(softwareFile);
+        file.open(QFile::ReadOnly);
+        hash.addData(&file);
+
+        auto result = hash.result();
+        auto hex = result.toHex();
+
+        if (hex.toLower() != sha256.toLower()) {
+            tWarn("IDeviceRestoreJob") << "Download integrity check failed";
+            tWarn("IDeviceRestoreJob") << "Expected SHA256 Hash: " << sha256;
+            tWarn("IDeviceRestoreJob") << "Actual SHA256 Hash:   " << QString(hex);
+            return false;
+        }
+
+        return true;
+    },
+        softwareFile, sha256);
 }
 
 quint64 IDeviceRestoreJob::progress() {

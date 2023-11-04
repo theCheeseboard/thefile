@@ -1,6 +1,7 @@
 #ifndef IDEVICERESTOREPOPOVER_H
 #define IDEVICERESTOREPOPOVER_H
 
+#include <QCoroTask>
 #include <QWidget>
 
 namespace Ui {
@@ -41,6 +42,7 @@ class IDeviceRestorePopover : public QWidget {
         IDeviceRestorePopoverPrivate* d;
 
         void updateRestoreState();
+        QCoro::Task<> getLatestVersion();
 };
 
 #endif // IDEVICERESTOREPOPOVER_H

@@ -3,16 +3,29 @@
 
 #include "isoftwareupdatefile.h"
 #include "jobs/idevicerestorejob.h"
+#include <QCoroNetwork>
 #include <QFileDialog>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QNetworkAccessManager>
+#include <QUrlQuery>
 #include <idevice.h>
 #include <libcontemporary_global.h>
+#include <ranges/trange.h>
 #include <tjobmanager.h>
 
 struct IDeviceRestorePopoverPrivate {
+        QNetworkAccessManager mgr;
+
         IDevice* device;
         bool erase;
 
         QString softwareVersion;
+
+        QString latestFirmwareBuild;
+        QString latestFirmwareVersion;
+        QString latestFirmwareSha256;
 };
 
 IDeviceRestorePopover::IDeviceRestorePopover(IDevice* device, bool erase, QWidget* parent) :
@@ -45,6 +58,7 @@ IDeviceRestorePopover::IDeviceRestorePopover(IDevice* device, bool erase, QWidge
         ui->doRestoreButton->setIcon(QIcon::fromTheme("phone-upgrade"));
     }
 
+    getLatestVersion();
     updateRestoreState();
 }
 
@@ -62,8 +76,8 @@ void IDeviceRestorePopover::updateRestoreState() {
     QString restoreVersion;
     if (ui->restoreFileButton->isChecked()) {
         if (ui->restoreFileBox->text().isEmpty()) {
-            canRestore = false;
             ui->updateFileInformation->setText("");
+            canRestore = false;
         } else {
             auto file = ISoftwareUpdateFile(ui->restoreFileBox->text());
             if (!file.isValid()) {
@@ -85,7 +99,17 @@ void IDeviceRestorePopover::updateRestoreState() {
             }
         }
     } else {
-        canRestore = false;
+        if (d->latestFirmwareBuild.isEmpty()) {
+            ui->latestUpdateInformation->setText(tr("Getting the latest update information..."));
+            canRestore = false;
+        } else {
+            QStringList attributes;
+            attributes.append(d->device->humanReadableProductVersion(d->latestFirmwareVersion));
+            attributes.append(tr("Build %1").arg(d->latestFirmwareBuild));
+            ui->latestUpdateInformation->setText(attributes.join(libContemporaryCommon::humanReadablePartJoinString()));
+            restoreVersion = d->device->humanReadableProductVersion(d->latestFirmwareVersion);
+            canRestore = true;
+        }
     }
 
     if (canRestore) {
@@ -113,6 +137,38 @@ void IDeviceRestorePopover::updateRestoreState() {
             ui->restoreButton->setText(tr("Update %1").arg(QLocale().quoteString(d->device->deviceName())));
         }
     }
+}
+
+QCoro::Task<> IDeviceRestorePopover::getLatestVersion() {
+    QUrl url(QStringLiteral("https://api.ipsw.me/v4/device/%1").arg(d->device->productType()));
+    url.setQuery(QUrlQuery({
+        {"type", "ipsw"}
+    }));
+
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, "theFile/" + QApplication::applicationVersion());
+
+    auto reply = co_await d->mgr.get(req);
+    if (reply->error() != QNetworkReply::NoError) {
+        // TODO
+        auto err = reply->errorString();
+        co_return;
+    }
+
+    auto root = QJsonDocument::fromJson(reply->readAll()).object();
+    auto firmwares = root.value("firmwares").toArray();
+
+    // TODO: Sort by version number
+    auto latestFirmware = tRange(firmwares.toVariantList()).filter([](QVariant val) {
+                                                               return val.toJsonObject().value("signed").toBool();
+                                                           })
+                              .first()
+                              .toJsonObject();
+
+    d->latestFirmwareBuild = latestFirmware.value("buildid").toString();
+    d->latestFirmwareVersion = latestFirmware.value("version").toString();
+    d->latestFirmwareSha256 = latestFirmware.value("sha256sum").toString();
+    updateRestoreState();
 }
 
 void IDeviceRestorePopover::on_latestVersionButton_toggled(bool checked) {
@@ -157,6 +213,8 @@ void IDeviceRestorePopover::on_doRestoreButton_clicked() {
     auto restoreJob = new IDeviceRestoreJob(d->erase, d->device);
     if (ui->restoreFileButton->isChecked()) {
         restoreJob->startRestore(ui->restoreFileBox->text(), d->softwareVersion);
+    } else {
+        restoreJob->downloadAndStartRestore(d->latestFirmwareBuild, d->softwareVersion, d->latestFirmwareSha256);
     }
     tJobManager::trackJob(restoreJob);
     emit done();

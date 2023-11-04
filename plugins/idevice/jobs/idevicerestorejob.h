@@ -1,6 +1,7 @@
 #ifndef IDEVICERESTOREJOB_H
 #define IDEVICERESTOREJOB_H
 
+#include <QCoroTask>
 #include <tjob.h>
 
 class IDevice;
@@ -17,6 +18,7 @@ class IDeviceRestoreJob : public tJob {
 
         QString deviceName();
 
+        QCoro::Task<> downloadAndStartRestore(QString buildId, QString softwareVersion, QString sha256);
         void startRestore(QString softwareFile, QString softwareVersion);
         void cancel();
 
@@ -26,6 +28,9 @@ class IDeviceRestoreJob : public tJob {
 
     private:
         IDeviceRestoreJobPrivate* d;
+
+        QCoro::Task<QString> downloadSoftware(QString buildId, QString softwareVersion);
+        QCoro::Task<bool> checkSoftwareFile(QString softwareFile, QString sha256);
 
         // tJob interface
     public:

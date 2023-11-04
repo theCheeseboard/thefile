@@ -44,109 +44,135 @@
 <context>
     <name>IDeviceRestoreJob</name>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="35"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="45"/>
         <source>Waiting for download to complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="60"/>
-        <location filename="../jobs/idevicerestorejob.cpp" line="88"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="69"/>
+        <source>Preparing to download %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="81"/>
+        <source>Cancelled restore operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="83"/>
+        <source>Cancelled update operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="103"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="136"/>
         <source>Preparing for restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="62"/>
-        <location filename="../jobs/idevicerestorejob.cpp" line="90"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="105"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="138"/>
         <source>Preparing for update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="94"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="142"/>
         <source>Restoring %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="96"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="144"/>
         <source>Updating %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="102"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="150"/>
         <source>Verifying restored software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="104"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="152"/>
         <source>Verifying updated software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="109"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="157"/>
         <source>Finishing up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="126"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="174"/>
         <source>Restore complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="128"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="176"/>
         <source>Update complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="134"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="182"/>
         <source>Restored system software to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="136"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="184"/>
         <source>Updated system software on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="138"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="186"/>
         <source>%1 was installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="145"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="193"/>
         <source>The restore operation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="147"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="195"/>
         <source>The update operation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="153"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="201"/>
         <source>Couldn&apos;t restore to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="154"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="202"/>
         <source>Could not install %1 on %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="156"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="204"/>
         <source>Couldn&apos;t update %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="157"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="205"/>
         <source>Could not update %1 to %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="188"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="248"/>
+        <source>Downloading %1
+%2 of %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="278"/>
+        <source>Checking the downloaded system software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../jobs/idevicerestorejob.cpp" line="325"/>
         <source>Restore %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="190"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="327"/>
         <source>Update %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -178,116 +204,122 @@
     </message>
     <message>
         <location filename="../popovers/idevicerestorepopover.ui" line="95"/>
-        <location filename="../popovers/idevicerestorepopover.ui" line="154"/>
+        <location filename="../popovers/idevicerestorepopover.ui" line="192"/>
         <source>Software Update File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.ui" line="164"/>
+        <location filename="../popovers/idevicerestorepopover.ui" line="202"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.ui" line="276"/>
+        <location filename="../popovers/idevicerestorepopover.ui" line="314"/>
         <source>Restore this image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.ui" line="230"/>
+        <location filename="../popovers/idevicerestorepopover.ui" line="268"/>
         <source>Restore to Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.ui" line="245"/>
+        <location filename="../popovers/idevicerestorepopover.ui" line="283"/>
         <source>THIS IS IT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="35"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="48"/>
         <source>Restore Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="36"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="37"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="49"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="50"/>
         <source>Restore System Software on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="41"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="54"/>
         <source>Update Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="42"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="43"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="55"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="56"/>
         <source>Update System Software on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="71"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="103"/>
+        <source>Getting the latest update information...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="85"/>
         <source>The selected update file is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="75"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="89"/>
         <source>The selected update file does not support this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="82"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="96"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="108"/>
         <source>Build %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="96"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="100"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="120"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="124"/>
         <source>Restore %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="99"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="123"/>
         <source>Apple will be contacted to verify the restore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="103"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="127"/>
         <source>Once the %1 is updated, you may not be able to return to the previous version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="104"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="128"/>
         <source>Once the update is complete, %1 will be installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="105"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="129"/>
         <source>Apple will be contacted to verify the update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="102"/>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="106"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="126"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="130"/>
         <source>Update %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="97"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="121"/>
         <source>Once the %1 is restored, all the data on it will be erased. You may not be able to return to the previous version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="98"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="122"/>
         <source>Once the restore is complete, %1 will be installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="111"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="135"/>
         <source>Restore %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../popovers/idevicerestorepopover.cpp" line="113"/>
+        <location filename="../popovers/idevicerestorepopover.cpp" line="137"/>
         <source>Update %1</source>
         <translation type="unfinished"></translation>
     </message>
