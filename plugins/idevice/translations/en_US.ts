@@ -44,135 +44,135 @@
 <context>
     <name>IDeviceRestoreJob</name>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="45"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="73"/>
         <source>Waiting for download to complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="69"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="97"/>
         <source>Preparing to download %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="81"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="109"/>
         <source>Cancelled restore operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="83"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="111"/>
         <source>Cancelled update operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="103"/>
-        <location filename="../jobs/idevicerestorejob.cpp" line="136"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="131"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="164"/>
         <source>Preparing for restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="105"/>
-        <location filename="../jobs/idevicerestorejob.cpp" line="138"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="133"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="166"/>
         <source>Preparing for update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="142"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="170"/>
         <source>Restoring %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="144"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="172"/>
         <source>Updating %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="150"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="178"/>
         <source>Verifying restored software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="152"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="180"/>
         <source>Verifying updated software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="157"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="185"/>
         <source>Finishing up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="174"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="202"/>
         <source>Restore complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="176"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="204"/>
         <source>Update complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="182"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="210"/>
         <source>Restored system software to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="184"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="212"/>
         <source>Updated system software on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="186"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="214"/>
         <source>%1 was installed onto %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="193"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="221"/>
         <source>The restore operation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="195"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="223"/>
         <source>The update operation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="201"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="229"/>
         <source>Couldn&apos;t restore to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="202"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="230"/>
         <source>Could not install %1 on %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="204"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="232"/>
         <source>Couldn&apos;t update %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="205"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="233"/>
         <source>Could not update %1 to %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="248"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="281"/>
         <source>Downloading %1
 %2 of %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="278"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="311"/>
         <source>Checking the downloaded system software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="325"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="358"/>
         <source>Restore %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jobs/idevicerestorejob.cpp" line="327"/>
+        <location filename="../jobs/idevicerestorejob.cpp" line="360"/>
         <source>Update %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -358,18 +358,51 @@
 <context>
     <name>RecoveryIDevice</name>
     <message>
-        <location filename="../recoveryidevice.cpp" line="37"/>
+        <location filename="../recoveryidevice.cpp" line="42"/>
         <source>Device in Recovery Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../recoveryidevice.cpp" line="49"/>
+        <location filename="../recoveryidevice.cpp" line="54"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../recoveryidevice.cpp" line="53"/>
+        <location filename="../recoveryidevice.cpp" line="58"/>
         <source>Software version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RecoveryIDeviceWidget</name>
+    <message>
+        <location filename="../recoveryidevicewidget.ui" line="14"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_recoveryidevicewidget.h" line="103"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../recoveryidevicewidget.ui" line="38"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_recoveryidevicewidget.h" line="104"/>
+        <source>Device in Recovery Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../recoveryidevicewidget.ui" line="48"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_recoveryidevicewidget.h" line="105"/>
+        <source>Recover this device by updating or restoring it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../recoveryidevicewidget.ui" line="73"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_recoveryidevicewidget.h" line="106"/>
+        <source>Update Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../recoveryidevicewidget.ui" line="83"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/idevice/plugin-idevice_autogen/include/ui_recoveryidevicewidget.h" line="107"/>
+        <source>Restore Device</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,6 +2,7 @@
 
 #include "idevicerootdirectory.h"
 #include "idevicewatcher.h"
+#include "recoveryidevicerootdirectory.h"
 
 struct IDeviceDirectoryHandlerPrivate {
         IDeviceWatcher* watcher;
@@ -28,7 +29,10 @@ DirectoryPtr IDeviceDirectoryHandler::directoryForUrl(QUrl url) {
         if (url.path() == "/") return (new IDeviceRootDirectory(device))->sharedFromThis();
         return nullptr;
     } else {
-        return nullptr;
+        auto device = d->watcher->recoveryDeviceByEcid(host.mid(1).toULongLong());
+        if (!device) return nullptr;
+
+        return (new RecoveryIDeviceRootDirectory(device))->sharedFromThis();
     }
 }
 

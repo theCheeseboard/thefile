@@ -13,7 +13,11 @@
 #include <QProcess>
 #include <QStandardPaths>
 #include <QtConcurrent>
+#include <grp.h>
+#include <pwd.h>
+#include <sys/types.h>
 #include <tlogger.h>
+#include <unistd.h>
 
 struct IDeviceRestoreJobPrivate {
         quint64 progress = 0;
@@ -29,6 +33,30 @@ struct IDeviceRestoreJobPrivate {
         bool canCancel = true;
         std::stop_source stopSource;
         std::stop_token stopToken;
+
+        bool haveStorageGroup() {
+            // Get the current user
+            uid_t uid = geteuid();
+            struct passwd* pw = getpwuid(uid);
+            if (!pw) {
+                return false;
+            }
+
+            // Get the group
+            struct group* grp = getgrnam("storage");
+            if (!grp) {
+                return false;
+            }
+
+            // Check if user is in the group
+            for (char** p = grp->gr_mem; *p; p++) {
+                if (strcmp(*p, pw->pw_name) == 0) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 };
 
 IDeviceRestoreJob::IDeviceRestoreJob(bool erase, AbstractIDevice* device, QObject* parent) :
@@ -208,7 +236,12 @@ void IDeviceRestoreJob::startRestore(QString softwareFile, QString softwareVersi
         }
     });
 
-    restoreProcess->start("pkexec", args);
+    if (d->haveStorageGroup()) {
+        // We don't need root access in order to recover devices
+        restoreProcess->start(args.takeFirst(), args);
+    } else {
+        restoreProcess->start("pkexec", args);
+    }
 }
 
 void IDeviceRestoreJob::cancel() {

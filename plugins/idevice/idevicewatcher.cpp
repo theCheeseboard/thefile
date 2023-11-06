@@ -85,6 +85,10 @@ IDevice* IDeviceWatcher::deviceByUdid(QString udid) {
     return nullptr;
 }
 
+RecoveryIDevice* IDeviceWatcher::recoveryDeviceByEcid(quint64 ecid) {
+    return d->recoveryDevices.value(ecid);
+}
+
 void IDeviceWatcher::addDevice(QString udid) {
     emit addingDevice();
     tDebug("IDeviceWatcher") << "New device with UDID " << udid;

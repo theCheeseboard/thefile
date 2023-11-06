@@ -16,11 +16,16 @@ RecoveryIDevice::RecoveryIDevice(quint64 ecid, QObject* parent) :
     d->ecid = ecid;
 
     irecv_client_t client;
-    irecv_open_with_ecid(&client, ecid);
+    auto openResult = irecv_open_with_ecid(&client, ecid);
+    if (openResult != IRECV_E_SUCCESS) {
+        return;
+    }
 
     irecv_device_t device;
-    irecv_devices_get_device_by_client(client, &device);
-    d->productType = QString::fromLocal8Bit(device->product_type);
+    auto deviceResult = irecv_devices_get_device_by_client(client, &device);
+    if (deviceResult == IRECV_E_SUCCESS) {
+        d->productType = QString::fromLocal8Bit(device->product_type);
+    }
 
     irecv_close(client);
 }

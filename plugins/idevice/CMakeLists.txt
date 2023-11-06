@@ -49,7 +49,9 @@ set(HEADERS
 
 add_library(plugin-idevice SHARED ${SOURCES} ${HEADERS}
     abstractidevice.h abstractidevice.cpp
-    recoveryidevice.h recoveryidevice.cpp)
+    recoveryidevice.h recoveryidevice.cpp
+    directories/recoveryidevicerootdirectory.h directories/recoveryidevicerootdirectory.cpp
+    recoveryidevicewidget.h recoveryidevicewidget.cpp recoveryidevicewidget.ui)
 target_include_directories(plugin-idevice PUBLIC ../../libthefile/)
 
 cntp_init_plugin(thefile plugin-idevice 20 ideviceplugin)

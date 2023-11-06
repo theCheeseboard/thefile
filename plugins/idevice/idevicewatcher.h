@@ -18,6 +18,7 @@ class IDeviceWatcher : public QObject {
         QList<IDevice*> devices();
         QList<RecoveryIDevice*> recoveryDevices();
         IDevice* deviceByUdid(QString udid);
+        RecoveryIDevice* recoveryDeviceByEcid(quint64 ecid);
 
     signals:
         void addingDevice();
