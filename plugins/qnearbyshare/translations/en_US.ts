@@ -5,49 +5,49 @@
     <name>NearbyShareHelpPopover</name>
     <message>
         <location filename="../nearbysharehelppopover.ui" line="14"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="118"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="119"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../nearbysharehelppopover.ui" line="35"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="119"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="120"/>
         <source>Nearby Share Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharehelppopover.ui" line="63"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="120"/>
+        <location filename="../nearbysharehelppopover.ui" line="78"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="121"/>
         <source>If Nearby Share isn&apos;t working for you, try the following:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharehelppopover.ui" line="73"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="121"/>
+        <location filename="../nearbysharehelppopover.ui" line="88"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="122"/>
         <source>Ensure the device is discoverable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharehelppopover.ui" line="83"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="122"/>
+        <location filename="../nearbysharehelppopover.ui" line="98"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="123"/>
         <source>Using theFile, on the other device, open the Nearby Share pane.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharehelppopover.ui" line="96"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="123"/>
-        <source>*Nearby Share does not support sending to Android devices right now, but you can send from an Android Device to theFile.</source>
+        <location filename="../nearbysharehelppopover.ui" line="108"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="124"/>
+        <source>On an Android device, open the Google Files app, switch to the Nearby Share tab and select Receive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharehelppopover.ui" line="106"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="124"/>
+        <location filename="../nearbysharehelppopover.ui" line="118"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="125"/>
         <source>Ensure you are connected to the same network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharehelppopover.ui" line="113"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="125"/>
+        <location filename="../nearbysharehelppopover.ui" line="125"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharehelppopover.h" line="126"/>
         <source>Nearby Share only works with devices connected to the same network right now.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -155,43 +155,48 @@
     <name>NearbyShareWidget</name>
     <message>
         <location filename="../nearbysharewidget.ui" line="14"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="164"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="172"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../nearbysharewidget.ui" line="43"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="165"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="173"/>
         <source>Nearby Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../nearbysharewidget.ui" line="53"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="166"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="174"/>
         <source>Share files over the local network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharewidget.ui" line="157"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="167"/>
+        <location filename="../nearbysharewidget.ui" line="185"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="175"/>
         <source>No Targets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharewidget.ui" line="164"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="168"/>
+        <location filename="../nearbysharewidget.ui" line="192"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="176"/>
         <source>No one is discoverable right now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nearbysharewidget.ui" line="171"/>
-        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="169"/>
+        <location filename="../nearbysharewidget.ui" line="199"/>
+        <location filename="../../../../build-thefile-Chroot_6-Debug/plugins/qnearbyshare/plugin-qnearbyshare_autogen/include/ui_nearbysharewidget.h" line="177"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../nearbysharewidget.cpp" line="29"/>
         <source>Temporarily discoverable as %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../nearbysharewidget.cpp" line="34"/>
+        <source>Can&apos;t find the target device?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

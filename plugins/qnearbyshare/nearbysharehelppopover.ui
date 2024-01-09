@@ -39,7 +39,7 @@
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -50,11 +50,26 @@
         <x>0</x>
         <y>0</y>
         <width>681</width>
-        <height>380</height>
+        <height>379</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop">
         <widget class="QWidget" name="helpContainer" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
@@ -89,11 +104,8 @@
           </item>
           <item>
            <widget class="QLabel" name="label_3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
             <property name="text">
-             <string>*Nearby Share does not support sending to Android devices right now, but you can send from an Android Device to theFile.</string>
+             <string>On an Android device, open the Google Files app, switch to the Nearby Share tab and select Receive.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -132,6 +144,7 @@
    <extends>QLabel</extends>
    <header location="global">ttitlelabel.h</header>
    <slots>
+    <signal>backButtonClicked()</signal>
     <slot>backButtonClicked()</slot>
    </slots>
   </customwidget>

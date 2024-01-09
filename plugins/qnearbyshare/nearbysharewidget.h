@@ -21,12 +21,18 @@ class NearbyShareWidget : public FileColumnWidget {
     private slots:
         void on_helpButton_clicked();
 
+        void on_label_5_linkActivated(const QString& link);
+
+        void on_helpLabel_linkActivated(const QString& link);
+
     private:
         Ui::NearbyShareWidget* ui;
         NearbyShareWidgetPrivate* d;
 
         QCoro::Task<> start();
         void addNewSession(NearbyShareSessionPtr session);
+
+        void showHelp();
 };
 
 #endif // NEARBYSHAREWIDGET_H

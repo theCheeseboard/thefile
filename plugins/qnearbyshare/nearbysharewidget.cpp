@@ -31,6 +31,7 @@ NearbyShareWidget::NearbyShareWidget(QWidget* parent) :
     connect(&d->manager, &NearbyShareManager::newSessionAvailable, this, &NearbyShareWidget::addNewSession);
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
+    ui->helpLabel->setText(QStringLiteral("[%1](help)").arg(tr("Can't find the target device?")));
 
     this->start();
 }
@@ -126,7 +127,7 @@ void NearbyShareWidget::addNewSession(NearbyShareSessionPtr session) {
     targetWidget->trackSession(session);
 }
 
-void NearbyShareWidget::on_helpButton_clicked() {
+void NearbyShareWidget::showHelp() {
     auto jp = new NearbyShareHelpPopover();
     auto popover = new tPopover(jp);
     popover->setPopoverWidth(-200);
@@ -135,4 +136,12 @@ void NearbyShareWidget::on_helpButton_clicked() {
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, jp, &NearbyShareHelpPopover::deleteLater);
     popover->show(this->window());
+}
+
+void NearbyShareWidget::on_helpButton_clicked() {
+    showHelp();
+}
+
+void NearbyShareWidget::on_helpLabel_linkActivated(const QString& link) {
+    showHelp();
 }
